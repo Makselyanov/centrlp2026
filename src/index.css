@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* CentrLP Brand Colors - HSL format */
+    --background: 200 50% 98%;
+    --foreground: 205 60% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 205 60% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 205 60% 10%;
+
+    /* Primary: #008dd2 */
+    --primary: 199 100% 41%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Accent 1: #009ada */
+    --accent-1: 194 100% 43%;
+    --accent-1-foreground: 0 0% 100%;
+    
+    /* Accent 2: #3aaa7c */
+    --accent-2: 158 50% 45%;
+    --accent-2-foreground: 0 0% 100%;
+
+    --secondary: 199 100% 95%;
+    --secondary-foreground: 205 60% 10%;
+
+    --muted: 200 40% 96%;
+    --muted-foreground: 205 30% 45%;
+
+    --accent: 199 100% 41%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 200 30% 90%;
+    --input: 200 30% 90%;
+    --ring: 199 100% 41%;
+
+    --radius: 1rem;
+
+    /* Gradients and Shadows */
+    --gradient-primary: linear-gradient(135deg, hsl(199 100% 41%), hsl(194 100% 43%));
+    --gradient-hero: linear-gradient(135deg, hsl(200 50% 98%), hsl(199 100% 95%));
+    --shadow-card: 0 4px 20px -2px hsl(199 100% 41% / 0.1);
+    --shadow-button: 0 2px 8px -1px hsl(199 100% 41% / 0.2);
+    
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+}
+
+@layer utilities {
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .pulse-gentle {
+    animation: pulse-gentle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse-gentle {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.85;
+    }
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-button {
+    box-shadow: var(--shadow-button);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
