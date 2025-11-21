@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils";
 // === EmailJS constants (твой аккаунт) ===
 const EMAILJS_SERVICE_ID = "service_ep2g9me";
 const EMAILJS_TEMPLATE_ID = "template_b0xrz8b";
-const EMAILJS_PUBLIC_KEY = "yzCN-4Aotl3kVqWlT";
+const EMAILJS_PUBLIC_KEY = "yzcN-4Aotl3kVqWIT";
 
 // --- Types & Data ---
 
