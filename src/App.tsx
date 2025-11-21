@@ -18,6 +18,7 @@ import Contacts from "./pages/Contacts";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
+import { AiPlanPage } from "./pages/AiPlanPage";
 
 // Service pages
 import TildaWebsite from "./pages/services/TildaWebsite";
@@ -40,12 +41,15 @@ import OfferPackaging from "./pages/services/OfferPackaging";
 
 const queryClient = new QueryClient();
 
+import { ScrollToTop } from "./components/ScrollToTop";
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
@@ -61,7 +65,7 @@ const App = () => (
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/cookies" element={<Cookies />} />
-          
+
           {/* Service pages */}
           <Route path="/services/tilda-website" element={<TildaWebsite />} />
           <Route path="/services/design-prototyping" element={<DesignPrototyping />} />
@@ -80,7 +84,9 @@ const App = () => (
           <Route path="/services/content-plan" element={<ContentPlan />} />
           <Route path="/services/copywriting-texts" element={<CopywritingTexts />} />
           <Route path="/services/offer-packaging" element={<OfferPackaging />} />
-          
+
+          <Route path="/ai-plan" element={<AiPlanPage />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 const Prices = () => {
   const packages = [
     {
+      id: "start",
       title: "Старт",
       price: "от 60 000 ₽",
       description: "Быстрая упаковка малого бизнеса с фокусом на получении заявок в первые 7–14 дней.",
@@ -23,6 +24,7 @@ const Prices = () => {
       popular: false
     },
     {
+      id: "full",
       title: "Продажи под ключ",
       price: "от 80 000 ₽",
       description: "Полный цикл маркетинга для стабильного потока заявок.",
@@ -39,6 +41,7 @@ const Prices = () => {
       popular: true
     },
     {
+      id: "ads",
       title: "Ведение рекламы",
       price: "от 20 000 ₽/мес",
       description: "Профессиональное сопровождение трафика с прогнозом и аналитикой.",
@@ -102,6 +105,7 @@ const Prices = () => {
             {packages.map((pkg, index) => (
               <motion.div
                 key={index}
+                id={pkg.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

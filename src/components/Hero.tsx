@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+    const navigate = useNavigate();
+
     return (
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
             {/* Dynamic Background - Subtle Parallax Feel */}
@@ -63,6 +66,7 @@ export const Hero = () => {
                             <motion.button
                                 whileHover={{ scale: 1.03, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
                                 whileTap={{ scale: 0.98 }}
+                                onClick={() => navigate('/ai-plan')}
                                 className="px-8 py-4 bg-[#0096D6] text-white rounded-2xl font-semibold text-lg shadow-lg shadow-[#0096D6]/30 flex items-center justify-center gap-2 transition-all"
                             >
                                 Получить план внедрения
