@@ -32,7 +32,7 @@ const BusinessPlans = () => {
             animate="animate"
             variants={stagger}
           >
-            <motion.h1 className="mb-6 text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600" variants={fadeIn}>
+            <motion.h1 className="mb-6 text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#0096D6] to-[#44B78B]" variants={fadeIn}>
               Бизнес-планы и финансовые модели с AI-аналитикой
             </motion.h1>
             <motion.p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto" variants={fadeIn}>

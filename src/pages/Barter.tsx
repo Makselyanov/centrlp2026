@@ -2,8 +2,14 @@ import { Layout } from "@/components/Layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, FileText, Handshake } from "lucide-react";
+import { ContactForm } from "@/components/ContactForm";
 
 const Barter = () => {
+  const scrollToForm = () => {
+    const element = document.getElementById('form');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <Layout>
       <section className="pt-32 pb-20 gradient-hero">
@@ -155,9 +161,7 @@ const Barter = () => {
                 </p>
               </div>
 
-              <a href="/#form">
-                <Button className="w-full">Обсудить бартер</Button>
-              </a>
+              <Button className="w-full" onClick={scrollToForm}>Обсудить бартер</Button>
             </Card>
 
             {/* СТО */}
@@ -216,9 +220,7 @@ const Barter = () => {
                 </p>
               </div>
 
-              <a href="/#form">
-                <Button className="w-full">Обсудить бартер</Button>
-              </a>
+              <Button className="w-full" onClick={scrollToForm}>Обсудить бартер</Button>
             </Card>
 
             {/* Клининг */}
@@ -278,9 +280,7 @@ const Barter = () => {
                 </p>
               </div>
 
-              <a href="/#form">
-                <Button className="w-full">Обсудить бартер</Button>
-              </a>
+              <Button className="w-full" onClick={scrollToForm}>Обсудить бартер</Button>
             </Card>
           </div>
         </div>
@@ -337,9 +337,7 @@ const Barter = () => {
                 Если вашей ниши нет в списке — не проблема. Напишите, и мы обсудим возможность
                 бартера.
               </p>
-              <a href="/#form">
-                <Button size="lg">Предложить свою нишу</Button>
-              </a>
+              <Button size="lg" onClick={scrollToForm}>Предложить свою нишу</Button>
             </div>
           </div>
         </div>
@@ -419,18 +417,16 @@ const Barter = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="mb-6">Обсудим бартер для вашей ниши?</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Оставьте заявку, расскажите о своём бизнесе — мы предложим варианты взаимозачёта
-          </p>
-          <a href="/#form">
-            <Button size="lg" className="animate-pulse-gentle">
-              Обсудить условия бартера
-            </Button>
-          </a>
+      {/* CTA / Contact Form */}
+      <section id="form" className="py-20 bg-card">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="text-center mb-12">
+            <h2 className="mb-6">Обсудим бартер для вашей ниши?</h2>
+            <p className="text-xl text-muted-foreground mb-8">
+              Оставьте заявку, расскажите о своём бизнесе — мы предложим варианты взаимозачёта
+            </p>
+          </div>
+          <ContactForm />
         </div>
       </section>
     </Layout>

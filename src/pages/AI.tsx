@@ -10,7 +10,7 @@ const AI = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <Brain className="w-20 h-20 text-primary mx-auto mb-6" />
-            <h1 className="mb-6">ИИ-внедрение для малого бизнеса</h1>
+            <h1 className="mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#0096D6] to-[#44B78B]">ИИ-внедрение для малого бизнеса</h1>
             <p className="text-xl text-muted-foreground">
               Автоматизируем рутину, снижаем нагрузку на персонал и увеличиваем конверсию с помощью
               искусственного интеллекта. Без сложностей и с соблюдением 152-ФЗ.
