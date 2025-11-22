@@ -35,11 +35,26 @@ const BarterCleaning = () => {
               ИИ-бот для расчёта и настраиваем ретаргет ВК и РСЯ
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Button size="lg" className="shadow-lg animate-pulse-gentle bg-primary hover:bg-primary/90 text-white border-none">
-                <a href="#form">Оставить заявку на бартер</a>
+              <Button
+                size="lg"
+                className="shadow-lg animate-pulse-gentle bg-primary hover:bg-primary/90 text-white border-none"
+                onClick={() => {
+                  const element = document.getElementById('form');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Оставить заявку на бартер
               </Button>
-              <Button variant="outline" size="lg" className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm">
-                <a href="#benefits">Что вы получаете</a>
+              <Button
+                variant="outline"
+                size="lg"
+                className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm"
+                onClick={() => {
+                  const element = document.getElementById('benefits');
+                  element?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                Что вы получаете
               </Button>
             </div>
 

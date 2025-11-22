@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ContactForm } from "@/components/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle } from "lucide-react";
@@ -223,6 +224,19 @@ const Prices = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Contact Form */}
+      <section id="form" className="py-20 bg-secondary/30">
+        <div className="container mx-auto px-4 max-w-2xl">
+          <div className="text-center mb-12">
+            <h2 className="mb-4">Оставить заявку</h2>
+            <p className="text-muted-foreground">
+              Заполните форму, и мы свяжемся с вами для обсуждения деталей
+            </p>
+          </div>
+          <ContactForm />
         </div>
       </section>
 

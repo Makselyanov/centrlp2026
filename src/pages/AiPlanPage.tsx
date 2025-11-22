@@ -63,15 +63,16 @@ type ServiceId =
 type Service = {
     id: ServiceId;
     group:
-        | "Сайты и упаковка"
-        | "ИИ-внедрение"
-        | "Бизнес-планы и расчёты"
-        | "Реклама и трафик"
-        | "Сопровождение"
-        | "Бартер-пакеты";
+    | "Сайты и упаковка"
+    | "ИИ-внедрение"
+    | "Бизнес-планы и расчёты"
+    | "Реклама и трафик"
+    | "Сопровождение"
+    | "Бартер-пакеты";
     title: string;
     description: string;
     basePrice: number;
+    pricePrefix?: string;
     type: "one_time" | "monthly" | "barter";
 };
 
@@ -82,8 +83,9 @@ const SERVICES: Service[] = [
         group: "Сайты и упаковка",
         title: "Сайт на Tilda (5–10 страниц)",
         description:
-            "Продающий сайт под нишу, структура, дизайн, тексты, формы заявок, подключение аналитики.",
-        basePrice: 95000,
+            "Продающий сайт под нишу, структура, дизайн, тексты, формы заявок, подключение аналитики, проработанный AI.",
+        basePrice: 45000,
+        pricePrefix: "от ",
         type: "one_time",
     },
     {
@@ -92,7 +94,7 @@ const SERVICES: Service[] = [
         title: "Дизайн и прототипирование",
         description:
             "Прототип и дизайн экранов без разработки — подходит, если у вас уже есть разработчики.",
-        basePrice: 55000,
+        basePrice: 15000,
         type: "one_time",
     },
     {
@@ -101,7 +103,7 @@ const SERVICES: Service[] = [
         title: "Фирменный стиль и логотип",
         description:
             "Логотип, базовый гайд по стилю, цвета, шрифты, примеры использования.",
-        basePrice: 45000,
+        basePrice: 15000,
         type: "one_time",
     },
     {
@@ -110,7 +112,7 @@ const SERVICES: Service[] = [
         title: "Нейминг и продающие офферы",
         description:
             "Помощь с названием, позиционированием и формулировкой основных офферов.",
-        basePrice: 25000,
+        basePrice: 15000,
         type: "one_time",
     },
     {
@@ -119,7 +121,7 @@ const SERVICES: Service[] = [
         title: "Оформление ВКонтакте",
         description:
             "Обложка, аватар, меню, блоки, структура контента под вашу нишу.",
-        basePrice: 20000,
+        basePrice: 15000,
         type: "one_time",
     },
 
@@ -223,7 +225,7 @@ const SERVICES: Service[] = [
         group: "Реклама и трафик",
         title: "Ведение VK Ads (месяц)",
         description: "Оптимизация, новые связки, отчётность.",
-        basePrice: 18000,
+        basePrice: 30000,
         type: "monthly",
     },
     {
@@ -1269,6 +1271,7 @@ export function AiPlanPage() {
                                                                     {s.title}
                                                                 </span>
                                                                 <span className="font-semibold whitespace-nowrap ml-2">
+                                                                    {s.pricePrefix}
                                                                     {s.basePrice.toLocaleString()}{" "}
                                                                     ₽
                                                                 </span>

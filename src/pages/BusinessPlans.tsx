@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ContactForm } from "@/components/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, TrendingUp, Calculator, Target, CheckCircle, Clock, Award, Zap } from "lucide-react";
@@ -165,24 +166,24 @@ const BusinessPlans = () => {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA / Contact Form */}
       <section className="py-20 gradient-hero" id="contact-form">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 max-w-2xl">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
+            className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Готовы запустить свой проект?</h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground mb-8">
               Оставьте заявку, и мы бесплатно проконсультируем вас по шансам на получение субсидии или инвестиций.
             </p>
-            <a href="/contacts">
-              <Button size="lg" className="text-lg px-12 py-6 rounded-full shadow-xl hover:bg-primary/90">
-                Связаться с нами
-              </Button>
-            </a>
           </motion.div>
+
+          <div className="bg-card shadow-xl rounded-2xl p-1">
+            <ContactForm />
+          </div>
         </div>
       </section>
     </Layout>
