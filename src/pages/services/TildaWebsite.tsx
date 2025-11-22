@@ -308,137 +308,210 @@ export default function TildaWebsite() {
             ))}
           </div>
 
-          {/* Mini Case Study */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-4xl mx-auto bg-card border border-border/50 rounded-2xl p-6 shadow-lg flex flex-col md:flex-row gap-8 items-center"
-          >
-            <div className="flex-1 space-y-2">
-              <div className="flex items-center gap-2 text-primary font-bold">
-                <Zap className="w-5 h-5" />
-                <span>Мини-кейс: Редизайн</span>
-              </div>
-              <h3 className="text-xl font-bold">Было / Стало</h3>
-              <p className="text-muted-foreground text-sm">
-                Заменили устаревший лендинг на современный сайт на Tilda. Конверсия выросла с 1.5% до 4.8% за первый месяц.
-              </p>
-            </div>
-            <div className="flex gap-4">
-              {/* Before Image */}
-              <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-border group cursor-pointer">
-                <img
-                  src="/assets/cases/redesign-before.jpg"
-                  alt="Сайт до редизайна"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
-                />
-                {/* Badge */}
-                <div className="absolute top-2 left-2 z-20">
-                  <span className="text-[10px] text-white font-mono font-bold bg-black/60 px-2 py-1 rounded backdrop-blur-sm">БЫЛО</span>
-                </div>
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white z-10">
-                  <ZoomIn className="w-6 h-6 mb-1" />
-                  <span className="text-[10px] font-medium">Увеличить</span>
-                </div>
-              </div>
 
-              <ArrowRight className="w-6 h-6 text-muted-foreground self-center" />
-
-              {/* After Image */}
-              <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-primary/20 shadow-md group cursor-pointer">
-                <img
-                  src="/assets/cases/redesign-after.jpg"
-                  alt="Сайт после редизайна"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {/* Badge */}
-                <div className="absolute top-2 right-2 z-20">
-                  <span className="text-[10px] text-white font-bold bg-green-500/90 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm">СТАЛО</span>
-                </div>
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white z-10">
-                  <ZoomIn className="w-6 h-6 mb-1" />
-                  <span className="text-[10px] font-medium">Увеличить</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* Кейсы */}
+      {/* Detailed Case Study */}
       <section className="py-20 bg-muted/30">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            Примеры результатов
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                niche: "Мебельная мастерская",
-                before: "Заявки по 1200₽",
-                after: "CPL 350₽",
-                metric: "Экономия 70%",
-                desc: "Вдрили квиз и автоворонку. Снизили стоимость заявки в 3.5 раза.",
-                color: "bg-primary",
-                textColor: "text-primary-foreground"
-              },
-              {
-                niche: "Клининговая компания",
-                before: "0 заявок",
-                after: "5-7 заявок/день",
-                metric: "Рост с нуля",
-                desc: "Запустили сайт под гео-запросы + контекст. Стабильный поток клиентов.",
-                color: "bg-accent",
-                textColor: "text-accent-foreground"
-              },
-              {
-                niche: "Детейлинг-центр",
-                before: "Конверсия 0.5%",
-                after: "Конверсия 3.8%",
-                metric: "Рост x7.6",
-                desc: "Пересобрали офферы на основе AI-анализа конкурентов. Увеличили конверсию.",
-                color: "bg-green-600",
-                textColor: "text-white"
-              }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                whileHover={{ y: -10 }}
-                className="bg-background rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden flex flex-col h-full border border-border/50"
-              >
-                <div className={`${item.color} p-6 text-white relative overflow-hidden`}>
-                  <div className="absolute top-0 right-0 p-4 opacity-20">
-                    <TrendingUp className="w-16 h-16" />
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-semibold mb-4">
+              <Zap className="w-4 h-4" />
+              <span>Мини-кейс: редизайн + маркетинговая система для клининга</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold">
+              Было / Стало: как мы превратили «визитку»<br />в работающую систему заявок
+            </h2>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+            {/* Column 1: Source Data */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-background p-8 rounded-2xl shadow-sm border border-border/50 h-full"
+            >
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-primary" />
+                Исходные данные
+              </h3>
+              <ul className="space-y-4">
+                <li className="flex gap-3">
+                  <MapPin className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <div>
+                    <span className="font-semibold block text-sm">Клиент</span>
+                    <span className="text-muted-foreground text-sm">Клининговая компания, 2 филиала: Тюмень и Ханты-Мансийск.</span>
                   </div>
-                  <div className="text-sm font-medium opacity-90 mb-1">{item.niche}</div>
-                  <div className="text-3xl font-bold">{item.metric}</div>
-                </div>
-                <div className="p-6 flex-grow flex flex-col">
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-muted/50 p-3 rounded-lg">
-                      <div className="text-xs text-muted-foreground uppercase mb-1">Было</div>
-                      <div className="font-semibold text-sm">{item.before}</div>
+                </li>
+                <li className="flex gap-3">
+                  <LayoutIcon className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <div>
+                    <span className="font-semibold block text-sm">Ситуация</span>
+                    <span className="text-muted-foreground text-sm">Старый сайт на конструкторе, сделанный «для галочки».</span>
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <Users className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <div>
+                    <span className="font-semibold block text-sm">Каналы продаж</span>
+                    <span className="text-muted-foreground text-sm">Сарафанка, немного соцсетей, случайные заявки с сайта.</span>
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <Target className="w-5 h-5 text-muted-foreground flex-shrink-0" />
+                  <div>
+                    <span className="font-semibold block text-sm">Задача</span>
+                    <span className="text-muted-foreground text-sm">Увеличить кол-во заявок, разделить потоки по городам, упаковать как сервис, обеспечить защиту ПД (Роскомнадзор).</span>
+                  </div>
+                </li>
+              </ul>
+            </motion.div>
+
+            {/* Column 2: What was wrong */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-red-50/50 p-8 rounded-2xl shadow-sm border border-red-100 h-full"
+            >
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-red-700">
+                <HelpCircle className="w-5 h-5" />
+                Что было не так
+              </h3>
+              <ul className="space-y-4">
+                {[
+                  { text: "Нет выбора филиала. Клиенты путались в телефонах и ценах.", icon: MapPin },
+                  { text: "Услуги перемешаны. Нет разделения по зонам (кухня, спальня).", icon: LayoutIcon },
+                  { text: "Текст «про компанию», а не про боли клиента.", icon: FileText },
+                  { text: "Нет живой команды. Выглядит как фирма-однодневка.", icon: Users },
+                  { text: "Цены непрозрачные. Нужно звонить и уточнять.", icon: CreditCard },
+                  { text: "Нет квизов. Все заявки сваливались в одну кучу.", icon: MessageSquare },
+                  { text: "Риски штрафов. Нет согласия на ПД и HTTPS.", icon: ShieldCheck },
+                  { text: "Слабая SEO-основа под запросы «уборка Тюмень».", icon: Search }
+                ].map((item, i) => (
+                  <li key={i} className="flex gap-3 items-start">
+                    <div className="mt-1 min-w-[20px]">
+                      <item.icon className="w-4 h-4 text-red-400" />
                     </div>
-                    <div className="bg-green-500/10 p-3 rounded-lg">
-                      <div className="text-xs text-green-600 uppercase mb-1">Стало</div>
-                      <div className="font-semibold text-sm text-green-700">{item.after}</div>
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground text-sm mb-4">{item.desc}</p>
-                  <div className="mt-auto pt-4 border-t border-border/50 flex items-center justify-between text-sm font-medium text-primary cursor-pointer group/link">
-                    <span>Подробнее</span>
-                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                  </div>
+                    <span className="text-sm text-muted-foreground">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Column 3: What we did */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-green-50/50 p-8 rounded-2xl shadow-sm border border-green-100 h-full"
+            >
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-green-700">
+                <CheckCircle2 className="w-5 h-5" />
+                Что сделали мы
+              </h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-green-800 mb-2 text-sm uppercase tracking-wider">Упаковка сайта</h4>
+                  <ul className="space-y-2">
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      Селектор города (Тюмень / Ханты-Мансийск) с подменой контактов.
+                    </li>
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      Интерактивный выбор услуг по комнатам (Спальня, Кухня, Санузел).
+                    </li>
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      Блок «Наша команда» с живыми фото и FAQ по страхам.
+                    </li>
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      Юридическая защита: HTTPS, Политика, Чекбоксы согласия.
+                    </li>
+                  </ul>
                 </div>
-              </motion.div>
-            ))}
+                <div>
+                  <h4 className="font-semibold text-green-800 mb-2 text-sm uppercase tracking-wider">Маркетинг</h4>
+                  <ul className="space-y-2">
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      2 квиза: на уборку и на мойку окон (AI-вопросы).
+                    </li>
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      Контент-стратегия для соцсетей + Реклама ВК.
+                    </li>
+                    <li className="text-sm text-muted-foreground flex gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
+                      Упаковка Яндекс Бизнес и 2ГИС.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Before / After Visual */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="relative group cursor-pointer overflow-hidden rounded-xl border border-border shadow-lg">
+                <div className="absolute top-4 left-4 z-10 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-md">
+                  До: Информационная визитка
+                </div>
+                <img
+                  src="/assets/cases/redesign-before.jpg"
+                  alt="Старый сайт клининга"
+                  className="w-full h-auto object-cover filter grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
+                />
+                <div className="p-4 bg-background border-t border-border">
+                  <p className="text-sm text-muted-foreground">Без структуры, без юридической защиты, без сегментации.</p>
+                </div>
+              </div>
+              <div className="relative group cursor-pointer overflow-hidden rounded-xl border border-primary/30 shadow-2xl ring-4 ring-primary/5">
+                <div className="absolute top-4 right-4 z-10 bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold shadow-lg">
+                  После: Система продаж
+                </div>
+                <img
+                  src="/assets/cases/redesign-after.jpg"
+                  alt="Новый сайт клининга"
+                  className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105"
+                />
+                <div className="p-4 bg-background border-t border-border">
+                  <p className="text-sm text-primary font-medium">Продающий сайт + Квизы + Комплексный маркетинг.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Results Summary */}
+          <div className="max-w-4xl mx-auto bg-primary/5 rounded-2xl p-8 text-center mb-12 border border-primary/10">
+            <h3 className="text-2xl font-bold mb-4">Результат для клиента</h3>
+            <p className="text-lg text-muted-foreground mb-6">
+              Появился понятный путь клиента: выбрал город → посмотрел услуги по комнатам → прошёл квиз → оставил заявку.
+              Компания выглядит как сервис с командой и лицами. Сайт полностью соответствует требованиям Роскомнадзора.
+              Удобно вести рекламу и аналитику по отдельным воронкам.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm font-medium">
+              <span className="bg-background px-3 py-1 rounded-full border border-border text-muted-foreground">Рост конверсии</span>
+              <span className="bg-background px-3 py-1 rounded-full border border-border text-muted-foreground">Защита от штрафов</span>
+              <span className="bg-background px-3 py-1 rounded-full border border-border text-muted-foreground">Прозрачная аналитика</span>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Button
+              size="lg"
+              className="text-lg px-8 h-14 shadow-xl hover:shadow-primary/25 hover:-translate-y-1 transition-all duration-300"
+              onClick={() => scrollToSection('form')}
+            >
+              Хочу такой же результат <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
           </div>
         </div>
       </section>
