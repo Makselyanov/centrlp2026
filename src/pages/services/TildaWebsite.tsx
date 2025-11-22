@@ -326,14 +326,26 @@ export default function TildaWebsite() {
               </p>
             </div>
             <div className="flex gap-4">
-              <div className="w-32 h-24 bg-muted rounded-lg flex items-center justify-center border border-border relative overflow-hidden group">
-                <span className="text-xs text-muted-foreground font-mono z-10">OLD SITE</span>
-                <div className="absolute inset-0 bg-red-500/10 group-hover:bg-red-500/20 transition-colors" />
+              <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-border group cursor-pointer">
+                <img
+                  src="/assets/cases/redesign-before.jpg"
+                  alt="Сайт до редизайна"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
+                />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity group-hover:opacity-0">
+                  <span className="text-xs text-white font-mono font-bold bg-black/50 px-2 py-1 rounded backdrop-blur-sm">БЫЛО</span>
+                </div>
               </div>
               <ArrowRight className="w-6 h-6 text-muted-foreground self-center" />
-              <div className="w-32 h-24 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20 relative overflow-hidden group shadow-md">
-                <span className="text-xs text-primary font-bold font-mono z-10">NEW SITE</span>
-                <div className="absolute inset-0 bg-green-500/10 group-hover:bg-green-500/20 transition-colors" />
+              <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-primary/20 shadow-md group cursor-pointer">
+                <img
+                  src="/assets/cases/redesign-after.jpg"
+                  alt="Сайт после редизайна"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute top-2 right-2">
+                  <span className="text-[10px] text-white font-bold bg-green-500/90 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm">СТАЛО</span>
+                </div>
               </div>
             </div>
           </motion.div>
