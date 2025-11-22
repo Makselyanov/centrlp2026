@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Zap, Users, TrendingUp, Layout as LayoutIcon, Palette, FileText, Settings, Rocket, BarChart, Clock, CreditCard, HelpCircle, MessageSquare, MapPin, Briefcase, Search, Target, Smartphone, MousePointer, Eye, Globe, ShieldCheck, Award, PieChart } from "lucide-react";
+import { CheckCircle2, ArrowRight, Zap, Users, TrendingUp, Layout as LayoutIcon, Palette, FileText, Settings, Rocket, BarChart, Clock, CreditCard, HelpCircle, MessageSquare, MapPin, Briefcase, Search, Target, Smartphone, MousePointer, Eye, Globe, ShieldCheck, Award, PieChart, ZoomIn } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
@@ -326,25 +326,41 @@ export default function TildaWebsite() {
               </p>
             </div>
             <div className="flex gap-4">
+              {/* Before Image */}
               <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-border group cursor-pointer">
                 <img
                   src="/assets/cases/redesign-before.jpg"
                   alt="Сайт до редизайна"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 filter grayscale group-hover:grayscale-0"
                 />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity group-hover:opacity-0">
-                  <span className="text-xs text-white font-mono font-bold bg-black/50 px-2 py-1 rounded backdrop-blur-sm">БЫЛО</span>
+                {/* Badge */}
+                <div className="absolute top-2 left-2 z-20">
+                  <span className="text-[10px] text-white font-mono font-bold bg-black/60 px-2 py-1 rounded backdrop-blur-sm">БЫЛО</span>
+                </div>
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white z-10">
+                  <ZoomIn className="w-6 h-6 mb-1" />
+                  <span className="text-[10px] font-medium">Увеличить</span>
                 </div>
               </div>
+
               <ArrowRight className="w-6 h-6 text-muted-foreground self-center" />
+
+              {/* After Image */}
               <div className="relative w-32 h-24 rounded-lg overflow-hidden border border-primary/20 shadow-md group cursor-pointer">
                 <img
                   src="/assets/cases/redesign-after.jpg"
                   alt="Сайт после редизайна"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-2 right-2">
+                {/* Badge */}
+                <div className="absolute top-2 right-2 z-20">
                   <span className="text-[10px] text-white font-bold bg-green-500/90 px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm">СТАЛО</span>
+                </div>
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white z-10">
+                  <ZoomIn className="w-6 h-6 mb-1" />
+                  <span className="text-[10px] font-medium">Увеличить</span>
                 </div>
               </div>
             </div>
