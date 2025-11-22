@@ -6,6 +6,11 @@ import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout
 import { motion } from "framer-motion";
 
 const Prices = () => {
+  const scrollToForm = () => {
+    const element = document.getElementById('form');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const packages = [
     {
       id: "start",
@@ -142,11 +147,13 @@ const Prices = () => {
                     <p className="text-sm italic">{pkg.solve}</p>
                   </div>
 
-                  <a href="#form" className="w-full">
-                    <Button variant={pkg.popular ? "default" : "outline"} className="w-full">
-                      Заказать
-                    </Button>
-                  </a>
+                  <Button
+                    variant={pkg.popular ? "default" : "outline"}
+                    className="w-full"
+                    onClick={scrollToForm}
+                  >
+                    Заказать
+                  </Button>
                 </Card>
               </motion.div>
             ))}
@@ -218,9 +225,7 @@ const Prices = () => {
                 </div>
               </div>
               <div className="flex-shrink-0">
-                <a href="#form">
-                  <Button size="lg" className="shadow-lg">Обсудить бартер</Button>
-                </a>
+                <Button size="lg" className="shadow-lg" onClick={scrollToForm}>Обсудить бартер</Button>
               </div>
             </div>
           </div>

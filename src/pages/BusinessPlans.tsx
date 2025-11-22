@@ -20,6 +20,11 @@ const BusinessPlans = () => {
     }
   };
 
+  const scrollToForm = () => {
+    const element = document.getElementById('contact-form');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -39,11 +44,13 @@ const BusinessPlans = () => {
               Разрабатываем профессиональные бизнес-планы для получения грантов, субсидий и привлечения инвестиций. Точные расчеты, глубокий анализ рынка и гарантия качества.
             </motion.p>
             <motion.div variants={fadeIn}>
-              <a href="#contact-form">
-                <Button size="lg" className="text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
-                  Заказать расчет проекта
-                </Button>
-              </a>
+              <Button
+                size="lg"
+                className="text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1"
+                onClick={scrollToForm}
+              >
+                Заказать расчет проекта
+              </Button>
             </motion.div>
           </motion.div>
         </div>
