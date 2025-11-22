@@ -236,6 +236,43 @@ export default function Branding() {
         </div>
       </section>
 
+      {/* 4.5 Our Works: Logos */}
+      <section className="py-24 bg-muted/30">
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              Наши работы
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Реальные логотипы, которые мы разработали
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[1, 2, 3, 4, 5, 6, 7].map((num, i) => (
+              <motion.div
+                key={num}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ scale: 1.05 }}
+                className="bg-background rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex items-center justify-center aspect-[3/2] border border-border/50"
+              >
+                <img
+                  src={`/assets/branding-logos/logo${num}.gif`}
+                  alt={`Логотип клиента ${num}`}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </motion.div>
+            ))}
+          </div>
+
+          <p className="text-center text-muted-foreground mt-12 max-w-2xl mx-auto">
+            Мы усиливаем каждую разработку через нейросетевой анализ вашей ниши и аудитории — визуал формируется на данных, а не на вдохновении дизайнера
+          </p>
+        </div>
+      </section>
+
       {/* 5. AI Tech Block */}
       <section className="py-24 bg-muted/30 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent" />
