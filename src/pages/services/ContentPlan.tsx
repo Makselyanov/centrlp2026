@@ -6,7 +6,7 @@ import {
   Calendar, Zap, Users, TrendingUp, CheckCircle, MessageSquare, Target,
   Brain, Smartphone, Video, Image as ImageIcon, BarChart3, Clock,
   AlertTriangle, XCircle, CheckCircle2, ArrowRight, Sparkles,
-  Layout as LayoutIcon, FileText, Search
+  Layout as LayoutIcon, FileText, Search, Map
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
