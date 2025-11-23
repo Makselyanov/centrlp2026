@@ -2,13 +2,30 @@ import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle } from "lucide-react";
+import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Prices = () => {
   const scrollToForm = () => {
     const element = document.getElementById('form');
     element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
   };
 
   const packages = [
@@ -27,7 +44,10 @@ const Prices = () => {
       ],
       solve: "Отсутствие упаковки, низкая конверсия, дорогие заявки.",
       icon: Zap,
-      popular: false
+      popular: false,
+      color: "text-blue-500",
+      bgColor: "bg-blue-500/10",
+      borderColor: "border-blue-500/20"
     },
     {
       id: "full",
@@ -44,7 +64,10 @@ const Prices = () => {
       ],
       solve: "Низкий поток лидов, устаревшие процессы, потеря клиентов.",
       icon: Star,
-      popular: true
+      popular: true,
+      color: "text-primary",
+      bgColor: "bg-primary/10",
+      borderColor: "border-primary/50"
     },
     {
       id: "ads",
@@ -60,7 +83,10 @@ const Prices = () => {
       ],
       solve: "Дорогая заявка, нестабильный поток, отсутствие аналитики.",
       icon: TrendingUp,
-      popular: false
+      popular: false,
+      color: "text-purple-500",
+      bgColor: "bg-purple-500/10",
+      borderColor: "border-purple-500/20"
     }
   ];
 
@@ -80,79 +106,146 @@ const Prices = () => {
     { title: "Юнит-экономика", price: "10 000–20 000 ₽", desc: "Модель, сценарии «минимум/норма/оптимум».", solve: "Непонимание рентабельности.", icon: BarChart },
   ];
 
+  const floatingElements = [
+    { icon: "₽", top: "15%", left: "10%", delay: 0 },
+    { icon: "%", top: "25%", right: "15%", delay: 1.5 },
+    { icon: "ROI", bottom: "20%", left: "15%", delay: 1 },
+    { icon: "KPI", bottom: "30%", right: "10%", delay: 2 },
+  ];
+
   return (
     <Layout>
       {/* Hero */}
-      <section className="pt-32 pb-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5 -z-10" />
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.08),transparent_70%)]" />
+
+        {/* Floating Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          {floatingElements.map((el, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: [0.3, 0.6, 0.3],
+                y: [0, -20, 0],
+              }}
+              transition={{
+                duration: 5 + i,
+                repeat: Infinity,
+                delay: el.delay,
+                ease: "easeInOut"
+              }}
+              className="absolute text-4xl md:text-6xl font-bold text-primary/10"
+              style={{ top: el.top, left: el.left, right: el.right, bottom: el.bottom }}
+            >
+              {el.icon}
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
+          >
+            <Briefcase className="w-4 h-4" />
+            <span>Официально. Прозрачно. Эффективно.</span>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#0096D6] to-[#44B78B]"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
           >
-            Цены и пакеты услуг
+            Инвестиции в <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
+              рост вашего бизнеса
+            </span>
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+            transition={{ delay: 0.2 }}
+            className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            Прозрачное ценообразование. Работаем официально по договору.
+            Понятное ценообразование без скрытых платежей. Работаем по договору,
+            гарантируем соблюдение сроков и качество каждого этапа.
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <Button size="lg" className="h-14 px-8 text-lg rounded-full shadow-lg hover:shadow-primary/25 transition-all" onClick={scrollToForm}>
+              Рассчитать стоимость проекта
+            </Button>
+          </motion.div>
         </div>
       </section>
 
       {/* Packages */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="py-20 relative">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
+        <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-3 gap-8 items-start">
             {packages.map((pkg, index) => (
               <motion.div
                 key={index}
                 id={pkg.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
+                className="h-full"
               >
-                <Card className={`relative p-8 h-full flex flex-col ${pkg.popular ? 'border-primary shadow-xl scale-105 z-10 bg-card' : 'border-border bg-card/50'}`}>
+                <Card className={`relative p-8 h-full flex flex-col transition-all duration-300 ${pkg.popular ? 'border-primary shadow-2xl scale-105 z-10 bg-card' : 'border-border bg-card/50 hover:border-primary/30 hover:shadow-lg'}`}>
                   {pkg.popular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent-1 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
+                      <Star className="w-4 h-4 fill-current" />
                       Хит продаж
                     </div>
                   )}
-                  <div className="mb-6">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${pkg.popular ? 'bg-primary/10 text-primary' : 'bg-secondary text-muted-foreground'}`}>
-                      <pkg.icon className="w-6 h-6" />
+
+                  <div className="mb-8 text-center">
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 ${pkg.bgColor} ${pkg.color}`}>
+                      <pkg.icon className="w-8 h-8" />
                     </div>
                     <h3 className="text-2xl font-bold mb-2">{pkg.title}</h3>
-                    <div className="text-3xl font-bold text-primary">{pkg.price}</div>
+                    <div className={`text-3xl font-bold ${pkg.color}`}>{pkg.price}</div>
                   </div>
 
-                  <p className="text-muted-foreground mb-6 text-sm">{pkg.description}</p>
+                  <p className="text-muted-foreground mb-8 text-center text-sm leading-relaxed">{pkg.description}</p>
 
-                  <div className="space-y-3 mb-8 flex-grow">
+                  <div className="space-y-4 mb-8 flex-grow">
                     {pkg.features.map((feature, i) => (
-                      <div key={i} className="flex items-start text-sm">
-                        <Check className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
+                      <div key={i} className="flex items-start text-sm group">
+                        <CheckCircle className={`w-5 h-5 mr-3 mt-0.5 flex-shrink-0 transition-colors ${pkg.popular ? 'text-green-500' : 'text-muted-foreground group-hover:text-green-500'}`} />
+                        <span className="text-foreground/90">{feature}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="bg-secondary/30 p-4 rounded-lg mb-6">
-                    <div className="text-xs font-semibold text-muted-foreground uppercase mb-1">Решает проблему:</div>
-                    <p className="text-sm italic">{pkg.solve}</p>
+                  <div className={`p-4 rounded-xl mb-8 border ${pkg.borderColor} ${pkg.bgColor}`}>
+                    <div className={`text-xs font-bold uppercase mb-2 flex items-center gap-2 ${pkg.color}`}>
+                      <Target className="w-3 h-3" />
+                      Решает проблему:
+                    </div>
+                    <p className="text-sm italic text-foreground/80">{pkg.solve}</p>
                   </div>
 
                   <Button
                     variant={pkg.popular ? "default" : "outline"}
-                    className="w-full"
+                    size="lg"
+                    className={`w-full h-12 rounded-xl font-semibold ${pkg.popular ? 'shadow-lg hover:shadow-primary/25' : 'border-2'}`}
                     onClick={scrollToForm}
                   >
-                    Заказать
+                    Заказать пакет
                   </Button>
                 </Card>
               </motion.div>
@@ -162,102 +255,152 @@ const Prices = () => {
       </section>
 
       {/* Individual Services */}
-      <section className="py-20 bg-secondary/20">
+      <section className="py-24 bg-secondary/20 relative overflow-hidden">
+        <div className="absolute right-0 top-1/4 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full -z-10" />
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Отдельные услуги</h2>
-            <p className="text-muted-foreground">Точечные решения для вашего бизнеса</p>
-          </div>
+          <motion.div className="text-center mb-16" {...fadeInUp}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Отдельные услуги</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Точечные решения для усиления конкретных показателей вашего бизнеса
+            </p>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
             {services.map((service, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
+                variants={{
+                  hidden: { opacity: 0, scale: 0.9 },
+                  show: { opacity: 1, scale: 1 }
+                }}
               >
-                <Card className="p-6 h-full hover:shadow-lg transition-shadow border-border/50 hover:border-primary/50 group">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="p-2 bg-primary/5 rounded-lg group-hover:bg-primary/10 transition-colors">
-                      <service.icon className="w-6 h-6 text-primary" />
+                <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/50 group bg-card hover:-translate-y-1">
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="p-3 bg-primary/5 rounded-xl group-hover:bg-primary/10 transition-colors text-primary">
+                      <service.icon className="w-6 h-6" />
                     </div>
-                    <div className="text-right">
-                      <span className="font-bold text-lg block">{service.price}</span>
+                    <div className="text-right bg-secondary px-3 py-1 rounded-lg">
+                      <span className="font-bold text-sm md:text-base block whitespace-nowrap">{service.price}</span>
                     </div>
                   </div>
 
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{service.desc}</p>
+                  <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
+                  <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{service.desc}</p>
 
-                  <div className="pt-4 border-t border-border/50">
-                    <span className="text-xs font-medium text-muted-foreground">Решает: </span>
-                    <span className="text-xs">{service.solve}</span>
+                  <div className="pt-4 border-t border-border/50 mt-auto">
+                    <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <Check className="w-3 h-3 mt-0.5 text-green-500" />
+                      <span><span className="font-semibold text-foreground">Результат:</span> {service.solve}</span>
+                    </div>
                   </div>
                 </Card>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Barter */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-gradient-to-r from-primary/10 via-accent-1/10 to-accent-2/10 rounded-3xl p-8 md:p-12 border border-primary/20">
-            <div className="flex flex-col md:flex-row items-center gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-[#1a1f2c] to-[#2d3748] rounded-3xl p-8 md:p-12 border border-primary/20 shadow-2xl relative overflow-hidden text-white"
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
+
+            <div className="flex flex-col lg:flex-row items-center gap-10 relative z-10">
               <div className="flex-1">
-                <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/20 text-primary text-sm font-medium mb-4">
-                  <RefreshCw className="w-4 h-4 mr-2" />
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 text-white text-sm font-medium mb-6 border border-white/10 backdrop-blur-sm">
+                  <RefreshCw className="w-4 h-4 mr-2 text-green-400" />
                   Специальное предложение
                 </div>
-                <h2 className="mb-4">Бартер-пакеты</h2>
-                <p className="text-xl mb-6">Эквивалент 80 000+ ₽</p>
-                <p className="text-muted-foreground mb-6">
-                  Для мебельщиков, СТО/детейлинга, клининга, салонов услуг.
-                  <br />
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Бартер-пакеты для бизнеса</h2>
+                <div className="flex items-baseline gap-2 mb-6">
+                  <span className="text-2xl md:text-3xl font-bold text-green-400">Эквивалент 80 000+ ₽</span>
+                </div>
+
+                <p className="text-lg text-gray-300 mb-8 max-w-xl leading-relaxed">
+                  Идеально для мебельщиков, СТО, детейлинга, клининга и салонов услуг.
+                  Мы вам — упаковку и клиентов, вы нам — свои услуги.
                   Взаимозачёт по договору, фиксированная программа работ.
                 </p>
-                <div className="flex items-center gap-2 text-sm font-medium text-primary">
+
+                <div className="flex items-center gap-3 text-sm font-medium text-green-400 bg-green-400/10 px-4 py-2 rounded-lg w-fit">
                   <Shield className="w-4 h-4" />
-                  Решает: отсутствие бюджета на старте
+                  Решает проблему отсутствия бюджета на старте
                 </div>
               </div>
-              <div className="flex-shrink-0">
-                <Button size="lg" className="shadow-lg" onClick={scrollToForm}>Обсудить бартер</Button>
+
+              <div className="flex-shrink-0 w-full lg:w-auto">
+                <Card className="bg-white/5 border-white/10 p-6 backdrop-blur-sm max-w-sm mx-auto lg:mx-0">
+                  <h4 className="font-bold mb-4 text-white">Что входит в бартер:</h4>
+                  <ul className="space-y-3 text-sm text-gray-300 mb-6">
+                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Сайт + Квиз</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Настройка рекламы</li>
+                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Оформление соцсетей</li>
+                  </ul>
+                  <Button size="lg" className="w-full bg-white text-primary hover:bg-gray-100 font-bold" onClick={scrollToForm}>
+                    Обсудить условия
+                  </Button>
+                </Card>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Contact Form */}
-      <section id="form" className="py-20 bg-secondary/30">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Оставить заявку</h2>
-            <p className="text-muted-foreground">
-              Заполните форму, и мы свяжемся с вами для обсуждения деталей
+      <section id="form" className="py-24 bg-secondary/30 relative">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
+        <div className="container mx-auto px-4 max-w-2xl relative z-10">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold mb-4">Оставить заявку</h2>
+            <p className="text-muted-foreground text-lg">
+              Заполните форму, и мы свяжемся с вами для обсуждения деталей проекта
             </p>
-          </div>
-          <ContactForm />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <ContactForm />
+          </motion.div>
         </div>
       </section>
 
       {/* Footer Note */}
-      <section className="pb-20">
+      <section className="pb-20 pt-10">
         <div className="container mx-auto px-4 text-center">
-          <div className="inline-block bg-secondary p-6 rounded-xl max-w-3xl">
-            <h4 className="font-bold mb-2 flex items-center justify-center gap-2">
-              <Briefcase className="w-5 h-5" />
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="inline-block bg-secondary/50 p-8 rounded-2xl max-w-3xl border border-border/50"
+          >
+            <h4 className="font-bold mb-3 flex items-center justify-center gap-2 text-lg">
+              <Briefcase className="w-5 h-5 text-primary" />
               Официально и прозрачно
             </h4>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground leading-relaxed">
               Все услуги выполняются официально, по договору НПД, с этапами, ТЗ и прозрачной отчётностью.
-              Мы гарантируем качество и соблюдение сроков.
+              Мы гарантируем качество и соблюдение сроков. Вы всегда знаете, за что платите.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
     </Layout>
