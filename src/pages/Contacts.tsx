@@ -15,6 +15,14 @@ const Contacts = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const tags = [
+    { text: "Telegram", top: "15%", left: "10%", delay: 0 },
+    { text: "WhatsApp", top: "25%", right: "15%", delay: 1.5 },
+    { text: "Звонок", bottom: "20%", left: "15%", delay: 1 },
+    { text: "Встреча", bottom: "30%", right: "10%", delay: 2 },
+    { text: "Офис", top: "10%", left: "50%", delay: 0.5 },
+  ];
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -32,25 +40,33 @@ const Contacts = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
-        {/* Dynamic Background - Subtle Parallax Feel */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-[#0096D6]/10 blur-[120px]"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-[#44B78B]/10 blur-[120px]"
-          />
+      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.08),transparent_70%)]" />
+
+        {/* Floating Tags */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          {tags.map((tag, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: [0.3, 0.7, 0.3],
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                delay: tag.delay,
+                ease: "easeInOut"
+              }}
+              className="absolute px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/5 border border-primary/10 text-primary/50 text-xs md:text-sm font-medium backdrop-blur-sm hidden sm:block"
+              style={{ top: tag.top, left: tag.left, right: tag.right, bottom: tag.bottom }}
+            >
+              {tag.text}
+            </motion.div>
+          ))}
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -59,7 +75,7 @@ const Contacts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-white shadow-sm border border-slate-200 text-[#0096D6] text-sm font-medium mb-6">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
               <MessageCircle className="w-4 h-4 mr-2" />
               Всегда на связи
             </div>

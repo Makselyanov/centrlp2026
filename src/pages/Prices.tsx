@@ -11,6 +11,14 @@ const Prices = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const tags = [
+    { text: "Скидки", top: "15%", left: "10%", delay: 0 },
+    { text: "Пакеты", top: "25%", right: "15%", delay: 1.5 },
+    { text: "Договор", bottom: "20%", left: "15%", delay: 1 },
+    { text: "Рассрочка", bottom: "30%", right: "10%", delay: 2 },
+    { text: "Бонусы", top: "10%", left: "50%", delay: 0.5 },
+  ];
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
@@ -111,43 +119,51 @@ const Prices = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 min-h-[80vh] flex flex-col justify-center">
-        {/* Dynamic Background - Subtle Parallax Feel */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-[#0096D6]/10 blur-[120px]"
-          />
-          <motion.div
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3]
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-[#44B78B]/10 blur-[120px]"
-          />
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 min-h-[80vh] flex flex-col justify-center">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.08),transparent_70%)]" />
+
+        {/* Floating Tags */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          {tags.map((tag, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: [0.3, 0.7, 0.3],
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                delay: tag.delay,
+                ease: "easeInOut"
+              }}
+              className="absolute px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/5 border border-primary/10 text-primary/50 text-xs md:text-sm font-medium backdrop-blur-sm hidden sm:block"
+              style={{ top: tag.top, left: tag.left, right: tag.right, bottom: tag.bottom }}
+            >
+              {tag.text}
+            </motion.div>
+          ))}
         </div>
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-200 text-sm font-medium mb-8 hover:bg-slate-50 transition-colors cursor-default text-slate-600"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
           >
-            <Sparkles className="w-4 h-4 text-[#0096D6]" />
+            <Sparkles className="w-4 h-4" />
             <span>Прайс-лист 2025</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight text-slate-900"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight"
           >
             Инвестируйте в <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
@@ -159,7 +175,7 @@ const Prices = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             Прозрачные цены. Понятные этапы. <br className="hidden md:block" />
             Гарантия результата по договору.
@@ -171,21 +187,21 @@ const Prices = () => {
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="h-16 px-10 text-lg rounded-2xl bg-[#0096D6] hover:bg-[#0085bd] shadow-lg shadow-[#0096D6]/20 transition-all hover:scale-105" onClick={scrollToForm}>
+            <Button size="lg" className="h-16 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_30px_-10px_rgba(var(--primary-rgb),0.5)] transition-all hover:scale-105" onClick={scrollToForm}>
               Рассчитать проект
             </Button>
-            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-2xl border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-sm transition-all hover:scale-105">
+            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full border-2 transition-all hover:scale-105">
               Смотреть пакеты
             </Button>
           </motion.div>
         </div>
 
         {/* Ticker */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-6 bg-white/50 backdrop-blur-sm border-t border-slate-100">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-6 bg-background/50 backdrop-blur-sm border-t border-border/5">
           <div className="flex whitespace-nowrap animate-marquee">
             {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
-              <div key={i} className="mx-8 text-slate-400 font-bold text-xl uppercase tracking-widest flex items-center gap-4">
-                {item} <div className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+              <div key={i} className="mx-8 text-muted-foreground/30 font-bold text-xl uppercase tracking-widest flex items-center gap-4">
+                {item} <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
               </div>
             ))}
           </div>
