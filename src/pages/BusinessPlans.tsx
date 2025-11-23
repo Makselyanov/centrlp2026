@@ -183,6 +183,75 @@ const BusinessPlans = () => {
         </div>
       </section>
 
+      {/* 3.5 Programs */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <motion.div className="text-center mb-16" {...fadeInUp}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Для каких программ подойдут наши бизнес-планы</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Мы адаптируем документы под требования конкретной программы, будь то соцконтракт или банковский кредит.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {[
+              {
+                title: "Соцконтракт",
+                desc: "Поддержка малообеспеченных граждан на открытие и развитие дела.",
+                link: "https://www.gosuslugi.ru/",
+                linkText: "Портал Госуслуги"
+              },
+              {
+                title: "Субсидии и гранты от центров занятости",
+                desc: "Выплаты на открытие собственного дела для безработных и самозанятых.",
+                link: "https://trudvsem.ru/",
+                linkText: "Работа России"
+              },
+              {
+                title: "Региональные программы «Мой бизнес»",
+                desc: "Гранты, субсидии и льготная поддержка для малого и среднего бизнеса.",
+                link: "https://мойбизнес.рф/",
+                linkText: "Мой бизнес.рф"
+              },
+              {
+                title: "Гранты для инновационных проектов",
+                desc: "Поддержка технологических и инновационных проектов.",
+                link: "https://fasie.ru/",
+                linkText: "Фонд содействия инновациям"
+              },
+              {
+                title: "Банковские программы и инвесторы",
+                desc: "Бизнес-планы и финмодели для кредитов и частных инвестиций.",
+                link: null,
+                linkText: null
+              }
+            ].map((prog, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-background p-6 rounded-xl border shadow-sm flex flex-col"
+              >
+                <h3 className="text-xl font-bold mb-2">{prog.title}</h3>
+                <p className="text-muted-foreground mb-4 flex-grow">{prog.desc}</p>
+                {prog.link && (
+                  <a
+                    href={prog.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary font-medium hover:underline inline-flex items-center gap-1 mt-auto"
+                  >
+                    {prog.linkText} <ArrowRight className="w-4 h-4" />
+                  </a>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 4. Our Approach */}
       <section className="py-20 bg-primary text-primary-foreground overflow-hidden">
         <div className="container mx-auto px-4">
@@ -282,6 +351,50 @@ const BusinessPlans = () => {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5.5 Reviews */}
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <motion.h2
+            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            {...fadeInUp}
+          >
+            Отзывы клиентов
+          </motion.h2>
+
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              className="bg-background p-8 rounded-2xl shadow-sm border"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-bold text-primary">
+                    В
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xl font-bold">Владислав Погодин</h3>
+                    <div className="flex text-yellow-400">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <svg key={star} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                          <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z" clipRule="evenodd" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-muted-foreground italic leading-relaxed">
+                    "Хочу выразить благодарность за помощь в создании бизнес-плана. Профессионализм, внимание к деталям и конструктивные советы позволили мне чётко понять ключевые аспекты моего проекта. Особенно впечатлили анализ рынка и финансовые прогнозы, которые увеличили мою уверенность перед инвесторами. Рекомендую всем, кто хочет разработать качественный бизнес-план!"
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
