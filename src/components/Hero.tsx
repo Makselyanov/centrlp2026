@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "@/assets/hero/hero_3d_object_1763935106533.png";
+import Hero3D from "../assets/hero/hero_3d_object_1763931506533.png";
 
 export const Hero = () => {
     const navigate = useNavigate();
@@ -98,7 +98,7 @@ export const Hero = () => {
                             className="relative z-20"
                         >
                             <img
-                                src={heroImage}
+                                src={Hero3D}
                                 alt="AI Marketing Rocket"
                                 className="h-[280px] sm:h-[340px] w-auto object-contain drop-shadow-2xl"
                             />
