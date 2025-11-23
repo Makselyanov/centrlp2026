@@ -1,46 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
     const navigate = useNavigate();
-
-    // 3D Tilt Logic
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    // Smooth spring animation for tilt
-    const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
-    const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
-
-    // Map mouse position to rotation degrees (-8 to 8)
-    const rotateX = useTransform(mouseY, [-0.5, 0.5], [8, -8]);
-    const rotateY = useTransform(mouseX, [-0.5, 0.5], [-8, 8]);
-
-    // Shine effect opacity/position based on tilt
-    const shineOpacity = useTransform(mouseX, [-0.5, 0.5], [0, 0.5]);
-    const shineX = useTransform(mouseX, [-0.5, 0.5], ["0%", "100%"]);
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-
-        const mouseXPos = e.clientX - rect.left;
-        const mouseYPos = e.clientY - rect.top;
-
-        const xPct = mouseXPos / width - 0.5;
-        const yPct = mouseYPos / height - 0.5;
-
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
 
     return (
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
@@ -126,51 +90,35 @@ export const Hero = () => {
                         animate={{ opacity: 1, scale: 1, rotate: 0 }}
                         transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
                         className="relative h-[600px] flex items-center justify-center perspective-1000"
-                        onMouseMove={handleMouseMove}
-                        onMouseLeave={handleMouseLeave}
                     >
                         {/* This is the container for the 3D object. Replace the content of this div with your 3D model later. */}
                         <motion.div
-                            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                            animate={{ y: [-2, 2, -2] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="relative z-20 w-full h-full flex items-center justify-center"
+                            animate={{ y: [-15, 15, -15], rotateX: [2, -2, 2], rotateY: [2, -2, 2] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                            className="relative z-20 w-full h-full flex items-center justify-center preserve-3d"
                         >
                             {/* Placeholder for 3D Object - Abstract Glass Shape */}
-                            <motion.div
-                                className="w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group"
-                                style={{ transformStyle: "preserve-3d" }}
-                            >
-                                {/* Shine Effect */}
-                                <motion.div
-                                    className="absolute inset-0 z-40 pointer-events-none bg-gradient-to-tr from-transparent via-white/20 to-transparent w-[200%] h-[200%] -top-[50%] -left-[50%]"
-                                    style={{
-                                        x: shineX,
-                                        opacity: shineOpacity
-                                    }}
-                                />
-
-                                {/* Soft Blue Glow */}
-                                <div className="absolute inset-0 bg-[#0096D6]/20 blur-3xl z-0" />
-
+                            <div className="w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group transform transition-transform hover:scale-105 duration-500">
                                 {/* Glass effect overlay */}
                                 <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-10" />
                                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent z-20" />
 
                                 {/* Content inside the placeholder */}
-                                <div className="relative z-30 text-white text-center p-8 transform translate-z-10">
+                                <div className="relative z-30 text-white text-center p-8">
                                     <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
                                     <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
                                     <p className="text-lg font-medium opacity-90">Ваш 3D объект здесь</p>
                                 </div>
-                            </motion.div>
+
+                                {/* Shine effect */}
+                                <div className="absolute -top-[100%] -left-[100%] w-[200%] h-[200%] bg-gradient-to-br from-transparent via-white/40 to-transparent rotate-45 animate-shine pointer-events-none" />
+                            </div>
 
                             {/* Floating Elements around the object */}
                             <motion.div
                                 animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                                 className="absolute top-32 -right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl z-30 border border-white/50"
-                                style={{ transform: "translateZ(40px)" }}
                             >
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-[#44B78B]">
@@ -187,7 +135,6 @@ export const Hero = () => {
                                 animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                                 className="absolute bottom-40 -left-8 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl z-30 border border-white/50"
-                                style={{ transform: "translateZ(40px)" }}
                             >
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-[#0096D6]">
