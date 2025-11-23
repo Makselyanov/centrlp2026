@@ -1,20 +1,110 @@
 import { Layout } from "@/components/Layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Brain, Shield, Clock, TrendingUp, MessageSquare, FileText, Users, Zap } from "lucide-react";
+import { Brain, Shield, Clock, TrendingUp, MessageSquare, FileText, Users, Zap, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const AI = () => {
+  const tags = [
+    { text: "Аналитика", top: "15%", left: "10%", delay: 0 },
+    { text: "Нейросети", top: "25%", right: "15%", delay: 1.5 },
+    { text: "Автоматизация", bottom: "20%", left: "15%", delay: 1 },
+    { text: "Реклама", bottom: "30%", right: "10%", delay: 2 },
+    { text: "Воронки", top: "10%", left: "50%", delay: 0.5 },
+  ];
+
   return (
     <Layout>
-      <section className="pt-32 pb-20 gradient-hero">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <Brain className="w-20 h-20 text-primary mx-auto mb-6" />
-            <h1 className="mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#0096D6] to-[#44B78B]">ИИ-внедрение для малого бизнеса</h1>
-            <p className="text-xl text-muted-foreground">
-              Автоматизируем рутину, снижаем нагрузку на персонал и увеличиваем конверсию с помощью
-              искусственного интеллекта. Без сложностей и с соблюдением 152-ФЗ.
-            </p>
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.08),transparent_70%)]" />
+
+        {/* Floating Tags */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          {tags.map((tag, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: [0.3, 0.7, 0.3],
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                delay: tag.delay,
+                ease: "easeInOut"
+              }}
+              className="absolute px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/5 border border-primary/10 text-primary/50 text-xs md:text-sm font-medium backdrop-blur-sm hidden sm:block"
+              style={{ top: tag.top, left: tag.left, right: tag.right, bottom: tag.bottom }}
+            >
+              {tag.text}
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
+            >
+              <Brain className="w-4 h-4" />
+              <span>AI-Integration 2.0</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
+            >
+              Маркетинг на <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
+                скоростях AI
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed"
+            >
+              Внедряем искусственный интеллект в продажи, аналитику и рутину.
+              Гипотезы проверяются за часы, а не недели.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"
+            >
+              <a href="#callbackkiller" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full h-14 text-lg px-8 rounded-full shadow-lg hover:shadow-primary/25 transition-all">
+                  Хочу AI в маркетинге
+                </Button>
+              </a>
+              <a href="#callbackkiller" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full h-14 text-lg px-8 rounded-full border-2">
+                  Разобрать мой проект
+                </Button>
+              </a>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center justify-center gap-2 text-sm text-muted-foreground/70"
+            >
+              <CheckCircle className="w-4 h-4 text-green-500" />
+              <span>Работаем с реальными проектами: сайты, реклама, аналитика</span>
+            </motion.div>
           </div>
         </div>
       </section>
