@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowRight } from "lucide-react";
+import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowUpRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Prices = () => {
@@ -91,79 +91,52 @@ const Prices = () => {
   ];
 
   const services = [
-    { title: "Квиз «Продажа под ключ»", price: "15 000–35 000 ₽", desc: "Многошаговый квиз с продуманной логикой и ИИ-оптимизацией.", solve: "Выявление потребностей, рост конверсии.", icon: HelpCircle },
-    { title: "ИИ-скрипты продаж", price: "10 000–25 000 ₽", desc: "Сценарии обработки возражений, FAQ-модуль, подсказки.", solve: "Низкая конверсия менеджеров, хаос в диалогах.", icon: MessageSquare },
-    { title: "Генерация текста и A/B", price: "10 000–20 000 ₽", desc: "SEO-тексты, заголовки, офферы, варианты лендинга.", solve: "Слабый копирайтинг, отсутствие чёткого оффера.", icon: PenTool },
-    { title: "Сайт на Tilda (5–10 стр)", price: "45 000–70 000 ₽", desc: "Полная сборка с адаптивом, SEO и аналитикой.", solve: "Отсутствие продающего сайта.", icon: LayoutIcon },
-    { title: "Оформление ВКонтакте", price: "12 000–25 000 ₽", desc: "Обложки, меню, закреп, посты, CTA-блоки.", solve: "Непродающий профиль, низкая вовлечённость.", icon: LayoutIcon },
-    { title: "Настройка Яндекс.Директ", price: "от 20 000 ₽", desc: "Поиск + РСЯ, минус-слова, ИИ-заголовки.", solve: "Дорогие клики, слив бюджета.", icon: Search },
-    { title: "Настройка рекламы ВК", price: "от 18 000 ₽", desc: "Прогрев, лид-формы, ретаргетинг.", solve: "Мало заявок, низкое качество трафика.", icon: Target },
-    { title: "Фирменный стиль + лого", price: "18 000–40 000 ₽", desc: "Стиль, логотип, шаблоны, цвета.", solve: "Отсутствие визуальной айдентики.", icon: PenTool },
-    { title: "Контент-план + креативы", price: "от 15 000 ₽", desc: "Посты, баннеры, сторис, объявления.", solve: "Несистемный контент, слабое привлечение.", icon: MessageSquare },
-    { title: "Бизнес-план и финмодель", price: "от 25 000 ₽", desc: "Юнит-экономика, окупаемость, сметы.", solve: "Непонимание цифр и рисков.", icon: BarChart },
-    { title: "Маркетинговая стратегия", price: "18 000–45 000 ₽", desc: "Позиционирование, медиаплан, гипотезы.", solve: "Хаотичный маркетинг.", icon: Target },
-    { title: "Анализ конкурентов", price: "8 000–18 000 ₽", desc: "Разбор офферов, цен, структуры сайтов.", solve: "Слабый УТП, нерелевантные цены.", icon: Search },
-    { title: "Юнит-экономика", price: "10 000–20 000 ₽", desc: "Модель, сценарии «минимум/норма/оптимум».", solve: "Непонимание рентабельности.", icon: BarChart },
+    { title: "Квиз «Продажа под ключ»", price: "15–35к ₽", desc: "Многошаговый квиз с продуманной логикой и ИИ-оптимизацией.", solve: "Рост конверсии", icon: HelpCircle },
+    { title: "ИИ-скрипты продаж", price: "10–25к ₽", desc: "Сценарии обработки возражений, FAQ-модуль, подсказки.", solve: "Порядок в продажах", icon: MessageSquare },
+    { title: "Генерация текста и A/B", price: "10–20к ₽", desc: "SEO-тексты, заголовки, офферы, варианты лендинга.", solve: "Сильный оффер", icon: PenTool },
+    { title: "Сайт на Tilda (5–10 стр)", price: "45–70к ₽", desc: "Полная сборка с адаптивом, SEO и аналитикой.", solve: "Продающий сайт", icon: LayoutIcon },
+    { title: "Оформление ВКонтакте", price: "12–25к ₽", desc: "Обложки, меню, закреп, посты, CTA-блоки.", solve: "Упаковка соцсетей", icon: LayoutIcon },
+    { title: "Настройка Яндекс.Директ", price: "от 20к ₽", desc: "Поиск + РСЯ, минус-слова, ИИ-заголовки.", solve: "Целевой трафик", icon: Search },
+    { title: "Настройка рекламы ВК", price: "от 18к ₽", desc: "Прогрев, лид-формы, ретаргетинг.", solve: "Заявки из соцсетей", icon: Target },
+    { title: "Фирменный стиль + лого", price: "18–40к ₽", desc: "Стиль, логотип, шаблоны, цвета.", solve: "Узнаваемость", icon: PenTool },
+    { title: "Контент-план + креативы", price: "от 15к ₽", desc: "Посты, баннеры, сторис, объявления.", solve: "Вовлечение", icon: MessageSquare },
+    { title: "Бизнес-план и финмодель", price: "от 25к ₽", desc: "Юнит-экономика, окупаемость, сметы.", solve: "Понимание цифр", icon: BarChart },
+    { title: "Маркетинговая стратегия", price: "18–45к ₽", desc: "Позиционирование, медиаплан, гипотезы.", solve: "План действий", icon: Target },
+    { title: "Анализ конкурентов", price: "8–18к ₽", desc: "Разбор офферов, цен, структуры сайтов.", solve: "Отстройка", icon: Search },
+    { title: "Юнит-экономика", price: "10–20к ₽", desc: "Модель, сценарии «минимум/норма/оптимум».", solve: "Рентабельность", icon: BarChart },
   ];
 
-  const floatingElements = [
-    { icon: "₽", top: "15%", left: "10%", delay: 0 },
-    { icon: "%", top: "25%", right: "15%", delay: 1.5 },
-    { icon: "ROI", bottom: "20%", left: "15%", delay: 1 },
-    { icon: "KPI", bottom: "30%", right: "10%", delay: 2 },
-  ];
+  const tickerItems = ["Маркетинг", "Разработка", "Дизайн", "Аналитика", "Автоматизация", "AI-Решения", "Трафик", "Упаковка", "Стратегия"];
 
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.08),transparent_70%)]" />
-
-        {/* Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-          {floatingElements.map((el, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: [0.3, 0.6, 0.3],
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 5 + i,
-                repeat: Infinity,
-                delay: el.delay,
-                ease: "easeInOut"
-              }}
-              className="absolute text-4xl md:text-6xl font-bold text-primary/10"
-              style={{ top: el.top, left: el.left, right: el.right, bottom: el.bottom }}
-            >
-              {el.icon}
-            </motion.div>
-          ))}
-        </div>
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-[#0A0F1C] text-white min-h-[80vh] flex flex-col justify-center">
+        {/* Dynamic Background */}
+        <div className="absolute inset-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.05]" />
+        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/30 blur-[120px] rounded-full pointer-events-none opacity-60 animate-pulse-slow" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent-1/20 blur-[100px] rounded-full pointer-events-none opacity-40" />
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-sm font-medium mb-8 hover:bg-white/10 transition-colors cursor-default"
           >
-            <Briefcase className="w-4 h-4" />
-            <span>Официально. Прозрачно. Эффективно.</span>
+            <Sparkles className="w-4 h-4 text-yellow-400" />
+            <span className="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Прайс-лист 2025</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight"
           >
-            Инвестиции в <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-              рост вашего бизнеса
+            Инвестируйте в <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
+              Рост Бизнеса
             </span>
           </motion.h1>
 
@@ -171,28 +144,49 @@ const Prices = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+            className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Понятное ценообразование без скрытых платежей. Работаем по договору,
-            гарантируем соблюдение сроков и качество каждого этапа.
+            Прозрачные цены. Понятные этапы. <br className="hidden md:block" />
+            Гарантия результата по договору.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="h-14 px-8 text-lg rounded-full shadow-lg hover:shadow-primary/25 transition-all" onClick={scrollToForm}>
-              Рассчитать стоимость проекта
+            <Button size="lg" className="h-16 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_30px_-10px_rgba(var(--primary-rgb),0.5)] transition-all hover:scale-105" onClick={scrollToForm}>
+              Рассчитать проект
+            </Button>
+            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full border-white/10 bg-white/5 hover:bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105">
+              Смотреть пакеты
             </Button>
           </motion.div>
+        </div>
+
+        {/* Ticker */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-6 bg-white/5 backdrop-blur-sm border-t border-white/5">
+          <div className="flex whitespace-nowrap animate-marquee">
+            {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
+              <div key={i} className="mx-8 text-white/30 font-bold text-xl uppercase tracking-widest flex items-center gap-4">
+                {item} <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Packages */}
-      <section className="py-20 relative">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
+      <section className="py-24 relative bg-background">
         <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Комплексные пакеты</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Готовые решения для быстрого старта и масштабирования
+            </p>
+          </div>
+
           <div className="grid lg:grid-cols-3 gap-8 items-start">
             {packages.map((pkg, index) => (
               <motion.div
@@ -213,8 +207,8 @@ const Prices = () => {
                   )}
 
                   <div className="mb-8 text-center">
-                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 ${pkg.bgColor} ${pkg.color}`}>
-                      <pkg.icon className="w-8 h-8" />
+                    <div className={`w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 ${pkg.bgColor} ${pkg.color} shadow-inner`}>
+                      <pkg.icon className="w-10 h-10" />
                     </div>
                     <h3 className="text-2xl font-bold mb-2">{pkg.title}</h3>
                     <div className={`text-3xl font-bold ${pkg.color}`}>{pkg.price}</div>
@@ -255,13 +249,20 @@ const Prices = () => {
       </section>
 
       {/* Individual Services */}
-      <section className="py-24 bg-secondary/20 relative overflow-hidden">
-        <div className="absolute right-0 top-1/4 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full -z-10" />
-        <div className="container mx-auto px-4">
-          <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Отдельные услуги</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Точечные решения для усиления конкретных показателей вашего бизнеса
+      <section className="py-32 bg-[#0A0F1C] relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div className="text-center mb-20" {...fadeInUp}>
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/20">
+              Точечные решения
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">Отдельные услуги</h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Усильте конкретные показатели вашего бизнеса с помощью наших специализированных инструментов
             </p>
           </motion.div>
 
@@ -276,27 +277,34 @@ const Prices = () => {
               <motion.div
                 key={index}
                 variants={{
-                  hidden: { opacity: 0, scale: 0.9 },
-                  show: { opacity: 1, scale: 1 }
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 }
                 }}
+                className="group relative h-full"
               >
-                <Card className="p-6 h-full hover:shadow-xl transition-all duration-300 border-border/50 hover:border-primary/50 group bg-card hover:-translate-y-1">
+                {/* Glowing Border Effect */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent-1 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 blur opacity-20" />
+
+                <Card className="relative h-full bg-[#111625] border-white/5 p-6 flex flex-col overflow-hidden group-hover:border-transparent transition-colors">
                   <div className="flex items-start justify-between mb-6">
-                    <div className="p-3 bg-primary/5 rounded-xl group-hover:bg-primary/10 transition-colors text-primary">
-                      <service.icon className="w-6 h-6" />
+                    <div className="p-3 bg-white/5 rounded-2xl group-hover:bg-primary/20 group-hover:text-primary transition-all duration-300 text-gray-400">
+                      <service.icon className="w-8 h-8" />
                     </div>
-                    <div className="text-right bg-secondary px-3 py-1 rounded-lg">
-                      <span className="font-bold text-sm md:text-base block whitespace-nowrap">{service.price}</span>
+                    <div className="flex items-center gap-1 text-white/30 group-hover:text-primary transition-colors">
+                      <ArrowUpRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
                     </div>
                   </div>
 
-                  <h3 className="font-bold text-lg mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
-                  <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{service.desc}</p>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+                  <p className="text-gray-400 text-sm mb-6 leading-relaxed flex-grow">{service.desc}</p>
 
-                  <div className="pt-4 border-t border-border/50 mt-auto">
-                    <div className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <Check className="w-3 h-3 mt-0.5 text-green-500" />
-                      <span><span className="font-semibold text-foreground">Результат:</span> {service.solve}</span>
+                  <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+                    <div className="flex flex-col">
+                      <span className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Результат</span>
+                      <span className="text-sm text-gray-300 font-medium">{service.solve}</span>
+                    </div>
+                    <div className="bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/10 transition-colors">
+                      <span className="text-white font-bold text-sm group-hover:text-primary">{service.price}</span>
                     </div>
                   </div>
                 </Card>
@@ -307,7 +315,7 @@ const Prices = () => {
       </section>
 
       {/* Barter */}
-      <section className="py-20">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
