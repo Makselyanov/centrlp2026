@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowUpRight, Sparkles } from "lucide-react";
+import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowUpRight, Sparkles, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const Prices = () => {
@@ -111,28 +111,43 @@ const Prices = () => {
   return (
     <Layout>
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-[#0A0F1C] text-white min-h-[80vh] flex flex-col justify-center">
-        {/* Dynamic Background */}
-        <div className="absolute inset-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.05]" />
-        <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/30 blur-[120px] rounded-full pointer-events-none opacity-60 animate-pulse-slow" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-accent-1/20 blur-[100px] rounded-full pointer-events-none opacity-40" />
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 min-h-[80vh] flex flex-col justify-center">
+        {/* Dynamic Background - Subtle Parallax Feel */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-[#0096D6]/10 blur-[120px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-[#44B78B]/10 blur-[120px]"
+          />
+        </div>
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-sm font-medium mb-8 hover:bg-white/10 transition-colors cursor-default"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-200 text-sm font-medium mb-8 hover:bg-slate-50 transition-colors cursor-default text-slate-600"
           >
-            <Sparkles className="w-4 h-4 text-yellow-400" />
-            <span className="bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">Прайс-лист 2025</span>
+            <Sparkles className="w-4 h-4 text-[#0096D6]" />
+            <span>Прайс-лист 2025</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight text-slate-900"
           >
             Инвестируйте в <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
@@ -144,7 +159,7 @@ const Prices = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto mb-12 leading-relaxed"
           >
             Прозрачные цены. Понятные этапы. <br className="hidden md:block" />
             Гарантия результата по договору.
@@ -156,21 +171,21 @@ const Prices = () => {
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="h-16 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_30px_-10px_rgba(var(--primary-rgb),0.5)] transition-all hover:scale-105" onClick={scrollToForm}>
+            <Button size="lg" className="h-16 px-10 text-lg rounded-2xl bg-[#0096D6] hover:bg-[#0085bd] shadow-lg shadow-[#0096D6]/20 transition-all hover:scale-105" onClick={scrollToForm}>
               Рассчитать проект
             </Button>
-            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full border-white/10 bg-white/5 hover:bg-white/10 text-white backdrop-blur-sm transition-all hover:scale-105">
+            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-2xl border-slate-200 bg-white hover:bg-slate-50 text-slate-700 shadow-sm transition-all hover:scale-105">
               Смотреть пакеты
             </Button>
           </motion.div>
         </div>
 
         {/* Ticker */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-6 bg-white/5 backdrop-blur-sm border-t border-white/5">
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-6 bg-white/50 backdrop-blur-sm border-t border-slate-100">
           <div className="flex whitespace-nowrap animate-marquee">
             {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
-              <div key={i} className="mx-8 text-white/30 font-bold text-xl uppercase tracking-widest flex items-center gap-4">
-                {item} <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
+              <div key={i} className="mx-8 text-slate-400 font-bold text-xl uppercase tracking-widest flex items-center gap-4">
+                {item} <div className="w-1.5 h-1.5 rounded-full bg-slate-300" />
               </div>
             ))}
           </div>

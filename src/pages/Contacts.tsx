@@ -32,9 +32,26 @@ const Contacts = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-[#0A0F1C] text-white">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.05]" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+        {/* Dynamic Background - Subtle Parallax Feel */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+          <motion.div
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-[#0096D6]/10 blur-[120px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-[#44B78B]/10 blur-[120px]"
+          />
+        </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -42,17 +59,17 @@ const Contacts = () => {
             animate={{ opacity: 1, y: 0 }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-primary text-sm font-medium mb-6 border border-white/10 backdrop-blur-sm">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-white shadow-sm border border-slate-200 text-[#0096D6] text-sm font-medium mb-6">
               <MessageCircle className="w-4 h-4 mr-2" />
               Всегда на связи
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-slate-900">
               Давайте обсудим <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
                 ваш проект
               </span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-xl">
+            <p className="text-xl text-slate-600 max-w-xl">
               Мы в Тюмени, но работаем со всем миром.
               Открыты к диалогу, встречам и новым вызовам.
             </p>
