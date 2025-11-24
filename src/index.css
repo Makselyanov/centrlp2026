@@ -146,6 +146,7 @@ All colors MUST be HSL.
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+  overflow: hidden;
 }
 
 .hero-webgl {
