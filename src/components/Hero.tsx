@@ -36,15 +36,15 @@ export const Hero = () => {
         <section
             className="
                 relative overflow-hidden
-                bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950
-                text-slate-50
+                bg-gradient-to-br from-slate-50 via-white to-slate-50
+                text-slate-900
                 py-24
             "
         >
             <div
                 className="
                     pointer-events-none absolute inset-0
-                    bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.25),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(52,211,153,0.2),_transparent_55%)]
+                    bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.1),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(45,212,191,0.1),_transparent_55%)]
                 "
             ></div>
 
@@ -81,7 +81,7 @@ export const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="inline-flex items-center px-4 py-2 rounded-full bg-slate-900/60 shadow-md text-slate-100 text-sm font-semibold mb-8 border border-[#0096D6]/20"
+                            className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 shadow-sm text-slate-700 text-sm font-semibold mb-8 border border-slate-200"
                         >
                             <span className="relative flex h-3 w-3 mr-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#44B78B] opacity-75"></span>
@@ -90,16 +90,16 @@ export const Hero = () => {
                             AI-Маркетинг 2.0
                         </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight text-slate-50">
+                        <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight text-slate-900">
                             Запускаем продажи <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
                                 с помощью AI
                             </span>, чат-ботов и умной рекламы
                         </h1>
 
-                        <p className="text-xl text-slate-400 mb-10 max-w-lg leading-relaxed">
+                        <p className="text-xl text-slate-600 mb-10 max-w-lg leading-relaxed">
                             Комплексная упаковка бизнеса: сайт, соцсети, AI-боты, воронки и реклама.
-                            <span className="font-semibold text-slate-50"> Первые заявки через 14 дней.</span>
+                            <span className="font-semibold text-slate-900"> Первые заявки через 14 дней.</span>
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-5">
@@ -114,9 +114,9 @@ export const Hero = () => {
                             </motion.button>
 
                             <motion.button
-                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.8)" }}
                                 whileTap={{ scale: 0.98 }}
-                                className="px-8 py-4 bg-transparent text-slate-300 border border-slate-700 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
+                                className="px-8 py-4 bg-white/50 text-slate-700 border border-slate-200 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
                             >
                                 <Play className="w-5 h-5 fill-current" />
                                 Наши услуги
