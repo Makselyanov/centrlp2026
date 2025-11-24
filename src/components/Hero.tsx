@@ -13,23 +13,22 @@ export const Hero = () => {
         if (!card) return;
 
         const handleMouseMove = (e: MouseEvent) => {
-            const w = window.innerWidth;
-            const h = window.innerHeight;
-            const x = (e.clientX / w - 0.5) * 20;
-            const y = (e.clientY / h - 0.5) * 20;
-            card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg) translateZ(10px)`;
+            const { innerWidth, innerHeight } = window;
+            const rotateY = (e.clientX / innerWidth - 0.5) * 20;
+            const rotateX = (e.clientY / innerHeight - 0.5) * -20;
+            card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(16px)`;
         };
 
-        const handleMouseLeave = () => {
+        const reset = () => {
             card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
         };
 
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseleave', reset);
 
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseleave', handleMouseLeave);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseleave', reset);
         };
     }, []);
 
