@@ -35,16 +35,14 @@ export const Hero = () => {
     return (
         <section
             className="
-                relative overflow-hidden w-full
-                bg-[#050b16]
-                text-slate-50
-                py-28
+                relative w-full overflow-hidden bg-[#050b16] py-28
             "
         >
             <div
                 className="
-                    pointer-events-none absolute inset-0
-                    bg-[radial-gradient(circle_at_20%_0%,rgba(56,189,248,0.22),transparent_60%),radial-gradient(circle_at_80%_100%,rgba(129,140,248,0.26),transparent_60%)]
+                    pointer-events-none
+                    absolute inset-0
+                    bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.18),transparent_60%),radial-gradient(circle_at_70%_80%,rgba(99,102,241,0.18),transparent_60%)]
                     opacity-80
                 "
             ></div>
