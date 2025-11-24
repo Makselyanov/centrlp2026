@@ -11,14 +11,13 @@ import {
   AlertTriangle,
   Brain,
   Search,
-  MousePointerClick,
+  MousePointer,
   Clock,
   ArrowRight,
   FileText,
   Phone,
   Zap,
-  PieChart,
-  Layers
+  Copy
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -209,17 +208,17 @@ const YandexDirect = () => {
                 {
                   title: "Структура кампаний под воронку",
                   desc: "Поиск, РСЯ, бренд, конкуренты, ретаргетинг. Холодный и тёплый трафик разводим грамотно.",
-                  icon: Layers
+                  icon: Copy
                 },
                 {
                   title: "Объявления, которые говорят человеческим языком",
                   desc: "Не канцелярит, а кликабельные фразы, которые вызывают доверие.",
-                  icon: MessageSquare
+                  icon: FileText
                 },
                 {
                   title: "Подключение аналитики",
                   desc: "Считаем заявки, звонки, обращения. Не клики.",
-                  icon: PieChart
+                  icon: BarChart
                 }
               ].map((item, i) => (
                 <motion.div
