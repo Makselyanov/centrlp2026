@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, History, CheckCircle, Zap, Users, TrendingUp, MapPin, Star, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
+import founderImage from "@/assets/founder.png";
 
 const About = () => {
   const timelineEvents = [
@@ -27,46 +28,66 @@ const About = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-background">
-        {/* Dynamic Background */}
+      {/* About Me Section */}
+      <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50">
+        {/* Background elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-[#0096D6]/10 blur-[100px] animate-pulse-gentle" />
-          <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[100px] animate-pulse-gentle delay-1000" />
+          <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
+          <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-30" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-              О студии CentrLP
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Честная история, понятный язык и современные технологии для роста вашего бизнеса.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: Text */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/50 backdrop-blur-md border border-[#0096D6]/20 text-[#0096D6] font-semibold text-sm tracking-wide shadow-sm">
+                Обо мне | CentrLP
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-8 text-slate-900 leading-tight">
+                Создаю системы, которые <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
+                  приносят деньги
+                </span>
+              </h1>
+              <div className="prose prose-lg text-slate-600 leading-relaxed bg-white/60 backdrop-blur-sm p-8 rounded-3xl border border-white/50 shadow-sm">
+                <p className="mb-0">
+                  Я работаю в digital-сфере больше 12 лет и собираю под одну крышу всё, что действительно приносит результат бизнесу: разработку сайтов, маркетинг, аналитику и автоматизацию. Основатель студии CentrLP в Тюмени. Начинал как разработчик, позже углубился в маркетинг и построил собственную систему, где сайт, реклама и аналитика работают как единое целое. Я люблю понятные решения, которые приносят заявки и деньги. Сейчас я помогаю бизнесам внедрять воронки, квизы, чат-ботов, подключаю аналитику, настраиваю рекламу, делаю сайты под ключ и оптимизирую процессы. Моя цель — чтобы у предпринимателя перестало болеть всё, что связано с интернет-продвижением. Люблю технологии, видеографию, путешествия и проекты, в которых можно что-то улучшить.
+                </p>
+              </div>
+            </motion.div>
 
-      {/* History Text Block */}
-      <section className="py-16 relative">
-        <div className="container mx-auto px-4 max-w-3xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="prose prose-lg max-w-none text-center"
-          >
-            <p className="text-xl leading-relaxed text-foreground">
-              CentrLP вырос из личной истории. За это время сделал проекты для десятков компаний:
-              <span className="text-[#0096D6] font-semibold"> мебельщики, СТО, клининг, салоны красоты, турагентства</span> и другие ниши малого бизнеса.
-            </p>
-          </motion.div>
+            {/* Right: Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative"
+            >
+              {/* Glow behind image */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#0096D6] to-[#44B78B] rounded-[3rem] blur-2xl opacity-20 transform translate-y-4 translate-x-4" />
+
+              {/* Image Container with 3D lift */}
+              <motion.div
+                whileHover={{ y: -10, rotateX: 5, rotateY: -5 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/80"
+                style={{ perspective: 1000 }}
+              >
+                <img
+                  src={founderImage}
+                  alt="Основатель CentrLP"
+                  className="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105"
+                />
+                {/* Glass overlay/shine */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
