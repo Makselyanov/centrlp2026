@@ -320,8 +320,8 @@ const YandexDirect = () => {
                 <motion.div
                   key={item.id}
                   className={`p-6 rounded-2xl cursor-pointer transition-all duration-300 border ${activePainPoint === item.id
-                      ? "bg-slate-900 text-white border-slate-800 shadow-xl scale-105"
-                      : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-white hover:shadow-md"
+                    ? "bg-slate-900 text-white border-slate-800 shadow-xl scale-105"
+                    : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-white hover:shadow-md"
                     }`}
                   onMouseEnter={() => setActivePainPoint(item.id)}
                   onClick={() => setActivePainPoint(item.id)}
@@ -654,7 +654,7 @@ const YandexDirect = () => {
             </div>
           </div>
 
-          <div className="max-w-xl mx-auto bg-white rounded-3xl p-8 md:p-10 shadow-2xl">
+          <div className="max-w-xl mx-auto bg-white rounded-3xl p-8 md:p-10 shadow-2xl text-slate-900">
             <ContactForm />
           </div>
         </div>
