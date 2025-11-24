@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 export const Hero = () => {
     const navigate = useNavigate();
     const cardRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const card = cardRef.current;
@@ -17,10 +18,24 @@ export const Hero = () => {
             const rotateY = (e.clientX / innerWidth - 0.5) * 20;
             const rotateX = (e.clientY / innerHeight - 0.5) * -20;
             card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(16px)`;
+
+            // обновляем позицию свечения
+            if (wrapperRef.current) {
+                const rect = wrapperRef.current.getBoundingClientRect();
+                const relX = ((e.clientX - rect.left) / rect.width) * 100;
+                const relY = ((e.clientY - rect.top) / rect.height) * 100;
+                wrapperRef.current.style.setProperty("--mx", `${relX}%`);
+                wrapperRef.current.style.setProperty("--my", `${relY}%`);
+            }
         };
 
         const reset = () => {
+            if (!card) return;
             card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+            if (wrapperRef.current) {
+                wrapperRef.current.style.setProperty("--mx", "50%");
+                wrapperRef.current.style.setProperty("--my", "50%");
+            }
         };
 
         window.addEventListener('mousemove', handleMouseMove);
@@ -124,7 +139,7 @@ export const Hero = () => {
                     </motion.div>
 
                     {/* Right Content - 3D Object Container */}
-                    <div className="hero-3d-wrapper relative w-[420px] h-[640px] flex items-center justify-center">
+                    <div ref={wrapperRef} className="hero-3d-wrapper relative w-[420px] h-[640px] flex items-center justify-center">
                         <div className="webgl" data-us-project="jSQIShw8nRxgcNnhfv18"></div>
 
                         <div ref={cardRef} className="hero-card">
