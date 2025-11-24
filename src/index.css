@@ -139,26 +139,30 @@ All colors MUST be HSL.
 }
 
 /* Hero 3D Effect Styles */
-.hero-3d-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 50vw;
-  /* правая половина экрана */
-  pointer-events: none;
-  overflow: visible;
-  z-index: 1;
-  /* ниже карточки, выше фона */
+.hero-bg {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
-/* Сам WebGL-слой от Unicorn */
-.hero-3d-wrapper .webgl {
+.hero-webgl {
   position: absolute;
-  inset: -20%;
-  width: 140%;
-  height: 140%;
-  opacity: 0.8;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Сам WebGL canvas */
+.hero-bg .webgl {
+  position: absolute !important;
+  inset: -20% !important;
+  width: 140% !important;
+  height: 140% !important;
+  opacity: 0.85;
   mix-blend-mode: screen;
   pointer-events: none;
 }
