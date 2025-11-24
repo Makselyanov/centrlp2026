@@ -468,9 +468,9 @@ const VKAds = () => {
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {/* Ведение ленты */}
-            <Card className="hover:shadow-xl transition-all border-slate-200 relative overflow-hidden group">
+            <Card className="hover:shadow-xl transition-all border-slate-200 relative overflow-hidden group h-full flex flex-col">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0096D6] to-[#44B78B]" />
-              <CardContent className="p-8">
+              <CardContent className="p-8 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h3 className="text-2xl font-bold mb-2">Ведение ленты</h3>
@@ -501,18 +501,18 @@ const VKAds = () => {
                     <span className="text-slate-600">Дизайн постов в фирменном стиле</span>
                   </li>
                 </ul>
-                <Button variant="outline" className="w-full border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6] hover:text-white" asChild>
+                <Button variant="outline" className="w-full border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6] hover:text-white mt-auto" asChild>
                   <a href="#contact">Заказать ведение</a>
                 </Button>
               </CardContent>
             </Card>
 
             {/* Ведение таргетированной рекламы */}
-            <Card className="hover:shadow-xl transition-all border-[#0096D6]/20 relative overflow-hidden shadow-lg">
+            <Card className="hover:shadow-xl transition-all border-[#0096D6]/20 relative overflow-hidden shadow-lg h-full flex flex-col">
               <div className="absolute top-0 right-0 bg-gradient-to-r from-[#0096D6] to-[#44B78B] text-white text-xs font-bold px-3 py-1 rounded-bl-xl">
                 РЕКОМЕНДУЕМ
               </div>
-              <CardContent className="p-8">
+              <CardContent className="p-8 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h3 className="text-2xl font-bold mb-2">Ведение таргета</h3>
@@ -543,7 +543,7 @@ const VKAds = () => {
                     <span className="text-slate-600">Еженедельные понятные отчеты</span>
                   </li>
                 </ul>
-                <Button className="w-full bg-gradient-to-r from-[#0096D6] to-[#44B78B] hover:opacity-90 transition-opacity" asChild>
+                <Button className="w-full bg-gradient-to-r from-[#0096D6] to-[#44B78B] hover:opacity-90 transition-opacity mt-auto" asChild>
                   <a href="#contact">Начать работу</a>
                 </Button>
               </CardContent>
