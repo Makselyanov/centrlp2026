@@ -129,3 +129,26 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Hero 3D Effect Styles */
+.hero-3d-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.hero-3d-wrapper .webgl {
+  position: absolute;
+  inset: -40px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-3d-wrapper .hero-card {
+  position: relative;
+  z-index: 1;
+  border-radius: 32px;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}

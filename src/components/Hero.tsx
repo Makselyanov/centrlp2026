@@ -2,9 +2,36 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 export const Hero = () => {
     const navigate = useNavigate();
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const card = cardRef.current;
+        if (!card) return;
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            const x = (e.clientX / w - 0.5) * 20;
+            const y = (e.clientY / h - 0.5) * 20;
+            card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg) translateZ(10px)`;
+        };
+
+        const handleMouseLeave = () => {
+            card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseleave', handleMouseLeave);
+        };
+    }, []);
 
     return (
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
@@ -98,20 +125,23 @@ export const Hero = () => {
                             className="relative z-20 w-full h-full flex items-center justify-center preserve-3d"
                         >
                             {/* Placeholder for 3D Object - Abstract Glass Shape */}
-                            <div className="w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group transform transition-transform hover:scale-105 duration-500">
-                                {/* Glass effect overlay */}
-                                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-10" />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent z-20" />
+                            <div className="hero-3d-wrapper">
+                                <div className="webgl" data-us-project="jSQIShw8nRxgcNnhfv18"></div>
+                                <div ref={cardRef} className="hero-card w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group transform transition-transform hover:scale-105 duration-500">
+                                    {/* Glass effect overlay */}
+                                    <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-10" />
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent z-20" />
 
-                                {/* Content inside the placeholder */}
-                                <div className="relative z-30 text-white text-center p-8">
-                                    <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
-                                    <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
-                                    <p className="text-lg font-medium opacity-90">Ваш 3D объект здесь</p>
+                                    {/* Content inside the placeholder */}
+                                    <div className="relative z-30 text-white text-center p-8">
+                                        <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
+                                        <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
+                                        <p className="text-lg font-medium opacity-90">Ваш 3D объект здесь</p>
+                                    </div>
+
+                                    {/* Shine effect */}
+                                    <div className="absolute -top-[100%] -left-[100%] w-[200%] h-[200%] bg-gradient-to-br from-transparent via-white/40 to-transparent rotate-45 animate-shine pointer-events-none" />
                                 </div>
-
-                                {/* Shine effect */}
-                                <div className="absolute -top-[100%] -left-[100%] w-[200%] h-[200%] bg-gradient-to-br from-transparent via-white/40 to-transparent rotate-45 animate-shine pointer-events-none" />
                             </div>
 
                             {/* Floating Elements around the object */}

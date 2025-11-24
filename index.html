@@ -27,6 +27,22 @@
   <link rel="stylesheet" href="https://cdn.envybox.io/widget/cbk.css">
   <script type="text/javascript" src="https://cdn.envybox.io/widget/cbk.js?wcb_code=528a9824dc4bc4c6b0c7a45e8beea4ca"
     charset="UTF-8" async></script>
+  <script type="text/javascript">
+    !function(){
+      if(!window.UnicornStudio){
+        window.UnicornStudio = { isInitialized: !1 };
+        var s = document.createElement("script");
+        s.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.20/dist/unicornStudio.umd.js";
+        s.onload = function(){
+          if(!window.UnicornStudio.isInitialized){
+            UnicornStudio.init();
+            window.UnicornStudio.isInitialized = !0;
+          }
+        };
+        (document.head || document.body).appendChild(s);
+      }
+    }();
+  </script>
 </body>
 
 </html>
