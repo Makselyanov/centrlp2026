@@ -139,47 +139,35 @@ All colors MUST be HSL.
 }
 
 /* Hero 3D Effect Styles */
+/* Hero 3D Effect Styles */
 .hero-3d-wrapper {
   position: relative;
-  width: 420px;
-  height: 640px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  isolation: isolate;
-  --mx: 50%;
-  --my: 50%;
+  border-radius: 48px;
+  overflow: hidden;
 }
 
-/* динамическое свечение, центр зависит от --mx / --my */
 .hero-3d-wrapper::before {
   content: "";
   position: absolute;
-  inset: -80px;
+  inset: -120px;
   border-radius: 64px;
   background:
-    radial-gradient(circle at var(--mx) var(--my),
-      rgba(56, 189, 248, 0.35), transparent 55%),
-    radial-gradient(circle at calc(100% - var(--mx)) calc(100% - var(--my)),
-      rgba(59, 130, 246, 0.4), transparent 60%);
+    radial-gradient(circle at 30% 20%, rgba(56, 189, 248, 0.25), transparent 70%),
+    radial-gradient(circle at 70% 80%, rgba(99, 102, 241, 0.25), transparent 70%);
+  filter: blur(70px);
   opacity: 0.9;
-  filter: blur(60px);
   z-index: 0;
 }
 
-/* WebGL-слой Unicorn + мышь должна его чувствовать */
 .hero-3d-wrapper .webgl {
   position: absolute;
-  inset: -40px;
-  border-radius: 48px;
-  overflow: hidden;
+  inset: -80px;
+  z-index: 1;
+  pointer-events: none;
   opacity: 0.5;
   mix-blend-mode: screen;
-  pointer-events: auto;
-  z-index: 1;
 }
 
-/* сама карточка поверх всего */
 .hero-card {
   position: relative;
   z-index: 2;

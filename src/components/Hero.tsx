@@ -139,7 +139,7 @@ export const Hero = () => {
                     </motion.div>
 
                     {/* Right Content - 3D Object Container */}
-                    <div ref={wrapperRef} className="hero-3d-wrapper relative w-[420px] h-[640px] flex items-center justify-center">
+                    <div ref={wrapperRef} className="hero-3d-wrapper relative w-full max-w-[720px] h-[640px] lg:h-[720px] flex items-center justify-center">
                         <div className="webgl" data-us-project="jSQIShw8nRxgcNnhfv18"></div>
 
                         <div ref={cardRef} className="hero-card">
