@@ -147,23 +147,21 @@ All colors MUST be HSL.
   margin-right: auto;
 }
 
-/* Светлый градиентный фон вокруг карточки */
 .hero-3d-wrapper::before {
   content: "";
   position: absolute;
-  inset: -50px;
+  inset: -60px;
   border-radius: 48px;
   background:
     radial-gradient(circle at top,
-      rgba(59, 130, 246, 0.18),
+      rgba(56, 189, 248, 0.25),
       transparent 60%),
     radial-gradient(circle at bottom,
-      rgba(45, 212, 191, 0.16),
+      rgba(52, 211, 153, 0.22),
       transparent 60%);
   z-index: 0;
 }
 
-/* WebGL-эффект: полупрозрачный, смешивается со светлым фоном */
 .hero-3d-wrapper .webgl {
   position: absolute;
   inset: -40px;
@@ -171,7 +169,7 @@ All colors MUST be HSL.
   pointer-events: none;
   border-radius: 48px;
   overflow: hidden;
-  opacity: 0.5;
+  opacity: 0.7;
   mix-blend-mode: screen;
 }
 
