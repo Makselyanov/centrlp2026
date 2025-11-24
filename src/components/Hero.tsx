@@ -126,20 +126,22 @@ export const Hero = () => {
                             {/* Placeholder for 3D Object - Abstract Glass Shape */}
                             <div className="hero-3d-wrapper">
                                 <div className="webgl" data-us-project="jSQIShw8nRxgcNnhfv18"></div>
-                                <div ref={cardRef} className="hero-card w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group transform transition-transform hover:scale-105 duration-500">
-                                    {/* Glass effect overlay */}
-                                    <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-10" />
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent z-20" />
+                                <div ref={cardRef} className="hero-card">
+                                    <div className="card-inner w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group transform transition-transform hover:scale-105 duration-500">
+                                        {/* Glass effect overlay */}
+                                        <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-10" />
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent z-20" />
 
-                                    {/* Content inside the placeholder */}
-                                    <div className="relative z-30 text-white text-center p-8">
-                                        <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
-                                        <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
-                                        <p className="text-lg font-medium opacity-90">Усиливаем с помощью ИИ</p>
+                                        {/* Content inside the placeholder */}
+                                        <div className="relative z-30 text-white text-center p-8">
+                                            <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
+                                            <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
+                                            <p className="text-lg font-medium opacity-90">Усиливаем с помощью ИИ</p>
+                                        </div>
+
+                                        {/* Shine effect */}
+                                        <div className="absolute -top-[100%] -left-[100%] w-[200%] h-[200%] bg-gradient-to-br from-transparent via-white/40 to-transparent rotate-45 animate-shine pointer-events-none" />
                                     </div>
-
-                                    {/* Shine effect */}
-                                    <div className="absolute -top-[100%] -left-[100%] w-[200%] h-[200%] bg-gradient-to-br from-transparent via-white/40 to-transparent rotate-45 animate-shine pointer-events-none" />
                                 </div>
                             </div>
 
