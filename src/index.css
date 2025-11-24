@@ -141,40 +141,29 @@ All colors MUST be HSL.
 /* Hero 3D Effect Styles */
 .hero-3d-wrapper {
   position: relative;
-  width: 100%;
-  max-width: 420px;
+  width: 720px;
+  /* ширина правой колонки */
+  height: 640px;
+  /* высота hero-области под карточку */
   margin-left: auto;
-  margin-right: auto;
+  /* прижать к правому краю в flex-строке */
 }
 
-/* Светлый градиентный фон вокруг карточки */
-.hero-3d-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: -50px;
-  border-radius: 48px;
-  background:
-    radial-gradient(circle at top,
-      rgba(59, 130, 246, 0.18),
-      transparent 60%),
-    radial-gradient(circle at bottom,
-      rgba(45, 212, 191, 0.16),
-      transparent 60%);
-  z-index: 0;
-}
-
-/* WebGL-эффект: полупрозрачный, смешивается со светлым фоном */
+/* Сам WebGL-слой от Unicorn */
 .hero-3d-wrapper .webgl {
   position: absolute;
-  inset: -40px;
-  z-index: 1;
+  inset: -60px;
+  /* вылезает за границы, чтобы свечение было большим */
   pointer-events: none;
   border-radius: 48px;
   overflow: hidden;
-  opacity: 0.5;
+  opacity: 0.6;
   mix-blend-mode: screen;
+  /* красиво складывается с тёмным фоном */
+  z-index: 1;
 }
 
+/* Карточка поверх */
 .hero-card {
   position: relative;
   z-index: 2;
