@@ -2,335 +2,382 @@ import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
-import { Target, TrendingUp, Users, CheckCircle, BarChart, AlertTriangle, Brain, Search, MousePointerClick, Clock, ArrowRight } from "lucide-react";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Target,
+  TrendingUp,
+  Users,
+  CheckCircle,
+  BarChart,
+  AlertTriangle,
+  Brain,
+  Search,
+  MousePointerClick,
+  Clock,
+  ArrowRight,
+  FileText,
+  Phone,
+  Zap,
+  PieChart,
+  Layers
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 const YandexDirect = () => {
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.5 }
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  // Floating icons configuration
+  const floatingIcons = [
+    { icon: FileText, top: "15%", left: "10%", delay: 0, color: "text-blue-500", bg: "bg-blue-500/10" },
+    { icon: Phone, top: "25%", right: "15%", delay: 1.5, color: "text-green-500", bg: "bg-green-500/10" },
+    { icon: TrendingUp, bottom: "20%", left: "15%", delay: 1, color: "text-purple-500", bg: "bg-purple-500/10" },
+    { icon: Zap, bottom: "30%", right: "10%", delay: 2, color: "text-yellow-500", bg: "bg-yellow-500/10" },
+  ];
+
   return (
     <Layout
       title="Реклама в Яндекс Директ с AI-оптимизацией | CentrLP"
-      description="Настройка и ведение рекламы в Яндекс Директ с использованием искусственного интеллекта. Эффективный расход бюджета, чистый трафик и рост заявок."
+      description="Настройка и ведение рекламы в Яндекс Директ. Разбираем нишу, тестируем офферы, подключаем AI и считаем окупаемость."
     >
-      {/* Hero */}
-      <section className="py-20 bg-gradient-to-br from-background via-background to-primary/5">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Реклама в Яндекс Директ, <br />
-              <span className="text-primary">которая не сливает бюджет</span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Запускаем кампании под ваш бизнес: от локальной услуги в Тюмени до e-commerce по России. Подключаем AI-анализ, чтобы каждый рубль в Директе работал, а не «крутился где-то в поиске».
-            </p>
-            <div className="flex flex-col items-center gap-4">
-              <Button size="lg" className="text-lg px-8 h-14 rounded-full shadow-lg hover:shadow-primary/25 transition-all" asChild>
+      {/* Hero Section */}
+      <section className="relative py-24 md:py-32 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/50">
+        {/* Background Noise & Glow */}
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-400/5 rounded-full blur-[120px] -z-10" />
+
+        {/* Floating Icons */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+          {floatingIcons.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{
+                opacity: [0.4, 0.8, 0.4],
+                y: [0, -15, 0],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                delay: item.delay,
+                ease: "easeInOut"
+              }}
+              className={`absolute p-3 rounded-2xl ${item.bg} backdrop-blur-sm border border-white/50 shadow-sm hidden sm:block`}
+              style={{ top: item.top, left: item.left, right: item.right, bottom: item.bottom }}
+            >
+              <item.icon className={`w-6 h-6 ${item.color}`} />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100/50 text-blue-700 text-sm font-medium mb-8 border border-blue-200"
+            >
+              <Zap className="w-4 h-4 fill-current" />
+              <span>AI-Optimized Direct</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.1]"
+            >
+              Яндекс.Директ, который <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
+                приносит заявки
+              </span>, а не сливает бюджет
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed"
+            >
+              Разбираем вашу нишу, тестируем офферы, подключаем AI-оптимизацию и считаем окупаемость по заявкам, а не по кликам. Первые результаты обычно в течение 7–14 дней.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col items-center gap-4"
+            >
+              <Button size="lg" className="h-14 px-10 text-lg rounded-full shadow-xl shadow-blue-500/20 hover:shadow-blue-500/30 transition-all" asChild>
                 <a href="#contact">Запустить рекламу</a>
               </Button>
-              <p className="text-sm text-muted-foreground">
-                Первые заявки обычно приходят в течение 3–7 дней после старта.
-              </p>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Pain Points */}
-      <section className="py-20 bg-card">
+      {/* Block 1: Pain Points */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-12 items-start">
-            <div className="lg:w-1/3 sticky top-24">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Что чаще всего <br />
-                <span className="text-destructive">болит в Яндекс.Директ</span>
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Большинство приходят ко мне не «за рекламой», а с усталостью. Деньги тратятся, отчёты красивые, а в CRM тишина. Узнаёте что-то своё?
-              </p>
-            </div>
-            <div className="lg:w-2/3 grid gap-6">
-              <Card className="border-l-4 border-l-destructive/50">
-                <CardContent className="pt-6 flex gap-4">
-                  <div className="bg-destructive/10 p-3 rounded-full h-fit">
-                    <MousePointerClick className="w-6 h-6 text-destructive" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Клики есть, заявок нет</h3>
-                    <p className="text-muted-foreground">
-                      Платите за переходы, а форму никто не заполняет. Значит, объявления подтягивают не тех людей, не в то время и не на тот оффер.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-l-4 border-l-destructive/50">
-                <CardContent className="pt-6 flex gap-4">
-                  <div className="bg-destructive/10 p-3 rounded-full h-fit">
-                    <TrendingUp className="w-6 h-6 text-destructive" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Резко выросла цена заявки</h3>
-                    <p className="text-muted-foreground">
-                      Вчера было 400–600 ₽, сегодня 1500+, а менеджер говорит «конкуренты активизировались». На деле чаще всего кампании просто никто не пересобирает и не чистит.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-l-4 border-l-destructive/50">
-                <CardContent className="pt-6 flex gap-4">
-                  <div className="bg-destructive/10 p-3 rounded-full h-fit">
-                    <BarChart className="w-6 h-6 text-destructive" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Утонули в отчётах</h3>
-                    <p className="text-muted-foreground">
-                      В статистике кучи цифр, в жизни один вопрос: «Мы вообще окупаемся или нет?» Без нормальной связки с заявками и продажами это гадание на кликах.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-l-4 border-l-destructive/50">
-                <CardContent className="pt-6 flex gap-4">
-                  <div className="bg-destructive/10 p-3 rounded-full h-fit">
-                    <AlertTriangle className="w-6 h-6 text-destructive" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Заявки, с которыми невозможно работать</h3>
-                    <p className="text-muted-foreground">
-                      Люди звонят «просто спросить» или вообще не берут трубку. Значит, креативы и посадочная не отсекают мусорный трафик.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-l-4 border-l-destructive/50">
-                <CardContent className="pt-6 flex gap-4">
-                  <div className="bg-destructive/10 p-3 rounded-full h-fit">
-                    <Clock className="w-6 h-6 text-destructive" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Никто не думает наперёд</h3>
-                    <p className="text-muted-foreground">
-                      Кампании сделали «как у всех», и всё. Стратегии по сезонам, тестов офферов и гипотез нет, всё живёт на уровне «запустили и не трогаем».
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AI Solution */}
-      <section className="py-20 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5 -skew-y-3 transform origin-top-left scale-110" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Как мы включаем <span className="text-primary">AI в Яндекс.Директ</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Не просто жмём «умные стратегии», а реально используем ИИ-инструменты в связке «реклама → сайт → заявки».
+          <motion.div className="text-center mb-16" {...fadeInUp}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Узнаёте свой сценарий?</h2>
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+              Частые ситуации, с которыми к нам приходят клиенты после неудачного опыта
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <Card className="bg-card/50 backdrop-blur border-primary/20 hover:border-primary/50 transition-colors">
-              <CardContent className="pt-8">
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                  <Search className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">AI-анализ поисковых запросов</h3>
-                <p className="text-muted-foreground">
-                  Подгружаем реальные запросы пользователей, чистим мусор и расширяем семантику с помощью ИИ. В итоге объявления показываются людям, которые действительно готовы купить.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-card/50 backdrop-blur border-primary/20 hover:border-primary/50 transition-colors">
-              <CardContent className="pt-8">
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                  <Brain className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Генерация и тест офферов</h3>
-                <p className="text-muted-foreground">
-                  Вместо одного шаблонного объявления запускаем несколько вариантов текста и УТП. AI помогает быстро собрать гипотезы, но отбор делаем по реальным заявкам, а не по CTR.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-card/50 backdrop-blur border-primary/20 hover:border-primary/50 transition-colors">
-              <CardContent className="pt-8">
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                  <MousePointerClick className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">AI-тепловая карта посадочной</h3>
-                <p className="text-muted-foreground">
-                  Прогоняем посадочную через AI-анализ поведения пользователя: что непонятно, где он «спотыкается», почему не оставляет заявку. На основе этого переписываем блоки, а не «красим кнопки».
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-card/50 backdrop-blur border-primary/20 hover:border-primary/50 transition-colors">
-              <CardContent className="pt-8">
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                  <BarChart className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Прогноз по бюджету и заявкам</h3>
-                <p className="text-muted-foreground">
-                  На старте вы получаете не «ну попробуем», а понятный диапазон: сколько заявок и по какой цене можно ожидать при выбранном бюджете. На основе исторических данных + AI-модели.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Results */}
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Что у вас меняется в первые <br className="hidden md:block" />
-            <span className="text-primary">7–14 дней работы</span>
-          </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="text-center p-6 rounded-2xl bg-background shadow-sm border">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600">
-                <Users className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Живые заявки</h3>
-              <p className="text-muted-foreground">
-                Вы видите конкретных людей, которые оставили номер, а не просто графики показов.
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-2xl bg-background shadow-sm border">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-600">
-                <CheckCircle className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Понимание расходов</h3>
-              <p className="text-muted-foreground">
-                Понятный отчёт: бюджет → клики → заявки → стоимость лида. Без магических терминов.
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-2xl bg-background shadow-sm border">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 text-purple-600">
-                <TrendingUp className="w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">План на 1–3 месяца</h3>
-              <p className="text-muted-foreground">
-                Чёткий список, что тестируем дальше: офферы, лендинги, регионы. Не работа «из дня в день», а стратегия.
-              </p>
-            </div>
+            {[
+              {
+                icon: AlertTriangle,
+                title: "Запустили сами",
+                desc: "Трафик идёт, но звонков почти нет. Деньги уходят в никуда, в отчётах красивые цифры, но результата ноль.",
+                color: "text-orange-500",
+                bg: "bg-orange-50"
+              },
+              {
+                icon: FileText,
+                title: "Агентство-отчётники",
+                desc: "Менеджер присылает отчёт раз в месяц, но вы не понимаете, что реально делается. Ощущение, что кампании просто брошены.",
+                color: "text-blue-500",
+                bg: "bg-blue-50"
+              },
+              {
+                icon: TrendingUp,
+                title: "Страшно увеличивать бюджет",
+                desc: "Заявки есть, но нестабильные. Каждый раз боитесь включить дополнительные кампании, чтобы не слить бюджет.",
+                color: "text-red-500",
+                bg: "bg-red-50"
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="h-full border-none shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <CardContent className="p-8">
+                    <div className={`w-14 h-14 ${item.bg} rounded-2xl flex items-center justify-center mb-6`}>
+                      <item.icon className={`w-7 h-7 ${item.color}`} />
+                    </div>
+                    <h3 className="text-xl font-bold mb-4">{item.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Workflow */}
-      <section className="py-20 bg-background">
+      {/* Block 2: How We Work */}
+      <section className="py-20 bg-slate-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Как мы работаем</h2>
-              <p className="text-xl text-muted-foreground">
-                Схема проста. Без десяти созвонов и километровых ТЗ.
-              </p>
-            </div>
+            <motion.div className="text-center mb-16" {...fadeInUp}>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Не “настройка за 2 дня”, а нормальная системная работа
+              </h2>
+            </motion.div>
 
-            <div className="space-y-8">
+            <div className="grid gap-6">
               {[
                 {
-                  step: "01",
-                  title: "Заявка и короткое интервью",
-                  desc: "Разбираем ваш продукт, гео, средний чек, текущие каналы. Фиксируем цели: заявки, звонки, лиды в мессенджере."
+                  title: "Разбор вашей ниши и конкурентов",
+                  desc: "Определяем реальные точки роста, офферы, которые сработают именно у вас.",
+                  icon: Search
                 },
                 {
-                  step: "02",
-                  title: "Аудит или старт с нуля",
-                  desc: "Если реклама уже есть, делаем аудит: что тратит бюджет впустую, что можно сохранить. Если нет, собираем кампании с нуля."
+                  title: "Структура кампаний под воронку",
+                  desc: "Поиск, РСЯ, бренд, конкуренты, ретаргетинг. Холодный и тёплый трафик разводим грамотно.",
+                  icon: Layers
                 },
                 {
-                  step: "03",
-                  title: "Сбор семантики и AI-проработка",
-                  desc: "Генерируем и фильтруем ключи и минус-слова, готовим несколько пакетов объявлений под разные сегменты."
+                  title: "Объявления, которые говорят человеческим языком",
+                  desc: "Не канцелярит, а кликабельные фразы, которые вызывают доверие.",
+                  icon: MessageSquare
                 },
                 {
-                  step: "04",
-                  title: "Запуск + первые корректировки",
-                  desc: "В течение первой недели смотрим реальные запросы и поведение, режем мусор, усиливаем связки, где уже пошли заявки."
-                },
-                {
-                  step: "05",
-                  title: "Поддержка и развитие",
-                  desc: "Еженедельный контроль ставок, поисковых запросов, офферов. Допиливаем объявления, страницы и расширения."
+                  title: "Подключение аналитики",
+                  desc: "Считаем заявки, звонки, обращения. Не клики.",
+                  icon: PieChart
                 }
-              ].map((item, index) => (
-                <div key={index} className="flex gap-6 items-start p-6 rounded-2xl hover:bg-card transition-colors border border-transparent hover:border-border">
-                  <div className="text-4xl font-bold text-primary/20 leading-none">
-                    {item.step}
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex gap-6 items-start"
+                >
+                  <div className="bg-blue-50 p-3 rounded-xl flex-shrink-0">
+                    <item.icon className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.desc}</p>
+                    <p className="text-slate-600">{item.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Target Audience */}
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Кому наш подход подходит лучше всего</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="hover-scale border-primary/10">
-              <CardContent className="pt-6">
-                <Target className="w-10 h-10 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Локальный бизнес</h3>
-                <p className="text-muted-foreground">
-                  Салоны, клининг, автосервисы, ремонт. Нужно, чтобы звонили из вашего города, а не из соседнего региона.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="hover-scale border-primary/10">
-              <CardContent className="pt-6">
-                <Users className="w-10 h-10 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">E-commerce</h3>
-                <p className="text-muted-foreground">
-                  Интернет-магазины с доставкой по России. Важно вытаскивать людей из поиска и РСЯ с понятной ценой заказа.
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="hover-scale border-primary/10">
-              <CardContent className="pt-6">
-                <BarChart className="w-10 h-10 text-primary mb-4" />
-                <h3 className="text-xl font-semibold mb-2">B2B-сектор</h3>
-                <p className="text-muted-foreground">
-                  Оборудование, подрядчики, сложные услуги. Нужны не «просчитайте КП на всякий случай», а реальные закупщики и ЛПР.
-                </p>
-              </CardContent>
-            </Card>
+      {/* Block 3: AI Enhancements */}
+      <section className="py-20 bg-white relative overflow-hidden">
+        <div className="absolute right-0 top-0 w-1/3 h-full bg-gradient-to-l from-blue-50 to-transparent opacity-50" />
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div className="text-center mb-16" {...fadeInUp}>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100/50 text-purple-700 text-sm font-medium mb-6">
+              <Brain className="w-4 h-4" />
+              <span>AI-Powered</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Где здесь AI и почему это добавляет эффективности
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "Чистка мусорных запросов",
+                desc: "AI анализирует поисковые фразы, фильтрует нерелевантный трафик быстрее, чем руками.",
+                icon: AlertTriangle
+              },
+              {
+                title: "Поиск новых рабочих связок",
+                desc: "AI помогает находить запросы и формулировки, которые приводят дешёвые заявки.",
+                icon: Search
+              },
+              {
+                title: "Генерация и тест объявлений",
+                desc: "Можно быстро тестировать десятки вариантов без лишней траты бюджета.",
+                icon: Zap
+              },
+              {
+                title: "Прогноз CPA и бюджета",
+                desc: "На старте формируется реалистичный диапазон стоимости заявки.",
+                icon: BarChart
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Card className="h-full border-slate-200 hover:border-purple-200 hover:shadow-lg transition-all">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mb-6 text-purple-600">
+                      <item.icon className="w-6 h-6" />
+                    </div>
+                    <h3 className="font-bold mb-3 text-lg">{item.title}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="contact" className="py-20 bg-background">
+      {/* Block 4: Target Audience */}
+      <section className="py-20 bg-slate-50">
+        <div className="container mx-auto px-4">
+          <motion.div className="text-center mb-16" {...fadeInUp}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Кому это подходит</h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {[
+              {
+                title: "Локальный бизнес",
+                desc: "Салоны, автосервисы, клиники, мастерские. Получаете клиентов из своего города.",
+                icon: Target
+              },
+              {
+                title: "E-commerce",
+                desc: "Интернет-магазины в России. Привлекаем покупателей через поиск и РСЯ.",
+                icon: Users
+              },
+              {
+                title: "B2B-сектор",
+                desc: "Поставщики, подрядчики, сложные ниши. Получаете лиды по целевым запросам.",
+                icon: BarChart
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Card className="h-full border-none shadow-md">
+                  <CardContent className="p-8 text-center">
+                    <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-600">
+                      <item.icon className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                    <p className="text-slate-600">
+                      {item.desc}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Block 5: CTA Form */}
+      <section id="contact" className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
+            <motion.div
+              className="text-center mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Начните получать клиентов из Яндекса уже через неделю
               </h2>
-              <p className="text-xl text-muted-foreground">
-                Оставьте контакты, вышлю вам предварительный расчёт бюджета и стоимости заявки под ваш бизнес.
+              <p className="text-xl text-slate-500">
+                Оставьте контакты, мы разберём вашу нишу и вышлем честный прогноз по заявкам и бюджету.
               </p>
-            </div>
-            <div className="bg-card p-8 rounded-3xl shadow-lg border">
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl shadow-2xl shadow-blue-900/5 border border-slate-100 p-8 md:p-10"
+            >
               <ContactForm />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
