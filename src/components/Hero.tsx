@@ -33,7 +33,21 @@ export const Hero = () => {
     }, []);
 
     return (
-        <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100">
+        <section
+            className="
+                relative overflow-hidden
+                bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950
+                text-slate-50
+                py-24
+            "
+        >
+            <div
+                className="
+                    pointer-events-none absolute inset-0
+                    bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.25),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(52,211,153,0.2),_transparent_55%)]
+                "
+            ></div>
+
             {/* Dynamic Background - Subtle Parallax Feel */}
             <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
                 <motion.div
@@ -54,8 +68,8 @@ export const Hero = () => {
                 />
             </div>
 
-            <div className="container mx-auto px-4 relative z-10 pt-20">
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative z-10 container mx-auto flex flex-col lg:flex-row items-center gap-12">
+                <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
                     {/* Left Content */}
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -67,7 +81,7 @@ export const Hero = () => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="inline-flex items-center px-4 py-2 rounded-full bg-white shadow-md text-[#0096D6] text-sm font-semibold mb-8 border border-[#0096D6]/20"
+                            className="inline-flex items-center px-4 py-2 rounded-full bg-slate-900/60 shadow-md text-slate-100 text-sm font-semibold mb-8 border border-[#0096D6]/20"
                         >
                             <span className="relative flex h-3 w-3 mr-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#44B78B] opacity-75"></span>
@@ -76,16 +90,16 @@ export const Hero = () => {
                             AI-Маркетинг 2.0
                         </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight text-slate-900">
+                        <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight text-slate-50">
                             Запускаем продажи <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
                                 с помощью AI
                             </span>, чат-ботов и умной рекламы
                         </h1>
 
-                        <p className="text-xl text-slate-600 mb-10 max-w-lg leading-relaxed">
+                        <p className="text-xl text-slate-400 mb-10 max-w-lg leading-relaxed">
                             Комплексная упаковка бизнеса: сайт, соцсети, AI-боты, воронки и реклама.
-                            <span className="font-semibold text-slate-900"> Первые заявки через 14 дней.</span>
+                            <span className="font-semibold text-slate-50"> Первые заявки через 14 дней.</span>
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-5">
@@ -100,9 +114,9 @@ export const Hero = () => {
                             </motion.button>
 
                             <motion.button
-                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.8)" }}
+                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                 whileTap={{ scale: 0.98 }}
-                                className="px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
+                                className="px-8 py-4 bg-transparent text-slate-300 border border-slate-700 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
                             >
                                 <Play className="w-5 h-5 fill-current" />
                                 Наши услуги
