@@ -136,7 +136,7 @@ export const Hero = () => {
                                     <div className="relative z-30 text-white text-center p-8">
                                         <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
                                         <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
-                                        <p className="text-lg font-medium opacity-90">Ваш 3D объект здесь</p>
+                                        <p className="text-lg font-medium opacity-90">Усиливаем с помощью ИИ</p>
                                     </div>
 
                                     {/* Shine effect */}
