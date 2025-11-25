@@ -188,7 +188,7 @@ const Contacts = () => {
                         8-905-824-85-64
                       </a>
                       <div className="flex gap-3">
-                        <Button size="sm" variant="outline" className="gap-2" onClick={() => window.open('https://t.me/makselyanov', '_blank')}>
+                        <Button size="sm" variant="outline" className="gap-2" onClick={() => window.open('https://t.me/centrlp', '_blank')}>
                           Telegram
                         </Button>
                         <Button size="sm" variant="outline" className="gap-2" onClick={() => window.open('https://wa.me/79058248564', '_blank')}>

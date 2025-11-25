@@ -109,7 +109,7 @@ const About = () => {
               >
                 <div className="flex-1 w-full">
                   <div className={`bg-card p-6 rounded-2xl shadow-lg border border-border/50 hover:border-[#0096D6]/30 transition-colors relative group ${index % 2 === 0 ? 'text-left md:text-right' : 'text-left'}`}>
-                    <div className="text-4xl font-bold text-[#0096D6]/20 absolute top-4 right-4 group-hover:text-[#0096D6]/10 transition-colors select-none">
+                    <div className={`text-4xl font-bold text-[#0096D6]/20 absolute top-4 group-hover:text-[#0096D6]/10 transition-colors select-none ${index % 2 === 0 ? 'right-4 md:right-auto md:left-4' : 'right-4'}`}>
                       {event.year}
                     </div>
                     <h3 className="text-2xl font-bold mb-3 text-[#0096D6]">{event.title}</h3>
