@@ -8,6 +8,38 @@ export const Hero = () => {
     const navigate = useNavigate();
     const cardRef = useRef<HTMLDivElement>(null);
 
+    const heroRef = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const hero = heroRef.current;
+        if (!hero) return;
+
+        let rafId: number;
+        const updatePosition = (x: number, y: number) => {
+            hero.style.setProperty('--mx', `${x}px`);
+            hero.style.setProperty('--my', `${y}px`);
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            if (rafId) return; // simple throttle via rAF existence check
+
+            const rect = hero.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            rafId = requestAnimationFrame(() => {
+                updatePosition(x, y);
+                rafId = 0;
+            });
+        };
+
+        hero.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            hero.removeEventListener('mousemove', handleMouseMove);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
+    }, []);
+
     useEffect(() => {
         const card = cardRef.current;
         if (!card) return;
@@ -34,9 +66,22 @@ export const Hero = () => {
 
     return (
         <section
+            ref={heroRef}
             id="hero"
-            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] text-slate-50 py-24"
+            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] text-slate-50 py-24 group"
         >
+            {/* Mouse Flow Overlay - Enhanced Glow */}
+            <div
+                className="pointer-events-none absolute inset-0 z-[1] transition-opacity duration-300 opacity-0 group-hover:opacity-100 mix-blend-screen"
+                style={{
+                    background: `
+                        radial-gradient(600px circle at var(--mx) var(--my), rgba(255,255,255,0.18), transparent 40%),
+                        radial-gradient(1100px circle at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 40%)
+                    `,
+                    filter: 'blur(25px)'
+                }}
+            />
+
             <div className="hero-webgl">
                 <div className="webgl" data-us-project="jSQIShw8nRxgcNnhfv18"></div>
             </div>
