@@ -9,11 +9,11 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isBarterOpen, setIsBarterOpen] = useState(false);
-  
+
   // Mobile submenu states
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileBarterOpen, setMobileBarterOpen] = useState(false);
-  
+
   const location = useLocation();
   const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const barterTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -62,17 +62,16 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-card shadow-card" : "bg-card/95 backdrop-blur-sm"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-card shadow-card" : "bg-card/95 backdrop-blur-sm"
+        }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <img 
-              src={logoImage} 
-              alt="CentrLP Logo" 
+            <img
+              src={logoImage}
+              alt="CentrLP Logo"
               className="h-12 w-12 object-contain rounded-full"
             />
             <div className="flex flex-col">
@@ -82,16 +81,16 @@ export const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
+          <nav className="hidden lg:flex items-center space-x-6 flex-1 min-w-0 justify-center">
             {/* Services Dropdown */}
             <div
-              className="relative"
+              className="relative shrink-0"
               onMouseEnter={handleServicesMouseEnter}
               onMouseLeave={handleServicesMouseLeave}
             >
               <Link
                 to="/services"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
               >
                 Услуги
                 <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
@@ -143,26 +142,26 @@ export const Header = () => {
 
             <Link
               to="/ai"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
             >
               ИИ-внедрение
             </Link>
             <Link
               to="/business-plans"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
             >
               Бизнес-планы и расчёты
             </Link>
 
             {/* Barter Dropdown */}
             <div
-              className="relative"
+              className="relative shrink-0"
               onMouseEnter={handleBarterMouseEnter}
               onMouseLeave={handleBarterMouseLeave}
             >
               <Link
                 to="/barter"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
               >
                 Бартер
                 <ChevronDown className={`w-4 h-4 transition-transform ${isBarterOpen ? 'rotate-180' : ''}`} />
@@ -202,34 +201,40 @@ export const Header = () => {
             </div>
 
             <Link
+              to="/blog"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+            >
+              Инсайты
+            </Link>
+            <Link
               to="/prices"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
             >
               Цены
             </Link>
             <Link
               to="/about"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
             >
               О нас
             </Link>
             <Link
               to="/contacts"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
             >
               Контакты
             </Link>
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4 shrink-0">
             <a
               href="tel:+79058248564"
-              className="flex items-center text-sm font-medium text-foreground hover:text-primary transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               data-metric="phone-click"
             >
-              <Phone className="w-4 h-4 mr-2" />
-              8-905-824-85-64
+              <Phone className="w-4 h-4" />
+              8&#8209;905&#8209;824&#8209;85&#8209;64
             </a>
             <div className="flex items-center space-x-2">
               <a
@@ -386,6 +391,12 @@ export const Header = () => {
                 )}
               </div>
 
+              <Link
+                to="/blog"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
+              >
+                Инсайты
+              </Link>
               <Link
                 to="/prices"
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors py-2"

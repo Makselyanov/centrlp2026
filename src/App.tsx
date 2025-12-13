@@ -19,6 +19,8 @@ import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
 import { AiPlanPage } from "./pages/AiPlanPage";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BlogPost";
 
 // Service pages
 import TildaWebsite from "./pages/services/TildaWebsite";
@@ -84,6 +86,9 @@ const App = () => (
           <Route path="/services/content-plan" element={<ContentPlan />} />
           <Route path="/services/copywriting-texts" element={<CopywritingTexts />} />
           <Route path="/services/offer-packaging" element={<OfferPackaging />} />
+
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
 
           <Route path="/ai-plan" element={<AiPlanPage />} />
 
