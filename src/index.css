@@ -97,6 +97,10 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
+  .text-brand-gradient {
+    @apply bg-gradient-to-r from-[#0096D6] via-[#00B8FF] to-[#0077AA] bg-clip-text text-transparent;
+  }
+
   .hover-scale {
     @apply transition-transform duration-300 hover:scale-105;
   }

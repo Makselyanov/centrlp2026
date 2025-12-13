@@ -1,100 +1,320 @@
 import { Layout } from "@/components/Layout";
-import { getPostBySlug } from "@/lib/blog";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-import { Calendar, ArrowLeft, ExternalLink, Tag } from "lucide-react";
+import { getPostBySlug, generateTableOfContents } from "@/lib/blog";
+import { useParams, Link } from "react-router-dom";
+import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { Calendar, ArrowLeft, Copy, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+
+// Brand gradient constant (from /prices page)
+const BRAND_GRADIENT = "from-[#0096D6] via-[#44B78B] to-[#0096D6]";
 
 const BlogPost = () => {
     const { slug } = useParams<{ slug: string }>();
-    const navigate = useNavigate();
-    const post = slug ? getPostBySlug(slug) : undefined;
+    const progressBarRef = useRef<HTMLDivElement>(null);
+    const scrollRAFRef = useRef<number | null>(null);
+    const [toc, setToc] = useState<Array<{ level: number; text: string; id: string }>>([]);
+    const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-        if (!post) {
-            // Можно редиректить или показывать 404
-            // navigate('/404');
-        }
-    }, [post, navigate]);
-
-    if (!post) {
+    if (!slug) {
         return (
             <Layout>
-                <div className="container mx-auto px-4 py-32 text-center">
-                    <h1 className="text-2xl font-bold mb-4">Статья не найдена</h1>
-                    <Link to="/blog">
-                        <Button>Вернуться в блог</Button>
-                    </Link>
-                </div>
+                <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 min-h-screen">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
+                        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10 max-w-4xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center py-20"
+                        >
+                            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">404</h1>
+                            <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
+                            <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
+                                К сожалению, статья с таким адресом не существует.
+                            </p>
+                            <Link to="/blog">
+                                <Button size="lg" className="gap-2">
+                                    <ArrowLeft className="w-4 h-4" />
+                                    Вернуться в блог
+                                </Button>
+                            </Link>
+                        </motion.div>
+                    </div>
+                </section>
             </Layout>
         );
     }
 
-    return (
-        <Layout>
-            <article className="pt-32 pb-20 min-h-screen bg-slate-50">
-                <div className="container mx-auto px-4 max-w-4xl">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <Link to="/blog" className="inline-block mb-8">
-                            <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
-                                <ArrowLeft className="w-4 h-4" />
-                                Назад к списку
+    const post = getPostBySlug(slug);
+
+    if (!post) {
+        return (
+            <Layout>
+                <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 min-h-screen">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
+                        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10 max-w-4xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center py-20"
+                        >
+                            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">404</h1>
+                            <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
+                            <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
+                                К сожалению, статья с адресом "{slug}" не существует или была удалена.
+                            </p>
+                            <Link to="/blog">
+                                <Button size="lg" className="gap-2">
+                                    <ArrowLeft className="w-4 h-4" />
+                                    Вернуться в блог
+                                </Button>
+                            </Link>
+                        </motion.div>
+                    </div>
+                </section>
+            </Layout>
+        );
+    }
+
+    // Генерируем оглавление
+    useEffect(() => {
+        const tableOfContents = generateTableOfContents(post.content);
+        setToc(tableOfContents);
+    }, [post.content]);
+
+    // Optimized scroll logic
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!progressBarRef.current) return;
+
+            if (scrollRAFRef.current !== null) {
+                return; // Frame already requested
+            }
+
+            scrollRAFRef.current = requestAnimationFrame(() => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const rawPercent = docHeight > 0 ? (scrollTop / docHeight) : 0;
+                // Clamp between 0 and 1
+                const clampedScale = Math.min(Math.max(rawPercent, 0), 1);
+
+                if (progressBarRef.current) {
+                    progressBarRef.current.style.transform = `scaleX(${clampedScale})`;
+                }
+                scrollRAFRef.current = null;
+            });
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            if (scrollRAFRef.current !== null) {
+                cancelAnimationFrame(scrollRAFRef.current);
+            }
+        };
+    }, []);
+
+    const handleCopyLink = async () => {
+        const url = `${window.location.origin}/blog/${post.slug}`;
+        try {
+            await navigator.clipboard.writeText(url);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error('Ошибка при копировании:', err);
+        }
+    };
+
+    // Проверяем наличие TOC
+    const hasToc = toc && toc.length > 0;
+
+    // Hero Section Component
+    const HeroSection = () => (
+        <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative pt-12 pb-12 mb-12 bg-gradient-to-r from-slate-50 via-blue-50/20 to-slate-50 border-b border-slate-200/50"
+        >
+            <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                <Link to="/blog" className="inline-block mb-6">
+                    <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
+                        <ArrowLeft className="w-4 h-4" />
+                        Назад к списку
+                    </Button>
+                </Link>
+
+                <header className="mb-6">
+                    <div className="flex gap-2 mb-4 flex-wrap">
+                        {post.tags?.map((tag) => (
+                            <Badge key={tag} variant="secondary" className="bg-blue-100/50 text-slate-700">
+                                {tag}
+                            </Badge>
+                        ))}
+                    </div>
+
+                    <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r ${BRAND_GRADIENT} text-transparent bg-clip-text mb-6 leading-tight`}>
+                        {post.title}
+                    </h1>
+
+                    <div className="flex flex-wrap items-center gap-6 text-sm text-slate-600 mb-6">
+                        <span className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-[#0096D6]" />
+                            {new Date(post.date).toLocaleDateString('ru-RU', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                        </span>
+                        {post.readTime && (
+                            <span className="flex items-center gap-2">
+                                <Clock className="w-4 h-4 text-[#0096D6]" />
+                                {post.readTime} мин. чтения
+                            </span>
+                        )}
+                    </div>
+
+                    <p className="text-lg text-slate-700 mb-6">
+                        {post.description}
+                    </p>
+
+                    <div className="flex gap-3 flex-wrap">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="gap-2"
+                            onClick={handleCopyLink}
+                        >
+                            <Copy className="w-4 h-4" />
+                            {copied ? 'Скопировано!' : 'Копировать ссылку'}
+                        </Button>
+                    </div>
+                </header>
+            </div>
+        </motion.section>
+    );
+
+    // Layout with TOC Component
+    const LayoutWithToc = () => (
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] items-start">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="min-w-0"
+            >
+                <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm dark:prose-invert dark:bg-slate-900/60">
+                    <MarkdownRenderer content={post.content} />
+                </div>
+            </motion.div>
+
+            <motion.aside
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="hidden lg:block sticky top-24 h-fit"
+            >
+                <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl p-6 shadow-sm">
+                    <h3 className="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wide">
+                        Оглавление
+                    </h3>
+                    <nav className="space-y-2 text-sm">
+                        {toc.map((item) => (
+                            <a
+                                key={item.id}
+                                href={`#${item.id}`}
+                                className={`block transition-colors hover:text-[#0096D6] ${item.level === 2
+                                    ? 'text-slate-900 font-medium'
+                                    : 'text-slate-600 ml-4'
+                                    }`}
+                            >
+                                {item.text}
+                            </a>
+                        ))}
+                    </nav>
+                </div>
+            </motion.aside>
+        </div>
+    );
+
+    // Layout without TOC Component
+    const LayoutNoToc = () => (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mx-auto w-full max-w-3xl"
+        >
+            <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm dark:prose-invert dark:bg-slate-900/60">
+                <MarkdownRenderer content={post.content} />
+            </div>
+        </motion.div>
+    );
+
+    // CTA Block Component
+    const CTABlock = () => (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className={`mt-12 p-[1px] bg-gradient-to-r ${BRAND_GRADIENT} rounded-2xl shadow-lg`}
+        >
+            <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl p-8 md:p-10 border border-white/40 dark:border-white/10">
+                <div className="flex flex-col gap-6">
+                    <div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                            Готовы повысить эффективность?
+                        </h3>
+                        <p className="text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed">
+                            Наша команда поможет вам разработать и реализовать стратегию, которая приведет к реальным результатам для вашего бизнеса.
+                        </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <Link to="/services/yandex-direct" className="flex-1">
+                            <Button className={`w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
+                                Заказать аудит
                             </Button>
                         </Link>
+                        <Link to="/contacts" className="flex-1">
+                            <Button variant="outline" className="w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
+                                Получить консультацию
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </motion.div>
+    );
 
-                        <header className="mb-10">
-                            <div className="flex gap-2 mb-4 flex-wrap">
-                                {post.tags?.map((tag) => (
-                                    <Badge key={tag} variant="secondary">
-                                        {tag}
-                                    </Badge>
-                                ))}
-                            </div>
-                            <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                                {post.title}
-                            </h1>
-                            <div className="flex items-center gap-4 text-muted-foreground text-sm border-b border-border/50 pb-8">
-                                <span className="flex items-center gap-1">
-                                    <Calendar className="w-4 h-4" />
-                                    {post.date}
-                                </span>
-                                {post.source && (
-                                    <a
-                                        href={post.source}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-1 hover:text-[#0096D6] transition-colors"
-                                    >
-                                        <ExternalLink className="w-4 h-4" />
-                                        Источник
-                                    </a>
-                                )}
-                            </div>
-                        </header>
+    return (
+        <Layout>
+            {/* Progress Bar - using ref and scaleX transform */}
+            <div
+                ref={progressBarRef}
+                className={`fixed top-0 left-0 h-1 bg-gradient-to-r ${BRAND_GRADIENT} z-50 origin-left`}
+                style={{ transform: 'scaleX(0)' }}
+            />
 
-                        <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm">
-                            <ReactMarkdown>{post.content}</ReactMarkdown>
-                        </div>
+            <article className="pt-20 pb-20 min-h-screen bg-gradient-to-b from-slate-50 to-white">
+                <HeroSection />
 
-                        {post.source && (
-                            <div className="mt-8 p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex items-start gap-3 text-sm text-slate-600">
-                                <ExternalLink className="w-5 h-5 text-[#0096D6] shrink-0 mt-0.5" />
-                                <div>
-                                    <span className="font-semibold text-slate-900">Источник:</span>{" "}
-                                    <a href={post.source} target="_blank" rel="noopener noreferrer" className="text-[#0096D6] hover:underline break-all">
-                                        {post.source}
-                                    </a>
-                                </div>
-                            </div>
-                        )}
-                    </motion.div>
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                    <div className="mb-12">
+                        {hasToc ? <LayoutWithToc /> : <LayoutNoToc />}
+                    </div>
+                    <div className="mx-auto max-w-3xl">
+                        <CTABlock />
+                    </div>
                 </div>
             </article>
         </Layout>

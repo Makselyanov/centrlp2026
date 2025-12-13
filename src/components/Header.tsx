@@ -66,7 +66,7 @@ export const Header = () => {
         }`}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="grid grid-cols-[auto,1fr,auto] items-center gap-x-6 h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
             <img
@@ -81,7 +81,8 @@ export const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6 flex-1 min-w-0 justify-center">
+          <nav className="hidden lg:flex justify-center">
+            <div className="flex items-center gap-6 whitespace-nowrap">
             {/* Services Dropdown */}
             <div
               className="relative shrink-0"
@@ -224,10 +225,11 @@ export const Header = () => {
             >
               Контакты
             </Link>
+            </div>
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden lg:flex items-center space-x-4 shrink-0">
+          <div className="hidden lg:flex items-center gap-3 whitespace-nowrap shrink-0">
             <a
               href="tel:+79058248564"
               className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
@@ -236,7 +238,7 @@ export const Header = () => {
               <Phone className="w-4 h-4" />
               8&#8209;905&#8209;824&#8209;85&#8209;64
             </a>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2">
               <a
                 href="https://t.me/centrlp"
                 target="_blank"
