@@ -1,20 +1,19 @@
-# CentrLP — Решения для масштабирования бизнеса
+# CentrLP 2026
 
-Маркетинговое агентство полного цикла, предлагающее комплексную упаковку бизнеса, автоматизацию и внедрение AI-решений.
+Сайт и блог CentrLP. Стек: Vite + React + TypeScript + Tailwind.
 
-## Технологии
-- **Frontend**: React + TypeScript + Vite
-- **UI**: Tailwind CSS + Shadcn/ui + Framer Motion
-- **Blog**: Markdown based content system
+## Команды
+- Установить зависимости: `npm i`
+- Запуск (dev): `npm run dev`
+- Сборка: `npm run build`
+- Preview сборки: `npm run preview`
 
-## Запуск локально
-```bash
-npm install
-npm run dev
-```
+## Структура проекта
+- `src/pages/` — страницы сайта
+- `content/posts/` — статьи блога (Markdown)
+- `src/components/` — компоненты
+- `public/` — статические файлы (robots.txt, sitemap.xml и т.п.)
+- `scripts/` — служебные скрипты (например генерация sitemap)
 
-## Сборка
-```bash
-npm run build
-```
-Сборка автоматически генерирует `sitemap.xml` на основе статических маршрутов и постов блога.
+## Деплой
+Деплой выполняется через GitHub Actions на GitHub Pages.
