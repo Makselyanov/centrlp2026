@@ -3,7 +3,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 // --- CONFIG ---
-const SITE_URL = 'https://makselyanov.github.io/centrlp2026';
+// Get SITE_URL from env or default to production domain
+const envSiteUrl = process.env.SITE_URL || 'https://centrlp.ru';
+// Remove trailing slash if present
+const SITE_URL = envSiteUrl.replace(/\/$/, '');
+
 const SRC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src');
 const CONTENT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../content/posts');
 const OUTPUT_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public/sitemap.xml');
@@ -20,7 +24,6 @@ function getStaticRoutes() {
     const content = fs.readFileSync(appPath, 'utf8');
 
     // Simple regex to find path="/some/route"
-    // It won't be perfect but good enough for simple React Router setup
     const staticRoutes = [];
     const regex = /path=["'](\/[^"']*)["']/g;
     let match;
@@ -81,7 +84,7 @@ ${urls.join('\n')}
 
 // --- MAIN ---
 try {
-    console.log('Generating sitemap...');
+    console.log(`Generating sitemap for ${SITE_URL}...`);
 
     const staticRoutes = getStaticRoutes();
     const blogRoutes = getBlogRoutes();
