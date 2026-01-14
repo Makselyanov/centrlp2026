@@ -83,148 +83,148 @@ export const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex justify-center">
             <div className="flex items-center gap-6 whitespace-nowrap">
-            {/* Services Dropdown */}
-            <div
-              className="relative shrink-0"
-              onMouseEnter={handleServicesMouseEnter}
-              onMouseLeave={handleServicesMouseLeave}
-            >
-              <Link
-                to="/services"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
+              {/* Services Dropdown */}
+              <div
+                className="relative shrink-0"
+                onMouseEnter={handleServicesMouseEnter}
+                onMouseLeave={handleServicesMouseLeave}
               >
-                Услуги
-                <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                <Link
+                  to="/services"
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
+                >
+                  Услуги
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                </Link>
+                {isServicesOpen && (
+                  <div className="absolute top-full left-0 pt-2">
+                    <div className="w-[800px] bg-card shadow-elegant rounded-xl p-6 grid grid-cols-4 gap-6 border border-border z-50 whitespace-normal">
+                      <div>
+                        <h4 className="font-semibold text-sm mb-3 text-primary">Сайты и упаковка</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li><Link to="/services/tilda-website" className="text-muted-foreground hover:text-primary transition-colors">Сайт на Tilda (5–10 страниц)</Link></li>
+                          <li><Link to="/services/design-prototyping" className="text-muted-foreground hover:text-primary transition-colors">Дизайн и прототипирование</Link></li>
+                          <li><Link to="/services/branding" className="text-muted-foreground hover:text-primary transition-colors">Фирменный стиль и логотип</Link></li>
+                          <li><Link to="/services/naming-offers" className="text-muted-foreground hover:text-primary transition-colors">Нейминг и продающие офферы</Link></li>
+                          <li><Link to="/services/vk-design" className="text-muted-foreground hover:text-primary transition-colors">Оформление ВКонтакте</Link></li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm mb-3 text-primary">Чат-боты и коммуникации</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li><Link to="/services/chatbot-vk" className="text-muted-foreground hover:text-primary transition-colors">Чат-бот ВКонтакте / виджет на сайт</Link></li>
+                          <li><Link to="/services/auto-responses" className="text-muted-foreground hover:text-primary transition-colors">Автоответы 24/7 и запись на услугу</Link></li>
+                          <li><Link to="/services/operator-scripts" className="text-muted-foreground hover:text-primary transition-colors">Скрипты / FAQ для оператора</Link></li>
+                          <li><Link to="/services/help-bot" className="text-muted-foreground hover:text-primary transition-colors">Help-бот поддержки клиентов</Link></li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm mb-3 text-primary">Реклама и аналитика</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li><Link to="/services/yandex-direct" className="text-muted-foreground hover:text-primary transition-colors">Яндекс Директ (поиск + РСЯ)</Link></li>
+                          <li><Link to="/services/vk-ads" className="text-muted-foreground hover:text-primary transition-colors">Реклама ВКонтакте (лиды, ретаргет)</Link></li>
+                          <li><Link to="/services/web-analytics" className="text-muted-foreground hover:text-primary transition-colors">Веб-аналитика: Метрика, цели, отчёты</Link></li>
+                          <li><Link to="/services/ab-testing" className="text-muted-foreground hover:text-primary transition-colors">A/B-тесты креативов и посадочных</Link></li>
+                        </ul>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-sm mb-3 text-primary">Стратегия и контент</h4>
+                        <ul className="space-y-2 text-sm">
+                          <li><Link to="/services/marketing-strategy" className="text-muted-foreground hover:text-primary transition-colors">Маркетинговая стратегия и медиаплан</Link></li>
+                          <li><Link to="/services/content-plan" className="text-muted-foreground hover:text-primary transition-colors">Контент-план ВК, креативы, посты</Link></li>
+                          <li><Link to="/services/copywriting-texts" className="text-muted-foreground hover:text-primary transition-colors">Тексты для сайта и объявлений</Link></li>
+                          <li><Link to="/services/offer-packaging" className="text-muted-foreground hover:text-primary transition-colors">Упаковка офферов под нишу</Link></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <Link
+                to="/ai"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              >
+                ИИ-внедрение
               </Link>
-              {isServicesOpen && (
-                <div className="absolute top-full left-0 pt-2">
-                  <div className="w-[800px] bg-card shadow-elegant rounded-xl p-6 grid grid-cols-4 gap-6 border border-border z-50">
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3 text-primary">Сайты и упаковка</h4>
-                      <ul className="space-y-2 text-sm">
-                        <li><Link to="/services/tilda-website" className="text-muted-foreground hover:text-primary transition-colors">Сайт на Tilda (5–10 страниц)</Link></li>
-                        <li><Link to="/services/design-prototyping" className="text-muted-foreground hover:text-primary transition-colors">Дизайн и прототипирование</Link></li>
-                        <li><Link to="/services/branding" className="text-muted-foreground hover:text-primary transition-colors">Фирменный стиль и логотип</Link></li>
-                        <li><Link to="/services/naming-offers" className="text-muted-foreground hover:text-primary transition-colors">Нейминг и продающие офферы</Link></li>
-                        <li><Link to="/services/vk-design" className="text-muted-foreground hover:text-primary transition-colors">Оформление ВКонтакте</Link></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3 text-primary">Чат-боты и коммуникации</h4>
-                      <ul className="space-y-2 text-sm">
-                        <li><Link to="/services/chatbot-vk" className="text-muted-foreground hover:text-primary transition-colors">Чат-бот ВКонтакте / виджет на сайт</Link></li>
-                        <li><Link to="/services/auto-responses" className="text-muted-foreground hover:text-primary transition-colors">Автоответы 24/7 и запись на услугу</Link></li>
-                        <li><Link to="/services/operator-scripts" className="text-muted-foreground hover:text-primary transition-colors">Скрипты / FAQ для оператора</Link></li>
-                        <li><Link to="/services/help-bot" className="text-muted-foreground hover:text-primary transition-colors">Help-бот поддержки клиентов</Link></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3 text-primary">Реклама и аналитика</h4>
-                      <ul className="space-y-2 text-sm">
-                        <li><Link to="/services/yandex-direct" className="text-muted-foreground hover:text-primary transition-colors">Яндекс Директ (поиск + РСЯ)</Link></li>
-                        <li><Link to="/services/vk-ads" className="text-muted-foreground hover:text-primary transition-colors">Реклама ВКонтакте (лиды, ретаргет)</Link></li>
-                        <li><Link to="/services/web-analytics" className="text-muted-foreground hover:text-primary transition-colors">Веб-аналитика: Метрика, цели, отчёты</Link></li>
-                        <li><Link to="/services/ab-testing" className="text-muted-foreground hover:text-primary transition-colors">A/B-тесты креативов и посадочных</Link></li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3 text-primary">Стратегия и контент</h4>
-                      <ul className="space-y-2 text-sm">
-                        <li><Link to="/services/marketing-strategy" className="text-muted-foreground hover:text-primary transition-colors">Маркетинговая стратегия и медиаплан</Link></li>
-                        <li><Link to="/services/content-plan" className="text-muted-foreground hover:text-primary transition-colors">Контент-план ВК, креативы, посты</Link></li>
-                        <li><Link to="/services/copywriting-texts" className="text-muted-foreground hover:text-primary transition-colors">Тексты для сайта и объявлений</Link></li>
-                        <li><Link to="/services/offer-packaging" className="text-muted-foreground hover:text-primary transition-colors">Упаковка офферов под нишу</Link></li>
+              <Link
+                to="/business-plans"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              >
+                Бизнес-планы и расчёты
+              </Link>
+
+              {/* Barter Dropdown */}
+              <div
+                className="relative shrink-0"
+                onMouseEnter={handleBarterMouseEnter}
+                onMouseLeave={handleBarterMouseLeave}
+              >
+                <Link
+                  to="/barter"
+                  className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
+                >
+                  Бартер
+                  <ChevronDown className={`w-4 h-4 transition-transform ${isBarterOpen ? 'rotate-180' : ''}`} />
+                </Link>
+                {isBarterOpen && (
+                  <div className="absolute top-full left-0 pt-2">
+                    <div className="w-64 bg-card shadow-elegant rounded-xl p-4 border border-border z-50 whitespace-normal">
+                      <ul className="space-y-3">
+                        <li>
+                          <Link
+                            to="/barter/furniture"
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
+                          >
+                            Для мебельщиков
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/barter/sto"
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
+                          >
+                            Для СТО и детейлинга
+                          </Link>
+                        </li>
+                        <li>
+                          <Link
+                            to="/barter/cleaning"
+                            className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
+                          >
+                            Для клининга
+                          </Link>
+                        </li>
                       </ul>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
-            <Link
-              to="/ai"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
-            >
-              ИИ-внедрение
-            </Link>
-            <Link
-              to="/business-plans"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
-            >
-              Бизнес-планы и расчёты
-            </Link>
-
-            {/* Barter Dropdown */}
-            <div
-              className="relative shrink-0"
-              onMouseEnter={handleBarterMouseEnter}
-              onMouseLeave={handleBarterMouseLeave}
-            >
               <Link
-                to="/barter"
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
+                to="/blog"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
-                Бартер
-                <ChevronDown className={`w-4 h-4 transition-transform ${isBarterOpen ? 'rotate-180' : ''}`} />
+                Инсайты
               </Link>
-              {isBarterOpen && (
-                <div className="absolute top-full left-0 pt-2">
-                  <div className="w-64 bg-card shadow-elegant rounded-xl p-4 border border-border z-50">
-                    <ul className="space-y-3">
-                      <li>
-                        <Link
-                          to="/barter/furniture"
-                          className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
-                        >
-                          Для мебельщиков
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/barter/sto"
-                          className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
-                        >
-                          Для СТО и детейлинга
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/barter/cleaning"
-                          className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
-                        >
-                          Для клининга
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <Link
-              to="/blog"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
-            >
-              Инсайты
-            </Link>
-            <Link
-              to="/prices"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
-            >
-              Цены
-            </Link>
-            <Link
-              to="/about"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
-            >
-              О нас
-            </Link>
-            <Link
-              to="/contacts"
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
-            >
-              Контакты
-            </Link>
+              <Link
+                to="/prices"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              >
+                Цены
+              </Link>
+              <Link
+                to="/about"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              >
+                О нас
+              </Link>
+              <Link
+                to="/contacts"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              >
+                Контакты
+              </Link>
             </div>
           </nav>
 
