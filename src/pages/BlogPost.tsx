@@ -315,9 +315,9 @@ const BlogPost = () => {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="min-w-0"
             >
-                <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm dark:prose-invert dark:bg-slate-900/60">
+                <article className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-slate-200/60 shadow-sm">
                     <EnhancedMarkdown content={post.content} />
-                </div>
+                </article>
             </motion.div>
 
             <motion.aside
@@ -357,9 +357,9 @@ const BlogPost = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mx-auto w-full max-w-3xl"
         >
-            <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm dark:prose-invert dark:bg-slate-900/60">
+            <article className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-slate-200/60 shadow-sm">
                 <EnhancedMarkdown content={post.content} />
-            </div>
+            </article>
         </motion.div>
     );
 

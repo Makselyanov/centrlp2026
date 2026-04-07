@@ -108,7 +108,7 @@ export const ContactForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-card shadow-card rounded-2xl p-8" data-metric="form-submit">
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-xl bg-white border border-slate-200 shadow-sm rounded-2xl p-7 md:p-8" data-metric="form-submit">
       <div className="space-y-6">
         <div>
           <Label htmlFor="name">Имя *</Label>
