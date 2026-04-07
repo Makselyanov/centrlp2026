@@ -14,14 +14,30 @@ const BlogList = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-    // Получаем все уникальные теги
+    // Получаем уникальные теги, отсортированные по частоте использования.
+    // Дубликаты с разным регистром схлопываем (берём первый встретившийся вариант).
     const allTags = useMemo(() => {
-        const tagSet = new Set<string>();
+        const counts = new Map<string, { display: string; count: number }>();
         posts.forEach(post => {
-            post.tags?.forEach(tag => tagSet.add(tag));
+            post.tags?.forEach(tag => {
+                const key = tag.trim().toLowerCase();
+                const existing = counts.get(key);
+                if (existing) {
+                    existing.count += 1;
+                } else {
+                    counts.set(key, { display: tag.trim(), count: 1 });
+                }
+            });
         });
-        return Array.from(tagSet).sort();
+        return Array.from(counts.values())
+            .sort((a, b) => b.count - a.count || a.display.localeCompare(b.display, 'ru'))
+            .map(t => t.display);
     }, [posts]);
+
+    const [showAllTags, setShowAllTags] = useState(false);
+    const VISIBLE_TAGS = 12;
+    const visibleTags = showAllTags ? allTags : allTags.slice(0, VISIBLE_TAGS);
+    const hiddenCount = allTags.length - VISIBLE_TAGS;
 
     // Фильтруем посты
     const filteredPosts = useMemo(() => {
@@ -151,32 +167,42 @@ const BlogList = () => {
                             )}
                         </div>
 
-                        {/* Tags Filter */}
+                        {/* Tags Filter — compact: top tags by frequency, expandable */}
                         {allTags.length > 0 && (
-                            <div className="max-w-4xl mx-auto">
-                                <p className="text-sm font-medium text-slate-700 mb-3 flex items-center gap-2">
-                                    <Tag className="w-4 h-4" />
-                                    Фильтр по тегам
-                                </p>
-                                <div className="flex flex-wrap gap-2 justify-center">
-                                    {allTags.map(tag => (
+                            <div className="max-w-3xl mx-auto">
+                                <div className="mb-2 flex items-center justify-between gap-2">
+                                    <p className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500">
+                                        <Tag className="h-3.5 w-3.5" />
+                                        Теги
+                                    </p>
+                                    {selectedTags.length > 0 && (
+                                        <button
+                                            onClick={() => setSelectedTags([])}
+                                            className="text-xs font-medium text-slate-500 hover:text-[#0096D6] transition-colors"
+                                        >
+                                            Сбросить ({selectedTags.length})
+                                        </button>
+                                    )}
+                                </div>
+                                <div className="flex flex-wrap gap-1.5 justify-center">
+                                    {visibleTags.map(tag => (
                                         <button
                                             key={tag}
                                             onClick={() => toggleTag(tag)}
-                                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedTags.includes(tag)
-                                                    ? 'bg-[#0096D6] text-white shadow-lg shadow-blue-400/30'
-                                                    : 'bg-white/60 text-slate-700 border border-slate-200/50 hover:border-[#0096D6]/50 hover:shadow-md'
+                                            className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${selectedTags.includes(tag)
+                                                ? 'bg-[#0096D6] text-white shadow-sm'
+                                                : 'bg-white/70 text-slate-600 border border-slate-200 hover:border-[#0096D6]/50 hover:text-[#0096D6]'
                                                 }`}
                                         >
                                             {tag}
                                         </button>
                                     ))}
-                                    {selectedTags.length > 0 && (
+                                    {hiddenCount > 0 && (
                                         <button
-                                            onClick={() => setSelectedTags([])}
-                                            className="px-4 py-2 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+                                            onClick={() => setShowAllTags(prev => !prev)}
+                                            className="px-3 py-1 rounded-full text-xs font-medium text-[#0096D6] border border-dashed border-[#0096D6]/40 hover:bg-[#0096D6]/5 transition-colors"
                                         >
-                                            Очистить фильтры
+                                            {showAllTags ? 'Свернуть' : `Ещё ${hiddenCount}`}
                                         </button>
                                     )}
                                 </div>
