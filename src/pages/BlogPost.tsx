@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { getPostBySlug, getRelatedPosts, generateTableOfContents } from "@/lib/blog";
 import { useParams, Link } from "react-router-dom";
-import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { EnhancedMarkdown } from "@/components/EnhancedMarkdown";
 import { Calendar, ArrowLeft, Copy, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -316,7 +316,7 @@ const BlogPost = () => {
                 className="min-w-0"
             >
                 <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm dark:prose-invert dark:bg-slate-900/60">
-                    <MarkdownRenderer content={post.content} />
+                    <EnhancedMarkdown content={post.content} />
                 </div>
             </motion.div>
 
@@ -358,7 +358,7 @@ const BlogPost = () => {
             className="mx-auto w-full max-w-3xl"
         >
             <div className="prose prose-lg prose-slate max-w-none bg-white/60 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-white/50 shadow-sm dark:prose-invert dark:bg-slate-900/60">
-                <MarkdownRenderer content={post.content} />
+                <EnhancedMarkdown content={post.content} />
             </div>
         </motion.div>
     );
