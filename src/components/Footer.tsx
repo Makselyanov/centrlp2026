@@ -16,6 +16,19 @@ export const Footer = () => {
               <br />
               г. Тюмень, Солнечный проезд, 22
             </p>
+            <details className="text-sm text-muted-foreground">
+              <summary className="cursor-pointer hover:text-primary transition-colors mb-2">
+                Банковские реквизиты
+              </summary>
+              <div className="space-y-0.5 text-xs">
+                <p>Счёт: 40817810905610530719</p>
+                <p>Банк: АО «Альфа-Банк», г. Москва</p>
+                <p>БИК: 044525593</p>
+                <p>ИНН Банка: 7728168971</p>
+                <p>КПП Банка: 770801001</p>
+                <p>Кор. счёт: 30101810200000000593</p>
+              </div>
+            </details>
           </div>
 
           {/* Navigation */}
@@ -30,6 +43,9 @@ export const Footer = () => {
               </Link>
               <Link to="/business-plans" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Бизнес-планы
+              </Link>
+              <Link to="/projects" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Проекты
               </Link>
               <Link to="/barter" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Бартер

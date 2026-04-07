@@ -3,9 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 // --- CONFIG ---
-// Get SITE_URL from env or default to production domain
 const envSiteUrl = process.env.SITE_URL || 'https://centrlp.ru';
-// Remove trailing slash if present
 const SITE_URL = envSiteUrl.replace(/\/$/, '');
 
 const SRC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src');
@@ -14,7 +12,6 @@ const OUTPUT_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 
 // --- HELPERS ---
 
-// Parse App.tsx to find routes path="..."
 function getStaticRoutes() {
     const appPath = path.join(SRC_DIR, 'App.tsx');
     if (!fs.existsSync(appPath)) {
@@ -23,20 +20,17 @@ function getStaticRoutes() {
     }
     const content = fs.readFileSync(appPath, 'utf8');
 
-    // Simple regex to find path="/some/route"
     const staticRoutes = [];
     const regex = /path=["'](\/[^"']*)["']/g;
     let match;
 
     while ((match = regex.exec(content)) !== null) {
         const route = match[1];
-        // Filter out dynamic routes (:param) and wildcard (*)
         if (!route.includes(':') && !route.includes('*')) {
             staticRoutes.push(route);
         }
     }
 
-    // Ensure root / exists
     if (!staticRoutes.includes('/')) {
         staticRoutes.push('/');
     }
@@ -44,7 +38,6 @@ function getStaticRoutes() {
     return [...new Set(staticRoutes)].sort();
 }
 
-// Read markdown files to generate blog routes
 function getBlogRoutes() {
     if (!fs.existsSync(CONTENT_DIR)) {
         console.warn('Content dir not found, skipping blog routes.');
@@ -55,24 +48,61 @@ function getBlogRoutes() {
     const blogRoutes = files
         .filter(file => file.endsWith('.md'))
         .map(file => {
-            // Remove date prefix (YYYY-MM-DD-) and extension (.md)
             let slug = file.replace(/\.md$/, '');
             slug = slug.replace(/^\d{4}-\d{2}-\d{2}-/, '');
-            return `/blog/${slug}`;
+            const filePath = path.join(CONTENT_DIR, file);
+            const stat = fs.statSync(filePath);
+
+            return {
+                route: `/blog/${slug}`,
+                lastmod: stat.mtime.toISOString().split('T')[0],
+            };
         });
 
     return blogRoutes;
 }
 
-// Generate XML content
-function generateSitemap(routes) {
-    const urls = routes.map(route => {
-        // Ensure route starts with /
+// Priority mapping for better SEO
+function getPriority(route) {
+    if (route === '/') return '1.0';
+    if (route === '/services' || route === '/prices' || route === '/projects') return '0.9';
+    if (route.startsWith('/services/') || route === '/contacts' || route === '/about') return '0.8';
+    if (route.startsWith('/blog/')) return '0.7';
+    if (route === '/privacy' || route === '/cookies') return '0.3';
+    return '0.7';
+}
+
+function getChangefreq(route) {
+    if (route === '/' || route === '/blog') return 'daily';
+    if (route.startsWith('/blog/')) return 'monthly';
+    if (route === '/privacy' || route === '/cookies') return 'yearly';
+    return 'weekly';
+}
+
+function normalizeRoutes(staticRoutes, blogRoutes) {
+    const today = new Date().toISOString().split('T')[0];
+    const normalizedStatic = staticRoutes.map(route => ({
+        route,
+        lastmod: today,
+    }));
+
+    return [...normalizedStatic, ...blogRoutes]
+        .map(entry => ({
+            route: entry.route.startsWith('/') ? entry.route : `/${entry.route}`,
+            lastmod: entry.lastmod || today,
+        }))
+        .filter((entry, index, arr) => arr.findIndex(item => item.route === entry.route) === index)
+        .sort((a, b) => a.route.localeCompare(b.route));
+}
+
+function generateSitemap(entries) {
+    const urls = entries.map(({ route, lastmod }) => {
         const safeRoute = route.startsWith('/') ? route : `/${route}`;
         return `  <url>
     <loc>${SITE_URL}${safeRoute}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>${safeRoute === '/' ? '1.0' : '0.8'}</priority>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${getChangefreq(safeRoute)}</changefreq>
+    <priority>${getPriority(safeRoute)}</priority>
   </url>`;
     });
 
@@ -88,11 +118,10 @@ try {
 
     const staticRoutes = getStaticRoutes();
     const blogRoutes = getBlogRoutes();
-    const allRoutes = [...staticRoutes, ...blogRoutes];
+    const allRoutes = normalizeRoutes(staticRoutes, blogRoutes);
 
     const xml = generateSitemap(allRoutes);
 
-    // Ensure directory exists
     fs.mkdirSync(path.dirname(OUTPUT_FILE), { recursive: true });
     fs.writeFileSync(OUTPUT_FILE, xml, 'utf8');
 

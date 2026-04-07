@@ -1,11 +1,23 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, Target, TrendingUp, Eye, Zap, CheckCircle, Settings, LineChart } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
 const WebAnalytics = () => {
+  const faqItems = [
+    { question: "Чем отличается Метрика от Google Analytics?", answer: "Метрика лучше работает с российским трафиком и рекламой (Директ, ВК). GA4 удобнее для международных проектов и интеграции с Google Ads. Мы рекомендуем ставить обе системы для полноты данных." },
+    { question: "Зачем нужны цели, если счетчик уже стоит?", answer: "Без целей вы видите только посещаемость. Цели показывают, сколько пользователей совершили важные действия (заявка, покупка, звонок) — то есть стали клиентами. Это основа для оценки эффективности." },
+    { question: "Как быстро будет готова аналитика?", answer: "Базовую настройку делаем за 3-5 дней. Расширенная с электронной торговлей и интеграциями — 1-2 недели в зависимости от сложности сайта и количества целей." },
+    { question: "Нужно ли что-то делать после настройки?", answer: "Нет, аналитика работает автоматически. Вы просто заходите в отчеты и смотрите актуальные данные. Мы научим, какие метрики отслеживать и как принимать решения на их основе." },
+    { question: "Можно ли связать аналитику с CRM?", answer: "Да, можно интегрировать с AmoCRM, Битрикс24 и другими системами. Тогда вы будете видеть полный путь клиента: от первого клика до закрытой сделки и выручки." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Веб-аналитика");
+
   return (
     <Layout
       title="Настройка веб-аналитики: Метрика, цели, отчёты | CentrLP"
@@ -15,7 +27,7 @@ const WebAnalytics = () => {
       <section className="py-20 bg-gradient-to-br from-background via-background to-primary/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
               Веб-аналитика: понимайте, откуда приходят деньги
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -43,10 +55,12 @@ const WebAnalytics = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="web-analytics" alt="web-analytics — иллюстрация услуги CentrLP" />
+
       {/* Target Audience */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Кому нужна веб-аналитика</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Кому нужна веб-аналитика</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -82,7 +96,7 @@ const WebAnalytics = () => {
       {/* Pain Points */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Почему аналитика не работает</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Почему аналитика не работает</h2>
           <div className="max-w-4xl mx-auto space-y-6">
             <Card>
               <CardContent className="pt-6">
@@ -124,7 +138,7 @@ const WebAnalytics = () => {
       {/* How We Solve */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Как мы настраиваем аналитику</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Как мы настраиваем аналитику</h2>
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="flex gap-4 animate-fade-in">
               <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">
@@ -188,7 +202,7 @@ const WebAnalytics = () => {
       {/* Results */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Что вы получите</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Что вы получите</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -233,7 +247,7 @@ const WebAnalytics = () => {
       {/* Cases */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Примеры внедрения</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Примеры внедрения</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card>
               <CardContent className="pt-6">
@@ -278,7 +292,7 @@ const WebAnalytics = () => {
       {/* Pricing */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Форматы работы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Форматы работы</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -371,7 +385,7 @@ const WebAnalytics = () => {
       {/* FAQ */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem value="item-1" className="border rounded-lg px-6">
@@ -423,7 +437,7 @@ const WebAnalytics = () => {
       <section id="contact" className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Настроим аналитику под ваш бизнес
             </h2>
             <p className="text-xl text-muted-foreground">

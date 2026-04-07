@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
+import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 
 const Contacts = () => {
+  useAutoBreadcrumb("Контакты");
   const [copied, setCopied] = useState(false);
 
   const copyInn = () => {
@@ -38,7 +40,10 @@ const Contacts = () => {
   };
 
   return (
-    <Layout>
+    <Layout
+      title="Контакты CentrLP — Тюмень, телефон, Telegram, WhatsApp"
+      description="Свяжитесь с CentrLP: 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: Тюмень, Солнечный проезд, 22. Консультация бесплатна."
+    >
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
         {/* Background Elements */}
@@ -79,7 +84,7 @@ const Contacts = () => {
               <MessageCircle className="w-4 h-4 mr-2" />
               Всегда на связи
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-slate-900">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-slate-900">
               Давайте обсудим <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
                 ваш проект
@@ -103,7 +108,7 @@ const Contacts = () => {
             variants={fadeInUp}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Говорим на человеческом языке</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Говорим на человеческом языке</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Мы не прячемся за сложными терминами. Наша задача — объяснить вам суть,
               а не запутать умными словами.

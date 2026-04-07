@@ -1,726 +1,436 @@
+import { Hero } from "@/components/Hero";
+import { ContactForm } from "@/components/ContactForm";
 import { Layout } from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Bot, Brain, Target, MessageSquare, LineChart, Sparkles, Check, Rocket, BarChart3 } from "lucide-react";
-import { motion } from "framer-motion";
-import { ContactForm } from "@/components/ContactForm";
+import {
+  Bot,
+  Brain,
+  BriefcaseBusiness,
+  Chrome,
+  Compass,
+  Layers3,
+  LineChart,
+  MessageSquare,
+  Rocket,
+  ScanSearch,
+  Sparkles,
+  Target,
+  Workflow,
+} from "lucide-react";
 import { Link } from "react-router-dom";
-import vkAnalyticsImage from "@/assets/vk-analytics.png";
-import vkMessagesImage from "@/assets/vk-messages.png";
-import { Hero } from "@/components/Hero";
+
+const primaryProducts = [
+  {
+    title: "Telegram Mini App",
+    description:
+      "Интерфейс продаж, записи, бронирования, оплаты и личного кабинета внутри Telegram без лишних шагов для клиента.",
+    href: "/services/telegram-mini-app",
+    icon: MessageSquare,
+  },
+  {
+    title: "AI-агенты",
+    description:
+      "Агенты для обработки заявок, ответов, классификации, поиска информации и внутренних действий команды.",
+    href: "/services/ai-agents",
+    icon: Bot,
+  },
+  {
+    title: "Персональная CRM",
+    description:
+      "CRM под вашу модель продаж и сервиса: статусы, задачи, роли, интеграции, прозрачность для руководителя.",
+    href: "/services/custom-crm",
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: "Browser extensions",
+    description:
+      "Расширения для Chrome и Яндекс Браузера как рабочие инструменты отделов продаж, маркетинга, HR и операционки.",
+    href: "/services/browser-extensions",
+    icon: Chrome,
+  },
+  {
+    title: "MVP и быстрый запуск",
+    description:
+      "Собираем минимальный, но рабочий продукт, чтобы проверить гипотезу, запустить продажи и понять, что масштабировать дальше.",
+    href: "/services/mvp-development",
+    icon: Rocket,
+  },
+  {
+    title: "AI-системы и нейросети",
+    description:
+      "Корпоративные ассистенты, база знаний, генерация контента и видео, внутренние AI-инструменты и автоматизация.",
+    href: "/services/ai-systems",
+    icon: Brain,
+  },
+];
+
+const digitalBlocks = [
+  {
+    title: "Современные цифровые продукты",
+    description:
+      "Создаём клиентские интерфейсы, которые помогают продавать, записывать, бронировать, сопровождать и удерживать клиентов.",
+    bullets: [
+      "Telegram Mini App и клиентские кабинеты",
+      "MVP для новых продуктов и рынков",
+      "Персональные CRM и сервисные интерфейсы",
+    ],
+    href: "/services/mvp-development",
+    icon: Layers3,
+    image: "/images/home/digital-products.png",
+    imageAlt: "3D-иллюстрация смартфона с интерфейсом Telegram Mini App",
+  },
+  {
+    title: "AI-системы для бизнеса",
+    description:
+      "Подключаем AI не как модную витрину, а как рабочий слой над продажами, контентом, знаниями и внутренними действиями.",
+    bullets: [
+      "AI-агенты по заявкам и сервису",
+      "База знаний и корпоративные ассистенты",
+      "Генерация контента, видео и выжимок",
+    ],
+    href: "/services/ai-systems",
+    icon: Brain,
+    image: "/images/home/ai-systems.png",
+    imageAlt: "Изометрическая иллюстрация AI-мозга и панели управления",
+  },
+  {
+    title: "Инструменты для команды",
+    description:
+      "Разрабатываем рабочие инструменты для отделов продаж, маркетинга, HR и операционки, чтобы ускорять рутину и снижать потери.",
+    bullets: [
+      "Browser extensions под рабочие сценарии",
+      "Контроль заявок, SLA и этапов",
+      "Сбор данных и быстрые внутренние действия",
+    ],
+    href: "/services/browser-extensions",
+    icon: ScanSearch,
+    image: "/images/home/team-tools.png",
+    imageAlt: "Изометрическая иллюстрация браузерного дашборда для команды",
+  },
+  {
+    title: "Ранний вход в новые каналы",
+    description:
+      "Помогаем заходить в новые мессенджеры и цифровые ниши раньше конкурентов, но с понятной экономикой и моделью роста.",
+    bullets: [
+      "Решения для Max как раннего рынка",
+      "Пилоты и быстрые проверки гипотез",
+      "Подготовка к масштабированию канала",
+    ],
+    href: "/services/max-messenger",
+    icon: Compass,
+    image: "/images/home/new-channels.png",
+    imageAlt: "Изометрическая иллюстрация компаса с тремя путями в новые каналы",
+  },
+];
+
+const aiScenarios = [
+  {
+    title: "AI-агенты на входящем потоке",
+    text: "Принимают запрос, уточняют задачу, квалифицируют лида и передают дальше не пустой контакт, а подготовленный кейс.",
+  },
+  {
+    title: "AI-система на вашей базе знаний",
+    text: "Собираем корпоративного ассистента на ваших документах, регламентах, FAQ и знаниях команды.",
+  },
+  {
+    title: "Генерация контента и видео",
+    text: "Помогаем быстрее собирать тексты, сценарии, ролики, промо и внутренние обучающие материалы.",
+  },
+  {
+    title: "Поиск, классификация и действия",
+    text: "AI находит информацию, сортирует обращения, формирует сводки, запускает внутренние задачи и сокращает рутину.",
+  },
+];
+
+const launchBundles = [
+  {
+    title: "MVP + Mini App + CRM",
+    text: "Быстрый запуск новой цифровой модели: проверяем гипотезу, даём клиенту удобный интерфейс и сразу строим внутреннюю опору для продаж.",
+    links: [
+      { label: "MVP", href: "/services/mvp-development" },
+      { label: "Telegram Mini App", href: "/services/telegram-mini-app" },
+      { label: "CRM", href: "/services/custom-crm" },
+    ],
+  },
+  {
+    title: "AI-агент + AI-система + CRM",
+    text: "Связка для входящего потока, клиентского сервиса и внутренней команды: заявки, знания, статусы и автоматические действия в едином контуре.",
+    links: [
+      { label: "AI-агенты", href: "/services/ai-agents" },
+      { label: "AI-системы", href: "/services/ai-systems" },
+      { label: "CRM", href: "/services/custom-crm" },
+    ],
+  },
+  {
+    title: "Browser extension + отдел продаж",
+    text: "Когда команде нужен внутренний инструмент для контроля заявок, подсказок, сбора данных и ускорения ежедневной работы.",
+    links: [
+      { label: "Расширения", href: "/services/browser-extensions" },
+      { label: "AI-агенты", href: "/services/ai-agents" },
+      { label: "Контроль продаж", href: "/services/marketing-strategy" },
+    ],
+  },
+];
+
+const growthServices = [
+  {
+    title: "Сайт под ключ",
+    text: "Если нужен SEO-трафик, коммерческие страницы и сильная основа для роста цифрового продукта.",
+    href: "/services/website-development",
+    icon: Sparkles,
+  },
+  {
+    title: "Яндекс.Директ",
+    text: "Подключаем платный трафик, чтобы быстрее тестировать спрос и запускать новые digital-сценарии.",
+    href: "/services/yandex-direct",
+    icon: LineChart,
+  },
+  {
+    title: "Маркетинговая стратегия",
+    text: "Формулируем позиционирование, продуктовый контур, офферы и карту гипотез перед запуском.",
+    href: "/services/marketing-strategy",
+    icon: Target,
+  },
+  {
+    title: "Веб-аналитика",
+    text: "Привязываем новые продукты и интерфейсы к данным: заявки, этапы, цели, конверсия и источники.",
+    href: "/services/web-analytics",
+    icon: Workflow,
+  },
+];
+
+const processSteps = [
+  {
+    step: "1",
+    title: "Диагностика бизнеса",
+    text: "Разбираем, где нужен рост: продажи, сервис, запись, внутренняя рутина или новый рынок.",
+  },
+  {
+    step: "2",
+    title: "Архитектура решения",
+    text: "Собираем состав продукта: MVP, Mini App, CRM, AI-модуль, расширение или связку нескольких решений.",
+  },
+  {
+    step: "3",
+    title: "Сборка и интеграции",
+    text: "Подключаем интерфейс, формы, статусы, уведомления, аналитику, CRM и внутренние действия.",
+  },
+  {
+    step: "4",
+    title: "Запуск на реальных данных",
+    text: "Проверяем путь клиента, скорость команды, качество обработки и быстро докручиваем рабочие связки.",
+  },
+];
 
 const Index = () => {
   return (
-    <Layout>
+    <Layout
+      title="CentrLP — Telegram Mini App, CRM, AI-агенты, MVP и цифровые продукты | Тюмень"
+      description="CentrLP разрабатывает современные цифровые продукты для бизнеса: Telegram Mini App, AI-агенты, персональные CRM, browser extensions, MVP, AI-системы, сайты и запуск роста."
+    >
       <Hero />
 
-      {/* Services Section */}
       <section id="services" className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="mb-4">Что мы делаем</h2>
+            <h2 className="mb-4">Что мы запускаем для бизнеса сейчас</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Полный цикл запуска продаж в интернете: от стратегии до первых заявок
+              Делаем не только сайты и рекламу. Собираем современные цифровые продукты, которые продают, обслуживают клиентов и упрощают внутреннюю работу команды.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <Card className="p-6 hover-scale shadow-card">
-              <Target className="w-10 h-10 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-3">Маркетинговая стратегия</h3>
-              <p className="text-muted-foreground">
-                Анализ ниши, сегментирование аудитории, разработка УТП и карты гипотез.
-                Составление медиаплана с понятными этапами и KPI.
-              </p>
-            </Card>
-
-            <Card className="p-6 hover-scale shadow-card">
-              <Sparkles className="w-10 h-10 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-3">Сайт на Тильде (5–10 страниц)</h3>
-              <p className="text-muted-foreground">
-                Прототип → дизайн → сборка на Тильде. Формы заявок, квизы, интеграция с
-                Метрикой и настройка целей. Адаптив под все устройства.
-              </p>
-            </Card>
-
-            <Card className="p-6 hover-scale shadow-card">
-              <svg className="w-10 h-10 mb-4" fill="hsl(var(--primary))" viewBox="0 0 24 24">
-                <path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.391 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.864-.525-2.05-1.727-1.033-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.441 0 .61.203.78.677.863 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.711 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.118-.254.322-.491.763-.491h1.744c.525 0 .644.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.78 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.49-.085.744-.576.744z" />
-              </svg>
-              <h3 className="text-xl font-bold mb-3">Оформление ВКонтакте</h3>
-              <p className="text-muted-foreground">
-                Обложка, меню с кнопками, закреп с предложением, перенос отзывов. Настройка
-                товаров и каталога для вашей ниши.
-              </p>
-            </Card>
-
-            <Card className="p-6 hover-scale shadow-card">
-              <Bot className="w-10 h-10 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-3">Чат-боты (ВК и сайт)</h3>
-              <p className="text-muted-foreground">
-                Автоматическая запись на услуги, автоответы 24/7, напоминания о визите. Сценарии
-                через промт-инжиниринг под вашу нишу.
-              </p>
-            </Card>
-
-            <Card className="p-6 hover-scale shadow-card">
-              <svg className="w-10 h-10 mb-4" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--primary))" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 12h8"></path>
-                <path d="M12 8v8"></path>
-              </svg>
-              <h3 className="text-xl font-bold mb-3">Фирменный стиль и нейминг</h3>
-              <p className="text-muted-foreground">
-                Логотип, фирменная палитра, шрифты, шаблоны документов. Разработка 3–5 вариантов
-                названий компании и продающих предложений.
-              </p>
-            </Card>
-
-            <Card className="p-6 hover-scale shadow-card">
-              <LineChart className="w-10 h-10 text-primary mb-4" />
-              <h3 className="text-xl font-bold mb-3">Реклама Яндекс.Директ и ВК</h3>
-              <p className="text-muted-foreground">
-                Стартовые кампании по ключевым запросам, ретаргетинг, быстрые A/B-тесты
-                креативов. Отчёты по CPL и конверсиям с первой недели.
-              </p>
-            </Card>
-          </div>
-
-          <div className="bg-accent-2/10 rounded-2xl p-8 text-center">
-            <Brain className="w-12 h-12 text-accent-2 mx-auto mb-4" />
-            <p className="text-lg text-foreground max-w-3xl mx-auto">
-              Используем ИИ для поиска работающих формул, генерации креативов и ускоренных
-              A/B-тестов, чтобы быстрее выйти на рабочие связки.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* AI Integration Section */}
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="mb-4">ИИ-внедрение для вашего бизнеса</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Автоматизация коммуникаций, снижение нагрузки на персонал, увеличение конверсии
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <Card className="p-6 text-center shadow-card">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <MessageSquare className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-lg font-bold mb-3">ИИ-автоответы 24/7</h3>
-              <p className="text-sm text-muted-foreground">
-                Бот отвечает на типовые вопросы, собирает заявки и разгружает телефон даже ночью и
-                в выходные.
-              </p>
-            </Card>
-
-            <Card className="p-6 text-center shadow-card">
-              <div className="w-16 h-16 rounded-full bg-accent-1/10 flex items-center justify-center mx-auto mb-4">
-                <Target className="w-8 h-8 text-accent-1" />
-              </div>
-              <h3 className="text-lg font-bold mb-3">ИИ-скрипты продаж</h3>
-              <p className="text-sm text-muted-foreground">
-                Подсказки для оператора или мастера по ходу диалога: возражения, допродажи,
-                ответы на частые вопросы.
-              </p>
-            </Card>
-
-            <Card className="p-6 text-center shadow-card">
-              <div className="w-16 h-16 rounded-full bg-accent-2/10 flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="w-8 h-8 text-accent-2" />
-              </div>
-              <h3 className="text-lg font-bold mb-3">ИИ-тексты и заголовки</h3>
-              <p className="text-sm text-muted-foreground">
-                Генерация и автоподбор вариантов под нишу: грамотный русский без лишних
-                англицизмов, адаптация под ЦА.
-              </p>
-            </Card>
-
-            <Card className="p-6 text-center shadow-card">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <LineChart className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-lg font-bold mb-3">A/B-тесты на основе ИИ</h3>
-              <p className="text-sm text-muted-foreground">
-                Быстрая генерация версий блоков лендинга, отключаем слабые варианты по данным
-                Метрики за 3–7 дней.
-              </p>
-            </Card>
-          </div>
-
-          <p className="text-center text-sm text-muted-foreground">
-            Соблюдаем 152-ФЗ и требования к содержанию рекламы.
-          </p>
-        </div>
-      </section>
-
-      {/* Barter Section */}
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="mb-4">Бартер-пакеты по нишам</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Обмениваем маркетинговые услуги на вашу продукцию или сервис. Работаем по договору.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <Card className="p-8 shadow-card hover-scale">
-              <div className="bg-primary/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" viewBox="0 0 24 24">
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <path d="M3 9h18" />
-                  <path d="M9 21V9" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Для мебельщиков</h3>
-              <p className="text-muted-foreground mb-4">
-                Сайт-портфолио с квизом «Рассчитать кухню», ИИ-бот по материалам и срокам.
-                Оформление ВК. Реклама по запросам «кухня на заказ» и локальным районам.
-              </p>
-              <Link to="/barter">
-                <Button variant="outline" className="w-full">
-                  Подробнее
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {primaryProducts.map((item) => (
+              <Card key={item.href} className="p-6 shadow-card hover-scale h-full flex flex-col">
+                <item.icon className="w-10 h-10 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-muted-foreground mb-6 flex-1">{item.description}</p>
+                <Button variant="outline" asChild>
+                  <Link to={item.href}>Открыть услугу</Link>
                 </Button>
-              </Link>
-            </Card>
-
-            <Card className="p-8 shadow-card hover-scale">
-              <div className="bg-accent-1/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8" fill="none" stroke="hsl(var(--accent-1))" strokeWidth="2" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Для СТО и детейлинга</h3>
-              <p className="text-muted-foreground mb-4">
-                Сайт с квизом «записаться/рассчитать», упаковка ВК, автоответы бота. Реклама по
-                маркам авто и видам работ: полировка, химчистка, ремонт.
-              </p>
-              <Link to="/barter">
-                <Button variant="outline" className="w-full">
-                  Подробнее
-                </Button>
-              </Link>
-            </Card>
-
-            <Card className="p-8 shadow-card hover-scale">
-              <div className="bg-accent-2/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                <svg className="w-8 h-8" fill="none" stroke="hsl(var(--accent-2))" strokeWidth="2" viewBox="0 0 24 24">
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Для клининга</h3>
-              <p className="text-muted-foreground mb-4">
-                Сайт с калькулятором уборки, ИИ-бот для расчёта площади и графика. Ретаргет ВК и
-                РСЯ на тех, кто уже заходил на сайт.
-              </p>
-              <Link to="/barter">
-                <Button variant="outline" className="w-full">
-                  Подробнее
-                </Button>
-              </Link>
-            </Card>
-          </div>
-
-          <div className="text-center">
-            <p className="text-lg text-foreground mb-4">
-              Эквивалентный пакет от 80 000 ₽. По бартеру — взаимозачёт, оформляем договор.
-            </p>
-            <p className="text-muted-foreground mb-6">
-              По аналогии собираем бартер-пакеты для салонов красоты, турагентств и других ниш.
-            </p>
-            <Link to="/barter">
-              <Button size="lg">Узнать условия бартера</Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="mb-4">Процесс работы</h2>
-            <p className="text-xl text-muted-foreground">
-              Прозрачная система с четкими этапами и отчётностью
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-5 gap-6 mb-12">
-            {[
-              { step: "1", title: "Бриф и аудит", desc: "Изучаем нишу, конкурентов, ЦА" },
-              { step: "2", title: "Прототип и стратегия", desc: "Карта гипотез, медиаплан" },
-              { step: "3", title: "Дизайн и сборка", desc: "Сайт + оформление ВК" },
-              { step: "4", title: "Настройка Метрики", desc: "Цели, чат-боты, формы" },
-              { step: "5", title: "Запуск рекламы", desc: "Отчёт по лидам через 7 дней" },
-            ].map((item) => (
-              <Card key={item.step} className="p-6 text-center shadow-card">
-                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center mx-auto mb-4">
-                  {item.step}
-                </div>
-                <h3 className="font-bold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
               </Card>
             ))}
           </div>
 
-          <div className="text-center">
-            <a href="#form">
-              <Button size="lg">Запросить план работ</Button>
-            </a>
+          <div className="text-center mt-10">
+            <Button size="lg" asChild>
+              <Link to="/services">
+                Все услуги и направления <Rocket className="w-5 h-5 ml-2" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="mb-4">Прозрачные цены</h2>
-            <p className="text-xl text-muted-foreground">
-              Работаем по договору. Оплата по этапам 50/50.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <Card className="p-8 shadow-card">
-              <h3 className="text-2xl font-bold mb-4">Старт</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-primary">от 60 000 ₽</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Сайт 5–7 страниц на Tilda</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Базовое оформление ВК</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Яндекс.Метрика и цели</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Формы заявок</span>
-                </li>
-              </ul>
-              <Link to="/prices">
-                <Button variant="outline" className="w-full">
-                  Подробнее
-                </Button>
-              </Link>
-            </Card>
-
-            <Card className="p-8 shadow-card border-2 border-primary">
-              <div className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">
-                ПОПУЛЯРНЫЙ
-              </div>
-              <h3 className="text-2xl font-bold mb-4">Под ключ</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-primary">от 80 000 ₽</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Всё из пакета «Старт»</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Чат-боты ВК и сайт</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">ИИ-скрипты и автоответы</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Запуск рекламы (2 канала)</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Первый отчёт через 7 дней</span>
-                </li>
-              </ul>
-              <Link to="/prices">
-                <Button className="w-full">Выбрать пакет</Button>
-              </Link>
-            </Card>
-
-            <Card className="p-8 shadow-card">
-              <h3 className="text-2xl font-bold mb-4">Ведение рекламы</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-primary">30 000 ₽</span>
-                <span className="text-muted-foreground">/мес</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Ведение кампаний Директ и ВК</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">A/B-тесты креативов</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">Еженедельные отчёты</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm">+ рекламный бюджет</span>
-                </li>
-              </ul>
-              <Link to="/prices">
-                <Button variant="outline" className="w-full">
-                  Подробнее
-                </Button>
-              </Link>
-            </Card>
-          </div>
-
-          <div className="text-center">
-            <p className="text-muted-foreground">
-              Бартер — взаимозачёт услуг по согласованному договору.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Business Plans Section */}
       <section className="py-20 gradient-hero">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="mb-6">Бизнес-планы и расчёты с ИИ</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Помогаем владельцам малого бизнеса посчитать экономику проекта: бизнес-план,
-                сметы, прайсы и базовую юнит-экономику.
-              </p>
-              <p className="text-muted-foreground mb-8">
-                Используем ИИ для ускорения расчётов и проверки гипотез. Подготовим документы для
-                получения субсидий, грантов или просто для понимания окупаемости вашей идеи.
-              </p>
-              <Link to="/business-plans">
-                <Button size="lg">Подробнее о бизнес-планах</Button>
-              </Link>
-            </div>
-            <Card className="p-8 shadow-card">
-              <h3 className="text-xl font-bold mb-6">Что входит:</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block mb-1">Бизнес-план под субсидии и гранты</span>
-                    <span className="text-sm text-muted-foreground">
-                      Структурированный документ с финансовыми расчётами
-                    </span>
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Современные цифровые продукты</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Отдельный продукт, клиентский кабинет, Mini App, CRM или внутренний инструмент команды. Подбираем формат не под хайп, а под задачу бизнеса.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {digitalBlocks.map((item) => (
+              <Card key={item.href} className="shadow-card bg-card h-full overflow-hidden flex flex-col">
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </div>
+                <div className="p-8 flex flex-col flex-1">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                    <item.icon className="w-7 h-7 text-primary" />
                   </div>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block mb-1">Финмодель и юнит-экономика</span>
-                    <span className="text-sm text-muted-foreground">
-                      Прогноз доходов, расходов, точка безубыточности
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block mb-1">Сметы и прайсы с ИИ</span>
-                    <span className="text-sm text-muted-foreground">
-                      Анализ конкурентов, подбор оптимальных цен
-                    </span>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-3 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block mb-1">Разбор текущей экономики</span>
-                    <span className="text-sm text-muted-foreground">
-                      Аудит рентабельности существующего бизнеса
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </Card>
+                  <h3 className="text-2xl font-bold">{item.title}</h3>
+                </div>
+                <p className="text-muted-foreground mb-6">{item.description}</p>
+                <ul className="space-y-3 mb-8">
+                  {item.bullets.map((bullet) => (
+                    <li key={bullet} className="flex items-start">
+                      <Sparkles className="w-4 h-4 text-accent-2 mr-3 mt-1 flex-shrink-0" />
+                      <span className="text-sm">{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button variant="outline" asChild>
+                  <Link to={item.href}>Подробнее</Link>
+                </Button>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Cases Section */}
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="mb-4">Реальные кейсы</h2>
+            <h2 className="mb-4">AI-системы и нейросети для бизнеса</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Как мы строим стабильный поток клиентов для малого бизнеса
+              Добавляем AI туда, где он действительно даёт эффект: заявки, ответы, база знаний, контент, видео, поиск информации и внутренние действия.
             </p>
           </div>
 
-          {/* Case 1: СТО и детейлинг */}
-          <Card className="mb-12 p-8 lg:p-12 shadow-card animate-fade-in">
-            <div className="mb-6">
-              <h3 className="text-3xl font-bold mb-3">
-                Кейс: как мы за год превратили СТО в магнит для заявок из VK Рекламы
-              </h3>
-              <p className="text-lg text-muted-foreground">
-                Работа по бартеру. Клиент — детейлинг-центр, полный цикл работ: керамика, оклейка, шумка, ремонт, кузовщина.
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-8 mb-8">
-              <div>
-                <h4 className="text-xl font-bold mb-4 flex items-center">
-                  <Target className="w-6 h-6 text-primary mr-2" />
-                  Задача клиента
-                </h4>
-                <p className="text-foreground mb-4">
-                  «Нужны заявки. Хотим стабильность, а не рывками».
-                </p>
-                <p className="text-muted-foreground">
-                  Точка входа была такая: реклама как будто есть, но система не работает.
-                  Заявки хаотичные, неструктурированные, льётся мимо.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-bold mb-4 flex items-center">
-                  <Sparkles className="w-6 h-6 text-accent-1 mr-2" />
-                  Что сделали
-                </h4>
-                <ul className="space-y-2 text-sm text-foreground">
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Создали новую матрицу рекламных кампаний по направлениям (2–4 слоя керамики, оклейка, кузовной ремонт, детейлинг, шумка)</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Настроили и вели VK Ads под CPL, фактически перезапустили всю рекламу</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Оттестировали связки офферов и креативов</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Сделали автоворонки в сообщениях</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Написали тексты, оформили структуру сообщений, добавили быстрые ответы</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Проводили аналитику по каждому сегменту и корректировали кампании</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-primary/5 rounded-xl p-6 mb-8">
-              <h4 className="text-xl font-bold mb-4 flex items-center">
-                <LineChart className="w-6 h-6 text-primary mr-2" />
-                Результат
-              </h4>
-              <div className="grid md:grid-cols-3 gap-6 mb-6">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Длительность работы</p>
-                  <p className="text-2xl font-bold text-primary">12 месяцев</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            {aiScenarios.map((item) => (
+              <Card key={item.title} className="p-6 shadow-card text-center h-full">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Brain className="w-8 h-8 text-primary" />
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Стабильность</p>
-                  <p className="text-2xl font-bold text-accent-2">Ежедневно</p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Качество</p>
-                  <p className="text-2xl font-bold text-accent-1">Готовые клиенты</p>
-                </div>
-              </div>
-              <ul className="space-y-2 text-foreground">
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Стабильные ежедневные заявки</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Живые вопросы по керамике 2–4 слоя, оклейке, шумоизоляции, детейлингу</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Записи на осмотр, консультации, расчёт стоимости</span>
-                </li>
-                <li className="flex items-start">
-                  <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Диалоги, где клиент уже готов ехать</span>
-                </li>
-              </ul>
-              <p className="text-sm text-muted-foreground mt-4 italic">
-                Это не всплески. Это постоянство. 12 месяцев подряд.
-              </p>
-            </div>
+                <h3 className="text-lg font-bold mb-3">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.text}</p>
+              </Card>
+            ))}
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="bg-background rounded-xl overflow-hidden hover-scale">
-                <img
-                  src={vkAnalyticsImage}
-                  alt="Аналитика рекламной кампании VK Ads для детейлинг-центра"
-                  className="w-full h-auto"
-                />
-                <p className="p-4 text-sm text-muted-foreground">
-                  Аналитика рекламной кампании: стабильный поток результатов
-                </p>
-              </div>
-              <div className="bg-background rounded-xl overflow-hidden hover-scale">
-                <img
-                  src={vkMessagesImage}
-                  alt="Примеры входящих сообщений от клиентов детейлинг-центра"
-                  className="w-full h-auto"
-                />
-                <p className="p-4 text-sm text-muted-foreground">
-                  Входящие сообщения: качественные заявки каждый день
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-border">
-              <h4 className="text-lg font-bold mb-3">Почему получилось</h4>
-              <p className="text-foreground">
-                Потому что мы не занимаемся «красивыми словами» о маркетинге.
-                Мы копаем до живого оффера, строим систему и доводим её до результата.
-                Работа строилась как полноценное ведение, а не разовая настройка.
-              </p>
-            </div>
-          </Card>
-
-          {/* Case 2: Напольное покрытие */}
-          <Card className="mb-12 p-8 lg:p-12 shadow-card animate-fade-in">
-            <div className="mb-6">
-              <h3 className="text-3xl font-bold mb-3">
-                Кейс: продающая система для напольного покрытия
-              </h3>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-8 mb-8">
-              <div>
-                <h4 className="text-xl font-bold mb-4 flex items-center">
-                  <Target className="w-6 h-6 text-primary mr-2" />
-                  Проблема
-                </h4>
-                <p className="text-foreground">
-                  У клиента были разрозненные попытки рекламы, которые не давали стабильного потока обращений.
-                  Не было структуры, оффера, понятной логики сегментации и нормальной обработки входящих.
-                  Из-за этого реклама работала непредсказуемо и не давала нужного объёма обращений.
-                </p>
-              </div>
-
-              <div>
-                <h4 className="text-xl font-bold mb-4 flex items-center">
-                  <Sparkles className="w-6 h-6 text-accent-1 mr-2" />
-                  Решение
-                </h4>
-                <ul className="space-y-2 text-sm text-foreground">
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Перезапустили рекламные кампании с правильным разделением по типам помещений</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Сформировали понятный и конкретный оффер</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Выстроили обработку сообщений и настроили автоматизацию</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Привели в порядок коммуникации с клиентами</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Подключили аналитику, чистили всё лишнее, усиливали рабочие связки</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="w-5 h-5 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Корректировали подход под реальный спрос</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-accent-1/5 rounded-xl p-6 mb-6">
-              <h4 className="text-xl font-bold mb-4 flex items-center">
-                <LineChart className="w-6 h-6 text-accent-1 mr-2" />
-                Результат
-              </h4>
-              <p className="text-foreground mb-4">
-                У клиента появилась стабильная, ровная работа рекламного канала — без провалов,
-                скачков и непредсказуемости.
-              </p>
-              <p className="text-foreground font-semibold">
-                Теперь рекламный трафик превращается в постоянный поток обращений, а продажи
-                опираются на понятную, управляемую систему, которая работает каждый день и не
-                зависит от удачи.
-              </p>
-            </div>
-
-            <div className="bg-primary/5 rounded-xl p-6">
-              <p className="text-foreground">
-                <strong>Для кого это актуально:</strong> Если вы продаёте покрытия, оборудование,
-                материалы или работаете с коммерческими помещениями — вы можете получить такой же
-                структурный, стабильный и управляемый поток клиентов. Реклама наконец начнёт работать
-                так, как должна.
-              </p>
-            </div>
-          </Card>
-
-          <div className="text-center">
-            <Link to="/cases">
-              <Button size="lg" variant="outline" className="mr-4">
-                Смотреть все кейсы
-              </Button>
-            </Link>
-            <a href="#form">
-              <Button size="lg">
-                Получить такой же результат
-              </Button>
-            </a>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Button asChild>
+              <Link to="/services/ai-systems">AI-системы</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/services/ai-agents">AI-агенты</Link>
+            </Button>
           </div>
         </div>
       </section>
 
-      {/* Contact Form Section */}
-      <section id="form" className="py-20 gradient-hero">
-        <div className="container mx-auto px-4 max-w-2xl">
-          <div className="text-center mb-12">
-            <h2 className="mb-4">Оставьте заявку</h2>
-            <p className="text-lg text-muted-foreground">
-              Ответим в течение часа. Консультация бесплатна.
+      <section className="py-20 gradient-hero">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4">MVP, мини-приложения и CRM как единая связка</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Если нужно быстро запустить новый продукт или перестроить путь клиента, мы собираем не отдельный экран, а рабочую систему из интерфейса, логики и внутренних процессов.
             </p>
           </div>
-          <ContactForm />
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {launchBundles.map((item) => (
+              <Card key={item.title} className="p-8 shadow-card bg-card h-full flex flex-col">
+                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
+                <p className="text-muted-foreground mb-6 flex-1">{item.text}</p>
+                <div className="flex flex-wrap gap-3">
+                  {item.links.map((link) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      className="rounded-full border border-primary/20 px-3 py-2 text-sm text-primary hover:bg-primary/5 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-0">
-        <iframe
-          src="https://yandex.ru/map-widget/v1/?um=constructor%3A644fd3fd8f74799009f60c932487dc7ef6b4d7208f53ac7e5e596cb6eec650ac&source=constructor"
-          width="100%"
-          height="400"
-          frameBorder="0"
-          title="Карта"
-        ></iframe>
+      <section className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Усиливаем запуск маркетингом и аналитикой</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Новые продукты лучше растут, когда у них есть сильная посадочная, трафик, аналитика и понятное позиционирование.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {growthServices.map((item) => (
+              <Card key={item.href} className="p-6 shadow-card h-full flex flex-col">
+                <item.icon className="w-10 h-10 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-muted-foreground mb-6 flex-1">{item.text}</p>
+                <Button variant="outline" asChild>
+                  <Link to={item.href}>Подробнее</Link>
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 gradient-hero">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="mb-4">Как мы работаем</h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Сначала понимаем, какая цифровая система действительно нужна бизнесу, потом собираем её, запускаем и усиливаем по данным.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {processSteps.map((item) => (
+              <Card key={item.step} className="p-6 shadow-card bg-card text-center h-full">
+                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center mx-auto mb-4">
+                  {item.step}
+                </div>
+                <h3 className="font-bold mb-3">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.text}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="form" className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="mb-4">Нужен продукт, который реально работает на продажи и процессы?</h2>
+            <p className="text-xl text-muted-foreground">
+              Расскажите задачу. Предложим, что лучше подойдёт: сайт, Mini App, CRM, AI-агент, browser extension, MVP или связка нескольких решений.
+            </p>
+          </div>
+          <div className="max-w-2xl mx-auto">
+            <ContactForm />
+          </div>
+        </div>
       </section>
     </Layout>
   );

@@ -1,9 +1,20 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowRight, Lightbulb, Target, Zap } from "lucide-react";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
 export default function NamingOffers() {
+  const faqItems = [
+    { question: "Как вы придумываете варианты названий?", answer: "Используем техники нейминга, ассоциации, анализ ниши, ИИ для генерации вариантов. Затем отбираем лучшие вручную." },
+    { question: "Можно ли зарегистрировать название как товарный знак?", answer: "Мы проверяем на уникальность в поисковиках и базах доменов. Для регистрации ТЗ нужна отдельная юридическая проверка." },
+    { question: "А если ни один вариант не понравится?", answer: "Делаем ещё один раунд с учётом ваших пожеланий. Обычно из 10 вариантов находится 2–3 подходящих." },
+    { question: "Как быстро растёт конверсия после смены офферов?", answer: "Зависит от ниши и трафика. В среднем видим рост 20–50% в первые 2 недели после внедрения." },
+    { question: "Можно ли заказать только офферы без нейминга?", answer: "Да, это отдельный пакет. Если название уже есть, работаем только над упаковкой предложений." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Нейминг и офферы");
   return (
     <Layout
       title="Нейминг и продающие офферы для бизнеса | CentrLP Тюмень"
@@ -16,7 +27,7 @@ export default function NamingOffers() {
             <div className="inline-block mb-6 px-4 py-2 bg-accent/20 rounded-full">
               <span className="text-accent font-semibold">Нейминг и офферы</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Название и оффер, которые продают
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8">
@@ -47,10 +58,12 @@ export default function NamingOffers() {
         </div>
       </section>
 
+      <ServiceImageBand slug="naming-offers" alt="naming-offers — иллюстрация услуги CentrLP" />
+
       {/* Для кого */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Кому нужен нейминг и офферы
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -84,7 +97,7 @@ export default function NamingOffers() {
       {/* Боли */}
       <section className="py-20 bg-muted/30">
         <div className="container max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Типичные проблемы с названиями и офферами
           </h2>
           <div className="space-y-4">
@@ -108,7 +121,7 @@ export default function NamingOffers() {
       {/* Как решаем */}
       <section id="process" className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-16">
             Как мы работаем над неймингом и офферами
           </h2>
           <div className="max-w-4xl mx-auto space-y-8">
@@ -156,7 +169,7 @@ export default function NamingOffers() {
       {/* Результат */}
       <section className="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Что вы получите
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -180,7 +193,7 @@ export default function NamingOffers() {
       {/* Кейсы */}
       <section className="py-20 bg-muted/30">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Примеры работ
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -228,7 +241,7 @@ export default function NamingOffers() {
       {/* Тарифы */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Форматы и стоимость
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -303,7 +316,7 @@ export default function NamingOffers() {
       {/* FAQ */}
       <section className="py-20 bg-muted/30">
         <div className="container max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Частые вопросы
           </h2>
           <div className="space-y-6">
@@ -341,7 +354,7 @@ export default function NamingOffers() {
       {/* CTA */}
       <section id="form" className="py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10">
         <div className="container max-w-4xl text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Готовы создать название и офферы, которые продают?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">

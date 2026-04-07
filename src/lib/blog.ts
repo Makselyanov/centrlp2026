@@ -225,6 +225,27 @@ export const getPostBySlug = (slug: string): BlogPost | undefined => {
 };
 
 /**
+ * Получает похожие посты по тегам (исключая текущий)
+ */
+export const getRelatedPosts = (currentSlug: string, limit: number = 3): BlogPost[] => {
+    const allPosts = getAllPosts();
+    const currentPost = allPosts.find(p => p.slug === currentSlug);
+    if (!currentPost) return allPosts.filter(p => p.slug !== currentSlug).slice(0, limit);
+
+    const currentTags = currentPost.tags || [];
+
+    const scored = allPosts
+        .filter(p => p.slug !== currentSlug)
+        .map(post => {
+            const sharedTags = (post.tags || []).filter(t => currentTags.includes(t)).length;
+            return { post, score: sharedTags };
+        })
+        .sort((a, b) => b.score - a.score);
+
+    return scored.slice(0, limit).map(s => s.post);
+};
+
+/**
  * Генерирует оглавление (TOC) из markdown контента
  */
 export const generateTableOfContents = (content: string): Array<{ level: number; text: string; id: string }> => {

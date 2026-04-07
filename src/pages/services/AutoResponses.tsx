@@ -1,11 +1,25 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Calendar, Bell, Zap, CheckCircle, MessageCircle } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
 const AutoResponses = () => {
+  const faqItems = [
+    { question: "Сколько времени занимает настройка?", answer: "Базовые автоответы — 3-5 дней, система онлайн-записи — 7-10 дней. Комплексные решения обсуждаются индивидуально." },
+    { question: "Можно ли настроить запись для разных специалистов?", answer: "Да, система поддерживает несколько мастеров/специалистов с индивидуальными графиками, разными услугами и ценами." },
+    { question: "Как клиенты узнают о свободных слотах?", answer: "Система автоматически показывает только свободное время на основе вашего расписания. Вы просто вносите график работы, остальное делает система." },
+    { question: "Что делать, если клиент не пришел?", answer: "Автоматические напоминания за сутки и за час до визита снижают количество неявок на 60-70%. Также можно настроить подтверждение записи." },
+    { question: "Можно ли изменить расписание вручную?", answer: "Да, у вас будет доступ к админ-панели, где можно заблокировать время, добавить новые слоты или отменить запись." },
+    { question: "Нужно ли мне что-то устанавливать?", answer: "Нет, всё работает через браузер или приложения ВКонтакте/Telegram. Вы получаете доступ к панели управления, клиенты записываются через удобный интерфейс." },
+    { question: "Можно ли оплатить поэтапно?", answer: "Да, работаем по этапам: аванс → настройка → тестирование → оплата остатка → запуск. Рассмотрим бартер с некоторыми видами бизнеса." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("ИИ-автоответы");
+
   return (
     <Layout
       title="Автоответы 24/7 и автоматическая запись на услуги | CentrLP"
@@ -15,7 +29,7 @@ const AutoResponses = () => {
       <section className="py-20 bg-gradient-to-br from-background via-background to-primary/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
               Ни одна заявка не останется без ответа
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -43,10 +57,12 @@ const AutoResponses = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="auto-responses" alt="auto-responses — иллюстрация услуги CentrLP" />
+
       {/* Target Audience */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Кому это нужно</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Кому это нужно</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -82,7 +98,7 @@ const AutoResponses = () => {
       {/* Problems */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Какие проблемы решаем</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Какие проблемы решаем</h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
               "Теряете клиентов, которые пишут вечером или в выходные",
@@ -105,7 +121,7 @@ const AutoResponses = () => {
       {/* How We Solve */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Как мы настраиваем систему</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Как мы настраиваем систему</h2>
           <div className="max-w-4xl mx-auto space-y-8">
             {[
               {
@@ -156,7 +172,7 @@ const AutoResponses = () => {
       {/* Results */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Что вы получаете</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Что вы получаете</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
               { icon: Zap, title: "Мгновенная реакция", desc: "Клиенты получают ответ в первые секунды" },
@@ -181,7 +197,7 @@ const AutoResponses = () => {
       {/* Cases */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Реальные результаты</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Реальные результаты</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <Card>
               <CardContent className="pt-6">
@@ -249,7 +265,7 @@ const AutoResponses = () => {
       {/* Tariffs */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Форматы настройки</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Форматы настройки</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -350,7 +366,7 @@ const AutoResponses = () => {
       {/* Why CentrLP */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Почему CentrLP</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Почему CentrLP</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card>
               <CardContent className="pt-6">
@@ -391,7 +407,7 @@ const AutoResponses = () => {
       {/* FAQ */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
@@ -445,7 +461,7 @@ const AutoResponses = () => {
       <section id="contact" className="py-20 bg-gradient-to-br from-primary/5 via-background to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Перестаньте терять клиентов из-за задержек с ответом
             </h2>
             <p className="text-xl text-muted-foreground">

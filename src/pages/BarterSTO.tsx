@@ -9,7 +9,7 @@ import vkMessages from "@/assets/vk-messages.png";
 
 const BarterSTO = () => {
   return (
-    <Layout>
+    <Layout title="Бартер для автосервиса — маркетинг в обмен на услуги СТО | CentrLP" description="Продвижение автосервиса в обмен на услуги по авто: ГБО, тонировка, плёнка, автозвук. Сайт, реклама, заявки для СТО в Тюмени.">
       {/* Hero Section */}
       <section 
         className="pt-32 pb-20 relative bg-cover bg-center bg-no-repeat"

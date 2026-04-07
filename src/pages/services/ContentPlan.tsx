@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +11,16 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 const ContentPlan = () => {
+  const faqItems = [
+    { question: "Сколько стоит контент-план для соцсетей в Тюмени?", answer: "Контент-план стоит от 10 000 ₽/мес. Ведение соцсетей (план + написание текстов + публикация) — от 20 000 ₽/мес. Комплекс «контент + реклама» — от 30 000 ₽/мес. Финальная цена зависит от количества площадок и объёма работ." },
+    { question: "Какие сроки разработки контент-плана?", answer: "Первый контент-план готов за 5–7 рабочих дней. В него входит рубрикатор, календарь публикаций, примеры креативов и рекомендации по визуалу. Далее план обновляется ежемесячно." },
+    { question: "Что входит в контент-план?", answer: "В контент-план входят: рубрикатор под цели бизнеса, календарь с датами и форматами публикаций (посты, сторис, Reels), структура текстов с заголовками и CTA, референсы для визуала и рекомендации по аналитике." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Контент-план");
   const scrollToForm = () => {
     const element = document.getElementById('contact');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -92,7 +101,7 @@ const ContentPlan = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
+            className="text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
           >
             Не просто «33 поста», а <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
@@ -137,12 +146,14 @@ const ContentPlan = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="content-plan" alt="content-plan — иллюстрация услуги CentrLP" />
+
       {/* Who Needs Content Plan */}
       <section className="py-20 bg-card relative">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Кому нужен системный контент</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Кому нужен системный контент</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Если вы устали вымучивать посты и хотите, чтобы соцсети работали на бизнес
             </p>
@@ -209,7 +220,7 @@ const ContentPlan = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Почему контент не работает</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Почему контент не работает</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Типичные ошибки, которые убивают охваты и продажи
             </p>
@@ -268,7 +279,7 @@ const ContentPlan = () => {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.05]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-20" {...fadeInUp}>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Что входит в контент-план</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Что входит в контент-план</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Не просто список тем, а полноценная стратегия коммуникации
             </p>
@@ -342,7 +353,7 @@ const ContentPlan = () => {
                 <Brain className="w-4 h-4 mr-2" />
                 Технологии
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Как мы используем AI в работе</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Как мы используем AI в работе</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Нейросети — это мощный ускоритель, но руль всегда в руках эксперта.
               </p>
@@ -401,7 +412,7 @@ const ContentPlan = () => {
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Контент-план под тренды 2026</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Контент-план под тренды 2026</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Что будет работать в соцсетях в ближайший год
             </p>
@@ -438,7 +449,7 @@ const ContentPlan = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Форматы работы</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Форматы работы</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Прозрачные цены для Тюмени и региона
             </p>
@@ -565,6 +576,23 @@ const ContentPlan = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form */}
       <section id="contact" className="py-24 relative">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
@@ -575,7 +603,7 @@ const ContentPlan = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Нужен контент, который продаёт?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Нужен контент, который продаёт?</h2>
             <p className="text-muted-foreground text-lg">
               Оставьте заявку. Мы проанализируем ваши соцсети и предложим стратегию контента.
             </p>

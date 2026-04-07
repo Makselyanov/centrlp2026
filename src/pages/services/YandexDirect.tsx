@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import {
   Target,
   TrendingUp,
@@ -27,8 +29,17 @@ import {
   Timer
 } from "lucide-react";
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 const YandexDirect = () => {
+  const faqItems = [
+    { question: "Сколько стоит настройка Яндекс.Директ в Тюмени?", answer: "Настройка поисковой рекламы — от 20 000 ₽. РСЯ (рекламная сеть Яндекса) — от 25 000 ₽. Ведение и ежедневная оптимизация — от 30 000 ₽/мес. Комплекс AI (поиск + РСЯ + чат-боты + доработка сайта) — от 50 000 ₽/мес. Рекламный бюджет оплачивается отдельно." },
+    { question: "Какие сроки запуска рекламы в Яндекс.Директ?", answer: "Сбор семантики, написание объявлений и настройка аналитики — 5–7 рабочих дней. Первые клики и заявки — в день запуска. Оптимизация и выход на целевую стоимость лида — 2–4 недели." },
+    { question: "Что входит в ведение Яндекс.Директ?", answer: "Ежедневная чистка мусорных площадок, корректировка ставок, A/B-тесты объявлений, защита от ботов и скликивания, AI-оптимизация кампаний, ретаргетинг, регулярные отчёты с аналитикой по лидам и продажам." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Яндекс.Директ");
   // --- State & Refs ---
   const [sliderValue, setSliderValue] = useState(50);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -91,8 +102,8 @@ const YandexDirect = () => {
 
   return (
     <Layout
-      title="Яндекс.Директ 2026: AI-революция в трафике | CentrLP"
-      description="Забудьте про слив бюджета. AI-оптимизация, защита от ботов и гарантия результата. Кейсы 2025 года."
+      title="Яндекс.Директ 2026: заявки в сайт, Mini App и CRM | CentrLP"
+      description="Настройка и ведение Яндекс.Директ с AI-оптимизацией. Ведем трафик не в пустые страницы, а в продающие сайты, мини-приложения и CRM-воронки."
     >
       {/* Scroll Progress Bar */}
       <motion.div
@@ -119,14 +130,14 @@ const YandexDirect = () => {
             <span className="inline-block px-4 py-2 rounded-full bg-white/5 border border-white/10 text-blue-400 text-sm font-medium backdrop-blur-md mb-6">
               🚀 Технологии маркетинга 2026
             </span>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
               Яндекс.Директ <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-x">
-                Будущего
+                как система заявок
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
-              Пока конкуренты сливают бюджет на ботов, мы используем AI для точечных ударов по целевой аудитории.
+              Проектируем трафик под продающие страницы, Telegram Mini App, ботов и CRM-сценарии. AI помогает быстрее найти рабочие связки, а мы собираем всю воронку до продажи.
             </p>
           </motion.div>
 
@@ -152,11 +163,13 @@ const YandexDirect = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="yandex-direct" alt="yandex-direct — иллюстрация услуги CentrLP" />
+
       {/* Before / After Slider */}
       <section id="cases" className="py-24 bg-slate-900 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Директ: <span className="text-red-500">Ожидание</span> vs <span className="text-green-500">Реальность CentrLP</span>
             </h2>
             <p className="text-slate-400 text-lg">Потяните ползунок, чтобы увидеть разницу</p>
@@ -277,7 +290,7 @@ const YandexDirect = () => {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
               Почему 87% кампаний <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
                 умирают в 2026 году?
@@ -422,7 +435,7 @@ const YandexDirect = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-20">
             <span className="text-purple-400 font-medium tracking-wider uppercase text-sm mb-4 block">AI-Технологии 2026</span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Что делает AI, чего не может <br />
               <span className="text-slate-500">обычный директолог?</span>
             </h2>
@@ -480,11 +493,81 @@ const YandexDirect = () => {
         </div>
       </section>
 
+      {/* Traffic Destinations */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
+              Куда мы ведём трафик, чтобы Директ окупался
+            </h2>
+            <p className="text-lg text-slate-500">
+              Сильный Директ в 2026 году упирается не только в ключи и ставки, а в то, какой путь проходит человек после клика: сайт, мини-приложение, бот, CRM или их связка.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                icon: Layers,
+                title: "Продающий сайт",
+                text: "Для услуг, B2B и локального бизнеса, где нужен сильный оффер, SEO-слой и удобная форма заявки.",
+                href: "/services/website-development",
+                cta: "Нужен сайт"
+              },
+              {
+                icon: Rocket,
+                title: "Telegram Mini App",
+                text: "Для бронирования, записи, личного кабинета и повторных касаний в мессенджере без лишних шагов.",
+                href: "/services/telegram-mini-app",
+                cta: "Вести в Mini App"
+              },
+              {
+                icon: BarChart,
+                title: "CRM и воронка",
+                text: "Для отделов продаж, которым нужна маршрутизация лидов, статусы, сегментация и контроль потерь.",
+                href: "/services/custom-crm",
+                cta: "Собрать CRM"
+              },
+              {
+                icon: Bot,
+                title: "AI-агент",
+                text: "Для квалификации заявок, быстрых ответов, обработки однотипных запросов и догрева до менеджера.",
+                href: "/services/ai-agents",
+                cta: "Подключить AI"
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                whileHover={{ y: -8 }}
+                className="rounded-3xl border border-slate-200 bg-slate-50 p-8 shadow-sm hover:shadow-xl transition-all"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-slate-900 text-white flex items-center justify-center mb-6">
+                  <item.icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
+                <p className="text-slate-500 text-sm leading-relaxed mb-6">{item.text}</p>
+                <Link
+                  to={item.href}
+                  className="inline-flex items-center gap-2 text-slate-900 font-semibold hover:gap-3 transition-all"
+                >
+                  {item.cta}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pricing: 3D Cards */}
       <section className="py-24 bg-slate-50 overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">
               Инвестиции в результат
             </h2>
             <p className="text-slate-500 text-lg">Честные цены без скрытых комиссий</p>
@@ -574,7 +657,7 @@ const YandexDirect = () => {
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-[3rem] p-8 md:p-16">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold mb-6">
                   Тренды 2026: <br />
                   <span className="text-blue-600">Будьте на шаг впереди</span>
                 </h2>
@@ -622,6 +705,23 @@ const YandexDirect = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA: Dark Block */}
       <section id="contact" className="py-24 bg-slate-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.05]" />
@@ -629,7 +729,7 @@ const YandexDirect = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Хватит кормить Яндекс. <br />
               <span className="text-blue-400">Пора забирать свои заявки.</span>
             </h2>

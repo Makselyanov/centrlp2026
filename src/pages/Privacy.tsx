@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 
 const Privacy = () => {
   return (
-    <Layout>
+    <Layout title="Политика конфиденциальности | CentrLP" description="Политика в отношении обработки персональных данных на сайте CentrLP. Информация о защите данных пользователей.">
       <section className="pt-32 pb-20">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="mb-8 text-3xl font-bold">Политика в отношении обработки персональных данных</h1>

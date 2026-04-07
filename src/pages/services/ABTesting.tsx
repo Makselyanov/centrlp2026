@@ -1,11 +1,23 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, Target, Zap, BarChart3, CheckCircle, Repeat, Eye, Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
 const ABTesting = () => {
+  const faqItems = [
+    { question: "Сколько времени длится один тест?", answer: "Зависит от трафика. При 500+ визитов в день тест займет 1-2 недели. Если трафик меньше, потребуется 3-4 недели для статистически значимого результата." },
+    { question: "Что лучше тестировать в первую очередь?", answer: "Начинаем с элементов, которые видят все пользователи и которые напрямую влияют на конверсию: заголовок, главный оффер, форма заявки, CTA-кнопка. Это дает максимальный эффект." },
+    { question: "Можно ли тестировать несколько элементов одновременно?", answer: "Технически можно (мультивариантное тестирование), но нужен очень высокий трафик. Обычно тестируем один элемент за раз, чтобы четко понять, что повлияло на результат." },
+    { question: "Что если ни один вариант не победил?", answer: "Это тоже результат! Значит, гипотеза не подтвердилась, и мы экономим время на внедрении неэффективных изменений. Формируем новую гипотезу и тестируем дальше." },
+    { question: "Нужно ли техническое вмешательство в сайт?", answer: "Зависит от инструмента. Google Optimize и аналоги позволяют тестировать через визуальный редактор, без правок кода. Если нужны сложные изменения, подключаем разработчика." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("A/B-тестирование");
+
   return (
     <Layout
       title="A/B-тесты креативов и посадочных страниц | CentrLP"
@@ -15,7 +27,7 @@ const ABTesting = () => {
       <section className="py-20 bg-gradient-to-br from-background via-background to-primary/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
               A/B-тесты: находим то, что продает
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -43,10 +55,12 @@ const ABTesting = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="ab-testing" alt="ab-testing — иллюстрация услуги CentrLP" />
+
       {/* Target Audience */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Кому нужны A/B-тесты</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Кому нужны A/B-тесты</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -82,7 +96,7 @@ const ABTesting = () => {
       {/* Pain Points */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Почему изменения не работают</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Почему изменения не работают</h2>
           <div className="max-w-4xl mx-auto space-y-6">
             <Card>
               <CardContent className="pt-6">
@@ -124,7 +138,7 @@ const ABTesting = () => {
       {/* How We Solve */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Как мы проводим A/B-тесты</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Как мы проводим A/B-тесты</h2>
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="flex gap-4 animate-fade-in">
               <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xl">
@@ -188,7 +202,7 @@ const ABTesting = () => {
       {/* Results */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Что вы получите</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Что вы получите</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -233,7 +247,7 @@ const ABTesting = () => {
       {/* Cases */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Примеры тестов</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Примеры тестов</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card>
               <CardContent className="pt-6">
@@ -278,7 +292,7 @@ const ABTesting = () => {
       {/* Pricing */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Форматы работы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Форматы работы</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -371,7 +385,7 @@ const ABTesting = () => {
       {/* FAQ */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem value="item-1" className="border rounded-lg px-6">
@@ -423,7 +437,7 @@ const ABTesting = () => {
       <section id="contact" className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Повысим конверсию на основе данных
             </h2>
             <p className="text-xl text-muted-foreground">

@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, History, CheckCircle, Zap, Users, TrendingUp, MapPin, Star, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import founderImage from "@/assets/founder.png";
+import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 
 const About = () => {
+  useAutoBreadcrumb("О нас");
   const timelineEvents = [
     {
       year: "2010",
@@ -27,7 +29,10 @@ const About = () => {
   ];
 
   return (
-    <Layout>
+    <Layout
+      title="О компании CentrLP — агентство интернет-маркетинга в Тюмени"
+      description="CentrLP — агентство развития бизнеса в Тюмени. Создаём сайты, настраиваем рекламу, внедряем ИИ. НПД Кузнецов М.В., ИНН 720321829472."
+    >
       {/* About Me Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50">
         {/* Background elements */}
@@ -48,7 +53,7 @@ const About = () => {
               <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/50 backdrop-blur-md border border-[#0096D6]/20 text-[#0096D6] font-semibold text-sm tracking-wide shadow-sm">
                 Обо мне | CentrLP
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-8 text-slate-900 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-slate-900 leading-tight">
                 Создаю системы, которые <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
                   приносят деньги
@@ -143,7 +148,7 @@ const About = () => {
             className="bg-card/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-[#0096D6]/20 shadow-2xl text-center"
           >
             <Users className="w-16 h-16 text-[#0096D6] mx-auto mb-6" />
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Подход Win-Win</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Подход Win-Win</h2>
             <p className="text-xl text-muted-foreground leading-relaxed mb-8">
               Мы работаем по принципу <span className="text-foreground font-semibold">win-win</span>: клиент получает понятный результат и прозрачные условия, а я использую ИИ, чат-боты, аналитику и современные маркетинговые инструменты, чтобы бизнес рос быстрее.
             </p>
@@ -178,7 +183,7 @@ const About = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Отзывы клиентов</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Отзывы клиентов</h2>
             <p className="text-xl text-muted-foreground mb-8">
               Честное мнение о нашей работе на независимых площадках
             </p>
@@ -224,6 +229,27 @@ const About = () => {
             </div>
           </motion.div>
 
+          {/* Rating Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12 p-6 bg-background rounded-2xl border border-border/50 shadow-sm"
+          >
+            <div className="text-center">
+              <div className="text-5xl font-bold text-[#44B78B]">5.0</div>
+              <div className="flex gap-1 justify-center mt-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+            </div>
+            <div className="text-center sm:text-left">
+              <div className="text-2xl font-bold">52 отзыва</div>
+              <div className="text-muted-foreground">на 2GIS, Flamp и Яндекс Картах</div>
+            </div>
+          </motion.div>
+
           {/* Reviews Carousel */}
           <ReviewsCarousel />
         </div>
@@ -237,32 +263,72 @@ const ReviewsCarousel = () => {
     {
       name: "Трофимова Татьяна",
       date: "28 октября 2025",
-      text: "Команда внимательно погрузилась в наш бренд и предложила аккуратный, лаконичный дизайн. Прототип — согласовали быстро, правки — оперативно. В итоге сайт d-interior7 удобный, быстрый и понятный для клиента. После запуска вырос поток заявок",
-      rating: 5
+      text: "Команда внимательно погрузилась в наш бренд и предложила аккуратный, лаконичный дизайн. Прототип — согласовали быстро, правки — оперативно. В итоге сайт d-interior7 удобный, быстрый и понятный для клиента. После запуска вырос поток заявок.",
+      rating: 5,
+      source: "2GIS"
     },
     {
       name: "Владислав Погодин",
       date: "22 июля 2025",
-      text: "Хочу выразить благодарность за помощь в создании бизнес-плана. Профессионализм, внимание к деталям и конструктивные советы позволили мне чётко понять ключевые аспекты моего проекта. Особенно впечатлили анализ рынка и финансовые прогнозы, которые увеличили мою уверенность перед инвесторами.",
-      rating: 5
+      text: "Хочу выразить благодарность за помощь в создании бизнес-плана. Профессионализм, внимание к деталям и конструктивные советы позволили мне чётко понять ключевые аспекты моего проекта. Особенно впечатлили анализ рынка и финансовые прогнозы.",
+      rating: 5,
+      source: "2GIS"
     },
     {
       name: "Максим Калугин",
       date: "21 сентября 2024",
       text: "Отличные ребята все было оч круто!! Понимают с полуслова, всегда все вовремя. Есть вкус, понимание, креативность идей. Общаться было с ними легко, поэтому если нам нужна помощь мы работаем с ними.",
-      rating: 5
+      rating: 5,
+      source: "2GIS"
     },
     {
       name: "marinaviktotovna",
       date: "15 сентября 2024",
       text: "Давно с компанией работаем. Начинали еще с маленького интернет-магазина детской одежды, сейчас уже разрослось все до собственного офлайн магазина. И до сих пор сайтом и всеми техработами занимается centrlp. Мы им полностью доверяем.",
-      rating: 5
+      rating: 5,
+      source: "2GIS"
+    },
+    {
+      name: "Ксения Гаврилова",
+      date: "1 марта 2019",
+      text: "Сайт занял позиции в ТОП-10 поисковой выдачи по почти 30 запросам за год. Результат превзошёл ожидания — рекомендую!",
+      rating: 5,
+      source: "Flamp"
+    },
+    {
+      name: "Евгений Хомец",
+      date: "10 сентября 2018",
+      text: "Требовалось полностью переделать сайт. Через неделю сайт был готов, отличный сайт! Всем рекомендуем компанию.",
+      rating: 5,
+      source: "2GIS"
+    },
+    {
+      name: "Раиса Кузнецова",
+      date: "5 декабря 2018",
+      text: "Сайт получился красочный, удобный, информативный. Цена приемлемая. Рекомендую!",
+      rating: 5,
+      source: "2GIS"
+    },
+    {
+      name: "Татьяна Артюгина",
+      date: "20 января 2019",
+      text: "Сайт получился точно такой, какой мы хотели. Учли наши дополнительные пожелания. Работать с командой было комфортно.",
+      rating: 5,
+      source: "2GIS"
+    },
+    {
+      name: "Юлия Глушакова",
+      date: "1 марта 2019",
+      text: "Программист и дизайнер справились отлично. Пошли навстречу при ускорении процесса. Результатом довольна!",
+      rating: 5,
+      source: "Flamp"
     },
     {
       name: "Дарья Любимцева",
       date: "5 декабря 2024",
-      text: "Благодарю за составления контент-плана для группы вк",
-      rating: 5
+      text: "Благодарю за составление контент-плана для группы ВК. Качественная работа, всё чётко и по делу.",
+      rating: 5,
+      source: "2GIS"
     }
   ];
 
@@ -297,7 +363,7 @@ const ReviewsCarousel = () => {
             </p>
             <div>
               <div className="font-bold text-lg">{reviews[currentIndex].name}</div>
-              <div className="text-sm text-muted-foreground">{reviews[currentIndex].date}</div>
+              <div className="text-sm text-muted-foreground">{reviews[currentIndex].date} · {reviews[currentIndex].source}</div>
             </div>
           </div>
         </motion.div>

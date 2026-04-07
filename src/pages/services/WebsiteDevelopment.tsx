@@ -1,12 +1,25 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, ArrowRight, Zap, Users, TrendingUp, Layout as LayoutIcon, Palette, FileText, Settings, Rocket, BarChart, Clock, CreditCard, HelpCircle, MessageSquare, MapPin, Briefcase, Search, Target, Smartphone, MousePointer, Eye, Globe, ShieldCheck, Award, PieChart, ZoomIn } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
-export default function TildaWebsite() {
+export default function WebsiteDevelopment() {
+  const faqItems = [
+    { question: "Почему вы используете AI, это не ухудшает качество?", answer: "Наоборот. AI позволяет нам проанализировать объемы данных, на которые у человека ушли бы недели (конкуренты, отзывы, тренды). Мы тратим время на стратегию, а не на рутину." },
+    { question: "Как быстро окупятся вложения в сайт?", answer: "При запуске рекламы первые заявки идут уже на 3-5 день. Средняя окупаемость наших проектов — 1-2 месяца." },
+    { question: "Что если сайт не будет приносить заявки?", answer: "Мы работаем по KPI. Если конверсия ниже плановой, мы бесплатно докручиваем офферы и структуру, пока не выйдем на целевые показатели." },
+    { question: "Нужно ли мне разбираться в программировании?", answer: "Нет. Мы сдаем полностью готовый инструмент. Вы сможете менять цены и тексты через простую админку, как в Word." },
+    { question: "Вы настраиваете рекламу?", answer: "Да, мы агентство полного цикла. Сайт без трафика бесполезен, поэтому мы предлагаем комплексное продвижение (Яндекс, ВК, Telegram)." },
+    { question: "Можно ли оплатить в рассрочку?", answer: "Да, для юрлиц есть рассрочка от банка-партнера или поэтапная оплата (30/40/30)." },
+    { question: "Работаете ли вы по бартеру?", answer: "Да, мы открыты к сотрудничеству. Если у вас качественный продукт/услуга, мы готовы обсудить частичный или полный бартер." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Разработка сайта");
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -20,8 +33,8 @@ export default function TildaWebsite() {
 
   return (
     <Layout
-      title="Создание сайта на Tilda: разработка под ключ в Тюмени | CentrLP"
-      description="Разработка продающего сайта на Tilda за 14-21 день. Дизайн, тексты, формы заявок, интеграция с CRM. Сайт, который приносит клиентов вашему бизнесу."
+      title="Создание сайта, MVP и интерфейса продаж в Тюмени | CentrLP"
+      description="Разработка продающего сайта, MVP и клиентского интерфейса: дизайн, тексты, формы заявок, CRM, аналитика и SEO. Сайт как основа продаж и роста."
     >
       {/* Hero */}
       <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
@@ -54,7 +67,7 @@ export default function TildaWebsite() {
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="inline-block px-4 py-2 bg-primary/10 rounded-full">
-                <span className="text-primary font-semibold">Сайты на Tilda</span>
+                <span className="text-primary font-semibold">Сайты, MVP и digital-продукты</span>
               </div>
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -68,8 +81,8 @@ export default function TildaWebsite() {
             </div>
 
             <div className="relative inline-block">
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent relative z-10">
-                Сайт, который генерирует прибыль, а не просто «висит» в сети
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent relative z-10">
+                Сайт как интерфейс продаж, а не просто страница в интернете
               </h1>
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -86,20 +99,20 @@ export default function TildaWebsite() {
             </div>
 
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-              Разрабатываем инструменты продаж с помощью AI-аналитики: глубокий анализ ниши, A/B-тесты офферов и структура, которая закрывает боли клиентов.
+              Проектируем продающие сайты, MVP и клиентские интерфейсы: с формами заявок, квизами, CRM, аналитикой и возможностью расширить проект до Telegram Mini App, AI-агента или внутреннего сервиса.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <CheckCircle2 className="w-5 h-5 text-accent" />
-                <span>Нет заявок с сайта</span>
+                <span>Нет заявок и понятной воронки</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <CheckCircle2 className="w-5 h-5 text-accent" />
-                <span>Устаревший дизайн</span>
+                <span>Нужно быстро протестировать новый продукт</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <CheckCircle2 className="w-5 h-5 text-accent" />
-                <span>Сайт не работает</span>
+                <span>Заявки теряются без CRM и автоматизации</span>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -123,10 +136,12 @@ export default function TildaWebsite() {
         </div>
       </section>
 
+      <ServiceImageBand slug="website-development" alt="website-development — иллюстрация услуги CentrLP" />
+
       {/* Для кого */}
       <section className="py-20 bg-muted/30">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Для кого эта услуга
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -174,7 +189,7 @@ export default function TildaWebsite() {
       {/* Боли */}
       <section className="py-20">
         <div className="container max-w-5xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Типичные проблемы, которые мы решаем
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -207,8 +222,8 @@ export default function TildaWebsite() {
       {/* Как решаем */}
       <section id="process" className="py-20 bg-gradient-to-br from-primary/5 via-background to-accent/5">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-            Как мы создаём сайт на Tilda
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-16">
+            Как мы создаём сайт
           </h2>
           <div className="max-w-4xl mx-auto space-y-8">
             {[
@@ -279,10 +294,80 @@ export default function TildaWebsite() {
         </div>
       </section>
 
+      {/* Product Ecosystem */}
+      <section className="py-20 bg-muted/30">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Когда нужен не просто сайт, а продуктовая система
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Часто сильный сайт становится первым слоем. Дальше мы разворачиваем вокруг него MVP, мини-приложение, CRM или AI-агента, чтобы путь от клика до сделки был короче и прозрачнее.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                icon: Rocket,
+                title: "MVP для проверки ниши",
+                text: "Если нужно быстро выйти на рынок, собрать первые заявки и проверить гипотезу без тяжёлой разработки.",
+                href: "/services/mvp-development",
+                cta: "Запустить MVP"
+              },
+              {
+                icon: Smartphone,
+                title: "Telegram Mini App",
+                text: "Когда сайту нужен более удобный сценарий: запись, бронирование, кабинет клиента, повторные заказы прямо в мессенджере.",
+                href: "/services/telegram-mini-app",
+                cta: "Смотреть Mini App"
+              },
+              {
+                icon: Settings,
+                title: "CRM и внутренний кабинет",
+                text: "Когда заявок становится много и бизнесу нужен свой интерфейс для менеджеров, контроля статусов и повторных продаж.",
+                href: "/services/custom-crm",
+                cta: "Нужна CRM"
+              },
+              {
+                icon: MessageSquare,
+                title: "AI-агент для заявок",
+                text: "Когда хочется автоматически отвечать, квалифицировать лидов, собирать данные и разгружать отдел продаж.",
+                href: "/services/ai-agents",
+                cta: "Подключить AI"
+              }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                whileHover={{ y: -8 }}
+                className="bg-background rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-xl transition-all duration-300"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5">
+                  <item.icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-5">{item.text}</p>
+                <Link
+                  to={item.href}
+                  className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
+                >
+                  {item.cta}
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Результат */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Что вы получите в результате
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
@@ -320,7 +405,7 @@ export default function TildaWebsite() {
               <Zap className="w-4 h-4" />
               <span>Мини-кейс: редизайн + маркетинговая система для клининга</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold">
+            <h2 className="text-2xl md:text-3xl font-bold">
               Было / Стало: как мы превратили «визитку»<br />в работающую систему заявок
             </h2>
           </div>
@@ -519,7 +604,7 @@ export default function TildaWebsite() {
       {/* Тарифы */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Форматы сотрудничества
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-start">
@@ -616,7 +701,7 @@ export default function TildaWebsite() {
       {/* Почему мы */}
       <section className="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
         <div className="container max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Почему CentrLP
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -650,7 +735,7 @@ export default function TildaWebsite() {
       {/* FAQ */}
       <section className="py-20">
         <div className="container max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Частые вопросы
           </h2>
           <div className="space-y-4">
@@ -742,7 +827,7 @@ export default function TildaWebsite() {
               <div className="absolute -top-1 -right-1 w-6 h-6 bg-accent rounded-full flex items-center justify-center text-xs text-white font-bold animate-bounce">1</div>
             </div>
           </motion.div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Готовы запустить сайт, который работает?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">

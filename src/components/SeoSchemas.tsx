@@ -1,0 +1,173 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export const useFaqSchema = (faqItems: FaqItem[]) => {
+  useEffect(() => {
+    if (faqItems.length === 0) return;
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqItems.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    };
+
+    let script = document.getElementById('faq-jsonld') as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'faq-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+
+    return () => {
+      document.getElementById('faq-jsonld')?.remove();
+    };
+  }, [faqItems]);
+};
+
+export const useBreadcrumbSchema = (items: BreadcrumbItem[]) => {
+  useEffect(() => {
+    if (items.length === 0) return;
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": items.map((item, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": item.name,
+        "item": item.url
+      }))
+    };
+
+    let script = document.getElementById('breadcrumb-jsonld') as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'breadcrumb-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+
+    return () => {
+      document.getElementById('breadcrumb-jsonld')?.remove();
+    };
+  }, [items]);
+};
+
+/**
+ * Auto breadcrumb based on current path
+ * E.g. /services/chatbot-vk → Главная > Услуги > Чат-бот ВК
+ */
+export const useAutoBreadcrumb = (pageName: string) => {
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+
+  const breadcrumbs: BreadcrumbItem[] = [
+    { name: "Главная", url: "https://centrlp.ru/" }
+  ];
+
+  const segmentNames: Record<string, string> = {
+    services: "Услуги",
+    blog: "Блог",
+    barter: "Бартер",
+    projects: "Проекты",
+    prices: "Цены",
+    contacts: "Контакты",
+    about: "О нас",
+    cases: "Кейсы",
+  };
+
+  let currentPath = "";
+  for (let i = 0; i < pathSegments.length - 1; i++) {
+    currentPath += `/${pathSegments[i]}`;
+    breadcrumbs.push({
+      name: segmentNames[pathSegments[i]] || pathSegments[i],
+      url: `https://centrlp.ru${currentPath}`
+    });
+  }
+
+  breadcrumbs.push({
+    name: pageName,
+    url: `https://centrlp.ru${location.pathname}`
+  });
+
+  useBreadcrumbSchema(breadcrumbs);
+};
+
+interface ServiceSchemaProps {
+  name: string;
+  description: string;
+  price?: string;
+}
+
+/**
+ * Service JSON-LD schema for service pages
+ */
+export const useServiceSchema = ({ name, description, price }: ServiceSchemaProps) => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": name,
+      "description": description,
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "CentrLP",
+        "url": "https://centrlp.ru",
+        "telephone": "+7-905-824-85-64",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Тюмень",
+          "addressCountry": "RU"
+        }
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Россия"
+      },
+      "url": `https://centrlp.ru${location.pathname}`,
+      ...(price && {
+        "offers": {
+          "@type": "Offer",
+          "price": price,
+          "priceCurrency": "RUB",
+          "availability": "https://schema.org/InStock"
+        }
+      })
+    };
+
+    let script = document.getElementById('service-jsonld') as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'service-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+
+    return () => {
+      document.getElementById('service-jsonld')?.remove();
+    };
+  }, [name, description, price, location.pathname]);
+};

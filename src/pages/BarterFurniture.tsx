@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/ContactForm";
 
 const BarterFurniture = () => {
   return (
-    <Layout>
+    <Layout title="Бартер для мебельщиков — маркетинг в обмен на мебель | CentrLP" description="Обменяем маркетинговые услуги на мебель на заказ в Тюмени. Продвижение мебельного бизнеса: сайт, реклама, SMM по бартеру.">
       {/* Hero Section */}
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">

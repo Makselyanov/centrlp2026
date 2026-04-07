@@ -1,0 +1,17 @@
+[
+  {
+    "out": "public/images/home/ai-systems.png",
+    "skipIfExists": true,
+    "prompt": "Modern minimalist 3D isometric illustration of an abstract glowing AI brain made of soft polygonal nodes connected by light beams, hovering above a clean translucent dashboard with floating cards. Soft pastel gradient background — sky blue (#0096D6) blending into mint green (#44B78B). Premium product render style, soft shadows, no text, no watermarks, no logos. Square composition."
+  },
+  {
+    "out": "public/images/home/team-tools.png",
+    "skipIfExists": true,
+    "prompt": "Modern minimalist 3D isometric illustration of a translucent browser window floating above a clean desk surface, with a small dashboard panel showing simple bar charts and a checklist. Subtle browser extension icon as a small puzzle piece in the corner. Soft pastel gradient background — sky blue (#0096D6) blending into mint green (#44B78B). Premium tech aesthetic, soft shadows, no text, no watermarks, no logos. Square composition."
+  },
+  {
+    "out": "public/images/home/new-channels.png",
+    "skipIfExists": true,
+    "prompt": "Modern minimalist 3D isometric illustration of a glowing compass floating in space with three soft light paths branching out into different directions, each path ending at a small abstract chat bubble icon. Soft pastel gradient background — sky blue (#0096D6) blending into mint green (#44B78B). Premium product render style, soft shadows, no text, no watermarks, no logos. Square composition."
+  }
+]

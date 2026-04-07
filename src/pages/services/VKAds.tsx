@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,8 +24,17 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Slider } from "@/components/ui/slider";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 const VKAds = () => {
+  const faqItems = [
+    { question: "Сколько стоит реклама ВКонтакте в Тюмени?", answer: "Ведение ленты сообщества — от 15 000 ₽/мес. Ведение таргетированной рекламы — от 30 000 ₽/мес (без учёта рекламного бюджета). Рекламный бюджет оплачивается отдельно. На консультации рассчитаем оптимальный бюджет под ваши задачи." },
+    { question: "Какие сроки запуска рекламы ВКонтакте?", answer: "Подготовка и запуск первых рекламных кампаний — 3–5 рабочих дней. Первые результаты (заявки, подписчики) — в течение первой недели. Выход на стабильные показатели — 2–4 недели после оптимизации." },
+    { question: "Что входит в ведение рекламы ВКонтакте?", answer: "Полный цикл: настройка рекламного кабинета, создание аудиторий и сегментов, разработка креативов, запуск и ежедневная оптимизация кампаний, AI-оптимизация ставок, ретаргетинг, чистка площадок и еженедельные отчёты с аналитикой." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Реклама ВКонтакте");
   // Calculator State
   const [budget, setBudget] = useState([50000]);
   const [churn, setChurn] = useState([70]);
@@ -112,7 +122,7 @@ const VKAds = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.1]"
+              className="text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-[1.1]"
             >
               Таргет ВКонтакте 2026: <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
@@ -152,11 +162,13 @@ const VKAds = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="vk-ads" alt="vk-ads — иллюстрация услуги CentrLP" />
+
       {/* Pain Points: 4 Killers */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Почему таргет “умирает” через 2 месяца? <br />
               <span className="text-[#0096D6]">4 убийцы вашего бюджета</span>
             </h2>
@@ -230,7 +242,7 @@ const VKAds = () => {
       <section id="how-it-works" className="py-20 bg-slate-50 overflow-hidden">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               ВКонтакте — это не только реклама. <br />
               Это экосистема, где ваш сайт живет внутри соцсети
             </h2>
@@ -328,7 +340,7 @@ const VKAds = () => {
             <div className="inline-block px-4 py-1 bg-[#44B78B]/10 text-[#44B78B] rounded-full text-sm font-semibold mb-4">
               Реальный кейс
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Детейлинг-центр: превратили СТО в магнит для заявок
             </h2>
           </motion.div>
@@ -395,7 +407,7 @@ const VKAds = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div className="text-center mb-12" {...fadeInUp}>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
                 Сколько вы теряете без комплексного подхода?
               </h2>
               <p className="text-slate-400">
@@ -435,7 +447,7 @@ const VKAds = () => {
                 <div className="flex flex-col justify-center items-center text-center bg-slate-900/50 rounded-2xl p-6 border border-slate-700">
                   <Calculator className="w-12 h-12 text-[#0096D6] mb-4" />
                   <div className="text-sm text-slate-400 mb-2">Вы теряете за квартал:</div>
-                  <div className="text-4xl md:text-5xl font-bold text-[#0096D6] mb-4">
+                  <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#0096D6] mb-4">
                     {Math.round(loss).toLocaleString()} ₽
                   </div>
                   <p className="text-sm text-slate-400 mb-6">
@@ -458,7 +470,7 @@ const VKAds = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Ваша реклама не умрет через 3 месяца
             </h2>
             <p className="text-lg text-slate-500">
@@ -552,11 +564,28 @@ const VKAds = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section id="contact" className="py-20 bg-slate-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Хотите, чтобы ваш таргет работал как часы?
             </h2>
             <p className="text-xl text-slate-500">

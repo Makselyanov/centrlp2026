@@ -34,7 +34,7 @@ const EMAILJS_PUBLIC_KEY = "yzcN-4Aotl3kVqWIT";
 // --- Types & Data ---
 
 type ServiceId =
-    | "site_tilda"
+    | "site_web"
     | "design_prototype"
     | "branding"
     | "naming"
@@ -79,9 +79,9 @@ type Service = {
 const SERVICES: Service[] = [
     // Сайты и упаковка
     {
-        id: "site_tilda",
+        id: "site_web",
         group: "Сайты и упаковка",
-        title: "Сайт на Tilda (5–10 страниц)",
+        title: "Сайт под ключ (5–10 страниц)",
         description:
             "Продающий сайт под нишу, структура, дизайн, тексты, формы заявок, подключение аналитики, проработанный AI.",
         basePrice: 45000,
@@ -450,7 +450,7 @@ export function AiPlanPage() {
     const totals = calculateTotal();
 
     return (
-        <Layout>
+        <Layout title="Калькулятор маркетинг-плана с ИИ | CentrLP" description="Рассчитайте стоимость маркетинговых услуг онлайн. ИИ-калькулятор подберёт оптимальный набор услуг для вашего бизнеса в Тюмени.">
             <div className="min-h-screen bg-slate-50 pt-24 pb-20">
                 {/* Hero Section */}
                 <div className="container mx-auto px-4 mb-12 text-center">
@@ -458,7 +458,7 @@ export function AiPlanPage() {
                         <Zap className="w-3 h-3 mr-1" />
                         Конструктор внедрения
                     </div>
-                    <h1 className="text-3xl md:text-5xl font-bold mb-4 text-slate-900">
+                    <h1 className="text-2xl md:text-3xl font-bold mb-4 text-slate-900">
                         Персональный план внедрения AI и маркетинга
                     </h1>
                     <p className="text-lg text-slate-600 max-w-2xl mx-auto">
@@ -1361,7 +1361,7 @@ export function AiPlanPage() {
                                             <ul className="text-xs text-slate-600 space-y-1 mb-3">
                                                 <li className="flex items-center">
                                                     <Check className="w-3 h-3 mr-1 text-green-500" />{" "}
-                                                    Сайт 5–7 страниц на Tilda
+                                                    Сайт 5–7 страниц под ключ
                                                 </li>
                                                 <li className="flex items-center">
                                                     <Check className="w-3 h-3 mr-1 text-green-500" />{" "}

@@ -11,6 +11,15 @@ node_modules
 dist
 dist-ssr
 *.local
+.env.seo.local
+key.txt
+generated-images/
+seo-reports/*
+!seo-reports/.gitkeep
+!seo-reports/monthly/
+seo-reports/monthly/*
+!seo-reports/monthly/.gitkeep
+!seo-reports/monthly/MONTHLY_REPORT_TEMPLATE.md
 
 # Editor directories and files
 .vscode/*

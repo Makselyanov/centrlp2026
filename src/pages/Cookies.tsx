@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 
 const Cookies = () => {
   return (
-    <Layout>
+    <Layout title="Политика cookie | CentrLP" description="Политика использования cookie-файлов на сайте CentrLP. Информация о сборе данных через Яндекс.Метрику.">
       <section className="pt-32 pb-20">
         <div className="container mx-auto px-4 max-w-4xl">
           <h1 className="mb-6">Политика использования cookie</h1>

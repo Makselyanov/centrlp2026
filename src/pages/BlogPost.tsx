@@ -1,10 +1,11 @@
 import { Layout } from "@/components/Layout";
-import { getPostBySlug, generateTableOfContents } from "@/lib/blog";
+import { getPostBySlug, getRelatedPosts, generateTableOfContents } from "@/lib/blog";
 import { useParams, Link } from "react-router-dom";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
-import { Calendar, ArrowLeft, Copy, Clock } from "lucide-react";
+import { Calendar, ArrowLeft, Copy, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
@@ -33,7 +34,7 @@ const BlogPost = () => {
                             transition={{ duration: 0.6 }}
                             className="text-center py-20"
                         >
-                            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">404</h1>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
                             <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
                             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
                                 К сожалению, статья с таким адресом не существует.
@@ -68,7 +69,7 @@ const BlogPost = () => {
                             transition={{ duration: 0.6 }}
                             className="text-center py-20"
                         >
-                            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">404</h1>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
                             <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
                             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
                                 К сожалению, статья с адресом "{slug}" не существует или была удалена.
@@ -86,11 +87,96 @@ const BlogPost = () => {
         );
     }
 
+    const relatedPosts = getRelatedPosts(slug, 3);
+
     // Генерируем оглавление
     useEffect(() => {
         const tableOfContents = generateTableOfContents(post.content);
         setToc(tableOfContents);
     }, [post.content]);
+
+    // JSON-LD Article + BreadcrumbList schema
+    useEffect(() => {
+        const articleSchema = {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": post.title,
+            "description": post.description,
+            "datePublished": post.date,
+            "dateModified": post.date,
+            "author": {
+                "@type": "Organization",
+                "name": "CentrLP",
+                "url": "https://centrlp.ru"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "CentrLP",
+                "url": "https://centrlp.ru",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://centrlp.ru/favicon.jpg"
+                }
+            },
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": `https://centrlp.ru/blog/${post.slug}`
+            },
+            "keywords": post.tags?.join(", ") || "",
+            "wordCount": post.content.split(/\s+/).length,
+            "inLanguage": "ru"
+        };
+
+        const breadcrumbSchema = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Главная",
+                    "item": "https://centrlp.ru/"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Блог",
+                    "item": "https://centrlp.ru/blog"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": post.title,
+                    "item": `https://centrlp.ru/blog/${post.slug}`
+                }
+            ]
+        };
+
+        // Add article schema
+        let articleScript = document.getElementById('article-jsonld') as HTMLScriptElement;
+        if (!articleScript) {
+            articleScript = document.createElement('script');
+            articleScript.id = 'article-jsonld';
+            articleScript.type = 'application/ld+json';
+            document.head.appendChild(articleScript);
+        }
+        articleScript.textContent = JSON.stringify(articleSchema);
+
+        // Add breadcrumb schema
+        let breadcrumbScript = document.getElementById('breadcrumb-jsonld') as HTMLScriptElement;
+        if (!breadcrumbScript) {
+            breadcrumbScript = document.createElement('script');
+            breadcrumbScript.id = 'breadcrumb-jsonld';
+            breadcrumbScript.type = 'application/ld+json';
+            document.head.appendChild(breadcrumbScript);
+        }
+        breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema);
+
+        return () => {
+            document.getElementById('article-jsonld')?.remove();
+            document.getElementById('breadcrumb-jsonld')?.remove();
+        };
+    }, [post]);
 
     // Optimized scroll logic
     useEffect(() => {
@@ -137,6 +223,9 @@ const BlogPost = () => {
 
     // Проверяем наличие TOC
     const hasToc = toc && toc.length > 0;
+
+    // Cover image: per-post OG cover from /og/posts/<slug>.png
+    const coverSrc = `/og/posts/${post.slug}.png`;
 
     // Hero Section Component
     const HeroSection = () => (
@@ -200,6 +289,19 @@ const BlogPost = () => {
                         </Button>
                     </div>
                 </header>
+
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10 shadow-sm">
+                    <img
+                        src={coverSrc}
+                        alt={`${post.title} — обложка статьи CentrLP`}
+                        loading="eager"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
+                        onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = 'none';
+                        }}
+                    />
+                </div>
             </div>
         </motion.section>
     );
@@ -296,8 +398,47 @@ const BlogPost = () => {
         </motion.div>
     );
 
+    // Related Posts Component
+    const RelatedPosts = () => {
+        if (relatedPosts.length === 0) return null;
+        return (
+            <div className="mt-16">
+                <h2 className="text-2xl font-bold text-slate-900 mb-6">Читайте также</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                    {relatedPosts.map((rp) => (
+                        <Link key={rp.slug} to={`/blog/${rp.slug}`}>
+                            <Card className="h-full hover:shadow-lg transition-all duration-300 border-slate-200/50 bg-white/60 backdrop-blur-sm hover:border-[#0096D6]/30 group">
+                                <CardHeader className="pb-3">
+                                    <div className="flex gap-2 flex-wrap mb-2">
+                                        {rp.tags?.slice(0, 2).map(tag => (
+                                            <Badge key={tag} variant="secondary" className="text-xs bg-blue-100/50 text-blue-700">
+                                                {tag}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                    <CardTitle className="text-base text-slate-900 group-hover:text-[#0096D6] transition-colors leading-snug">
+                                        {rp.title}
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-slate-600 text-sm line-clamp-2 mb-3">{rp.description}</p>
+                                    <span className="text-sm font-medium text-[#0096D6] inline-flex items-center gap-1">
+                                        Читать <ArrowRight className="w-3 h-3" />
+                                    </span>
+                                </CardContent>
+                            </Card>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
     return (
-        <Layout>
+        <Layout
+            title={`${post.title} — CentrLP блог`}
+            description={post.description}
+        >
             {/* Progress Bar - using ref and scaleX transform */}
             <div
                 ref={progressBarRef}
@@ -314,6 +455,7 @@ const BlogPost = () => {
                     </div>
                     <div className="mx-auto max-w-3xl">
                         <CTABlock />
+                        <RelatedPosts />
                     </div>
                 </div>
             </article>

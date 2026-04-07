@@ -31,7 +31,10 @@ const AI = () => {
   };
 
   return (
-    <Layout>
+    <Layout
+      title="ИИ-внедрение для бизнеса — чат-боты, автоответы, ИИ-скрипты | CentrLP"
+      description="Внедрение искусственного интеллекта в бизнес: ИИ-автоответы 24/7, чат-боты, скрипты продаж, A/B-тесты с ИИ. Автоматизация коммуникаций в Тюмени."
+    >
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
@@ -77,7 +80,7 @@ const AI = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight"
             >
               Маркетинг на <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
@@ -131,7 +134,7 @@ const AI = () => {
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Почему ИИ нужен вашему бизнесу</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Почему ИИ нужен вашему бизнесу</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Искусственный интеллект — это не про сложные технологии. Это про реальные деньги,
               которые вы экономите и зарабатываете.
@@ -179,7 +182,7 @@ const AI = () => {
         <div className="absolute right-0 top-1/4 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full -z-10" />
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Что мы внедряем</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Что мы внедряем</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Готовые ИИ-решения, адаптированные под вашу нишу и особенности бизнеса
             </p>
@@ -370,7 +373,7 @@ const AI = () => {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">FAQ-бот и база знаний на ИИ</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">FAQ-бот и база знаний на ИИ</h2>
             <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
               Создаём базу знаний, которая обучает бота отвечать на вопросы клиентов так, как
               ответили бы вы
@@ -444,7 +447,7 @@ const AI = () => {
               <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-10 h-10 text-primary" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Ассистент для менеджера</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Ассистент для менеджера</h2>
               <p className="text-lg text-muted-foreground">
                 ИИ помогает менеджеру в режиме реального времени: подсказывает, что ответить,
                 какую акцию предложить, как закрыть возражение
@@ -505,7 +508,7 @@ const AI = () => {
           <div className="max-w-4xl mx-auto">
             <motion.div className="text-center mb-12" {...fadeInUp}>
               <Shield className="w-16 h-16 text-primary mx-auto mb-4" />
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Безопасность и 152-ФЗ</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Безопасность и 152-ФЗ</h2>
               <p className="text-lg text-muted-foreground">
                 Все ИИ-решения соответствуют требованиям российского законодательства
               </p>
@@ -575,7 +578,7 @@ const AI = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Готовы автоматизировать бизнес с ИИ?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Готовы автоматизировать бизнес с ИИ?</h2>
             <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
               Проконсультируем, подберём подходящие решения и внедрим за 7–14 дней
             </p>

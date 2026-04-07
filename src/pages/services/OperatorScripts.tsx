@@ -1,11 +1,25 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Users, Target, TrendingUp, CheckCircle, Headphones } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
 const OperatorScripts = () => {
+  const faqItems = [
+    { question: "Сколько времени нужно на разработку скриптов?", answer: "Базовые скрипты — 5-7 дней, комплексные с сегментацией и обучением — 10-14 дней. Всё зависит от объема и сложности." },
+    { question: "Нужно ли вам давать записи звонков?", answer: "Да, это очень помогает. Мы анализируем реальные диалоги, выявляем паттерны и лучшие практики. Если записей нет — проведем интервью с менеджерами." },
+    { question: "Можно ли использовать скрипты для чат-ботов?", answer: "Да, мы адаптируем скрипты под любой канал: телефон, переписка в соцсетях, email, чат-боты. Можем сразу интегрировать в бота." },
+    { question: "Вы обучаете нашу команду работе со скриптами?", answer: "Да, в комплексном и корпоративном пакете есть обучение. Проводим воркшоп с командой, отрабатываем сложные моменты, даем рекомендации." },
+    { question: "Что если скрипты не подойдут?", answer: "Мы делаем до 2 итераций корректировок бесплатно после тестирования. Дорабатываем на основе обратной связи от вашей команды и реальных результатов." },
+    { question: "В каком формате мы получим скрипты?", answer: "Word/PDF — для печати и изучения. По запросу можем сделать интерактивную версию в Notion, Google Docs или интегрировать в вашу CRM." },
+    { question: "Можно ли оплатить поэтапно?", answer: "Да: предоплата 50% → создание скриптов → согласование → оплата 50% → финальная версия и обучение. Рассмотрим бартер." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Скрипты для операторов");
+
   return (
     <Layout
       title="Скрипты продаж и FAQ для операторов | CentrLP"
@@ -15,7 +29,7 @@ const OperatorScripts = () => {
       <section className="py-20 bg-gradient-to-br from-background via-background to-primary/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
               Скрипты, которые продают за вас
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
@@ -43,10 +57,12 @@ const OperatorScripts = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="operator-scripts" alt="operator-scripts — иллюстрация услуги CentrLP" />
+
       {/* Target Audience */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Кому нужны скрипты</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Кому нужны скрипты</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -82,7 +98,7 @@ const OperatorScripts = () => {
       {/* Problems */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Какие проблемы решаем</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Какие проблемы решаем</h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {[
               "Менеджеры отвечают по-разному, нет единого стандарта",
@@ -105,7 +121,7 @@ const OperatorScripts = () => {
       {/* How We Solve */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Как мы создаем скрипты</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Как мы создаем скрипты</h2>
           <div className="max-w-4xl mx-auto space-y-8">
             {[
               {
@@ -156,7 +172,7 @@ const OperatorScripts = () => {
       {/* Results */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Что вы получаете</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Что вы получаете</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
               { icon: TrendingUp, title: "Рост конверсии", desc: "Больше лидов превращается в сделки" },
@@ -181,7 +197,7 @@ const OperatorScripts = () => {
       {/* Cases */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Примеры результатов</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Примеры результатов</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <Card>
               <CardContent className="pt-6">
@@ -249,7 +265,7 @@ const OperatorScripts = () => {
       {/* Tariffs */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Форматы работы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Форматы работы</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <Card className="hover-scale">
               <CardContent className="pt-6">
@@ -350,7 +366,7 @@ const OperatorScripts = () => {
       {/* Why CentrLP */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Почему CentrLP</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Почему CentrLP</h2>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card>
               <CardContent className="pt-6">
@@ -391,7 +407,7 @@ const OperatorScripts = () => {
       {/* FAQ */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
@@ -445,7 +461,7 @@ const OperatorScripts = () => {
       <section id="contact" className="py-20 bg-gradient-to-br from-primary/5 via-background to-background">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Увеличьте конверсию продаж с правильными скриптами
             </h2>
             <p className="text-xl text-muted-foreground">

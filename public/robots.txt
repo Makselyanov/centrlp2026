@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+
 Host: centrlp.ru
 Sitemap: https://centrlp.ru/sitemap.xml

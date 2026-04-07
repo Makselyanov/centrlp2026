@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,8 +9,17 @@ import {
   Search, Shield, MousePointerClick, Lightbulb
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 const OfferPackaging = () => {
+  const faqItems = [
+    { question: "Сколько стоит упаковка оффера?", answer: "Полная упаковка оффера под ключ — от 20 000 ₽. В стоимость входит анализ конкурентов, разработка 3–5 вариантов офферов, формулировка бонусов и гарантий, рекомендации по внедрению на сайт и в рекламу." },
+    { question: "Какие сроки упаковки оффера?", answer: "Полный цикл работы — 7–10 рабочих дней. Включает глубокий анализ ниши (2–3 дня), разработку гипотез и формулировок (3–4 дня), согласование и доработку (2–3 дня). Вы получите готовые офферы для внедрения." },
+    { question: "Что входит в упаковку оффера?", answer: "Глубокий анализ 100+ предложений конкурентов, выявление болей и страхов ЦА, создание 3–5 формулировок оффера по формуле «Ядро + Бонусы + Гарантия + Дедлайн», AI-анализ трендов и рекомендации по внедрению на сайт, в рекламу и соцсети." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Упаковка оффера");
   const scrollToForm = () => {
     const element = document.getElementById('contact');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -80,7 +90,7 @@ const OfferPackaging = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
+            className="text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
           >
             Продажи растут не от дизайна, <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
@@ -124,11 +134,13 @@ const OfferPackaging = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="offer-packaging" alt="offer-packaging — иллюстрация услуги CentrLP" />
+
       {/* Pain Points */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Почему вы теряете деньги</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Почему вы теряете деньги</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Признаки того, что ваш оффер не работает
             </p>
@@ -187,7 +199,7 @@ const OfferPackaging = () => {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.05]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-20" {...fadeInUp}>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Как мы создаем сильный оффер</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Как мы создаем сильный оффер</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Технология превращения «просто услуги» в «непреодолимое предложение»
             </p>
@@ -256,7 +268,7 @@ const OfferPackaging = () => {
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Примеры сильных офферов</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Примеры сильных офферов</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Почувствуйте разницу между «мы продаем кухни» и этим:
             </p>
@@ -326,7 +338,7 @@ const OfferPackaging = () => {
                 <Brain className="w-4 h-4 mr-2" />
                 AI-технологии
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Как AI делает ваш оффер непобедимым</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Как AI делает ваш оффер непобедимым</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Мы не просто креативим, мы используем данные.
               </p>
@@ -380,7 +392,7 @@ const OfferPackaging = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Стоимость упаковки</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Стоимость упаковки</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Инвестиция, которая окупается с первой продажи
             </p>
@@ -437,6 +449,23 @@ const OfferPackaging = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form */}
       <section id="contact" className="py-24 relative">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
@@ -447,7 +476,7 @@ const OfferPackaging = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Готовы продавать больше?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Готовы продавать больше?</h2>
             <p className="text-muted-foreground text-lg">
               Оставьте заявку — мы улучшим ваше предложение в 4 раза сильнее, чем сейчас.
             </p>

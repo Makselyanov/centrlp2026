@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/ContactForm";
 
 const BarterCleaning = () => {
   return (
-    <Layout>
+    <Layout title="Бартер для клининга — маркетинг в обмен на уборку | CentrLP" description="Обменяем маркетинговые услуги (сайт, реклама, SMM) на услуги клининга в Тюмени. Продвижение клининговой компании по бартеру.">
       {/* Hero Section */}
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">

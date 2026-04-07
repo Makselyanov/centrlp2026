@@ -3,15 +3,20 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, FileText, Handshake } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 
 const Barter = () => {
+  useAutoBreadcrumb("Бартер");
   const scrollToForm = () => {
     const element = document.getElementById('form');
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <Layout>
+    <Layout
+      title="Бартер-пакеты: маркетинг в обмен на услуги | CentrLP Тюмень"
+      description="Бартер маркетинговых услуг: сайт, ВК, реклама в обмен на мебель, услуги СТО или клининга. Эквивалент от 80 000 ₽. Работаем по договору."
+    >
       <section className="pt-32 pb-20 gradient-hero">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -124,7 +129,7 @@ const Barter = () => {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-start">
                     <CheckCircle2 className="w-4 h-4 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Сайт-портфолио на Tilda (7–10 страниц)</span>
+                    <span>Сайт-портфолио под ключ (7–10 страниц)</span>
                   </li>
                   <li className="flex items-start">
                     <CheckCircle2 className="w-4 h-4 text-accent-2 mr-2 mt-0.5 flex-shrink-0" />

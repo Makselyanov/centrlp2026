@@ -67,7 +67,7 @@ const BlogList = () => {
                                     Блог | CentrLP
                                 </div>
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
                                     Инсайты и Статьи
                                 </span>
@@ -92,7 +92,10 @@ const BlogList = () => {
     }
 
     return (
-        <Layout>
+        <Layout
+            title="Блог CentrLP — статьи о маркетинге, ИИ и продвижении бизнеса"
+            description="Полезные статьи о маркетинге, ВКонтакте, Яндекс.Директ, искусственном интеллекте, создании сайтов и автоматизации бизнеса. Экспертный блог студии CentrLP."
+        >
             <section className="relative pt-20 pb-20 overflow-hidden bg-gradient-to-b from-slate-50 to-white min-h-screen">
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
@@ -111,7 +114,7 @@ const BlogList = () => {
                         <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/50 backdrop-blur-md border border-[#0096D6]/20 text-[#0096D6] font-semibold text-sm tracking-wide shadow-sm">
                             Блог | CentrLP
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
                                 Инсайты и Статьи
                             </span>
@@ -203,6 +206,18 @@ const BlogList = () => {
                                 >
                                     <Link to={`/blog/${post.slug}`}>
                                         <Card className="h-full hover:shadow-xl transition-all duration-300 border-slate-200/50 bg-white/60 backdrop-blur-sm flex flex-col hover:border-[#0096D6]/30 group overflow-hidden">
+                                            <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10">
+                                                <img
+                                                    src={`/og/posts/${post.slug}.png`}
+                                                    alt={`${post.title} — обложка`}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    onError={(e) => {
+                                                        (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                                    }}
+                                                />
+                                            </div>
                                             <CardHeader className="pb-3">
                                                 <div className="flex justify-between items-start mb-3 gap-2">
                                                     <div className="flex gap-2 flex-wrap">

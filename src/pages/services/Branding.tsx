@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +10,17 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 export default function Branding() {
+  const faqItems = [
+    { question: "Сколько стоит разработка фирменного стиля в Тюмени?", answer: "Стоимость зависит от объёма работ. Логотип — от 10 000 ₽, фирменный стиль — от 15 000 ₽, полная бренд-система с брендбуком — от 20 000 ₽. На консультации определим оптимальный пакет под ваш бизнес." },
+    { question: "Какие сроки разработки брендинга?", answer: "Логотип — 5–7 рабочих дней, фирменный стиль — 10–14 дней, бренд-система — 2–3 недели. Сроки зависят от сложности проекта и количества итераций. Мы согласовываем каждый этап." },
+    { question: "Что входит в разработку фирменного стиля?", answer: "В базовый пакет входят логотип, цветовая палитра, подбор шрифтов и файлы для печати и web. В расширенный — паттерны, визитки, бланки, оформление соцсетей и гайдлайн по использованию всех элементов." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Брендинг");
   const [activeCase, setActiveCase] = useState<number | null>(null);
   const [isSeoOpen, setIsSeoOpen] = useState(false);
 
@@ -56,7 +66,7 @@ export default function Branding() {
               <span className="text-sm font-medium tracking-wide text-muted-foreground">NO MORE BORING BRANDS</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-8 leading-[1.1]">
               Если ваш бренд <br />
               <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
                 не запоминают
@@ -85,12 +95,14 @@ export default function Branding() {
         </div>
       </section>
 
+      <ServiceImageBand slug="branding" alt="branding — иллюстрация услуги CentrLP" />
+
       {/* 2. Pain Points: Боль и правда рынка */}
       <section className="py-24 bg-background">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 leading-tight">
                 90% логотипов — <span className="text-destructive">мусор</span>, созданный в Canva за 5 минут
               </h2>
               <p className="text-xl text-muted-foreground mb-8">
@@ -145,7 +157,7 @@ export default function Branding() {
       <section className="py-24 bg-muted/30">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Мы не «рисуем картинки».<br />Мы проектируем смыслы.
             </h2>
             <p className="text-xl text-muted-foreground">
@@ -199,7 +211,7 @@ export default function Branding() {
                 <Cpu className="w-4 h-4" />
                 AI-POWERED BRANDING
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
                 Нейросети ускоряют поиск идеала в 10 раз
               </h2>
               <p className="text-xl text-muted-foreground mb-8">
@@ -243,7 +255,7 @@ export default function Branding() {
       {/* 9. Psychology & Archetypes */}
       <section className="py-24 bg-background">
         <div className="container">
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-16">
             Психология бренда: 12 Архетипов
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -270,7 +282,7 @@ export default function Branding() {
       {/* 6. Process Timeline */}
       <section className="py-24 bg-background">
         <div className="container">
-          <h2 className="text-3xl md:text-5xl font-bold mb-16">Как мы создаем легенды</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-16">Как мы создаем легенды</h2>
           <div className="relative border-l border-border ml-4 md:ml-12 space-y-12">
             {[
               { title: "Исследование", desc: "Глубинное интервью, анализ рынка, CJM." },
@@ -291,7 +303,7 @@ export default function Branding() {
       {/* 7. Packages */}
       <section className="py-24 bg-muted/30">
         <div className="container">
-          <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-16">
             Инвестиции в ваш бренд
           </h2>
           <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -392,11 +404,28 @@ export default function Branding() {
         </AnimatePresence>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* 10. Final CTA */}
       <section id="form" className="py-24 bg-gradient-to-br from-primary/10 via-background to-accent/10 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
         <div className="container relative z-10 text-center max-w-4xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Ваш бренд должен выделяться.
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-12">

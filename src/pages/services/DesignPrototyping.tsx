@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,8 +9,18 @@ import {
   Layout as LayoutIcon,
   Smartphone,
 } from "lucide-react";
+import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
 const DesignPrototypingPage = () => {
+  const faqItems = [
+    { question: "Можно ли сначала только прототип?", answer: "Да, можно заказать отдельно прототип, согласовать структуру, а потом уже заказать дизайн." },
+    { question: "Сколько правок входит?", answer: "2 правки концепции главной страницы и 1 правка остальных страниц. Дополнительные правки — отдельно." },
+    { question: "В каком формате будут макеты?", answer: "Figma — это стандарт. Можно экспортировать в любые форматы, если нужно." },
+    { question: "Нужны ли мне исходники?", answer: "Да, передаём полный доступ к проекту в Figma + UI-kit. Сможете дорабатывать сами или через других дизайнеров." },
+    { question: "Можете ли вы свёрстать дизайн?", answer: "Да, можем собрать сайт или передать макеты для вёрстки на коде. Обсуждается отдельно." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Дизайн и прототипирование");
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
@@ -28,7 +39,7 @@ const DesignPrototypingPage = () => {
               <div className="inline-block mb-6 px-4 py-2 bg-accent/20 rounded-full">
                 <span className="text-accent font-semibold">UI/UX дизайн</span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 Проектируем интерфейсы, которые{" "}
                 <span className="text-primary">конвертируют</span> трафик в
                 деньги
@@ -143,10 +154,12 @@ const DesignPrototypingPage = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="design-prototyping" alt="design-prototyping — иллюстрация услуги CentrLP" />
+
       {/* Для кого */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Кому нужен профессиональный UI/UX дизайн
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -183,7 +196,7 @@ const DesignPrototypingPage = () => {
       {/* Боли */}
       <section className="py-20 bg-muted/30">
         <div className="container max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Какие проблемы бизнеса решает продуманный интерфейс
           </h2>
           <div className="space-y-4">
@@ -210,7 +223,7 @@ const DesignPrototypingPage = () => {
       {/* Как решаем */}
       <section id="process" className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-16">
             Как мы работаем: от аналитики до макетов
           </h2>
           <div className="max-w-4xl mx-auto space-y-8">
@@ -243,7 +256,7 @@ const DesignPrototypingPage = () => {
               {
                 step: "06",
                 title: "Передача макетов",
-                text: "Готовые макеты в Figma + UI-kit со всеми элементами. Полная готовность к верстке на любом стеке (React, Tilda, Bitrix).",
+                text: "Готовые макеты в Figma + UI-kit со всеми элементами. Полная готовность к верстке на любом стеке (React, Bitrix, WordPress).",
               },
             ].map((item, i) => (
               <div key={i} className="flex gap-6 items-start hover-scale">
@@ -267,7 +280,7 @@ const DesignPrototypingPage = () => {
       {/* Результат */}
       <section className="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Что вы получаете: больше, чем просто картинки
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -277,7 +290,7 @@ const DesignPrototypingPage = () => {
               "Адаптация под все устройства — идеально на десктопе, планшете, смартфоне",
               "Фирменный стиль и UI-kit — всё в единой цветовой гамме и типографике",
               "Прототип с продуманной логикой — перед дизайном согласовываем структуру",
-              "Готовые макеты в Figma — легко передать в разработку или на Tilda",
+              "Готовые макеты в Figma — легко передать в разработку",
             ].map((result, i) => (
               <div
                 key={i}
@@ -294,7 +307,7 @@ const DesignPrototypingPage = () => {
       {/* Тарифы */}
       <section className="py-20">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Форматы и стоимость разработки
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -329,7 +342,7 @@ const DesignPrototypingPage = () => {
                 period: "Срок: 14–21 день",
                 features: [
                   "Полный дизайн проект",
-                  "Сборка на Tilda",
+                  "Сборка и вёрстка",
                   "Интерактивные элементы",
                   "Анимации и эффекты",
                   "Все интеграции",
@@ -394,7 +407,7 @@ const DesignPrototypingPage = () => {
       {/* FAQ */}
       <section className="py-20 bg-muted/30">
         <div className="container max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
             Частые вопросы о дизайне и прототипировании
           </h2>
           <div className="space-y-6">
@@ -417,7 +430,7 @@ const DesignPrototypingPage = () => {
               },
               {
                 q: "Можете ли вы свёрстать дизайн?",
-                a: "Да, можем собрать на Tilda или передать макеты для вёрстки на коде. Обсуждается отдельно.",
+                a: "Да, можем собрать сайт или передать макеты для вёрстки на коде. Обсуждается отдельно.",
               },
             ].map((item, i) => (
               <div key={i} className="p-6 bg-background rounded-xl">
@@ -435,7 +448,7 @@ const DesignPrototypingPage = () => {
         className="py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10"
       >
         <div className="container max-w-4xl text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Готовы создать дизайн, который продаёт?
           </h2>
           <p className="text-xl text-muted-foreground mb-8">

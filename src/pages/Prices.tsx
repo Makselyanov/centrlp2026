@@ -4,8 +4,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowUpRight, Sparkles, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 
 const Prices = () => {
+  useAutoBreadcrumb("Цены");
   const scrollToForm = () => {
     const element = document.getElementById('form');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -102,7 +104,7 @@ const Prices = () => {
     { title: "Квиз «Продажа под ключ»", price: "15–35к ₽", desc: "Многошаговый квиз с продуманной логикой и ИИ-оптимизацией.", solve: "Рост конверсии", icon: HelpCircle },
     { title: "ИИ-скрипты продаж", price: "10–25к ₽", desc: "Сценарии обработки возражений, FAQ-модуль, подсказки.", solve: "Порядок в продажах", icon: MessageSquare },
     { title: "Генерация текста и A/B", price: "10–20к ₽", desc: "SEO-тексты, заголовки, офферы, варианты лендинга.", solve: "Сильный оффер", icon: PenTool },
-    { title: "Сайт на Tilda (5–10 стр)", price: "45–70к ₽", desc: "Полная сборка с адаптивом, SEO и аналитикой.", solve: "Продающий сайт", icon: LayoutIcon },
+    { title: "Сайт под ключ (5–10 стр)", price: "45–70к ₽", desc: "Полная сборка с адаптивом, SEO и аналитикой.", solve: "Продающий сайт", icon: LayoutIcon },
     { title: "Оформление ВКонтакте", price: "12–25к ₽", desc: "Обложки, меню, закреп, посты, CTA-блоки.", solve: "Упаковка соцсетей", icon: LayoutIcon },
     { title: "Настройка Яндекс.Директ", price: "от 20к ₽", desc: "Поиск + РСЯ, минус-слова, ИИ-заголовки.", solve: "Целевой трафик", icon: Search },
     { title: "Настройка рекламы ВК", price: "от 18к ₽", desc: "Прогрев, лид-формы, ретаргетинг.", solve: "Заявки из соцсетей", icon: Target },
@@ -117,7 +119,10 @@ const Prices = () => {
   const tickerItems = ["Маркетинг", "Разработка", "Дизайн", "Аналитика", "Автоматизация", "AI-Решения", "Трафик", "Упаковка", "Стратегия"];
 
   return (
-    <Layout>
+    <Layout
+      title="Цены на создание сайтов, рекламу и маркетинг | CentrLP Тюмень"
+      description="Прозрачные цены на услуги CentrLP: сайт от 60 000 ₽, пакет под ключ от 80 000 ₽, ведение рекламы от 20 000 ₽/мес. Оплата по договору 50/50."
+    >
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 min-h-[80vh] flex flex-col justify-center">
         {/* Background Elements */}
@@ -163,7 +168,7 @@ const Prices = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-tight"
           >
             Инвестируйте в <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
@@ -212,7 +217,7 @@ const Prices = () => {
       <section className="py-24 relative bg-background">
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Комплексные пакеты</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Комплексные пакеты</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Готовые решения для быстрого старта и масштабирования
             </p>
@@ -291,7 +296,7 @@ const Prices = () => {
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/20">
               Точечные решения
             </div>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">Отдельные услуги</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Отдельные услуги</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Усильте конкретные показатели вашего бизнеса с помощью наших специализированных инструментов
             </p>
@@ -362,7 +367,7 @@ const Prices = () => {
                   <RefreshCw className="w-4 h-4 mr-2 text-green-400" />
                   Специальное предложение
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">Бартер-пакеты для бизнеса</h2>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Бартер-пакеты для бизнеса</h2>
                 <div className="flex items-baseline gap-2 mb-6">
                   <span className="text-2xl md:text-3xl font-bold text-green-400">Эквивалент 80 000+ ₽</span>
                 </div>
@@ -407,7 +412,7 @@ const Prices = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Оставить заявку</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Оставить заявку</h2>
             <p className="text-muted-foreground text-lg">
               Заполните форму, и мы свяжемся с вами для обсуждения деталей проекта
             </p>

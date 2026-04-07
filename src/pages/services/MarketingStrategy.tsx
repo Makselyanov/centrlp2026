@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +11,16 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 const MarketingStrategy = () => {
+  const faqItems = [
+    { question: "Сколько стоит разработка маркетинговой стратегии?", answer: "Экспресс-стратегия для небольшого бизнеса — от 30 000 ₽. Полная стратегия с глубоким анализом ЦА, конкурентов и юнит-экономикой — от 50 000 ₽. Стратегия с внедрением и сопровождением — от 70 000 ₽. Точная стоимость зависит от ниши и каналов." },
+    { question: "Какие сроки разработки маркетинговой стратегии?", answer: "Экспресс-формат — 7–10 рабочих дней. Полная стратегия с медиапланом — 2–3 недели. Стратегия с внедрением первых кампаний — от 3 недель. Результат: готовый документ с пошаговым планом, бюджетами и KPI." },
+    { question: "Что входит в маркетинговую стратегию?", answer: "Аудит текущего маркетинга, анализ ЦА и конкурентов с помощью AI, позиционирование и УТП, медиаплан с бюджетами по каналам (VK, Telegram, Яндекс.Директ), юнит-экономика, карта гипотез по креативам и офферам, дорожная карта внедрения." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Маркетинговая стратегия");
   const scrollToForm = () => {
     const element = document.getElementById('contact');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -92,7 +101,7 @@ const MarketingStrategy = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
+            className="text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
           >
             Маркетинг, который <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
@@ -136,12 +145,14 @@ const MarketingStrategy = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="marketing-strategy" alt="marketing-strategy — иллюстрация услуги CentrLP" />
+
       {/* Who Needs Strategy */}
       <section className="py-20 bg-card relative">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Кому нужна стратегия</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Кому нужна стратегия</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Если вы устали от хаотичных тестов и хотите системного роста
             </p>
@@ -208,7 +219,7 @@ const MarketingStrategy = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Почему маркетинг не работает</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Почему маркетинг не работает</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Честный взгляд на то, почему бюджеты сливаются впустую
             </p>
@@ -267,7 +278,7 @@ const MarketingStrategy = () => {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.05]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-20" {...fadeInUp}>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Как мы создаем стратегию</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Как мы создаем стратегию</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               5 шагов от хаоса к системному маркетингу с использованием AI
             </p>
@@ -340,7 +351,7 @@ const MarketingStrategy = () => {
               <Zap className="w-4 h-4 mr-2" />
               Будущее уже здесь
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Маркетинг 2026: под что мы строим стратегию</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Маркетинг 2026: под что мы строим стратегию</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Мы не просто «делаем посты», мы строим систему, которая будет работать завтра
             </p>
@@ -382,7 +393,7 @@ const MarketingStrategy = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Что вы получите на выходе</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">Что вы получите на выходе</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Не просто презентацию, а рабочий инструмент для собственника и маркетолога.
               </p>
@@ -436,7 +447,7 @@ const MarketingStrategy = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Стоимость разработки</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Стоимость разработки</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Инвестиция в понятный и прогнозируемый маркетинг
             </p>
@@ -559,6 +570,23 @@ const MarketingStrategy = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form */}
       <section id="contact" className="py-24 relative">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
@@ -569,7 +597,7 @@ const MarketingStrategy = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Готовы к системному росту?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Готовы к системному росту?</h2>
             <p className="text-muted-foreground text-lg">
               Оставьте заявку на бесплатную консультацию. Обсудим ваши задачи и подберем оптимальный формат стратегии.
             </p>

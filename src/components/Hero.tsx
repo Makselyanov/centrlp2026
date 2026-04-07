@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
 export const Hero = () => {
-    const navigate = useNavigate();
     const cardRef = useRef<HTMLDivElement>(null);
 
     const heroRef = useRef<HTMLElement>(null);
@@ -105,40 +104,42 @@ export const Hero = () => {
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#44B78B] opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-[#44B78B]"></span>
                             </span>
-                            AI-Маркетинг 2.0
+                            Современные цифровые продукты
                         </motion.div>
 
                         <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight text-slate-50">
-                            Запускаем продажи <br />
+                            Создаём цифровые продукты <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-                                с помощью AI
-                            </span>, чат-ботов и умной рекламы
+                                для продаж и сервиса
+                            </span>, а не просто красивые страницы
                         </h1>
 
                         <p className="text-xl text-slate-400 mb-10 max-w-lg leading-relaxed">
-                            Комплексная упаковка бизнеса: сайт, соцсети, AI-боты, воронки и реклама.
-                            <span className="font-semibold text-slate-50"> Первые заявки через 14 дней.</span>
+                            Telegram Mini App, AI-агенты, персональные CRM, браузерные расширения, MVP и AI-системы под реальную работу бизнеса.
+                            <span className="font-semibold text-slate-50"> От интерфейса заявки до внутреннего инструмента команды.</span>
                         </p>
 
                         <div className="flex flex-col sm:flex-row gap-5">
                             <motion.button
                                 whileHover={{ scale: 1.03, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate('/ai-plan')}
+                                onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}
                                 className="px-8 py-4 bg-[#0096D6] text-white rounded-2xl font-semibold text-lg shadow-lg shadow-[#0096D6]/30 flex items-center justify-center gap-2 transition-all"
                             >
-                                Получить план внедрения
+                                Получить план продукта
                                 <ArrowRight className="w-5 h-5" />
                             </motion.button>
 
-                            <motion.button
-                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                                whileTap={{ scale: 0.98 }}
-                                className="px-8 py-4 bg-transparent text-slate-300 border border-slate-700 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
-                            >
-                                <Play className="w-5 h-5 fill-current" />
-                                Наши услуги
-                            </motion.button>
+                            <Link to="/projects">
+                                <motion.button
+                                    whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className="px-8 py-4 bg-transparent text-slate-300 border border-slate-700 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
+                                >
+                                    <Play className="w-5 h-5 fill-current" />
+                                    Наши проекты
+                                </motion.button>
+                            </Link>
                         </div>
                     </motion.div>
 
@@ -159,8 +160,8 @@ export const Hero = () => {
                                 {/* Content inside the placeholder */}
                                 <div className="relative z-30 text-white text-center p-8">
                                     <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
-                                    <div className="text-4xl font-bold mb-2 drop-shadow-md">AI POWER</div>
-                                    <p className="text-lg font-medium opacity-90">Усиливаем с помощью ИИ</p>
+                                    <div className="text-4xl font-bold mb-2 drop-shadow-md">DIGITAL AI</div>
+                                    <p className="text-lg font-medium opacity-90">Интерфейсы, CRM и AI-системы</p>
                                 </div>
 
                                 {/* Shine effect */}
@@ -180,7 +181,7 @@ export const Hero = () => {
                                 </div>
                                 <div>
                                     <div className="font-bold text-slate-800 text-lg">+127%</div>
-                                    <div className="text-xs text-slate-500">Рост продаж</div>
+                                    <div className="text-xs text-slate-500">Рост эффективности</div>
                                 </div>
                             </div>
                         </motion.div>
@@ -196,7 +197,7 @@ export const Hero = () => {
                                 </div>
                                 <div>
                                     <div className="font-bold text-slate-800 text-lg">24/7</div>
-                                    <div className="text-xs text-slate-500">Работает AI-Бот</div>
+                                    <div className="text-xs text-slate-500">Работает цифровой сервис</div>
                                 </div>
                             </div>
                         </motion.div>

@@ -68,16 +68,12 @@ export const Header = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-[auto,1fr,auto] items-center gap-x-6 h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center">
             <img
               src={logoImage}
-              alt="CentrLP Logo"
+              alt="CentrLP"
               className="h-12 w-12 object-contain rounded-full"
             />
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-primary">CentrLP</span>
-              <span className="text-xs text-muted-foreground hidden sm:block">Агентство развития бизнеса</span>
-            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -102,7 +98,7 @@ export const Header = () => {
                       <div>
                         <h4 className="font-semibold text-sm mb-3 text-primary">Сайты и упаковка</h4>
                         <ul className="space-y-2 text-sm">
-                          <li><Link to="/services/tilda-website" className="text-muted-foreground hover:text-primary transition-colors">Сайт на Tilda (5–10 страниц)</Link></li>
+                          <li><Link to="/services/website-development" className="text-muted-foreground hover:text-primary transition-colors">Разработка сайта (5–10 страниц)</Link></li>
                           <li><Link to="/services/design-prototyping" className="text-muted-foreground hover:text-primary transition-colors">Дизайн и прототипирование</Link></li>
                           <li><Link to="/services/branding" className="text-muted-foreground hover:text-primary transition-colors">Фирменный стиль и логотип</Link></li>
                           <li><Link to="/services/naming-offers" className="text-muted-foreground hover:text-primary transition-colors">Нейминг и продающие офферы</Link></li>
@@ -208,6 +204,12 @@ export const Header = () => {
                 Инсайты
               </Link>
               <Link
+                to="/projects"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              >
+                Проекты
+              </Link>
+              <Link
                 to="/prices"
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
@@ -309,7 +311,7 @@ export const Header = () => {
                     <div>
                       <div className="text-xs font-semibold text-primary mb-2">Сайты и упаковка</div>
                       <div className="text-xs space-y-1 ml-2">
-                        <Link to="/services/tilda-website" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Сайт на Tilda</Link>
+                        <Link to="/services/website-development" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Разработка сайта</Link>
                         <Link to="/services/design-prototyping" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Дизайн и прототипирование</Link>
                         <Link to="/services/branding" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Фирменный стиль и логотип</Link>
                         <Link to="/services/naming-offers" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Нейминг и офферы</Link>
@@ -398,6 +400,12 @@ export const Header = () => {
                 className="text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
               >
                 Инсайты
+              </Link>
+              <Link
+                to="/projects"
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors py-2"
+              >
+                Проекты
               </Link>
               <Link
                 to="/prices"

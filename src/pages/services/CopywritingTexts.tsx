@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +11,16 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/SeoSchemas";
 
 const CopywritingTexts = () => {
+  const faqItems = [
+    { question: "Сколько стоит написание текстов для сайта?", answer: "SEO-тексты — от 15 000 ₽ за пакет до 5 страниц. Продающие тексты для лендингов и коммерческих страниц — от 25 000 ₽. Рекламные объявления для Яндекс, VK, Telegram — от 10 000 ₽ за пакет 15–20 объявлений." },
+    { question: "Какие сроки написания текстов?", answer: "SEO-тексты для сайта — 5–7 рабочих дней. Продающие тексты для лендинга — 7–10 дней с учётом аналитики и итераций. Рекламные объявления — 3–5 дней. В стоимость входят правки и согласование." },
+    { question: "Что входит в услугу копирайтинга?", answer: "Полный цикл: анализ ниши и конкурентов, сбор ключевых слов, написание текстов с SEO-оптимизацией, продающая структура (заголовки, офферы, CTA), AI-усиление и редактура. Финальный текст без воды, штампов и канцелярита." },
+  ];
+  useFaqSchema(faqItems);
+  useAutoBreadcrumb("Копирайтинг");
   const scrollToForm = () => {
     const element = document.getElementById('contact');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -82,7 +91,7 @@ const CopywritingTexts = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
+            className="text-4xl md:text-5xl lg:text-6xl lg:text-7xl font-bold tracking-tight mb-8 leading-tight text-foreground"
           >
             Продающие тексты, которые <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
@@ -126,12 +135,14 @@ const CopywritingTexts = () => {
         </div>
       </section>
 
+      <ServiceImageBand slug="copywriting-texts" alt="copywriting-texts — иллюстрация услуги CentrLP" />
+
       {/* Why Strong Texts Matter in 2026 */}
       <section className="py-20 bg-card relative">
         <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-[0.02]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Зачем бизнесу сильные тексты в 2026</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Зачем бизнесу сильные тексты в 2026</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               В эпоху информационного шума выигрывает тот, кто говорит ясно и по делу
             </p>
@@ -191,7 +202,7 @@ const CopywritingTexts = () => {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Какие проблемы решают наши тексты</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Какие проблемы решают наши тексты</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Исправляем ошибки, из-за которых вы теряете клиентов
             </p>
@@ -253,7 +264,7 @@ const CopywritingTexts = () => {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.05]" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-20" {...fadeInUp}>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Как мы пишем тексты</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Как мы пишем тексты</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               От аналитики до финальной точки: 5 шагов к сильному контенту
             </p>
@@ -331,7 +342,7 @@ const CopywritingTexts = () => {
                 <Search className="w-4 h-4 mr-2" />
                 SEO-продвижение
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">SEO-тексты, которые продвигают</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">SEO-тексты, которые продвигают</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Мы пишем не для роботов, а для людей, но так, чтобы роботы это любили.
               </p>
@@ -391,7 +402,7 @@ const CopywritingTexts = () => {
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Что мы пишем</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Что мы пишем</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Любые форматы текстов для вашего бизнеса
             </p>
@@ -437,13 +448,13 @@ const CopywritingTexts = () => {
             <div className="inline-block p-3 bg-background rounded-full shadow-sm mb-6">
               <Sparkles className="w-6 h-6 text-primary animate-pulse" />
             </div>
-            <h2 className="text-3xl font-bold mb-4">Заказываете сайт в CentrLP?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Заказываете сайт в CentrLP?</h2>
             <p className="text-xl text-muted-foreground mb-8">
               Вам не нужно платить за тексты отдельно. <br />
               <span className="text-foreground font-bold">Все продающие тексты, офферы и SEO-структура уже включены</span> в стоимость разработки сайта.
             </p>
             <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white" asChild>
-              <a href="/services/tilda-website">Узнать про сайты</a>
+              <a href="/services/website-development">Узнать про сайты</a>
             </Button>
           </motion.div>
         </div>
@@ -453,7 +464,7 @@ const CopywritingTexts = () => {
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Стоимость текстов</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Стоимость текстов</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Прозрачные цены за результат, а не за знаки
             </p>
@@ -571,6 +582,23 @@ const CopywritingTexts = () => {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Частые вопросы</h2>
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible>
+              {faqItems.map((item, index) => (
+                <AccordionItem key={index} value={`item-${index + 1}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Form */}
       <section id="contact" className="py-24 relative">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
@@ -581,7 +609,7 @@ const CopywritingTexts = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold mb-4">Нужны тексты, которые работают?</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Нужны тексты, которые работают?</h2>
             <p className="text-muted-foreground text-lg">
               Оставьте заявку. Мы изучим вашу нишу и напишем контент, который принесет деньги.
             </p>

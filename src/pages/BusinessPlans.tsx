@@ -87,7 +87,7 @@ const BusinessPlans = () => {
             </div>
 
             <div className="relative inline-block">
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-tight">
                 Бизнес-планы, которые <br />
                 <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
                   приносят деньги
@@ -156,7 +156,7 @@ const BusinessPlans = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <motion.div {...fadeInUp}>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold mb-6">
                 Деньги от государства — это реально
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
@@ -218,7 +218,7 @@ const BusinessPlans = () => {
         <div className="absolute right-0 top-1/4 w-1/3 h-1/3 bg-primary/5 blur-3xl rounded-full -z-10" />
         <div className="container mx-auto px-4">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            className="text-2xl md:text-3xl font-bold text-center mb-16"
             {...fadeInUp}
           >
             Знакомые ситуации?
@@ -260,7 +260,7 @@ const BusinessPlans = () => {
       <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
         <div className="container mx-auto px-4">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Для каких программ подойдут наши бизнес-планы</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Для каких программ подойдут наши бизнес-планы</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Мы адаптируем документы под требования конкретной программы, будь то соцконтракт или банковский кредит.
             </p>
@@ -344,7 +344,7 @@ const BusinessPlans = () => {
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
         <div className="container mx-auto px-4 relative z-10">
           <motion.div className="text-center mb-16" {...fadeInUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Наш подход к разработке</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Наш подход к разработке</h2>
             <p className="text-primary-foreground/80 text-lg">Системная работа над каждым проектом</p>
           </motion.div>
 
@@ -383,7 +383,7 @@ const BusinessPlans = () => {
         <div className="absolute left-0 bottom-0 w-1/3 h-1/3 bg-accent/5 blur-3xl rounded-full -z-10" />
         <div className="container mx-auto px-4">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            className="text-2xl md:text-3xl font-bold text-center mb-16"
             {...fadeInUp}
           >
             Стоимость услуг
@@ -450,7 +450,7 @@ const BusinessPlans = () => {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-center mb-16"
+            className="text-2xl md:text-3xl font-bold text-center mb-16"
             {...fadeInUp}
           >
             Отзывы клиентов
@@ -517,7 +517,7 @@ const BusinessPlans = () => {
               <div className="p-10 flex flex-col justify-center bg-primary text-primary-foreground relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-full bg-[url('/grid.svg')] opacity-10" />
                 <div className="relative z-10">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-6">
                     Получите расчёт вашего проекта за 24 часа
                   </h2>
                   <p className="text-primary-foreground/80 text-lg mb-8">
