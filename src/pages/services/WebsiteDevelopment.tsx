@@ -2,11 +2,19 @@ import { Layout } from "@/components/Layout";
 import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ArrowRight, Zap, Users, TrendingUp, Layout as LayoutIcon, Palette, FileText, Settings, Rocket, BarChart, Clock, CreditCard, HelpCircle, MessageSquare, MapPin, Briefcase, Search, Target, Smartphone, MousePointer, Eye, Globe, ShieldCheck, Award, PieChart, ZoomIn } from "lucide-react";
+import { BentoSection } from "@/components/services/BentoSection";
+import { BentoCard } from "@/components/services/BentoCard";
+import { ProcessTimeline } from "@/components/services/ProcessTimeline";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  CheckCircle2, ArrowRight, Zap, Users, TrendingUp, Layout as LayoutIcon, Palette,
+  FileText, Settings, Rocket, BarChart, Clock, CreditCard, MessageSquare, MapPin,
+  Briefcase, Search, Target, Smartphone, MousePointer, Eye, ShieldCheck, PieChart,
+  XCircle, Sparkles,
+} from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
+import { motion } from "framer-motion";
+import { useFaqSchema, useAutoBreadcrumb } from "@/components/SeoSchemas";
 
 export default function WebsiteDevelopment() {
   const faqItems = [
@@ -20,115 +28,134 @@ export default function WebsiteDevelopment() {
   ];
   useFaqSchema(faqItems);
   useAutoBreadcrumb("Разработка сайта");
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: 'smooth' });
+
+  const scrollToForm = () => {
+    document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const audience = [
+    { icon: MapPin, title: "Локальный бизнес", text: "Клиенты уходят к конкурентам, потому что вас не находят. Решение: SEO-оптимизированная структура под гео-запросы." },
+    { icon: Rocket, title: "Стартапы и новые ниши", text: "Нужно протестировать гипотезу быстро и дешево. Решение: MVP-сайт за 7 дней с готовыми офферами от AI." },
+    { icon: Zap, title: "Действующий бизнес", text: "Заявки дорогие, сайт не конвертит. Решение: пересборка смыслов и внедрение квизов и лид-магнитов." },
+  ];
 
-  const toggleFaq = (index: number) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
+  const painPoints = [
+    { text: "Заявки слишком дорогие (CPL > 1000₽) — бюджет сливается впустую", icon: CreditCard },
+    { text: "Нет сквозной аналитики — непонятно, какой канал приносит деньги", icon: PieChart },
+    { text: "Сайт сделан «на глаз» — без анализа конкурентов и болей аудитории", icon: Eye },
+    { text: "Низкая конверсия (< 1%) — посетители заходят, но не оставляют контакты", icon: MousePointer },
+    { text: "Нет автоматизации — менеджеры теряют заявки или перезванивают поздно", icon: Clock },
+    { text: "Сложно масштабироваться — платформа не позволяет быстро внедрять воронки", icon: Rocket },
+  ];
+
+  const process = [
+    { step: "01", title: "AI-аналитика ниши", text: "Нейросети анализируют 50+ сайтов конкурентов, выделяют их слабые места и формируют список болей вашей ЦА." },
+    { step: "02", title: "Проектирование смыслов", text: "Создаём структуру не «для красоты», а для продаж. Каждый блок закрывает конкретное возражение клиента." },
+    { step: "03", title: "Дизайн и сборка", text: "Используем современные UI-паттерны, привычные пользователям. Адаптив под мобильные — приоритет №1." },
+    { step: "04", title: "Продающий контент", text: "Пишем тексты с помощью AI и редакторов. Заголовки по 4U, офферы, которые бьют точно в цель." },
+    { step: "05", title: "Техническая настройка", text: "Подключаем CRM, аналитику, пиксели соцсетей. Настраиваем цели, чтобы видеть стоимость каждой заявки." },
+    { step: "06", title: "Тесты и запуск", text: "Проверяем скорость загрузки, работу форм и сценарии поведения. Запускаем трафик только на готовый продукт." },
+  ];
+
+  const ecosystem = [
+    { icon: Rocket, title: "MVP для проверки ниши", text: "Быстро выйти на рынок, собрать первые заявки и проверить гипотезу без тяжёлой разработки.", href: "/services/mvp-development", cta: "Запустить MVP" },
+    { icon: Smartphone, title: "Telegram Mini App", text: "Когда сайту нужен более удобный сценарий: запись, бронирование, кабинет клиента в мессенджере.", href: "/services/telegram-mini-app", cta: "Смотреть Mini App" },
+    { icon: Settings, title: "CRM и кабинет", text: "Когда заявок много и нужен свой интерфейс для менеджеров, контроля статусов и повторных продаж.", href: "/services/custom-crm", cta: "Нужна CRM" },
+    { icon: MessageSquare, title: "AI-агент для заявок", text: "Автоматически отвечать, квалифицировать лидов, собирать данные и разгружать отдел продаж.", href: "/services/ai-agents", cta: "Подключить AI" },
+  ];
+
+  const results = [
+    { title: "Прогнозируемый поток заявок", text: "Понятная стоимость лида (CPL)" },
+    { title: "Полная прозрачность", text: "Дашборды с метриками, а не «ощущения»" },
+    { title: "Рост конверсии в 1.5–2 раза", text: "За счёт точечной работы со смыслами" },
+    { title: "Автоматизация рутины", text: "Заявки сразу попадают в CRM" },
+    { title: "Готовность к масштабированию", text: "Легко добавлять новые страницы и офферы" },
+    { title: "Независимость от разработчиков", text: "Вы сами можете менять цены и тексты" },
+  ];
+
+  const pricingTiers = [
+    {
+      name: "Базовый", price: "от 45 000 ₽", period: "10–14 дней",
+      features: ["Сайт на 5 блоков", "Анализ 10 конкурентов", "Базовая SEO-оптимизация", "Подключение метрики"],
+      highlighted: false,
+    },
+    {
+      name: "Бизнес", price: "от 70 000 ₽", period: "14–21 день",
+      features: ["Глубокий AI-анализ ниши", "Проработка воронок продаж", "Квиз + лид-магнит", "Интеграция с CRM", "Копирайтинг (AI + редактор)", "A/B тесты офферов"],
+      highlighted: true,
+    },
+    {
+      name: "Экосистема", price: "от 100 000 ₽", period: "21–30 дней",
+      features: ["Многостраничный сайт", "Сложные интеграции (API)", "Чат-бот автоворонка", "Сквозная аналитика", "Настройка рекламы (тест)", "Сопровождение 1 месяц"],
+      highlighted: false,
+    },
+  ];
+
+  const whyUs = [
+    { icon: Briefcase, title: "Фокус на LTV и ROI", text: "Не «красивые картинки», а понятная экономика проекта." },
+    { icon: Zap, title: "AI снижает стоимость", text: "Технологии уменьшают стоимость разработки на 30%." },
+    { icon: MapPin, title: "Знаем Тюмень", text: "Специфика регионального рынка и локальных запросов." },
+    { icon: Settings, title: "Единая система", text: "Сайт + CRM + реклама работают в связке." },
+    { icon: FileText, title: "Гарантия сроков", text: "Юридическая гарантия соблюдения сроков и результата." },
+    { icon: CreditCard, title: "Гибкая оплата", text: "Рассрочка, поэтапная оплата и бартер." },
+  ];
 
   return (
     <Layout
       title="Создание сайта, MVP и интерфейса продаж в Тюмени | CentrLP"
       description="Разработка продающего сайта, MVP и клиентского интерфейса: дизайн, тексты, формы заявок, CRM, аналитика и SEO. Сайт как основа продаж и роста."
     >
-      {/* Hero */}
-      <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,141,210,0.1),transparent_50%)]" />
-
-        {/* Floating Elements Animation */}
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-[#0096D6]/10 blur-3xl" />
+          <div className="absolute bottom-10 left-10 w-80 h-80 rounded-full bg-[#44B78B]/10 blur-3xl" />
+        </div>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 right-[10%] text-primary/20"
+            className="absolute top-24 right-[8%] text-[#0096D6]/20 hidden md:block"
           >
             <LayoutIcon className="w-16 h-16" />
           </motion.div>
           <motion.div
             animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-40 left-[10%] text-accent/20"
+            className="absolute bottom-36 left-[8%] text-[#44B78B]/20 hidden md:block"
           >
             <BarChart className="w-12 h-12" />
           </motion.div>
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-40 left-[20%] w-4 h-4 bg-primary/30 rounded-full blur-sm"
-          />
         </div>
 
-        <div className="container relative">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="inline-block px-4 py-2 bg-primary/10 rounded-full">
-                <span className="text-primary font-semibold">Сайты, MVP и digital-продукты</span>
-              </div>
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-                className="hidden md:flex items-center gap-2 text-muted-foreground text-sm"
-              >
-                <Zap className="w-4 h-4 text-yellow-500" />
-                <span>AI-ускорение</span>
-              </motion.div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#0096D6] text-xs font-semibold uppercase tracking-wider shadow-sm mb-8">
+              <Zap className="w-3.5 h-3.5 text-[#44B78B]" />
+              <span>Сайты, MVP и digital-продукты</span>
             </div>
 
-            <div className="relative inline-block">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent relative z-10">
-                Сайт как интерфейс продаж, а не просто страница в интернете
-              </h1>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8 }}
-                className="absolute -right-12 -top-8 hidden lg:block"
-              >
-                <div className="bg-card p-3 rounded-xl shadow-lg border border-border/50 flex flex-col items-center gap-1">
-                  <TrendingUp className="w-6 h-6 text-green-500" />
-                  <span className="text-xs font-bold">+150%</span>
-                  <span className="text-[10px] text-muted-foreground">конверсия</span>
-                </div>
-              </motion.div>
-            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+              Сайт как <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">интерфейс продаж</span>,<br />а не просто страница
+            </h1>
 
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed">
               Проектируем продающие сайты, MVP и клиентские интерфейсы: с формами заявок, квизами, CRM, аналитикой и возможностью расширить проект до Telegram Mini App, AI-агента или внутреннего сервиса.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <CheckCircle2 className="w-5 h-5 text-accent" />
-                <span>Нет заявок и понятной воронки</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <CheckCircle2 className="w-5 h-5 text-accent" />
-                <span>Нужно быстро протестировать новый продукт</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <CheckCircle2 className="w-5 h-5 text-accent" />
-                <span>Заявки теряются без CRM и автоматизации</span>
-              </div>
+
+            <div className="flex flex-wrap justify-center gap-2.5 mb-10">
+              {["Нет заявок и воронки", "Нужно быстро протестировать продукт", "Заявки теряются без CRM"].map((point) => (
+                <div key={point} className="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-sm text-slate-700 shadow-sm">
+                  {point}
+                </div>
+              ))}
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="text-lg px-8 animate-pulse-gentle hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-primary/25"
-                onClick={() => scrollToSection('form')}
-              >
-                Оставить заявку <ArrowRight className="ml-2" />
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button size="lg" onClick={scrollToForm}>
+                Оставить заявку <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-lg px-8 hover:bg-secondary/50 transition-colors"
-                onClick={() => scrollToSection('process')}
-              >
+              <Button size="lg" variant="outline" onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}>
                 Как мы работаем
               </Button>
             </div>
@@ -136,715 +163,317 @@ export default function WebsiteDevelopment() {
         </div>
       </section>
 
-      <ServiceImageBand slug="website-development" alt="website-development — иллюстрация услуги CentrLP" />
+      <ServiceImageBand slug="website-development" alt="Разработка сайта — иллюстрация услуги CentrLP" />
 
-      {/* Для кого */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            Для кого эта услуга
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                icons: [Users, MapPin, Briefcase],
-                title: "Локальный бизнес",
-                text: "Боль: «Клиенты уходят к конкурентам, потому что нас не находят». Решение: SEO-оптимизированная структура под гео-запросы."
-              },
-              {
-                icons: [Rocket, TrendingUp, Target],
-                title: "Стартапы и новые ниши",
-                text: "Боль: «Нужно протестировать гипотезу быстро и дешево». Решение: MVP-сайт за 7 дней с готовыми офферами от AI."
-              },
-              {
-                icons: [Zap, Settings, BarChart],
-                title: "Действующий бизнес",
-                text: "Боль: «Заявки слишком дорогие, сайт не конвертит». Решение: Пересборка смыслов и внедрение квизов/лид-магнитов."
-              }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="bg-background p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 group border border-border/50"
-              >
-                <div className="flex gap-3 mb-6">
-                  {item.icons.map((Icon, j) => (
-                    <div key={j} className={`w-12 h-12 rounded-xl flex items-center justify-center ${j === 0 ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'} group-hover:scale-110 transition-transform duration-300 delay-${j * 100}`}>
-                      <Icon className="w-6 h-6" />
-                    </div>
-                  ))}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{item.text}</p>
-              </motion.div>
-            ))}
-          </div>
+      {/* ── Audience ─────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Для кого"
+        title="Для кого эта услуга"
+        description="Три типовых сценария, когда сайт становится точкой роста бизнеса."
+      >
+        <div className="grid md:grid-cols-3 gap-5">
+          {audience.map((item) => (
+            <BentoCard key={item.title} icon={item.icon} title={item.title} text={item.text} />
+          ))}
         </div>
-      </section>
+      </BentoSection>
 
-      {/* Боли */}
-      <section className="py-20">
-        <div className="container max-w-5xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            Типичные проблемы, которые мы решаем
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { text: "Заявки выходят слишком дорогими (CPL > 1000₽) — бюджет сливается впустую", icon: CreditCard },
-              { text: "Нет сквозной аналитики — непонятно, какой канал приносит деньги, а какой убытки", icon: PieChart },
-              { text: "Сайт сделан «на глаз» — без анализа конкурентов и понимания болей аудитории", icon: Eye },
-              { text: "Низкая конверсия (< 1%) — посетители заходят, но не оставляют контакты", icon: MousePointer },
-              { text: "Нет автоматизации — менеджеры теряют заявки или перезванивают слишком поздно", icon: Clock },
-              { text: "Сложно масштабироваться — текущая платформа не позволяет быстро внедрять новые воронки", icon: Rocket }
-            ].map((pain, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-start gap-4 p-6 bg-muted/30 rounded-xl hover:bg-muted transition-all duration-300 group border border-transparent hover:border-border/50"
-              >
-                <div className="p-3 bg-background rounded-lg shadow-sm group-hover:scale-110 transition-transform duration-300">
-                  <pain.icon className="w-6 h-6 text-destructive" />
-                </div>
-                <p className="text-lg font-medium pt-1">{pain.text}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Как решаем */}
-      <section id="process" className="py-20 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-        <div className="container">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-16">
-            Как мы создаём сайт
-          </h2>
-          <div className="max-w-4xl mx-auto space-y-8">
-            {[
-              {
-                step: "01",
-                title: "AI-аналитика ниши",
-                text: "Нейросети анализируют 50+ сайтов конкурентов, выделяют их слабые места и формируют список болей вашей ЦА.",
-                icon: BarChart
-              },
-              {
-                step: "02",
-                title: "Проектирование смыслов",
-                text: "Создаем структуру не «для красоты», а для продаж. Каждый блок закрывает конкретное возражение клиента.",
-                icon: LayoutIcon
-              },
-              {
-                step: "03",
-                title: "Дизайн и сборка",
-                text: "Используем современные UI-паттерны, привычные пользователям. Адаптив под мобильные — приоритет №1.",
-                icon: Palette
-              },
-              {
-                step: "04",
-                title: "Продающий контент",
-                text: "Пишем тексты с помощью AI и редакторов. Заголовки по 4U, офферы, которые бьют точно в цель.",
-                icon: FileText
-              },
-              {
-                step: "05",
-                title: "Техническая настройка",
-                text: "Подключаем CRM, аналитику, пиксели соцсетей. Настраиваем цели, чтобы видеть стоимость каждой заявки.",
-                icon: Settings
-              },
-              {
-                step: "06",
-                title: "Тесты и запуск",
-                text: "Проверяем скорость загрузки, работу форм и сценарии поведения. Запускаем трафик только на готовый продукт.",
-                icon: Rocket
-              }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className="flex gap-6 items-start group"
-              >
-                <motion.div
-                  initial={{ scale: 0.9 }}
-                  whileInView={{ scale: 1 }}
-                  className="flex-shrink-0 w-16 h-16 bg-primary text-primary-foreground rounded-xl flex items-center justify-center text-2xl font-bold shadow-lg relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <item.icon className="w-8 h-8 absolute opacity-20 group-hover:opacity-40 transition-opacity duration-300 scale-150" />
-                  <span className="relative z-10">{item.step}</span>
-                </motion.div>
-                <div className="flex-1 pt-2">
-                  <h3 className="text-2xl font-semibold mb-2 flex items-center gap-3">
-                    {item.title}
-                    <item.icon className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </h3>
-                  <p className="text-muted-foreground text-lg">{item.text}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Product Ecosystem */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Когда нужен не просто сайт, а продуктовая система
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Часто сильный сайт становится первым слоем. Дальше мы разворачиваем вокруг него MVP, мини-приложение, CRM или AI-агента, чтобы путь от клика до сделки был короче и прозрачнее.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {[
-              {
-                icon: Rocket,
-                title: "MVP для проверки ниши",
-                text: "Если нужно быстро выйти на рынок, собрать первые заявки и проверить гипотезу без тяжёлой разработки.",
-                href: "/services/mvp-development",
-                cta: "Запустить MVP"
-              },
-              {
-                icon: Smartphone,
-                title: "Telegram Mini App",
-                text: "Когда сайту нужен более удобный сценарий: запись, бронирование, кабинет клиента, повторные заказы прямо в мессенджере.",
-                href: "/services/telegram-mini-app",
-                cta: "Смотреть Mini App"
-              },
-              {
-                icon: Settings,
-                title: "CRM и внутренний кабинет",
-                text: "Когда заявок становится много и бизнесу нужен свой интерфейс для менеджеров, контроля статусов и повторных продаж.",
-                href: "/services/custom-crm",
-                cta: "Нужна CRM"
-              },
-              {
-                icon: MessageSquare,
-                title: "AI-агент для заявок",
-                text: "Когда хочется автоматически отвечать, квалифицировать лидов, собирать данные и разгружать отдел продаж.",
-                href: "/services/ai-agents",
-                cta: "Подключить AI"
-              }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -8 }}
-                className="bg-background rounded-2xl p-6 shadow-sm border border-border/50 hover:shadow-xl transition-all duration-300"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5">
-                  <item.icon className="w-7 h-7" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-5">{item.text}</p>
-                <Link
-                  to={item.href}
-                  className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
-                >
-                  {item.cta}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Результат */}
-      <section className="py-20">
-        <div className="container">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            Что вы получите в результате
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
-            {[
-              { text: "Прогнозируемый поток заявок", sub: "Понятная стоимость лида (CPL)" },
-              { text: "Полная прозрачность", sub: "Дашборды с метриками, а не «ощущения»" },
-              { text: "Рост конверсии в 1.5-2 раза", sub: "За счет точечной работы со смыслами" },
-              { text: "Автоматизация рутины", sub: "Заявки сразу попадают в CRM" },
-              { text: "Готовность к масштабированию", sub: "Легко добавлять новые страницы и офферы" },
-              { text: "Независимость от разработчиков", sub: "Вы сами можете менять цены и тексты" }
-            ].map((result, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.02, backgroundColor: "hsl(var(--accent) / 0.15)" }}
-                className="flex items-start gap-4 p-4 bg-accent/10 rounded-lg transition-colors duration-300"
-              >
-                <CheckCircle2 className="w-8 h-8 text-accent flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-lg font-bold">{result.text}</h3>
-                  <p className="text-muted-foreground text-sm">{result.sub}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-
-        </div>
-      </section>
-
-      {/* Detailed Case Study */}
-      <section className="py-20 bg-muted/30">
-        <div className="container">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary font-semibold mb-4">
-              <Zap className="w-4 h-4" />
-              <span>Мини-кейс: редизайн + маркетинговая система для клининга</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold">
-              Было / Стало: как мы превратили «визитку»<br />в работающую систему заявок
-            </h2>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            {/* Column 1: Source Data */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-background p-8 rounded-2xl shadow-sm border border-border/50 h-full"
+      {/* ── Pain Points ──────────────────────────────────────────────── */}
+      <BentoSection
+        tone="slate"
+        eyebrow="Проблема"
+        title="Типичные проблемы, которые мы решаем"
+        description="Что на практике мешает сайту приносить прогнозируемые заявки."
+      >
+        <div className="grid md:grid-cols-2 gap-5">
+          {painPoints.map((pain) => (
+            <div
+              key={pain.text}
+              className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
             >
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <Briefcase className="w-5 h-5 text-primary" />
-                Исходные данные
-              </h3>
-              <ul className="space-y-4">
-                <li className="flex gap-3">
-                  <MapPin className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block text-sm">Клиент</span>
-                    <span className="text-muted-foreground text-sm">Клининговая компания, 2 филиала: Тюмень и Ханты-Мансийск.</span>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <LayoutIcon className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block text-sm">Ситуация</span>
-                    <span className="text-muted-foreground text-sm">Старый сайт на конструкторе, сделанный «для галочки».</span>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <Users className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block text-sm">Каналы продаж</span>
-                    <span className="text-muted-foreground text-sm">Сарафанка, немного соцсетей, случайные заявки с сайта.</span>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <Target className="w-5 h-5 text-muted-foreground flex-shrink-0" />
-                  <div>
-                    <span className="font-semibold block text-sm">Задача</span>
-                    <span className="text-muted-foreground text-sm">Увеличить кол-во заявок, разделить потоки по городам, упаковать как сервис, обеспечить защиту ПД (Роскомнадзор).</span>
-                  </div>
-                </li>
-              </ul>
-            </motion.div>
-
-            {/* Column 2: What was wrong */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-red-50/50 p-8 rounded-2xl shadow-sm border border-red-100 h-full"
-            >
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-red-700">
-                <HelpCircle className="w-5 h-5" />
-                Что было не так
-              </h3>
-              <ul className="space-y-4">
-                {[
-                  { text: "Нет выбора филиала. Клиенты путались в телефонах и ценах.", icon: MapPin },
-                  { text: "Услуги перемешаны. Нет разделения по зонам (кухня, спальня).", icon: LayoutIcon },
-                  { text: "Текст «про компанию», а не про боли клиента.", icon: FileText },
-                  { text: "Нет живой команды. Выглядит как фирма-однодневка.", icon: Users },
-                  { text: "Цены непрозрачные. Нужно звонить и уточнять.", icon: CreditCard },
-                  { text: "Нет квизов. Все заявки сваливались в одну кучу.", icon: MessageSquare },
-                  { text: "Риски штрафов. Нет согласия на ПД и HTTPS.", icon: ShieldCheck },
-                  { text: "Слабая SEO-основа под запросы «уборка Тюмень».", icon: Search }
-                ].map((item, i) => (
-                  <li key={i} className="flex gap-3 items-start">
-                    <div className="mt-1 min-w-[20px]">
-                      <item.icon className="w-4 h-4 text-red-400" />
-                    </div>
-                    <span className="text-sm text-muted-foreground">{item.text}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Column 3: What we did */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-green-50/50 p-8 rounded-2xl shadow-sm border border-green-100 h-full"
-            >
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-green-700">
-                <CheckCircle2 className="w-5 h-5" />
-                Что сделали мы
-              </h3>
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-semibold text-green-800 mb-2 text-sm uppercase tracking-wider">Упаковка сайта</h4>
-                  <ul className="space-y-2">
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      Селектор города (Тюмень / Ханты-Мансийск) с подменой контактов.
-                    </li>
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      Интерактивный выбор услуг по комнатам (Спальня, Кухня, Санузел).
-                    </li>
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      Блок «Наша команда» с живыми фото и FAQ по страхам.
-                    </li>
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      Юридическая защита: HTTPS, Политика, Чекбоксы согласия.
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-green-800 mb-2 text-sm uppercase tracking-wider">Маркетинг</h4>
-                  <ul className="space-y-2">
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      2 квиза: на уборку и на мойку окон (AI-вопросы).
-                    </li>
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      Контент-стратегия для соцсетей + Реклама ВК.
-                    </li>
-                    <li className="text-sm text-muted-foreground flex gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" />
-                      Упаковка Яндекс Бизнес и 2ГИС.
-                    </li>
-                  </ul>
-                </div>
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-500">
+                <pain.icon className="w-5 h-5" />
               </div>
-            </motion.div>
-          </div>
-
-          {/* Before / After Visual */}
-          <div className="max-w-5xl mx-auto mb-12">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="relative group cursor-pointer overflow-hidden rounded-xl border border-border shadow-lg">
-                <div className="absolute top-4 left-4 z-10 bg-black/70 text-white px-3 py-1 rounded-md text-sm font-bold backdrop-blur-md">
-                  До: Информационная визитка
-                </div>
-                <img
-                  src="/assets/cases/redesign-before.jpg"
-                  alt="Старый сайт клининга"
-                  className="w-full h-auto object-cover filter grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
-                />
-                <div className="p-4 bg-background border-t border-border">
-                  <p className="text-sm text-muted-foreground">Без структуры, без юридической защиты, без сегментации.</p>
-                </div>
-              </div>
-              <div className="relative group cursor-pointer overflow-hidden rounded-xl border border-primary/30 shadow-2xl ring-4 ring-primary/5">
-                <div className="absolute top-4 right-4 z-10 bg-green-600 text-white px-3 py-1 rounded-md text-sm font-bold shadow-lg">
-                  После: Система продаж
-                </div>
-                <img
-                  src="/assets/cases/redesign-after.jpg"
-                  alt="Новый сайт клининга"
-                  className="w-full h-auto object-cover transition-all duration-500 group-hover:scale-105"
-                />
-                <div className="p-4 bg-background border-t border-border">
-                  <p className="text-sm text-primary font-medium">Продающий сайт + Квизы + Комплексный маркетинг.</p>
-                </div>
-              </div>
+              <p className="text-[15px] text-slate-700 leading-relaxed pt-1">{pain.text}</p>
             </div>
-          </div>
-
-          {/* Results Summary */}
-          <div className="max-w-4xl mx-auto bg-primary/5 rounded-2xl p-8 text-center mb-12 border border-primary/10">
-            <h3 className="text-2xl font-bold mb-4">Результат для клиента</h3>
-            <p className="text-lg text-muted-foreground mb-6">
-              Появился понятный путь клиента: выбрал город → посмотрел услуги по комнатам → прошёл квиз → оставил заявку.
-              Компания выглядит как сервис с командой и лицами. Сайт полностью соответствует требованиям Роскомнадзора.
-              Удобно вести рекламу и аналитику по отдельным воронкам.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm font-medium">
-              <span className="bg-background px-3 py-1 rounded-full border border-border text-muted-foreground">Рост конверсии</span>
-              <span className="bg-background px-3 py-1 rounded-full border border-border text-muted-foreground">Защита от штрафов</span>
-              <span className="bg-background px-3 py-1 rounded-full border border-border text-muted-foreground">Прозрачная аналитика</span>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <Button
-              size="lg"
-              className="text-lg px-8 h-14 shadow-xl hover:shadow-primary/25 hover:-translate-y-1 transition-all duration-300"
-              onClick={() => scrollToSection('form')}
-            >
-              Хочу такой же результат <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </div>
+          ))}
         </div>
-      </section>
+      </BentoSection>
 
-      {/* Тарифы */}
-      <section className="py-20">
-        <div className="container">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            Форматы сотрудничества
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto items-start">
-            {[
-              {
-                name: "Базовый",
-                price: "от 45 000 ₽",
-                period: "Срок: 10–14 дней",
-                features: [
-                  { text: "Сайт на 5 блоков", icon: LayoutIcon },
-                  { text: "Анализ 10 конкурентов", icon: BarChart },
-                  { text: "Базовая SEO-оптимизация", icon: TrendingUp },
-                  { text: "Подключение метрики", icon: Settings },
-                  { text: "Срок: 7-10 дней", icon: Clock }
-                ]
-              },
-              {
-                name: "Бизнес",
-                price: "от 70 000 ₽",
-                period: "Срок: 14–21 день",
-                features: [
-                  { text: "Глубокий AI-анализ ниши", icon: Zap },
-                  { text: "Проработка воронок продаж", icon: TrendingUp },
-                  { text: "Квиз + Лид-магнит", icon: MessageSquare },
-                  { text: "Интеграция с CRM", icon: Settings },
-                  { text: "Копирайтинг (AI + редактор)", icon: FileText },
-                  { text: "A/B тесты офферов", icon: Rocket }
-                ],
-                popular: true
-              },
-              {
-                name: "Экосистема",
-                price: "от 100 000 ₽",
-                period: "Срок: 21–30 дней",
-                features: [
-                  { text: "Многостраничный сайт", icon: LayoutIcon },
-                  { text: "Сложные интеграции (API)", icon: Settings },
-                  { text: "Чат-бот автоворонка", icon: MessageSquare },
-                  { text: "Сквозная аналитика", icon: BarChart },
-                  { text: "Настройка рекламы (тест)", icon: Rocket },
-                  { text: "Сопровождение 1 месяц", icon: Users },
-                  { text: "Персональная стратегия", icon: FileText }
-                ]
-              }
-            ].map((plan, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`relative p-8 rounded-2xl transition-all duration-500 ${plan.popular ? 'bg-primary text-primary-foreground shadow-2xl scale-105 z-10 ring-4 ring-primary/20' : 'bg-background shadow-lg hover:shadow-xl'}`}
+      {/* ── Process ──────────────────────────────────────────────────── */}
+      <BentoSection
+        id="process"
+        tone="tint"
+        eyebrow="Процесс"
+        title="Как мы создаём сайт"
+        description="Шесть этапов от AI-аналитики ниши до запуска трафика на готовый продукт."
+      >
+        <ProcessTimeline steps={process} />
+      </BentoSection>
+
+      {/* ── Ecosystem ────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Экосистема"
+        title="Когда нужен не просто сайт, а продуктовая система"
+        description="Сильный сайт часто становится первым слоем. Дальше мы разворачиваем MVP, мини-приложение, CRM или AI-агента, чтобы путь от клика до сделки был короче."
+      >
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+          {ecosystem.map((item) => (
+            <div
+              key={item.href}
+              className="h-full flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md hover:border-slate-300"
+            >
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#0096D6]/10 to-[#44B78B]/10 text-[#0096D6]">
+                <item.icon className="w-6 h-6" />
+              </div>
+              <h3 className="mb-3 text-[20px] font-bold tracking-tight text-slate-900">{item.title}</h3>
+              <p className="mb-5 flex-1 text-slate-600 leading-relaxed text-[15px]">{item.text}</p>
+              <Link
+                to={item.href}
+                className="inline-flex items-center gap-1.5 text-[#0096D6] font-semibold text-sm hover:gap-2.5 transition-all"
               >
-                {plan.popular && (
-                  <>
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-accent text-accent-foreground rounded-full text-sm font-semibold shadow-lg">
-                      Популярный
-                    </div>
-                    <motion.div
-                      animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.02, 1] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                      className="absolute inset-0 rounded-2xl ring-2 ring-primary-foreground/30 pointer-events-none"
-                    />
-                  </>
-                )}
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                  <div className="text-3xl font-bold mb-1">{plan.price}</div>
-                  <div className={`text-sm ${plan.popular ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{plan.period}</div>
-                </div>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, j) => (
-                    <li key={j} className="flex items-center gap-3">
-                      <div className={`p-1 rounded-full ${plan.popular ? 'bg-primary-foreground/20' : 'bg-primary/10'}`}>
-                        <feature.icon className={`w-4 h-4 ${plan.popular ? 'text-primary-foreground' : 'text-primary'}`} />
-                      </div>
-                      <span className="text-sm font-medium">{feature.text}</span>
+                {item.cta}
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          ))}
+        </div>
+      </BentoSection>
+
+      {/* ── Results ──────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="slate"
+        eyebrow="Результат"
+        title="Что вы получите в итоге"
+      >
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {results.map((result) => (
+            <div
+              key={result.title}
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+            >
+              <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#0096D6]/10 to-[#44B78B]/10">
+                <CheckCircle2 className="w-5 h-5 text-[#44B78B]" />
+              </div>
+              <h3 className="mb-1 text-lg font-bold text-slate-900">{result.title}</h3>
+              <p className="text-sm text-slate-600">{result.text}</p>
+            </div>
+          ))}
+        </div>
+      </BentoSection>
+
+      {/* ── Case Study ───────────────────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Мини-кейс"
+        title="Было / Стало: клининг в Тюмени"
+        description="Как мы превратили «визитку» в работающую систему заявок — сайт + CRM + квизы + реклама."
+      >
+        <div className="grid lg:grid-cols-3 gap-5 mb-8">
+          <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+            <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900">
+              <Briefcase className="w-5 h-5 text-[#0096D6]" />
+              Исходные данные
+            </h3>
+            <ul className="space-y-4">
+              {[
+                { label: "Клиент", value: "Клининговая компания, 2 филиала: Тюмень и Ханты-Мансийск." },
+                { label: "Ситуация", value: "Старый сайт на конструкторе, сделанный «для галочки»." },
+                { label: "Каналы продаж", value: "Сарафанка, немного соцсетей, случайные заявки с сайта." },
+                { label: "Задача", value: "Увеличить кол-во заявок, разделить по городам, упаковать как сервис, защита ПД." },
+              ].map((item) => (
+                <li key={item.label}>
+                  <span className="block text-sm font-semibold text-slate-800">{item.label}</span>
+                  <span className="block text-sm text-slate-600 leading-relaxed">{item.value}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-red-200/60 bg-gradient-to-br from-white to-red-50/40 p-7 shadow-sm">
+            <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900">
+              <XCircle className="w-5 h-5 text-red-500" />
+              Что было не так
+            </h3>
+            <ul className="space-y-3">
+              {[
+                "Нет выбора филиала. Клиенты путались в телефонах и ценах.",
+                "Услуги перемешаны. Нет разделения по зонам (кухня, спальня).",
+                "Текст «про компанию», а не про боли клиента.",
+                "Нет живой команды. Выглядит как фирма-однодневка.",
+                "Цены непрозрачные. Нужно звонить и уточнять.",
+                "Нет квизов — заявки сваливались в одну кучу.",
+                "Риски штрафов: нет согласия на ПД и HTTPS.",
+                "Слабая SEO-основа под запросы «уборка Тюмень».",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-slate-700 leading-relaxed">
+                  <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-2xl border border-[#44B78B]/30 bg-gradient-to-br from-white to-[#44B78B]/[0.06] p-7 shadow-sm">
+            <h3 className="mb-5 flex items-center gap-2 text-lg font-bold text-slate-900">
+              <CheckCircle2 className="w-5 h-5 text-[#44B78B]" />
+              Что сделали мы
+            </h3>
+            <div className="space-y-5">
+              <div>
+                <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-[#0096D6]">Упаковка сайта</h4>
+                <ul className="space-y-2">
+                  {[
+                    "Селектор города с подменой контактов.",
+                    "Интерактивный выбор услуг по комнатам.",
+                    "Блок «Наша команда» с фото и FAQ.",
+                    "HTTPS, политика, чекбоксы согласия.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
+                      <CheckCircle2 className="mt-0.5 w-3.5 h-3.5 flex-shrink-0 text-[#44B78B]" />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
-                <Button
-                  variant={plan.popular ? "secondary" : "default"}
-                  className={`w-full text-lg h-12 shadow-lg ${plan.popular ? 'hover:bg-white hover:text-primary' : 'hover:bg-primary/90'} transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
-                  onClick={() => scrollToSection('form')}
-                >
-                  Выбрать пакет
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Почему мы */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
-        <div className="container max-w-4xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            Почему CentrLP
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {[
-              { text: "Фокус на LTV и ROI, а не на «красивые картинки»", icon: Briefcase },
-              { text: "AI-технологии снижают стоимость разработки на 30%", icon: Zap },
-              { text: "Знаем специфику рынка Тюмени и регионов", icon: MapPin },
-              { text: "Строим единую систему: Сайт + CRM + Реклама", icon: Settings },
-              { text: "Юридическая гарантия сроков и результата", icon: FileText },
-              { text: "Гибкие условия оплаты и бартер", icon: CreditCard }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-4 p-6 bg-background rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
-              >
-                <div className="p-3 bg-primary/10 rounded-full">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <span className="font-medium">{item.text}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-20">
-        <div className="container max-w-3xl">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
-            Частые вопросы
-          </h2>
-          <div className="space-y-4">
-            {[
-              {
-                q: "Почему вы используете AI, это не ухудшает качество?",
-                a: "Наоборот. AI позволяет нам проанализировать объемы данных, на которые у человека ушли бы недели (конкуренты, отзывы, тренды). Мы тратим время на стратегию, а не на рутину.",
-                icon: Zap
-              },
-              {
-                q: "Как быстро окупятся вложения в сайт?",
-                a: "При запуске рекламы первые заявки идут уже на 3-5 день. Средняя окупаемость наших проектов — 1-2 месяца.",
-                icon: TrendingUp
-              },
-              {
-                q: "Что если сайт не будет приносить заявки?",
-                a: "Мы работаем по KPI. Если конверсия ниже плановой, мы бесплатно докручиваем офферы и структуру, пока не выйдем на целевые показатели.",
-                icon: HelpCircle
-              },
-              {
-                q: "Нужно ли мне разбираться в программировании?",
-                a: "Нет. Мы сдаем полностью готовый инструмент. Вы сможете менять цены и тексты через простую админку, как в Word.",
-                icon: Settings
-              },
-              {
-                q: "Вы настраиваете рекламу?",
-                a: "Да, мы агентство полного цикла. Сайт без трафика бесполезен, поэтому мы предлагаем комплексное продвижение (Яндекс, ВК, Telegram).",
-                icon: Rocket
-              },
-              {
-                q: "Можно ли оплатить в рассрочку?",
-                a: "Да, для юрлиц есть рассрочка от банка-партнера или поэтапная оплата (30/40/30).",
-                icon: CreditCard
-              },
-              {
-                q: "Работаете ли вы по бартеру?",
-                a: "Да, мы открыты к сотрудничеству. Если у вас качественный продукт/услуга, мы готовы обсудить частичный или полный бартер.",
-                icon: Users
-              }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={false}
-                className="border border-border/50 rounded-xl overflow-hidden bg-card"
-              >
-                <button
-                  onClick={() => toggleFaq(i)}
-                  className="flex items-center justify-between w-full p-6 text-left hover:bg-muted/50 transition-colors"
-                >
-                  <div className="flex items-center gap-4">
-                    <item.icon className="w-5 h-5 text-primary" />
-                    <span className="font-semibold text-lg">{item.q}</span>
-                  </div>
-                  <ArrowRight className={`w-5 h-5 text-muted-foreground transition-transform duration-300 ${openFaq === i ? 'rotate-90' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="p-6 pt-0 text-muted-foreground border-t border-border/50">
-                        {item.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section id="form" className="py-20 bg-gradient-to-br from-primary/10 via-background to-accent/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10" />
-
-        <div className="container max-w-4xl text-center mb-12 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="inline-block mb-6"
-          >
-            <div className="w-20 h-20 bg-background rounded-full flex items-center justify-center shadow-xl mx-auto mb-6 relative">
-              <MessageSquare className="w-10 h-10 text-primary" />
-              <div className="absolute -top-1 -right-1 w-6 h-6 bg-accent rounded-full flex items-center justify-center text-xs text-white font-bold animate-bounce">1</div>
+              </div>
+              <div>
+                <h4 className="mb-2 text-xs font-bold uppercase tracking-wider text-[#0096D6]">Маркетинг</h4>
+                <ul className="space-y-2">
+                  {[
+                    "2 квиза: на уборку и мойку окон.",
+                    "Контент-стратегия + реклама ВК.",
+                    "Упаковка Яндекс Бизнес и 2ГИС.",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
+                      <CheckCircle2 className="mt-0.5 w-3.5 h-3.5 flex-shrink-0 text-[#44B78B]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </motion.div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            Готовы запустить сайт, который работает?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8">
-            Оставьте заявку — разберём ваш проект, предложим решение и рассчитаем стоимость
-          </p>
-        </div>
-        <div className="container max-w-2xl relative z-10">
-          <div className="bg-card shadow-2xl rounded-2xl p-1 border border-border/50">
-            <ContactForm />
           </div>
         </div>
-        <div className="container max-w-2xl mt-12 text-center relative z-10">
-          <p className="text-muted-foreground mb-4">Или напишите напрямую:</p>
-          <div className="flex flex-wrap justify-center gap-4">
+
+        <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-[#0096D6]/[0.03] to-[#44B78B]/[0.04] p-8 text-center shadow-sm">
+          <h3 className="mb-3 text-xl font-bold text-slate-900">Результат для клиента</h3>
+          <p className="mx-auto max-w-3xl text-slate-600 leading-relaxed mb-6">
+            Появился понятный путь клиента: выбрал город → посмотрел услуги по комнатам → прошёл квиз → оставил заявку. Компания выглядит как сервис с командой и лицами. Сайт полностью соответствует требованиям Роскомнадзора.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {["Рост конверсии", "Защита от штрафов", "Прозрачная аналитика"].map((tag) => (
+              <span key={tag} className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </BentoSection>
+
+      {/* ── Pricing ──────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="slate"
+        eyebrow="Стоимость"
+        title="Форматы сотрудничества"
+        description="Три тарифа под разные задачи — от лендинга до продуктовой экосистемы."
+      >
+        <div className="grid md:grid-cols-3 gap-5 max-w-6xl">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.name}
+              className={`relative rounded-2xl border shadow-sm p-7 flex flex-col ${
+                tier.highlighted
+                  ? "border-[#0096D6]/40 bg-gradient-to-br from-white via-[#0096D6]/[0.04] to-[#44B78B]/[0.04] shadow-md md:scale-[1.02]"
+                  : "border-slate-200 bg-white"
+              }`}
+            >
+              {tier.highlighted && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-[#0096D6] to-[#44B78B] text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
+                  <Sparkles className="w-3 h-3" />
+                  Популярный
+                </div>
+              )}
+              <h3 className="text-xl font-bold text-slate-900 mb-2">{tier.name}</h3>
+              <div className="text-3xl font-bold bg-gradient-to-br from-[#0096D6] to-[#44B78B] bg-clip-text text-transparent mb-1">
+                {tier.price}
+              </div>
+              <p className="text-sm text-slate-500 mb-6">Срок: {tier.period}</p>
+              <ul className="space-y-2.5 mb-7 flex-1">
+                {tier.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2.5 text-sm text-slate-700">
+                    <div className="mt-[3px] flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-md bg-gradient-to-br from-[#0096D6]/15 to-[#44B78B]/15">
+                      <CheckCircle2 className="w-2.5 h-2.5 text-[#0096D6]" strokeWidth={3} />
+                    </div>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              <Button
+                variant={tier.highlighted ? "default" : "outline"}
+                className="w-full"
+                onClick={scrollToForm}
+              >
+                Выбрать пакет
+              </Button>
+            </div>
+          ))}
+        </div>
+      </BentoSection>
+
+      {/* ── Why Us ───────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Почему CentrLP"
+        title="Шесть причин работать с нами"
+      >
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {whyUs.map((item) => (
+            <BentoCard key={item.title} icon={item.icon} title={item.title} text={item.text} />
+          ))}
+        </div>
+      </BentoSection>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="slate"
+        eyebrow="FAQ"
+        title="Частые вопросы"
+      >
+        <div className="max-w-3xl rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+          <Accordion type="single" collapsible>
+            {faqItems.map((item, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="px-6 text-left text-slate-900 hover:text-[#0096D6]">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-6 text-slate-600 leading-relaxed">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </BentoSection>
+
+      {/* ── Contact ──────────────────────────────────────────────────── */}
+      <section id="form" className="py-14 md:py-20 bg-gradient-to-b from-white via-[#44B78B]/[0.04] to-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <h2 className="text-[28px] md:text-[34px] font-bold tracking-tight text-slate-900 mb-4">
+              Готовы запустить сайт, который работает?
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed">
+              Оставьте заявку — разберём ваш проект, предложим решение и рассчитаем стоимость.
+            </p>
+          </div>
+          <ContactForm />
+          <div className="text-center mt-10">
+            <p className="text-slate-500 text-sm mb-3">Или напишите напрямую</p>
             <Link to="/contacts">
-              <Button variant="outline" size="lg" className="hover:bg-primary hover:text-primary-foreground transition-colors">
-                Контакты и мессенджеры
+              <Button variant="outline">
+                Контакты и мессенджеры <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
           </div>
