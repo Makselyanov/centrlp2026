@@ -2,11 +2,13 @@ import { ContactForm } from "@/components/ContactForm";
 import { Layout } from "@/components/Layout";
 import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
+import { BentoSection } from "@/components/services/BentoSection";
+import { BentoCard } from "@/components/services/BentoCard";
+import { ProcessTimeline } from "@/components/services/ProcessTimeline";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type FeatureItem = {
@@ -100,28 +102,35 @@ export const ServicePageTemplate = ({
 
   return (
     <Layout title={title} description={description}>
-      <section className="pt-32 pb-20 gradient-hero">
-        <div className="container mx-auto px-4">
+      {/* ── Hero ─────────────────────────────────────────────────────── */}
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-[#0096D6]/10 blur-3xl" />
+          <div className="absolute bottom-10 left-10 w-80 h-80 rounded-full bg-[#44B78B]/10 blur-3xl" />
+        </div>
+        <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-8">
-              <span className="w-2.5 h-2.5 rounded-full bg-accent-2 animate-pulse" />
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#0096D6] text-xs font-semibold uppercase tracking-wider shadow-sm mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#44B78B] animate-pulse" />
               {badge}
             </div>
-            <h1 className="mb-6">{heroTitle}</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-10">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+              {heroTitle}
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
               {heroDescription}
             </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-10">
+            <div className="flex flex-wrap justify-center gap-2.5 mb-10">
               {heroPoints.map((point) => (
                 <div
                   key={point}
-                  className="rounded-full border border-border bg-card/80 px-4 py-2 text-sm text-foreground shadow-sm"
+                  className="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-sm text-slate-700 shadow-sm"
                 >
                   {point}
                 </div>
               ))}
             </div>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
               <Button size="lg" asChild>
                 <a href="#contact">
                   Обсудить проект <ArrowRight className="w-4 h-4 ml-2" />
@@ -137,159 +146,135 @@ export const ServicePageTemplate = ({
 
       <ServiceImageBand slug={slug} alt={`${title} — иллюстрация услуги CentrLP`} />
 
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center max-w-3xl mx-auto">
-            <h2 className="mb-4">{audienceTitle}</h2>
-            <p className="text-lg text-muted-foreground">{audienceDescription}</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {audienceItems.map((item) => (
-              <Card key={item.title} className="p-8 shadow-card h-full">
-                <item.icon className="w-12 h-12 text-primary mb-5" />
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-muted-foreground">{item.text}</p>
-              </Card>
-            ))}
-          </div>
+      {/* ── Audience — 3-col bento ──────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Для кого"
+        title={audienceTitle}
+        description={audienceDescription}
+      >
+        <div className="grid md:grid-cols-3 gap-5">
+          {audienceItems.map((item) => (
+            <BentoCard
+              key={item.title}
+              icon={item.icon}
+              title={item.title}
+              text={item.text}
+            />
+          ))}
         </div>
-      </section>
+      </BentoSection>
 
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center max-w-3xl mx-auto">
-            <h2 className="mb-4">{deliverablesTitle}</h2>
-            <p className="text-lg text-muted-foreground">{deliverablesDescription}</p>
-          </div>
-          <div className="grid md:grid-cols-2 gap-8">
-            {deliverables.map((item) => (
-              <Card key={item.title} className="p-8 shadow-card bg-card h-full">
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                    <item.icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold">{item.title}</h3>
-                </div>
-                <p className="text-muted-foreground mb-6">{item.text}</p>
-                {item.bullets && item.bullets.length > 0 && (
-                  <ul className="space-y-3">
-                    {item.bullets.map((bullet) => (
-                      <li key={bullet} className="flex items-start">
-                        <CheckCircle2 className="w-5 h-5 text-accent-2 mr-3 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-foreground">{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </Card>
-            ))}
-          </div>
+      {/* ── Deliverables — 2-col feature bento ──────────────────────── */}
+      <BentoSection
+        tone="slate"
+        eyebrow="Что вы получите"
+        title={deliverablesTitle}
+        description={deliverablesDescription}
+      >
+        <div className="grid md:grid-cols-2 gap-5">
+          {deliverables.map((item) => (
+            <BentoCard
+              key={item.title}
+              icon={item.icon}
+              title={item.title}
+              text={item.text}
+              bullets={item.bullets}
+              variant="feature"
+            />
+          ))}
         </div>
-      </section>
+      </BentoSection>
 
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="mb-12 text-center max-w-3xl mx-auto">
-            <h2 className="mb-4">{useCasesTitle}</h2>
-            <p className="text-lg text-muted-foreground">{useCasesDescription}</p>
-          </div>
-          <div className="grid lg:grid-cols-3 gap-6">
-            {useCases.map((item) => (
-              <Card key={item.title} className="p-8 shadow-card h-full">
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-muted-foreground mb-6">{item.text}</p>
-                <ul className="space-y-3">
-                  {item.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-start">
-                      <CheckCircle2 className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
-                      <span className="text-sm">{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            ))}
-          </div>
+      {/* ── Use cases ───────────────────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Где работает"
+        title={useCasesTitle}
+        description={useCasesDescription}
+      >
+        <div className="grid lg:grid-cols-3 gap-5">
+          {useCases.map((item) => (
+            <BentoCard
+              key={item.title}
+              title={item.title}
+              text={item.text}
+              bullets={item.bullets}
+            />
+          ))}
         </div>
-      </section>
+      </BentoSection>
 
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="mb-4">Как запускаем решение</h2>
-            <p className="text-lg text-muted-foreground">
-              Идём от бизнес-задачи и сценария продаж, а не от набора красивых экранов.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-4 gap-6">
-            {process.map((item) => (
-              <Card key={item.step} className="p-6 shadow-card bg-card h-full">
-                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-lg font-bold mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.text}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ── Process — adaptive timeline ─────────────────────────────── */}
+      <BentoSection
+        tone="tint"
+        eyebrow="Процесс"
+        title="Как запускаем решение"
+        description="Идём от бизнес-задачи и сценария продаж, а не от набора красивых экранов."
+      >
+        <ProcessTimeline steps={process} />
+      </BentoSection>
 
-      <section className="py-20 bg-card">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="mb-4">Связанные решения</h2>
-            <p className="text-lg text-muted-foreground">
-              Эти услуги лучше работают в связке и усиливают друг друга по продажам, автоматизации и SEO.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {relatedServices.map((item) => (
-              <Card key={item.href} className="p-8 shadow-card h-full flex flex-col">
-                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                <p className="text-muted-foreground mb-6 flex-1">{item.text}</p>
-                <Button variant="outline" asChild>
-                  <Link to={item.href}>Открыть страницу</Link>
-                </Button>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 gradient-hero">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="mb-4">Частые вопросы</h2>
-              <p className="text-lg text-muted-foreground">
-                Собрали ответы на вопросы, которые обычно возникают перед запуском цифрового продукта.
-              </p>
+      {/* ── Related services ────────────────────────────────────────── */}
+      <BentoSection
+        tone="white"
+        eyebrow="Связанные решения"
+        title="Сильнее в связке"
+        description="Эти услуги лучше работают вместе и усиливают друг друга по продажам, автоматизации и SEO."
+      >
+        <div className="grid md:grid-cols-3 gap-5">
+          {relatedServices.map((item) => (
+            <div
+              key={item.href}
+              className="h-full flex flex-col rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm transition hover:shadow-md hover:border-slate-300"
+            >
+              <h3 className="mb-3 text-[20px] font-bold tracking-tight text-slate-900">
+                {item.title}
+              </h3>
+              <p className="mb-5 flex-1 text-slate-600 leading-relaxed">{item.text}</p>
+              <Button variant="outline" size="sm" asChild className="self-start">
+                <Link to={item.href}>
+                  Открыть страницу <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                </Link>
+              </Button>
             </div>
-            <Card className="p-2 shadow-card bg-card">
-              <Accordion type="single" collapsible>
-                {faqItems.map((item, index) => (
-                  <AccordionItem value={`item-${index}`} key={item.question}>
-                    <AccordionTrigger className="px-6 text-left">{item.question}</AccordionTrigger>
-                    <AccordionContent className="px-6 text-muted-foreground">
-                      {item.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </Card>
-          </div>
+          ))}
         </div>
-      </section>
+      </BentoSection>
 
-      <section id="contact" className="py-20 bg-card">
+      {/* ── FAQ ─────────────────────────────────────────────────────── */}
+      <BentoSection
+        tone="slate"
+        eyebrow="FAQ"
+        title="Частые вопросы"
+        description="Собрали ответы на вопросы, которые обычно возникают перед запуском цифрового продукта."
+      >
+        <div className="max-w-3xl rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+          <Accordion type="single" collapsible>
+            {faqItems.map((item, index) => (
+              <AccordionItem value={`item-${index}`} key={item.question}>
+                <AccordionTrigger className="px-6 text-left text-slate-900 hover:text-[#0096D6]">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-6 text-slate-600 leading-relaxed">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </BentoSection>
+
+      {/* ── Contact CTA ─────────────────────────────────────────────── */}
+      <section id="contact" className="py-14 md:py-20 bg-gradient-to-b from-white via-[#44B78B]/[0.04] to-white">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-10">
-            <h2 className="mb-4">{ctaTitle}</h2>
-            <p className="text-xl text-muted-foreground">{ctaDescription}</p>
+          <div className="max-w-3xl mx-auto text-center mb-10">
+            <h2 className="relative inline-block text-[28px] md:text-[34px] font-bold tracking-tight text-slate-900 mb-4">
+              {ctaTitle}
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed">{ctaDescription}</p>
           </div>
-          <div className="max-w-2xl mx-auto">
-            <ContactForm />
-          </div>
+          <ContactForm />
         </div>
       </section>
     </Layout>
