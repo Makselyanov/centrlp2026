@@ -217,6 +217,38 @@ function collectStaticRouteMeta() {
     .filter(Boolean);
 }
 
+function collectMetcoinProductMeta() {
+  const dataPath = path.join(srcDir, "data", "metcoinProducts.ts");
+  if (!fs.existsSync(dataPath)) {
+    return [];
+  }
+
+  const raw = readText(dataPath);
+  const entries = [];
+  // Find each product block: slug then later seoTitle/seoDescription
+  const slugRegex = /slug:\s*"([^"]+)"/g;
+  const seoTitleRegex = /seoTitle:\s*"((?:[^"\\]|\\.)*)"/g;
+  const seoDescRegex = /seoDescription:\s*"((?:[^"\\]|\\.)*)"/g;
+
+  const slugs = [...raw.matchAll(slugRegex)].map((m) => m[1]);
+  const titles = [...raw.matchAll(seoTitleRegex)].map((m) => m[1]);
+  const descs = [...raw.matchAll(seoDescRegex)].map((m) => m[1]);
+
+  // First slug match is the type-field declaration "slug: string"; skip only if count differs by one and it's literal "string"
+  // Actually the type has `slug: string;` (no quotes), so it won't match. Safe.
+
+  const count = Math.min(slugs.length, titles.length, descs.length);
+  for (let i = 0; i < count; i += 1) {
+    if (!slugs[i] || !titles[i] || !descs[i]) continue;
+    entries.push({
+      path: `/metcoin/${slugs[i]}`,
+      title: titles[i].replace(/\\"/g, '"'),
+      description: descs[i].replace(/\\"/g, '"'),
+    });
+  }
+  return entries;
+}
+
 function collectBlogPostMeta() {
   if (!fs.existsSync(postsDir)) {
     return [];
@@ -252,7 +284,7 @@ function main() {
   }
 
   const template = readText(templatePath);
-  const routes = [...collectStaticRouteMeta(), ...collectBlogPostMeta()];
+  const routes = [...collectStaticRouteMeta(), ...collectBlogPostMeta(), ...collectMetcoinProductMeta()];
 
   for (const route of routes) {
     const html = applyMeta(template, route);
