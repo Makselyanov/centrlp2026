@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Accordion,
   AccordionContent,
@@ -8,32 +9,26 @@ import {
 import { useFaqSchema } from "@/components/SeoSchemas";
 import { motion } from "framer-motion";
 import {
-  Anchor,
   ArrowRight,
   Award,
   Building2,
   CheckCircle2,
   ChevronDown,
   Clock,
-  Compass,
   FileCheck2,
   Gauge,
   HardHat,
-  Hexagon,
-  Layers,
   Loader2,
   MapPin,
   Package,
   Phone,
   Rocket,
-  Ruler,
   ShieldCheck,
   Sparkles,
-  Target,
-  Trash2,
   Truck,
   Wrench,
 } from "lucide-react";
+import { metcoinProducts as products } from "@/data/metcoinProducts";
 
 // ============================================================================
 // Брендовая палитра МеталлТех (Trust & Authority + Conversion)
@@ -71,72 +66,8 @@ const trustMetrics = [
   { value: "87", label: "городов доставки", hint: "РФ, Казахстан, Беларусь" },
 ];
 
-const products = [
-  {
-    icon: Anchor,
-    title: "Закладные изделия",
-    gost: "ГОСТ 25997-83, серия 1.400-15",
-    desc: "МН-1…МН-23, стеновые, колонные, фундаментные. С анкерными стержнями, сертификатом качества.",
-    price: "от 420 ₽ / шт",
-    tag: "Хит",
-  },
-  {
-    icon: Target,
-    title: "Деформационные марки",
-    gost: "ГОСТ 24846-2019",
-    desc: "Для наблюдения за осадками и смещениями зданий и сооружений. Круглые, прямоугольные, уголковые.",
-    price: "от 310 ₽ / шт",
-  },
-  {
-    icon: Compass,
-    title: "Нивелирные реперы",
-    gost: "ГОСТ 10528-90, ГОСТ 24846-2019",
-    desc: "Стенные, грунтовые, скальные, временные. Нержавеющая сталь или оцинковка по требованию.",
-    price: "от 580 ₽ / шт",
-  },
-  {
-    icon: MapPin,
-    title: "Грунтовые реперы",
-    gost: "ГОСТ 24846-2019, РСН 42-83",
-    desc: "С защитной трубой и колпаком, глубина заложения до 3,5 м. С паспортом на каждый репер.",
-    price: "от 1 850 ₽ / шт",
-  },
-  {
-    icon: Hexagon,
-    title: "Сальники, гильзы",
-    gost: "ТП 1.494.2-25 / СН 550-82",
-    desc: "Для пропуска трубопроводов через стены и перекрытия. Любой DN, любая толщина стены.",
-    price: "от 680 ₽ / шт",
-  },
-  {
-    icon: Ruler,
-    title: "Опоры под трубопровод",
-    gost: "ГОСТ 16037-80, серия 4.903-10",
-    desc: "Скользящие, неподвижные, хомутовые. DN 50–1400, включая антикор и покраску.",
-    price: "от 940 ₽ / шт",
-  },
-  {
-    icon: Building2,
-    title: "Металлоэлементы фундаментов",
-    gost: "СП 63.13330, ГОСТ 23279",
-    desc: "Закладные для монолитных работ, анкерные группы, пластины распределения нагрузки.",
-    price: "по чертежу",
-  },
-  {
-    icon: Layers,
-    title: "Металлоконструкции для ПЗПП",
-    gost: "ГОСТ 23118-2019",
-    desc: "Опорные и разгрузочные конструкции для промышленных трубопроводов и ёмкостей.",
-    price: "по ТЗ",
-  },
-  {
-    icon: Trash2,
-    title: "Контейнеры для ТБО",
-    gost: "ГОСТ 21220-75, 0,75 / 1,1 м³",
-    desc: "Оцинкованные и окрашенные, с колёсами и без. Нестандартные размеры — по проекту.",
-    price: "от 9 400 ₽ / шт",
-  },
-];
+// products теперь импортируется из src/data/metcoinProducts.ts
+// (9 позиций с расширенными данными для /metcoin/:slug страниц)
 
 const advantages = [
   {
@@ -459,6 +390,351 @@ const MetcoinHeader = ({ onCtaClick }: { onCtaClick: () => void }) => {
 };
 
 // ============================================================================
+// Welding Canvas — real-time particles, arc flash, smoke, glow
+// ============================================================================
+
+const WeldingCanvas = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Respect reduced-motion
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let w = 0;
+    let h = 0;
+    let rafId = 0;
+
+    type Spark = {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      life: number;
+      max: number;
+      size: number;
+    };
+    type Smoke = {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      life: number;
+      max: number;
+      size: number;
+    };
+    const sparks: Spark[] = [];
+    const smokes: Smoke[] = [];
+
+    let arcT = 0;
+    let arcOn = true;
+    let nextToggle = 40;
+    let glow = 0.2;
+    let flashBoost = 0;
+
+    const fit = () => {
+      const r = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = r.width;
+      h = r.height;
+      canvas.width = Math.max(1, w * dpr);
+      canvas.height = Math.max(1, h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    fit();
+    window.addEventListener("resize", fit);
+
+    const arcX = () => w * 0.42;
+    const arcY = () => h * 0.68;
+
+    const spawnSpark = () => {
+      // cone mostly upward + outward (to the right)
+      const angle = -Math.PI / 2 + (Math.random() - 0.45) * Math.PI * 1.1;
+      const speed = 3 + Math.random() * 10;
+      sparks.push({
+        x: arcX() + (Math.random() - 0.5) * 6,
+        y: arcY() + (Math.random() - 0.5) * 4,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 0,
+        max: 45 + Math.random() * 70,
+        size: 1.1 + Math.random() * 1.8,
+      });
+    };
+
+    const spawnSmoke = () => {
+      smokes.push({
+        x: arcX() + (Math.random() - 0.5) * 20,
+        y: arcY() - 8,
+        vx: (Math.random() - 0.5) * 0.55,
+        vy: -0.35 - Math.random() * 0.45,
+        life: 0,
+        max: 180 + Math.random() * 140,
+        size: 14 + Math.random() * 22,
+      });
+    };
+
+    let lastT = performance.now();
+
+    const frame = (t: number) => {
+      const dt = Math.min(2.2, (t - lastT) / 16.67);
+      lastT = t;
+
+      if (reduce) {
+        // static glow only
+        ctx.fillStyle = "rgba(10, 15, 30, 1)";
+        ctx.fillRect(0, 0, w, h);
+        const ax = arcX();
+        const ay = arcY();
+        const g = ctx.createRadialGradient(ax, ay, 0, ax, ay, 280);
+        g.addColorStop(0, "rgba(255, 235, 180, 0.7)");
+        g.addColorStop(0.15, "rgba(255, 180, 70, 0.4)");
+        g.addColorStop(0.45, "rgba(180, 83, 9, 0.18)");
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+        rafId = requestAnimationFrame(frame);
+        return;
+      }
+
+      // arc state machine
+      arcT += dt;
+      if (arcT >= nextToggle) {
+        arcOn = !arcOn;
+        arcT = 0;
+        if (arcOn) {
+          nextToggle = 14 + Math.random() * 70;
+          flashBoost = 0.35 + Math.random() * 0.35;
+        } else {
+          nextToggle = 4 + Math.random() * 22;
+        }
+      }
+
+      // glow smoothing
+      const targetGlow = arcOn ? 0.85 + flashBoost : 0.18;
+      glow += (targetGlow - glow) * Math.min(1, 0.5 * dt);
+      flashBoost *= Math.pow(0.9, dt);
+
+      // spawn sparks while arc on
+      if (arcOn) {
+        const rate = 4 + Math.random() * 6;
+        for (let i = 0; i < rate; i++) spawnSpark();
+      }
+      if (Math.random() < 0.08 * dt) spawnSmoke();
+
+      // clear with slight trail (slow fade = persistence of glow)
+      ctx.fillStyle = "rgba(10, 15, 30, 0.28)";
+      ctx.fillRect(0, 0, w, h);
+
+      // volumetric radial glow
+      const ax = arcX();
+      const ay = arcY();
+      const gradR = 280 + glow * 80;
+      const g = ctx.createRadialGradient(ax, ay, 0, ax, ay, gradR);
+      g.addColorStop(0, `rgba(255, 245, 210, ${Math.min(1, 0.95 * glow)})`);
+      g.addColorStop(0.08, `rgba(255, 200, 110, ${0.7 * glow})`);
+      g.addColorStop(0.28, `rgba(200, 100, 30, ${0.32 * glow})`);
+      g.addColorStop(0.6, `rgba(80, 40, 20, ${0.15 * glow})`);
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+
+      // secondary small hot core
+      if (arcOn) {
+        ctx.globalCompositeOperation = "lighter";
+        const coreR = 5 + Math.random() * 9;
+        const cg = ctx.createRadialGradient(ax, ay, 0, ax, ay, coreR * 3);
+        cg.addColorStop(0, "rgba(255, 255, 245, 0.98)");
+        cg.addColorStop(0.5, "rgba(200, 220, 255, 0.45)");
+        cg.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = cg;
+        ctx.beginPath();
+        ctx.arc(ax, ay, coreR * 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // electrode line from upper-left to arc point (welder's nozzle)
+        ctx.strokeStyle = `rgba(200, 215, 255, ${0.55 + Math.random() * 0.35})`;
+        ctx.lineWidth = 1.1 + Math.random() * 0.8;
+        ctx.beginPath();
+        ctx.moveTo(ax - 70 + Math.random() * 8, ay - 95);
+        ctx.lineTo(ax + (Math.random() - 0.5) * 3, ay + (Math.random() - 0.5) * 3);
+        ctx.stroke();
+        ctx.globalCompositeOperation = "source-over";
+      }
+
+      // smoke (under sparks)
+      for (let i = smokes.length - 1; i >= 0; i--) {
+        const s = smokes[i];
+        s.life += dt;
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+        s.vy -= 0.004 * dt;
+        const k = 1 - s.life / s.max;
+        if (k <= 0) {
+          smokes.splice(i, 1);
+          continue;
+        }
+        const alpha = k * 0.22;
+        const sg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.size);
+        sg.addColorStop(0, `rgba(90, 100, 120, ${alpha})`);
+        sg.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = sg;
+        ctx.fillRect(s.x - s.size, s.y - s.size, s.size * 2, s.size * 2);
+      }
+
+      // sparks with trails (additive)
+      ctx.globalCompositeOperation = "lighter";
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.life += dt;
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+        s.vy += 0.32 * dt;
+        s.vx *= Math.pow(0.985, dt);
+        // floor bounce
+        const floor = h * 0.9;
+        if (s.y > floor && s.vy > 0) {
+          s.vy = -s.vy * 0.32;
+          s.vx *= 0.72;
+          s.y = floor;
+          s.life += 6;
+        }
+        if (s.life >= s.max || s.x < -30 || s.x > w + 30) {
+          sparks.splice(i, 1);
+          continue;
+        }
+
+        const lifeRatio = s.life / s.max;
+        const heat = Math.max(0, 1 - lifeRatio);
+        let r: number;
+        let g2: number;
+        let b: number;
+        if (heat > 0.75) {
+          r = 255;
+          g2 = 250;
+          b = 220;
+        } else if (heat > 0.45) {
+          r = 255;
+          g2 = 180 + (heat - 0.45) * 180;
+          b = 60 + (heat - 0.45) * 150;
+        } else if (heat > 0.18) {
+          r = 230;
+          g2 = 90;
+          b = 25;
+        } else {
+          r = 120;
+          g2 = 25;
+          b = 5;
+        }
+        const a = heat;
+
+        // trail
+        ctx.strokeStyle = `rgba(${r | 0},${g2 | 0},${b | 0}, ${a * 0.6})`;
+        ctx.lineWidth = s.size;
+        ctx.beginPath();
+        ctx.moveTo(s.x - s.vx * 1.15, s.y - s.vy * 1.15);
+        ctx.lineTo(s.x, s.y);
+        ctx.stroke();
+
+        // head
+        ctx.fillStyle = `rgba(${r | 0},${g2 | 0},${b | 0}, ${a})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = "source-over";
+
+      rafId = requestAnimationFrame(frame);
+    };
+    rafId = requestAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", fit);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full block"
+      aria-hidden="true"
+    />
+  );
+};
+
+// ============================================================================
+// Welder silhouette SVG — static, overlays welding canvas
+// ============================================================================
+
+const WelderSilhouette = () => (
+  <svg
+    viewBox="0 0 400 500"
+    className="absolute inset-0 w-full h-full"
+    preserveAspectRatio="xMidYMax meet"
+    aria-hidden="true"
+    style={{ filter: "drop-shadow(0 0 14px rgba(255,170,60,0.15))" }}
+  >
+    <defs>
+      <linearGradient id="welderBody" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#0a0f1e" />
+        <stop offset="100%" stopColor="#05070d" />
+      </linearGradient>
+      <linearGradient id="visor" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor="#1a1f2e" />
+        <stop offset="60%" stopColor="#3b2a12" />
+        <stop offset="100%" stopColor="#8a5615" />
+      </linearGradient>
+    </defs>
+    {/* apron/body */}
+    <path
+      d="M 80 500 L 90 340 C 95 300 105 270 130 250 L 150 220 L 165 200 L 190 195 L 215 195 L 240 210 L 260 245 C 285 270 295 305 300 340 L 310 500 Z"
+      fill="url(#welderBody)"
+    />
+    {/* left arm holding torch */}
+    <path
+      d="M 135 258 L 110 285 L 88 310 L 72 332 L 58 352 L 48 368 L 36 380 L 28 392 L 22 400 L 18 408 L 30 412 L 44 408 L 60 400 L 76 388 L 92 372 L 108 352 L 126 328 L 148 298 L 162 280 Z"
+      fill="url(#welderBody)"
+    />
+    {/* torch nozzle (at arc point) */}
+    <rect x="16" y="404" width="22" height="7" rx="2" fill="#2b2a26" />
+    <rect x="8" y="408" width="14" height="3.5" rx="1" fill="#c5a657" />
+    {/* right arm on hip */}
+    <path
+      d="M 255 245 L 280 270 L 300 295 L 312 320 L 318 345 L 315 370 L 305 385 L 292 390 L 285 378 L 286 360 L 282 340 L 270 320 L 255 300 L 245 280 Z"
+      fill="url(#welderBody)"
+    />
+    {/* helmet */}
+    <rect
+      x="155"
+      y="135"
+      width="90"
+      height="90"
+      rx="18"
+      fill="url(#welderBody)"
+    />
+    {/* visor window */}
+    <rect
+      x="168"
+      y="160"
+      width="64"
+      height="22"
+      rx="3"
+      fill="url(#visor)"
+      opacity="0.95"
+    />
+    {/* visor highlight */}
+    <rect x="168" y="160" width="64" height="4" fill="#ffb24d" opacity="0.35" />
+    {/* neck */}
+    <rect x="184" y="218" width="32" height="14" fill="#0a0f1e" />
+  </svg>
+);
+
+// ============================================================================
 // Hero
 // ============================================================================
 
@@ -467,19 +743,25 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
     id="top"
     className="relative overflow-hidden"
     style={{
-      background: `linear-gradient(180deg, ${BRAND.bg} 0%, ${BRAND.surface} 100%)`,
+      background:
+        "radial-gradient(ellipse at 70% 65%, #0f1424 0%, #070a14 55%, #03060d 100%)",
     }}
   >
-    {/* фон — тонкая гравюра */}
+    {/* blueprint grid */}
     <div
       aria-hidden
-      className="absolute inset-0 opacity-[0.06] pointer-events-none"
+      className="absolute inset-0 opacity-[0.07] pointer-events-none"
       style={{
-        backgroundImage: `radial-gradient(${BRAND.primary} 1px, transparent 1px)`,
-        backgroundSize: "28px 28px",
+        backgroundImage:
+          "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
+        backgroundSize: "40px 40px, 40px 40px",
+        maskImage:
+          "radial-gradient(ellipse at 70% 65%, black 0%, transparent 75%)",
+        WebkitMaskImage:
+          "radial-gradient(ellipse at 70% 65%, black 0%, transparent 75%)",
       }}
     />
-    <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 pt-10 md:pt-16 lg:pt-20 pb-16 md:pb-24 grid gap-10 lg:gap-16 lg:grid-cols-[1.05fr_1fr] items-center">
+    <div className="relative max-w-7xl mx-auto px-4 md:px-6 lg:px-8 pt-12 md:pt-20 lg:pt-24 pb-16 md:pb-24 grid gap-10 lg:gap-14 lg:grid-cols-[1.05fr_1fr] items-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -488,8 +770,9 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
         <div
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-[0.18em] mb-6"
           style={{
-            background: BRAND.primarySoft,
-            color: BRAND.primary,
+            background: "rgba(180, 83, 9, 0.15)",
+            color: "#FDBA74",
+            border: "1px solid rgba(251, 146, 60, 0.3)",
             fontFamily: FONT_HEAD,
           }}
         >
@@ -501,7 +784,7 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
           className="text-4xl md:text-5xl lg:text-[64px] font-bold leading-[1.05] tracking-tight"
           style={{
             fontFamily: FONT_HEAD,
-            color: BRAND.text,
+            color: "#F8FAFC",
             letterSpacing: "-0.025em",
           }}
         >
@@ -509,10 +792,12 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
           <br />
           <span
             style={{
-              background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryMid} 60%, ${BRAND.accent} 100%)`,
+              background:
+                "linear-gradient(100deg, #60A5FA 0%, #93C5FD 40%, #FBBF24 70%, #F97316 100%)",
               WebkitBackgroundClip: "text",
               backgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              filter: "drop-shadow(0 0 24px rgba(251,146,60,0.25))",
             }}
           >
             металлоконструкций
@@ -523,7 +808,7 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
 
         <p
           className="mt-6 text-base md:text-lg lg:text-xl leading-relaxed max-w-xl"
-          style={{ color: BRAND.textMuted, fontFamily: FONT_BODY }}
+          style={{ color: "rgba(226,232,240,0.78)", fontFamily: FONT_BODY }}
         >
           Закладные изделия, реперы, опоры под трубопровод, контейнеры ТБО и нестандарт
           по чертежам. Собственный цех 1 800 м², только ГОСТ, сроки в договоре — работаем
@@ -538,7 +823,7 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
             style={{
               background: `linear-gradient(135deg, ${BRAND.accent} 0%, ${BRAND.accentLight} 100%)`,
               fontFamily: FONT_HEAD,
-              boxShadow: "0 10px 30px -8px rgba(180, 83, 9, 0.55)",
+              boxShadow: "0 10px 40px -5px rgba(249, 115, 22, 0.6)",
             }}
           >
             Рассчитать проект за 1 день
@@ -546,11 +831,11 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
           </button>
           <a
             href="#products"
-            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all hover:-translate-y-0.5 cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all hover:-translate-y-0.5 cursor-pointer backdrop-blur"
             style={{
-              background: BRAND.surface,
-              color: BRAND.primary,
-              border: `1.5px solid ${BRAND.borderStrong}`,
+              background: "rgba(255,255,255,0.06)",
+              color: "#E0E7FF",
+              border: "1.5px solid rgba(148, 163, 184, 0.3)",
               fontFamily: FONT_HEAD,
             }}
           >
@@ -565,57 +850,69 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
             { icon: Truck, label: "Доставка по РФ, КЗ, РБ" },
           ].map((x) => (
             <div key={x.label} className="flex items-center gap-2">
-              <x.icon className="w-4 h-4" style={{ color: BRAND.accent }} />
-              <span style={{ color: BRAND.textMuted, fontFamily: FONT_BODY }}>{x.label}</span>
+              <x.icon className="w-4 h-4" style={{ color: "#FBBF24" }} />
+              <span style={{ color: "rgba(203,213,225,0.8)", fontFamily: FONT_BODY }}>
+                {x.label}
+              </span>
             </div>
           ))}
         </div>
       </motion.div>
 
+      {/* welding stage — cinematic canvas animation */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
+        initial={{ opacity: 0, scale: 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.7, delay: 0.15 }}
+        transition={{ duration: 0.8, delay: 0.15 }}
         className="relative"
       >
         <div
-          className="relative rounded-2xl overflow-hidden"
+          className="relative rounded-2xl overflow-hidden aspect-[4/5] md:aspect-[5/6] lg:aspect-[4/5]"
           style={{
-            boxShadow: "0 30px 80px -30px rgba(15, 23, 42, 0.55)",
+            background:
+              "radial-gradient(ellipse at 42% 68%, #1a1410 0%, #0a0d18 50%, #05070d 100%)",
+            boxShadow:
+              "0 40px 80px -30px rgba(0,0,0,0.7), inset 0 0 120px rgba(0,0,0,0.5)",
+            border: "1px solid rgba(148, 163, 184, 0.12)",
           }}
         >
-          <img
-            src="/images/verticals/metcoin-hero.png"
-            alt="Производственный цех металлоконструкций МеталлТех в Тюмени"
-            className="w-full h-auto block"
-            loading="eager"
-          />
+          <WeldingCanvas />
+          <WelderSilhouette />
+
+          {/* arc-flash fullscreen overlay — rare, very subtle */}
           <div
             aria-hidden
-            className="absolute inset-x-0 bottom-0 h-1/3"
+            className="absolute inset-0 pointer-events-none mix-blend-screen"
             style={{
               background:
-                "linear-gradient(180deg, transparent 0%, rgba(15,23,42,0.55) 100%)",
+                "radial-gradient(ellipse at 42% 68%, rgba(255,220,150,0.08) 0%, transparent 60%)",
+              animation: "metcoinArcFlicker 4.5s infinite steps(1, end)",
             }}
           />
-          <div className="absolute left-4 md:left-6 bottom-4 md:bottom-6 right-4 md:right-6 flex items-end justify-between gap-4">
+
+          {/* bottom label */}
+          <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 flex items-end justify-between gap-4 bg-gradient-to-t from-black/70 to-transparent">
             <div>
               <div
-                className="text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/80"
+                className="text-[10px] md:text-[11px] uppercase tracking-[0.24em] text-white/70"
                 style={{ fontFamily: FONT_HEAD }}
               >
-                Наш цех
+                Цех · live
               </div>
               <div
-                className="text-white text-lg md:text-xl font-bold mt-1"
+                className="text-white text-base md:text-lg font-bold mt-1"
                 style={{ fontFamily: FONT_HEAD }}
               >
                 г. Тюмень, ул. Новаторов, 12 к3
               </div>
             </div>
             <div
-              className="hidden md:flex items-center gap-2 rounded-full px-4 py-2 text-white text-sm backdrop-blur"
-              style={{ background: "rgba(255,255,255,0.12)", fontFamily: FONT_BODY }}
+              className="hidden md:flex items-center gap-2 rounded-full px-3 py-1.5 text-white text-xs backdrop-blur"
+              style={{
+                background: "rgba(0,0,0,0.4)",
+                border: "1px solid rgba(52, 211, 153, 0.3)",
+                fontFamily: FONT_BODY,
+              }}
             >
               <span className="relative flex w-2 h-2">
                 <span
@@ -627,73 +924,96 @@ const Hero = ({ onCtaClick }: { onCtaClick: () => void }) => (
                   style={{ background: "#34D399" }}
                 />
               </span>
-              Производство работает
+              Сварка идёт
             </div>
           </div>
         </div>
 
-        {/* плавающие бейджи */}
-        <div
-          className="hidden md:flex absolute -left-6 -top-6 items-center gap-3 rounded-2xl p-4 shadow-xl"
+        {/* floating badge: ISO */}
+        <motion.div
+          initial={{ opacity: 0, x: -20, y: -10 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
+          className="hidden md:flex absolute -left-5 top-6 items-center gap-3 rounded-2xl p-3.5 backdrop-blur"
           style={{
-            background: BRAND.surface,
-            border: `1px solid ${BRAND.border}`,
-            boxShadow: "0 20px 50px -20px rgba(15, 23, 42, 0.25)",
+            background: "rgba(15, 23, 42, 0.8)",
+            border: "1px solid rgba(148, 163, 184, 0.2)",
+            boxShadow: "0 20px 50px -20px rgba(0,0,0,0.6)",
           }}
         >
           <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center"
-            style={{ background: BRAND.primarySoft }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={{ background: "rgba(96, 165, 250, 0.15)" }}
           >
-            <Award className="w-5 h-5" style={{ color: BRAND.primary }} />
+            <Award className="w-5 h-5" style={{ color: "#93C5FD" }} />
           </div>
           <div>
             <div
-              className="text-[11px] uppercase tracking-[0.18em]"
-              style={{ color: BRAND.textDim, fontFamily: FONT_HEAD }}
+              className="text-[10px] uppercase tracking-[0.18em]"
+              style={{ color: "#94A3B8", fontFamily: FONT_HEAD }}
             >
               ИСО
             </div>
             <div
               className="text-sm font-bold"
-              style={{ color: BRAND.text, fontFamily: FONT_HEAD }}
+              style={{ color: "#F1F5F9", fontFamily: FONT_HEAD }}
             >
               9001 : 2015
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div
-          className="hidden md:flex absolute -right-4 top-1/3 items-center gap-3 rounded-2xl p-4 shadow-xl"
+        {/* floating badge: срок */}
+        <motion.div
+          initial={{ opacity: 0, x: 20, y: 10 }}
+          animate={{ opacity: 1, x: 0, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+          className="hidden md:flex absolute -right-4 bottom-16 items-center gap-3 rounded-2xl p-3.5 backdrop-blur"
           style={{
-            background: BRAND.surface,
-            border: `1px solid ${BRAND.border}`,
-            boxShadow: "0 20px 50px -20px rgba(15, 23, 42, 0.25)",
+            background: "rgba(15, 23, 42, 0.8)",
+            border: "1px solid rgba(251, 146, 60, 0.3)",
+            boxShadow: "0 20px 50px -20px rgba(249, 115, 22, 0.4)",
           }}
         >
           <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center"
-            style={{ background: BRAND.accentSoft }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={{ background: "rgba(251, 146, 60, 0.15)" }}
           >
-            <Rocket className="w-5 h-5" style={{ color: BRAND.accent }} />
+            <Rocket className="w-5 h-5" style={{ color: "#FB923C" }} />
           </div>
           <div>
             <div
-              className="text-[11px] uppercase tracking-[0.18em]"
-              style={{ color: BRAND.textDim, fontFamily: FONT_HEAD }}
+              className="text-[10px] uppercase tracking-[0.18em]"
+              style={{ color: "#94A3B8", fontFamily: FONT_HEAD }}
             >
               Средний срок
             </div>
             <div
               className="text-sm font-bold"
-              style={{ color: BRAND.text, fontFamily: FONT_HEAD }}
+              style={{ color: "#F1F5F9", fontFamily: FONT_HEAD }}
             >
               7 рабочих дней
             </div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
+
+    {/* local keyframes for arc flicker */}
+    <style>{`
+      @keyframes metcoinArcFlicker {
+        0%, 90%, 100% { opacity: 0; }
+        2%, 3% { opacity: 1; }
+        4% { opacity: 0.2; }
+        5%, 7% { opacity: 0.9; }
+        8% { opacity: 0; }
+        34%, 36% { opacity: 0.8; }
+        37% { opacity: 0; }
+        62%, 63% { opacity: 1; }
+        64% { opacity: 0.3; }
+        65% { opacity: 0; }
+      }
+    `}</style>
   </section>
 );
 
@@ -774,18 +1094,23 @@ const Products = () => (
       <div className="mt-12 grid gap-4 md:gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((p, i) => (
           <motion.div
-            key={p.title}
+            key={p.slug}
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-30px" }}
             transition={{ duration: 0.4, delay: i * 0.03 }}
-            className="group relative rounded-2xl p-6 md:p-7 transition-all hover:-translate-y-1 cursor-pointer overflow-hidden"
+            className="group relative rounded-2xl p-6 md:p-7 transition-all hover:-translate-y-1 hover:shadow-xl cursor-pointer overflow-hidden"
             style={{
               background: BRAND.surface,
               border: `1px solid ${BRAND.border}`,
               boxShadow: "0 2px 8px -2px rgba(15,23,42,0.04)",
             }}
           >
+            <Link
+              to={`/metcoin/${p.slug}`}
+              className="absolute inset-0 z-10"
+              aria-label={`Подробнее: ${p.title}`}
+            />
             <div className="flex items-start justify-between gap-3 mb-5">
               <div
                 className="w-14 h-14 rounded-xl flex items-center justify-center transition-all group-hover:scale-110"
@@ -843,7 +1168,7 @@ const Products = () => (
                 className="inline-flex items-center gap-1 text-sm font-semibold transition-all group-hover:gap-2"
                 style={{ color: BRAND.accent, fontFamily: FONT_HEAD }}
               >
-                Заявка
+                Подробнее
                 <ArrowRight className="w-4 h-4" />
               </span>
             </div>
@@ -1727,19 +2052,39 @@ const Contact = ({ presetComment }: { presetComment?: string }) => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setState("sending");
+    const payload = {
+      ...form,
+      page_path: "/metcoin",
+      lead_source: "metcoin preview (centrlp.ru/metcoin)",
+      _subject: "Заявка: МеталлТех — металлоконструкции",
+      _template: "table",
+      _captcha: "false",
+    };
+    // Дублируем заявку на обе почты — основную МеталлТех и копию в CentrLP.
+    // Каждый адрес FormSubmit требует одноразовой активации (первое письмо —
+    // подтверждение от FormSubmit, после подтверждения идут рабочие заявки).
+    const recipients = [
+      "metallteh72@yandex.ru",
+      "1@centrlp.ru",
+    ];
     try {
-      const res = await fetch("https://formsubmit.co/ajax/1@centrlp.ru", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          ...form,
-          page_path: "/metcoin",
-          lead_source: "metcoin preview (centrlp.ru/metcoin)",
-          _subject: "Заявка: МеталлТех — металлоконструкции",
-          _captcha: "false",
-        }),
-      });
-      if (!res.ok) throw new Error("fail");
+      const results = await Promise.allSettled(
+        recipients.map((to) =>
+          fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
+          }).then((r) => {
+            if (!r.ok) throw new Error(`formsubmit ${to} failed: ${r.status}`);
+            return r;
+          })
+        )
+      );
+      const anyOk = results.some((r) => r.status === "fulfilled");
+      if (!anyOk) throw new Error("all recipients failed");
       setState("sent");
       setForm({ name: "", phone: "", email: "", comment: "" });
     } catch {

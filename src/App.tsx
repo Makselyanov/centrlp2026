@@ -27,6 +27,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default: m.AiPlanPage })));
 const AiTuragent = lazy(() => import("./pages/AiTuragent"));
 const Metcoin = lazy(() => import("./pages/Metcoin"));
+const MetcoinProduct = lazy(() => import("./pages/MetcoinProduct"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 
@@ -125,6 +126,7 @@ const App = () => (
             <Route path="/ai-plan" element={<AiPlanPage />} />
             <Route path="/ai-turagent" element={<AiTuragent />} />
             <Route path="/metcoin" element={<Metcoin />} />
+            <Route path="/metcoin/:slug" element={<MetcoinProduct />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
