@@ -25,6 +25,8 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default: m.AiPlanPage })));
+const AiTuragent = lazy(() => import("./pages/AiTuragent"));
+const Metcoin = lazy(() => import("./pages/Metcoin"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 
@@ -53,6 +55,11 @@ const AIAgents = lazy(() => import("./pages/services/AIAgents"));
 const AISystems = lazy(() => import("./pages/services/AISystems"));
 const CustomCRM = lazy(() => import("./pages/services/CustomCRM"));
 const MVPDevelopment = lazy(() => import("./pages/services/MVPDevelopment"));
+const OpenClawAI = lazy(() => import("./pages/services/OpenClawAI"));
+const N8nAutomation = lazy(() => import("./pages/services/N8nAutomation"));
+const TelegramLeadAgent = lazy(() => import("./pages/services/TelegramLeadAgent"));
+const TelegramServiceAgent = lazy(() => import("./pages/services/TelegramServiceAgent"));
+const Compliance2026 = lazy(() => import("./pages/services/Compliance2026"));
 
 const queryClient = new QueryClient();
 
@@ -106,11 +113,18 @@ const App = () => (
             <Route path="/services/ai-systems" element={<AISystems />} />
             <Route path="/services/custom-crm" element={<CustomCRM />} />
             <Route path="/services/mvp-development" element={<MVPDevelopment />} />
+            <Route path="/services/openclaw-ai" element={<OpenClawAI />} />
+            <Route path="/services/n8n-automation" element={<N8nAutomation />} />
+            <Route path="/services/telegram-lead-agent" element={<TelegramLeadAgent />} />
+            <Route path="/services/telegram-service-agent" element={<TelegramServiceAgent />} />
+            <Route path="/services/compliance-2026" element={<Compliance2026 />} />
 
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
 
             <Route path="/ai-plan" element={<AiPlanPage />} />
+            <Route path="/ai-turagent" element={<AiTuragent />} />
+            <Route path="/metcoin" element={<Metcoin />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
