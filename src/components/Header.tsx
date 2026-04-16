@@ -67,7 +67,7 @@ export const Header = () => {
         }`}
     >
       <div className="container mx-auto px-4">
-        <div className="grid h-20 grid-cols-[minmax(144px,176px),minmax(0,1fr),auto] items-center gap-x-4 xl:gap-x-6">
+        <div className="grid h-20 grid-cols-[minmax(164px,196px),minmax(0,1fr),auto] items-center gap-x-4 xl:gap-x-6">
           {/* Logo */}
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
@@ -84,7 +84,7 @@ export const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex justify-center">
+          <nav className="hidden xl:flex justify-center">
             <div className="flex items-center gap-2.5 xl:gap-3 whitespace-nowrap">
               {/* Services Dropdown */}
               <div
@@ -238,7 +238,7 @@ export const Header = () => {
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 whitespace-nowrap shrink-0">
+          <div className="hidden xl:flex items-center gap-2.5 xl:gap-3 whitespace-nowrap shrink-0">
             <MessengerLinks variant="header" className="pr-1" />
             <a
               href="tel:+79058248564"
@@ -253,6 +253,17 @@ export const Header = () => {
             </a>
           </div>
 
+          <div className="hidden items-center gap-2 lg:flex xl:hidden">
+            <MessengerLinks variant="header" only={["max"]} />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-foreground hover:text-primary transition-colors"
+              aria-label="РњРµРЅСЋ"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -265,7 +276,7 @@ export const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden pb-4 animate-fade-in">
+          <div className="xl:hidden pb-4 animate-fade-in">
             <nav className="flex flex-col space-y-3">
               {/* Services Mobile */}
               <div>

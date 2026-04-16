@@ -14,6 +14,7 @@ interface MessengerLinksProps {
   variant?: Variant;
   className?: string;
   onMessengerClick?: (messenger: Messenger) => void;
+  only?: Messenger[];
 }
 
 const maxMark = "/assets/messengers/max-mark.svg";
@@ -129,12 +130,14 @@ export const MessengerLinks = ({
   variant = "header",
   className,
   onMessengerClick,
+  only,
 }: MessengerLinksProps) => {
   const styles = variantClasses[variant];
+  const visibleLinks = only ? links.filter((link) => only.includes(link.messenger)) : links;
 
   return (
     <div className={cn(styles.wrapper, className)}>
-      {links.map((link) => {
+      {visibleLinks.map((link) => {
         const isMax = link.messenger === "max";
         const showLabel = isMax ? styles.emphasizeMax ?? true : styles.showText && !styles.iconOnlyOthers;
         const isIconOnly = !isMax && styles.iconOnlyOthers;
