@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execFileSync } from 'child_process';
 
 // --- CONFIG ---
 const envSiteUrl = process.env.SITE_URL || 'https://centrlp.ru';
@@ -9,8 +10,27 @@ const SITE_URL = envSiteUrl.replace(/\/$/, '');
 const SRC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../src');
 const CONTENT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../content/posts');
 const OUTPUT_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public/sitemap.xml');
+const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // --- HELPERS ---
+
+function getGitLastmod(targetPath) {
+    try {
+        const output = execFileSync(
+            'git',
+            ['log', '-1', '--format=%cs', '--', targetPath],
+            { cwd: ROOT_DIR, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }
+        ).trim();
+
+        if (output) {
+            return output;
+        }
+    } catch {
+        // Fall back to filesystem timestamps when git history is unavailable.
+    }
+
+    return null;
+}
 
 function getStaticRoutes() {
     const appPath = path.join(SRC_DIR, 'App.tsx');
@@ -52,10 +72,11 @@ function getBlogRoutes() {
             slug = slug.replace(/^\d{4}-\d{2}-\d{2}-/, '');
             const filePath = path.join(CONTENT_DIR, file);
             const stat = fs.statSync(filePath);
+            const gitLastmod = getGitLastmod(path.relative(ROOT_DIR, filePath));
 
             return {
                 route: `/blog/${slug}`,
-                lastmod: stat.mtime.toISOString().split('T')[0],
+                lastmod: gitLastmod || stat.mtime.toISOString().split('T')[0],
             };
         });
 
@@ -80,16 +101,16 @@ function getChangefreq(route) {
 }
 
 function normalizeRoutes(staticRoutes, blogRoutes) {
-    const today = new Date().toISOString().split('T')[0];
+    const staticLastmod = getGitLastmod('src/App.tsx') || new Date().toISOString().split('T')[0];
     const normalizedStatic = staticRoutes.map(route => ({
         route,
-        lastmod: today,
+        lastmod: staticLastmod,
     }));
 
     return [...normalizedStatic, ...blogRoutes]
         .map(entry => ({
             route: entry.route.startsWith('/') ? entry.route : `/${entry.route}`,
-            lastmod: entry.lastmod || today,
+            lastmod: entry.lastmod || staticLastmod,
         }))
         .filter((entry, index, arr) => arr.findIndex(item => item.route === entry.route) === index)
         .sort((a, b) => a.route.localeCompare(b.route));
