@@ -14,6 +14,11 @@ dist-ssr
 .env.seo.local
 key.txt
 generated-images/
+deploy-*.tar
+dist-*.tar
+dist-*.zip
+dist_prev_*/
+*.heapsnapshot
 seo-reports/*
 !seo-reports/.gitkeep
 !seo-reports/monthly/
