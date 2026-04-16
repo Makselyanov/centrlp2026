@@ -1,0 +1,34 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#07131F"/>
+  <rect x="48" y="48" width="1104" height="804" rx="40" fill="#091927" stroke="#18334C" stroke-width="2"/>
+  <text x="104" y="146" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">Кому такой бартер подходит</text>
+  <text x="104" y="192" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Эта проверка сразу отсеивает случайных и оставляет адекватных партнёров</text>
+
+  <rect x="104" y="258" width="472" height="470" rx="32" fill="#0D1D2C" stroke="#21435F"/>
+  <rect x="136" y="286" width="206" height="44" rx="22" fill="#0F2940"/>
+  <text x="174" y="315" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Подходит</text>
+  <circle cx="156" cy="388" r="10" fill="#35D39A"/>
+  <text x="186" y="397" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Есть понятные услуги</text>
+  <text x="186" y="431" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">ГБО, плёнка, антикор, автозвук, камеры, детейлинг</text>
+  <circle cx="156" cy="492" r="10" fill="#35D39A"/>
+  <text x="186" y="501" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Готовы считать эквивалент</text>
+  <text x="186" y="535" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">Не “сделайте что-нибудь”, а нормальная сделка со сметой</text>
+  <circle cx="156" cy="596" r="10" fill="#35D39A"/>
+  <text x="186" y="605" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Нужен стабильный поток заявок</text>
+  <text x="186" y="639" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">Есть задача на входящий поток, а не только “визитка в интернете”</text>
+
+  <rect x="624" y="258" width="472" height="470" rx="32" fill="#0D1D2C" stroke="#21435F"/>
+  <rect x="656" y="286" width="222" height="44" rx="22" fill="#241521"/>
+  <text x="694" y="315" fill="#F8B6CF" font-family="Arial, sans-serif" font-size="22" font-weight="700">Не подходит</text>
+  <circle cx="676" cy="388" r="10" fill="#FF6E9A"/>
+  <text x="706" y="397" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Нужен “просто сайт”</text>
+  <text x="706" y="431" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">Без рекламы, оффера, сценария заявки и аналитики</text>
+  <circle cx="676" cy="492" r="10" fill="#FF6E9A"/>
+  <text x="706" y="501" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Нет готовности к срокам</text>
+  <text x="706" y="535" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">Если бартер воспринимается как работа “когда-нибудь потом”</text>
+  <circle cx="676" cy="596" r="10" fill="#FF6E9A"/>
+  <text x="706" y="605" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Нужна только скидка</text>
+  <text x="706" y="639" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">А не долгосрочная схема, в которой обе стороны выигрывают</text>
+
+  <defs/>
+</svg>
