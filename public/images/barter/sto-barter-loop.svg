@@ -38,8 +38,8 @@
   <text x="548" y="468" fill="#7FA1B8" font-family="Arial, sans-serif" font-size="20">по смете</text>
 
   <rect x="110" y="654" width="980" height="112" rx="24" fill="#0B1725" stroke="#1B3850"/>
-  <text x="144" y="706" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Формула страницы</text>
-  <text x="144" y="742" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Владелец СТО сразу понимает: что отдаёт, что получает, сколько это стоит и как быстро это даст заявки.</text>
+  <text x="144" y="706" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Как устроен обмен</text>
+  <text x="144" y="742" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Состав работ, эквивалент по смете и порядок этапов видны заранее обеим сторонам.</text>
 
   <defs>
     <linearGradient id="bg" x1="1120" y1="94" x2="68" y2="844" gradientUnits="userSpaceOnUse">
