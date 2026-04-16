@@ -2,7 +2,7 @@
   <rect width="1200" height="900" rx="48" fill="#08131F"/>
   <rect x="48" y="48" width="1104" height="804" rx="40" fill="#091826" stroke="#163046" stroke-width="2"/>
   <text x="102" y="148" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">Что именно получает СТО</text>
-  <text x="102" y="194" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Показывайте не “маркетинг вообще”, а пакет с понятными блоками результата</text>
+  <text x="102" y="194" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Сайт, квиз и реклама собраны в один рабочий пакет</text>
 
   <rect x="102" y="254" width="996" height="128" rx="28" fill="#0D1D2C" stroke="#20425E"/>
   <rect x="132" y="286" width="172" height="64" rx="22" fill="url(#accent)"/>
@@ -24,7 +24,7 @@
 
   <rect x="102" y="710" width="996" height="88" rx="24" fill="#0D1D2C" stroke="#20425E"/>
   <circle cx="154" cy="754" r="9" fill="#20B5FF"/>
-  <text x="176" y="762" fill="#DDE8F1" font-family="Arial, sans-serif" font-size="24">Сверху вниз это читается за 5 секунд и сразу объясняет ценность обмена.</text>
+  <text x="176" y="762" fill="#DDE8F1" font-family="Arial, sans-serif" font-size="24">Каждый блок отвечает за свой участок пути: интерес, заявка и запись.</text>
 
   <defs>
     <linearGradient id="accent" x1="132" y1="286" x2="304" y2="350" gradientUnits="userSpaceOnUse">

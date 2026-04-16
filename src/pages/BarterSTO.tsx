@@ -202,7 +202,7 @@ const BarterSTO = () => {
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
                 <Gauge className="h-4 w-4" />
-                Не “маркетинг вообще”, а конкретный пакет
+                Конкретный состав работ и результата
               </div>
               <h2 className="mb-4">Что именно вы получаете взамен бартерной сделки</h2>
               <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
@@ -265,16 +265,16 @@ const BarterSTO = () => {
 
               <div className="mt-8 space-y-4">
                 <div className="rounded-2xl border border-border/60 bg-background p-5">
-                  <div className="font-semibold text-foreground">Шаг 1. Захватить внимание</div>
-                  <p className="mt-2 text-muted-foreground">Показать, что обмен строится вокруг понятного коммерческого результата.</p>
+                  <div className="font-semibold text-foreground">Шаг 1. Понять предложение</div>
+                  <p className="mt-2 text-muted-foreground">Человек сразу видит, какие услуги продвигаются, что входит в пакет и за счёт чего это приводит к заявке.</p>
                 </div>
                 <div className="rounded-2xl border border-border/60 bg-background p-5">
-                  <div className="font-semibold text-foreground">Шаг 2. Объяснить сделку</div>
-                  <p className="mt-2 text-muted-foreground">Что именно входит в пакет и почему это эквивалентно нормальной смете.</p>
+                  <div className="font-semibold text-foreground">Шаг 2. Оставить заявку без лишних шагов</div>
+                  <p className="mt-2 text-muted-foreground">Марка авто, задача, контакт и удобный способ связи собираются в одном простом обращении.</p>
                 </div>
                 <div className="rounded-2xl border border-border/60 bg-background p-5">
-                  <div className="font-semibold text-foreground">Шаг 3. Убрать страхи</div>
-                  <p className="mt-2 text-muted-foreground">Сроки, этапы, договорённости и реальные скриншоты вместо пустых обещаний.</p>
+                  <div className="font-semibold text-foreground">Шаг 3. Получить расчёт и запись</div>
+                  <p className="mt-2 text-muted-foreground">После обращения сервис быстро связывается, согласует детали и переводит интерес в реальную запись.</p>
                 </div>
               </div>
             </div>
