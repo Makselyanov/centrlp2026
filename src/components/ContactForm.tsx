@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MessageCircle, PhoneCall } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -135,9 +135,8 @@ export const ContactForm = () => {
             Имя и телефон уже достаточно, чтобы мы начали.
           </h3>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            В ответе мы не присылаем абстрактную презентацию, а предлагаем 2-3
-            рабочих сценария под ваш проект: Telegram, AI, CRM, сайт или связку из
-            них.
+            Достаточно оставить контакт, чтобы быстро обсудить задачу и удобный
+            формат связи без лишней переписки.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <MessengerLinks
@@ -149,24 +148,6 @@ export const ContactForm = () => {
                 })
               }
             />
-            <div className="hidden">
-            <a
-              href="https://t.me/centrlp"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-[#0096D6]/15 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-[#0096D6]/40 hover:text-[#0096D6]"
-              data-metric="messenger-click"
-              onClick={() =>
-                trackMetric("messenger_click_fastlane", {
-                  path: location.pathname,
-                  messenger: "telegram",
-                })
-              }
-            >
-              <MessageCircle className="h-4 w-4" />
-              Сразу в Telegram
-            </a>
-            </div>
             <a
               href="tel:+79058248564"
               className="inline-flex items-center gap-2 rounded-xl border border-[#44B78B]/20 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-[#44B78B]/40 hover:text-[#44B78B]"

@@ -80,31 +80,31 @@ const variantClasses: Record<Variant, { wrapper: string; link: string; showText:
     wrapper: "flex items-center gap-2",
     link: "h-8 rounded-full px-2.5 text-xs font-semibold shadow-sm transition-colors",
     showText: false,
-    maxText: "Сразу в MAX",
+    maxText: "MAX",
   },
   mobile: {
     wrapper: "flex flex-wrap items-center gap-2",
     link: "h-10 rounded-full px-3 text-sm font-semibold transition-colors",
     showText: false,
-    maxText: "Сразу в MAX",
+    maxText: "MAX",
   },
   footer: {
     wrapper: "flex flex-wrap items-center gap-2",
     link: "h-10 rounded-full px-3 text-sm font-semibold transition-colors",
     showText: false,
-    maxText: "Сразу в MAX",
+    maxText: "MAX",
   },
   fastlane: {
     wrapper: "flex flex-wrap gap-3",
     link: "rounded-xl border border-transparent px-3 py-2 text-sm font-medium shadow-sm transition-colors",
     showText: true,
-    maxText: "Сразу в MAX",
+    maxText: "MAX",
   },
   toast: {
     wrapper: "flex flex-wrap gap-2",
     link: "rounded-md px-3 py-1 text-sm font-medium transition-colors",
     showText: true,
-    maxText: "Сразу в MAX",
+    maxText: "MAX",
   },
 };
 
@@ -130,8 +130,8 @@ export const MessengerLinks = ({
               "inline-flex items-center justify-center gap-2",
               styles.link,
               link.className,
-              isMax && variant === "header" && "min-w-16 px-3",
-              isMax && (variant === "mobile" || variant === "footer") && "min-w-20",
+              isMax && variant === "header" && "min-w-[76px] px-3",
+              isMax && (variant === "mobile" || variant === "footer") && "min-w-[88px]",
             )}
             data-metric="messenger-click"
             aria-label={isMax ? "Написать в MAX" : link.label}
@@ -139,7 +139,7 @@ export const MessengerLinks = ({
           >
             {link.icon}
             {(styles.showText || isMax) && (
-              <span className={cn(!styles.showText && "sr-only")}>
+              <span className={cn(!styles.showText && !isMax && "sr-only")}>
                 {isMax ? styles.maxText : link.label}
               </span>
             )}

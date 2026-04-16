@@ -38,6 +38,10 @@ If a production hotfix happens:
 - Use it only as a deploy target and verification target.
 - Avoid manual production edits unless recovery is impossible otherwise.
 
+## Public Site Copy Rule
+
+- Do not expose internal discussion, sales-process notes, outreach logic, private chat context, or operator-facing commentary in any user-facing page copy.
+
 ## Required Final Report
 
 Every final report must explicitly say:

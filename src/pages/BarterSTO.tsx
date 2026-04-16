@@ -181,16 +181,16 @@ const BarterSTO = () => {
         <div className="container mx-auto px-4">
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
-              <div className="text-sm font-semibold text-primary">Кому эта страница</div>
-              <div className="mt-2 text-base text-foreground">Владельцам СТО и авто-направлений, которым нужен не “сайт”, а заявки.</div>
+              <div className="text-sm font-semibold text-primary">Формат сделки</div>
+              <div className="mt-2 text-base text-foreground">Нормальный бартер с эквивалентом по смете, этапами и понятным составом работ.</div>
             </div>
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
-              <div className="text-sm font-semibold text-primary">Что здесь важно</div>
-              <div className="mt-2 text-base text-foreground">Быстро понять сделку, эквивалент и как это даст входящий поток.</div>
+              <div className="text-sm font-semibold text-primary">Что получает сервис</div>
+              <div className="mt-2 text-base text-foreground">Страницу, квиз, рекламу и более понятный маршрут клиента до обращения и записи.</div>
             </div>
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
-              <div className="text-sm font-semibold text-primary">Что усиливает доверие</div>
-              <div className="mt-2 text-base text-foreground">Реальные скрины, понятный маршрут заявки и живая логика бартера.</div>
+              <div className="text-sm font-semibold text-primary">Что подтверждает результат</div>
+              <div className="mt-2 text-base text-foreground">Живые скрины, конкретный кейс и реальные автомобильные направления без абстракции.</div>
             </div>
           </div>
         </div>
@@ -230,11 +230,10 @@ const BarterSTO = () => {
                 className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.18)]"
               />
               <div className="rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/10 via-background to-accent-2/10 p-8">
-                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Быстрый смысл</div>
+                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Смысл сделки</div>
                 <p className="mt-4 text-lg leading-8 text-foreground">
-                  На странице для СТО важно показать не “что я умею”, а
-                  {" "}
-                  <span className="font-semibold">как именно это превращается в клиентов</span>.
+                  Вместо абстрактного описания услуг здесь сразу видно, какой пакет работ получает
+                  автосервис и как он помогает довести человека до обращения.
                 </p>
               </div>
             </div>
@@ -256,12 +255,12 @@ const BarterSTO = () => {
             <div className="order-1 lg:order-2">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent-2/10 px-4 py-2 text-sm font-semibold text-accent-2">
                 <MessageSquareText className="h-4 w-4" />
-                Это должен понимать владелец с первого пролистывания
+                Понятная логика обращения
               </div>
-              <h2 className="mb-4">Как эта страница помогает СТО согласиться на диалог</h2>
+              <h2 className="mb-4">Как клиент доходит до записи в автосервис</h2>
               <p className="text-lg leading-8 text-muted-foreground">
-                Когда ты рассылаешь ссылку сервисам, им нужно увидеть простой маршрут: реклама, страница,
-                сообщение, запись. Это намного лучше продаёт идею, чем длинный текст о digital под ключ.
+                Для локального авто-бизнеса важен понятный путь: увидел предложение, оставил заявку,
+                написал, получил расчёт и записался на нужную услугу.
               </p>
 
               <div className="mt-8 space-y-4">
@@ -324,17 +323,17 @@ const BarterSTO = () => {
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
                 <BadgeCheck className="h-4 w-4" />
-                Кому эта сделка подходит
+                Условия спокойной сделки
               </div>
-              <h2 className="mb-4">Не для всех СТО. И это хорошо.</h2>
+              <h2 className="mb-4">Что помогает бартеру пройти спокойно и по делу</h2>
               <p className="text-lg leading-8 text-muted-foreground">
-                В рассылке полезно сразу отсеять нецелевых. Так страница выглядит сильнее и вызывает
-                больше доверия у адекватного собственника.
+                Здесь важны не красивые обещания, а готовность обсуждать объём работ, сроки,
+                эквивалент и реальную ценность с обеих сторон.
               </p>
 
               <div className="mt-8 grid gap-6 md:grid-cols-2">
                 <Card className="rounded-[1.5rem] border-border/60 p-6 shadow-sm">
-                  <h3 className="text-xl font-bold text-foreground">Подходит</h3>
+                  <h3 className="text-xl font-bold text-foreground">Что помогает</h3>
                   <ul className="mt-4 space-y-4">
                     {fitItems.map((item) => (
                       <li key={item} className="flex items-start gap-3">
@@ -346,7 +345,7 @@ const BarterSTO = () => {
                 </Card>
 
                 <Card className="rounded-[1.5rem] border-border/60 p-6 shadow-sm">
-                  <h3 className="text-xl font-bold text-foreground">Не подходит</h3>
+                  <h3 className="text-xl font-bold text-foreground">Что мешает</h3>
                   <ul className="mt-4 space-y-4">
                     {notFitItems.map((item) => (
                       <li key={item} className="flex items-start gap-3">
@@ -445,10 +444,10 @@ const BarterSTO = () => {
                 </Card>
 
                 <Card className="rounded-[2rem] border-border/60 p-6 shadow-sm">
-                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Почему кейс работает на странице</div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Почему это дало результат</div>
                   <p className="mt-3 text-base leading-7 text-muted-foreground">
-                    Потому что владелец СТО видит не обещание “мы умеем маркетинг”, а знакомый себе сценарий:
-                    есть услуга, есть поток обращений, есть запись, есть смысл сотрудничать.
+                    Потому что работа шла не вокруг красивых отчётов, а вокруг реального спроса,
+                    понятных офферов и постоянной докрутки до входящих заявок.
                   </p>
                 </Card>
               </div>

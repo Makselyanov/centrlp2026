@@ -47,6 +47,7 @@ If there was a production hotfix:
 - Push to `origin`.
 - Update production to the exact same commit.
 - Verify important URLs after deploy.
+- Never expose internal discussion, prompt logic, outreach strategy, or private operator notes in user-facing site copy.
 
 Do not leave the site in a state where:
 
@@ -63,4 +64,3 @@ Every final session report must state:
 - whether it was pushed to `origin`
 - whether local git is clean
 - whether production git is clean
-

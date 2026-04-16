@@ -32,6 +32,10 @@ Correct sequence:
 4. deploy or fast-forward production to the same commit
 5. verify live URLs
 
+## Public Copy Rule
+
+- Never put internal working notes, private discussion, outreach reasoning, or “why this page works for our sales process” into site content.
+
 ## Final Message Rule
 
 The final message must always include:
@@ -41,4 +45,3 @@ The final message must always include:
 - pushed to `origin` or not
 - local git clean or not
 - production git clean or not
-
