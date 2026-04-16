@@ -67,15 +67,14 @@ export const Header = () => {
         }`}
     >
       <div className="container mx-auto px-4">
-        <div className="grid h-20 grid-cols-[minmax(164px,196px),minmax(0,1fr),auto] items-center gap-x-4 xl:gap-x-6">
+        <div className="grid h-20 grid-cols-[minmax(56px,72px),minmax(0,1fr),auto] items-center gap-x-4 xl:gap-x-6">
           {/* Logo */}
-          <Link to="/" className="flex min-w-0 items-center gap-3">
+          <Link to="/" className="flex min-w-0 items-center">
             <img
               src={logoImage}
               alt="CentrLP"
               className="h-12 w-12 shrink-0 rounded-full object-contain"
             />
-            <div className="min-w-0 text-base font-bold leading-none text-foreground">CentrLP</div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -233,7 +232,7 @@ export const Header = () => {
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden xl:flex items-center gap-2.5 border-l border-border/60 pl-5 xl:gap-3 xl:pl-6 whitespace-nowrap shrink-0">
+          <div className="hidden xl:flex items-center gap-2.5 border-l border-border/60 pl-4 ml-2 xl:gap-3 xl:pl-5 xl:ml-3 whitespace-nowrap shrink-0">
             <MessengerLinks variant="header" className="pr-1" />
             <a
               href="tel:+79058248564"
