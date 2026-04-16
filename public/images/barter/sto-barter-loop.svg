@@ -4,15 +4,22 @@
   <circle cx="938" cy="212" r="188" fill="url(#glow1)" opacity="0.35"/>
   <circle cx="226" cy="730" r="166" fill="url(#glow2)" opacity="0.3"/>
   <rect x="84" y="88" width="1032" height="724" rx="32" fill="#08111C" fill-opacity="0.78" stroke="#173047"/>
-  <text x="110" y="152" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">Бартер как понятная сделка</text>
-  <text x="110" y="197" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Не абстрактный обмен, а согласованный пакет работ с эквивалентом и этапами</text>
+
+  <text x="110" y="152" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">
+    Бартер как понятная сделка
+  </text>
+  <text x="110" y="197" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">
+    Не абстрактный обмен, а согласованный пакет работ с эквивалентом и этапами
+  </text>
 
   <rect x="110" y="254" width="368" height="346" rx="28" fill="#0B1725" stroke="#1F3D59"/>
   <rect x="128" y="274" width="164" height="36" rx="18" fill="#102437"/>
   <text x="154" y="298" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="18" font-weight="700">Что получает СТО</text>
   <text x="142" y="362" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="42" font-weight="700">Сайт + квиз</text>
   <text x="142" y="408" fill="#D9E7F2" font-family="Arial, sans-serif" font-size="30" font-weight="600">Реклама + заявки</text>
-  <text x="142" y="452" fill="#7FA1B8" font-family="Arial, sans-serif" font-size="24">Яндекс Директ, ВК, аналитика, структура оффера</text>
+  <text x="142" y="452" fill="#7FA1B8" font-family="Arial, sans-serif" font-size="24">
+    Яндекс Директ, VK, аналитика, структура оффера
+  </text>
   <circle cx="156" cy="518" r="8" fill="#20B5FF"/>
   <text x="178" y="526" fill="#D9E7F2" font-family="Arial, sans-serif" font-size="24">Одна точка входа для новых клиентов</text>
   <circle cx="156" cy="564" r="8" fill="#20B5FF"/>
@@ -23,7 +30,9 @@
   <text x="766" y="298" fill="#7CEBC5" font-family="Arial, sans-serif" font-size="18" font-weight="700">Что получаю я</text>
   <text x="754" y="362" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="42" font-weight="700">ГБО, антикор,</text>
   <text x="754" y="408" fill="#D9E7F2" font-family="Arial, sans-serif" font-size="30" font-weight="600">тонировка, плёнка</text>
-  <text x="754" y="452" fill="#7FA1B8" font-family="Arial, sans-serif" font-size="24">Плюс камеры, автозвук и доработка Pajero</text>
+  <text x="754" y="452" fill="#7FA1B8" font-family="Arial, sans-serif" font-size="24">
+    Плюс камеры, автозвук и доработка Pajero
+  </text>
   <circle cx="768" cy="518" r="8" fill="#35D39A"/>
   <text x="790" y="526" fill="#D9E7F2" font-family="Arial, sans-serif" font-size="24">Работы можно разбить по этапам</text>
   <circle cx="768" cy="564" r="8" fill="#35D39A"/>
@@ -39,7 +48,10 @@
 
   <rect x="110" y="654" width="980" height="112" rx="24" fill="#0B1725" stroke="#1B3850"/>
   <text x="144" y="706" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="28" font-weight="700">Как устроен обмен</text>
-  <text x="144" y="742" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">Состав работ, эквивалент по смете и порядок этапов видны заранее обеим сторонам.</text>
+  <text x="144" y="742" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="22">
+    <tspan x="144" dy="0">Состав работ, эквивалент по смете и порядок этапов</tspan>
+    <tspan x="144" dy="28">видны заранее обеим сторонам.</tspan>
+  </text>
 
   <defs>
     <linearGradient id="bg" x1="1120" y1="94" x2="68" y2="844" gradientUnits="userSpaceOnUse">

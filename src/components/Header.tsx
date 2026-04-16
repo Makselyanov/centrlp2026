@@ -75,12 +75,7 @@ export const Header = () => {
               alt="CentrLP"
               className="h-12 w-12 shrink-0 rounded-full object-contain"
             />
-            <div className="min-w-0">
-              <div className="text-base font-bold leading-none text-foreground">CentrLP</div>
-              <div className="mt-1 hidden 2xl:block truncate text-[11px] font-medium uppercase tracking-[0.18em] text-primary/80">
-                Digital Products
-              </div>
-            </div>
+            <div className="min-w-0 text-base font-bold leading-none text-foreground">CentrLP</div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -238,7 +233,7 @@ export const Header = () => {
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden xl:flex items-center gap-2.5 xl:gap-3 whitespace-nowrap shrink-0">
+          <div className="hidden xl:flex items-center gap-2.5 border-l border-border/60 pl-5 xl:gap-3 xl:pl-6 whitespace-nowrap shrink-0">
             <MessengerLinks variant="header" className="pr-1" />
             <a
               href="tel:+79058248564"
