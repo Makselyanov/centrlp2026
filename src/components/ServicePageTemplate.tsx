@@ -7,8 +7,9 @@ import { BentoCard } from "@/components/services/BentoCard";
 import { ProcessTimeline } from "@/components/services/ProcessTimeline";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bot, Orbit, Sparkles, Workflow } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type FeatureItem = {
@@ -69,6 +70,13 @@ interface ServicePageTemplateProps {
   price?: string;
 }
 
+const floatingIcons = [
+  { icon: Sparkles, className: "top-24 left-[8%]", color: "text-[#0096D6]/18", duration: 6.5, y: -18, rotate: 5 },
+  { icon: Orbit, className: "top-20 right-[10%]", color: "text-[#44B78B]/18", duration: 7.5, y: 20, rotate: -6 },
+  { icon: Workflow, className: "bottom-24 left-[12%]", color: "text-[#0b7cb0]/15", duration: 8.5, y: -14, rotate: 4 },
+  { icon: Bot, className: "bottom-20 right-[12%]", color: "text-[#44B78B]/14", duration: 7, y: 16, rotate: -4 },
+];
+
 export const ServicePageTemplate = ({
   title,
   description,
@@ -102,77 +110,127 @@ export const ServicePageTemplate = ({
 
   return (
     <Layout title={title} description={description}>
-      {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-20 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-[#0096D6]/10 blur-3xl" />
-          <div className="absolute bottom-10 left-10 w-80 h-80 rounded-full bg-[#44B78B]/10 blur-3xl" />
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.045] to-white pt-32 pb-16 md:pt-40 md:pb-20">
+        <div className="pointer-events-none absolute inset-0">
+          <motion.div
+            animate={{ scale: [1, 1.08, 1], opacity: [0.55, 0.8, 0.55] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-8 right-10 h-72 w-72 rounded-full bg-[#0096D6]/12 blur-3xl"
+          />
+          <motion.div
+            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.75, 0.5] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-0 left-10 h-80 w-80 rounded-full bg-[#44B78B]/12 blur-3xl"
+          />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#0096D6]/35 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#44B78B]/35 to-transparent" />
         </div>
-        <div className="container mx-auto px-4 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#0096D6] text-xs font-semibold uppercase tracking-wider shadow-sm mb-8">
-              <span className="w-2 h-2 rounded-full bg-[#44B78B] animate-pulse" />
+
+        <div className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block">
+          {floatingIcons.map(({ icon: Icon, className, color, duration, y, rotate }, index) => (
+            <motion.div
+              key={className}
+              animate={{ y: [0, y, 0], rotate: [0, rotate, 0] }}
+              transition={{ duration, repeat: Infinity, ease: "easeInOut", delay: index * 0.35 }}
+              className={`absolute ${className} ${color}`}
+            >
+              <Icon className="h-12 w-12 lg:h-14 lg:w-14" />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-4xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#0096D6] shadow-sm backdrop-blur-sm"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#44B78B]/60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#44B78B]" />
+              </span>
               {badge}
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.08 }}
+              className="mb-6 bg-[linear-gradient(135deg,#007DB3_0%,#0096D6_38%,#44B78B_100%)] bg-clip-text text-4xl font-bold leading-[1.04] tracking-tight text-transparent md:text-5xl lg:text-6xl"
+            >
               {heroTitle}
-            </h1>
-            <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.16 }}
+              className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-slate-600 md:text-xl"
+            >
               {heroDescription}
-            </p>
-            <div className="flex flex-wrap justify-center gap-2.5 mb-10">
-              {heroPoints.map((point) => (
-                <div
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.24 }}
+              className="mb-10 flex flex-wrap justify-center gap-2.5"
+            >
+              {heroPoints.map((point, index) => (
+                <motion.div
                   key={point}
-                  className="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-sm text-slate-700 shadow-sm"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.28 + index * 0.06 }}
+                  className="rounded-full border border-slate-200 bg-white/85 px-4 py-1.5 text-sm text-slate-700 shadow-sm backdrop-blur-sm"
                 >
                   {point}
-                </div>
+                </motion.div>
               ))}
-            </div>
-            <div className="flex flex-col sm:flex-row justify-center gap-3">
-              <Button size="lg" asChild>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+              className="flex flex-col justify-center gap-3 sm:flex-row"
+            >
+              <Button
+                size="lg"
+                asChild
+                className="border-0 bg-[linear-gradient(135deg,#0096D6_0%,#44B78B_100%)] text-white shadow-[0_18px_50px_-24px_rgba(0,150,214,0.7)] transition-transform duration-300 hover:-translate-y-0.5 hover:opacity-95"
+              >
                 <a href="#contact">
-                  Обсудить проект <ArrowRight className="w-4 h-4 ml-2" />
+                  Обсудить проект <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" asChild className="border-slate-300 bg-white/80 backdrop-blur-sm">
                 <Link to="/services">Все услуги</Link>
               </Button>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       <ServiceImageBand slug={slug} alt={`${title} — иллюстрация услуги CentrLP`} />
 
-      {/* ── Audience — 3-col bento ──────────────────────────────────── */}
-      <BentoSection
-        tone="white"
-        eyebrow="Для кого"
-        title={audienceTitle}
-        description={audienceDescription}
-      >
-        <div className="grid md:grid-cols-3 gap-5">
+      <BentoSection tone="white" eyebrow="Для кого" title={audienceTitle} description={audienceDescription}>
+        <div className="grid gap-5 md:grid-cols-3">
           {audienceItems.map((item) => (
-            <BentoCard
-              key={item.title}
-              icon={item.icon}
-              title={item.title}
-              text={item.text}
-            />
+            <BentoCard key={item.title} icon={item.icon} title={item.title} text={item.text} />
           ))}
         </div>
       </BentoSection>
 
-      {/* ── Deliverables — 2-col feature bento ──────────────────────── */}
       <BentoSection
         tone="slate"
         eyebrow="Что вы получите"
         title={deliverablesTitle}
         description={deliverablesDescription}
       >
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid gap-5 md:grid-cols-2">
           {deliverables.map((item) => (
             <BentoCard
               key={item.title}
@@ -186,26 +244,14 @@ export const ServicePageTemplate = ({
         </div>
       </BentoSection>
 
-      {/* ── Use cases ───────────────────────────────────────────────── */}
-      <BentoSection
-        tone="white"
-        eyebrow="Где работает"
-        title={useCasesTitle}
-        description={useCasesDescription}
-      >
-        <div className="grid lg:grid-cols-3 gap-5">
+      <BentoSection tone="white" eyebrow="Где работает" title={useCasesTitle} description={useCasesDescription}>
+        <div className="grid gap-5 lg:grid-cols-3">
           {useCases.map((item) => (
-            <BentoCard
-              key={item.title}
-              title={item.title}
-              text={item.text}
-              bullets={item.bullets}
-            />
+            <BentoCard key={item.title} title={item.title} text={item.text} bullets={item.bullets} />
           ))}
         </div>
       </BentoSection>
 
-      {/* ── Process — adaptive timeline ─────────────────────────────── */}
       <BentoSection
         tone="tint"
         eyebrow="Процесс"
@@ -215,26 +261,25 @@ export const ServicePageTemplate = ({
         <ProcessTimeline steps={process} />
       </BentoSection>
 
-      {/* ── Related services ────────────────────────────────────────── */}
       <BentoSection
         tone="white"
         eyebrow="Связанные решения"
         title="Сильнее в связке"
         description="Эти услуги лучше работают вместе и усиливают друг друга по продажам, автоматизации и SEO."
       >
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid gap-5 md:grid-cols-3">
           {relatedServices.map((item) => (
             <div
               key={item.href}
-              className="h-full flex flex-col rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm transition hover:shadow-md hover:border-slate-300"
+              className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-slate-300 hover:shadow-md md:p-7"
             >
               <h3 className="mb-3 text-[20px] font-bold tracking-tight text-slate-900">
                 {item.title}
               </h3>
-              <p className="mb-5 flex-1 text-slate-600 leading-relaxed">{item.text}</p>
+              <p className="mb-5 flex-1 leading-relaxed text-slate-600">{item.text}</p>
               <Button variant="outline" size="sm" asChild className="self-start">
                 <Link to={item.href}>
-                  Открыть страницу <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+                  Открыть страницу <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                 </Link>
               </Button>
             </div>
@@ -242,7 +287,6 @@ export const ServicePageTemplate = ({
         </div>
       </BentoSection>
 
-      {/* ── FAQ ─────────────────────────────────────────────────────── */}
       <BentoSection
         tone="slate"
         eyebrow="FAQ"
@@ -256,7 +300,7 @@ export const ServicePageTemplate = ({
                 <AccordionTrigger className="px-6 text-left text-slate-900 hover:text-[#0096D6]">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="px-6 text-slate-600 leading-relaxed">
+                <AccordionContent className="px-6 leading-relaxed text-slate-600">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -265,14 +309,13 @@ export const ServicePageTemplate = ({
         </div>
       </BentoSection>
 
-      {/* ── Contact CTA ─────────────────────────────────────────────── */}
-      <section id="contact" className="py-14 md:py-20 bg-gradient-to-b from-white via-[#44B78B]/[0.04] to-white">
+      <section id="contact" className="bg-gradient-to-b from-white via-[#44B78B]/[0.04] to-white py-14 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <h2 className="relative inline-block text-[28px] md:text-[34px] font-bold tracking-tight text-slate-900 mb-4">
+          <div className="mx-auto mb-10 max-w-3xl text-center">
+            <h2 className="relative mb-4 inline-block text-[28px] font-bold tracking-tight text-slate-900 md:text-[34px]">
               {ctaTitle}
             </h2>
-            <p className="text-lg text-slate-600 leading-relaxed">{ctaDescription}</p>
+            <p className="text-lg leading-relaxed text-slate-600">{ctaDescription}</p>
           </div>
           <ContactForm />
         </div>

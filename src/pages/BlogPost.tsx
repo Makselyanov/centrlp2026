@@ -19,84 +19,24 @@ const BlogPost = () => {
     const [toc, setToc] = useState<Array<{ level: number; text: string; id: string }>>([]);
     const [copied, setCopied] = useState(false);
 
-    if (!slug) {
-        return (
-            <Layout>
-                <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 min-h-screen">
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
-                        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
-                    </div>
-                    <div className="container mx-auto px-4 relative z-10 max-w-4xl">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="text-center py-20"
-                        >
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
-                            <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
-                            <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
-                                К сожалению, статья с таким адресом не существует.
-                            </p>
-                            <Link to="/blog">
-                                <Button size="lg" className="gap-2">
-                                    <ArrowLeft className="w-4 h-4" />
-                                    Вернуться в блог
-                                </Button>
-                            </Link>
-                        </motion.div>
-                    </div>
-                </section>
-            </Layout>
-        );
-    }
-
-    const post = getPostBySlug(slug);
-
-    if (!post) {
-        return (
-            <Layout>
-                <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 min-h-screen">
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
-                        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
-                    </div>
-                    <div className="container mx-auto px-4 relative z-10 max-w-4xl">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="text-center py-20"
-                        >
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
-                            <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
-                            <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
-                                К сожалению, статья с адресом "{slug}" не существует или была удалена.
-                            </p>
-                            <Link to="/blog">
-                                <Button size="lg" className="gap-2">
-                                    <ArrowLeft className="w-4 h-4" />
-                                    Вернуться в блог
-                                </Button>
-                            </Link>
-                        </motion.div>
-                    </div>
-                </section>
-            </Layout>
-        );
-    }
-
-    const relatedPosts = getRelatedPosts(slug, 3);
+    const post = slug ? getPostBySlug(slug) : undefined;
+    const relatedPosts = slug ? getRelatedPosts(slug, 3) : [];
 
     // Генерируем оглавление
     useEffect(() => {
+        if (!post) {
+            setToc([]);
+            return;
+        }
         const tableOfContents = generateTableOfContents(post.content);
         setToc(tableOfContents);
-    }, [post.content]);
+    }, [post]);
 
     // JSON-LD Article + BreadcrumbList schema
     useEffect(() => {
+        if (!post) {
+            return;
+        }
         const articleSchema = {
             "@context": "https://schema.org",
             "@type": "Article",
@@ -209,6 +149,72 @@ const BlogPost = () => {
             }
         };
     }, []);
+
+    if (!slug) {
+        return (
+            <Layout>
+                <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 min-h-screen">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
+                        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10 max-w-4xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center py-20"
+                        >
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
+                            <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
+                            <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
+                                К сожалению, статья с таким адресом не существует.
+                            </p>
+                            <Link to="/blog">
+                                <Button size="lg" className="gap-2">
+                                    <ArrowLeft className="w-4 h-4" />
+                                    Вернуться в блог
+                                </Button>
+                            </Link>
+                        </motion.div>
+                    </div>
+                </section>
+            </Layout>
+        );
+    }
+
+    if (!post) {
+        return (
+            <Layout>
+                <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50 min-h-screen">
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                        <div className="absolute top-[10%] right-[5%] w-[600px] h-[600px] rounded-full bg-[#0096D6]/10 blur-[120px]" />
+                        <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
+                    </div>
+                    <div className="container mx-auto px-4 relative z-10 max-w-4xl">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center py-20"
+                        >
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
+                            <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
+                            <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
+                                К сожалению, статья с адресом "{slug}" не существует или была удалена.
+                            </p>
+                            <Link to="/blog">
+                                <Button size="lg" className="gap-2">
+                                    <ArrowLeft className="w-4 h-4" />
+                                    Вернуться в блог
+                                </Button>
+                            </Link>
+                        </motion.div>
+                    </div>
+                </section>
+            </Layout>
+        );
+    }
 
     const handleCopyLink = async () => {
         const url = `${window.location.origin}/blog/${post.slug}`;

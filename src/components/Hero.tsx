@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 
 export const Hero = () => {
     const cardRef = useRef<HTMLDivElement>(null);
-
     const heroRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
@@ -15,12 +14,12 @@ export const Hero = () => {
 
         let rafId: number;
         const updatePosition = (x: number, y: number) => {
-            hero.style.setProperty('--mx', `${x}px`);
-            hero.style.setProperty('--my', `${y}px`);
+            hero.style.setProperty("--mx", `${x}px`);
+            hero.style.setProperty("--my", `${y}px`);
         };
 
         const handleMouseMove = (e: MouseEvent) => {
-            if (rafId) return; // simple throttle via rAF existence check
+            if (rafId) return;
 
             const rect = hero.getBoundingClientRect();
             const x = e.clientX - rect.left;
@@ -32,9 +31,9 @@ export const Hero = () => {
             });
         };
 
-        hero.addEventListener('mousemove', handleMouseMove);
+        hero.addEventListener("mousemove", handleMouseMove);
         return () => {
-            hero.removeEventListener('mousemove', handleMouseMove);
+            hero.removeEventListener("mousemove", handleMouseMove);
             if (rafId) cancelAnimationFrame(rafId);
         };
     }, []);
@@ -51,15 +50,15 @@ export const Hero = () => {
         };
 
         const reset = () => {
-            card.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+            card.style.transform = "rotateY(0deg) rotateX(0deg) translateZ(0)";
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        window.addEventListener('mouseleave', reset);
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseleave", reset);
 
         return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseleave', reset);
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseleave", reset);
         };
     }, []);
 
@@ -67,17 +66,16 @@ export const Hero = () => {
         <section
             ref={heroRef}
             id="hero"
-            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] text-slate-50 py-24 group"
+            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-24 text-slate-50 group"
         >
-            {/* Mouse Flow Overlay - Enhanced Glow */}
             <div
-                className="pointer-events-none absolute inset-0 z-[1] transition-opacity duration-300 opacity-0 group-hover:opacity-100 mix-blend-screen"
+                className="pointer-events-none absolute inset-0 z-[1] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover:opacity-100"
                 style={{
                     background: `
                         radial-gradient(600px circle at var(--mx) var(--my), rgba(255,255,255,0.18), transparent 40%),
                         radial-gradient(1100px circle at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 40%)
                     `,
-                    filter: 'blur(25px)'
+                    filter: "blur(25px)",
                 }}
             />
 
@@ -86,101 +84,102 @@ export const Hero = () => {
             </div>
 
             <div className="container mx-auto relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-12">
-                    {/* Left Content */}
+                <div className="flex flex-col items-center gap-12 lg:flex-row">
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-left max-w-xl"
+                        className="w-full max-w-3xl text-left lg:basis-[58%] xl:max-w-4xl"
                     >
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="inline-flex items-center px-4 py-2 rounded-full bg-slate-900/60 shadow-md text-slate-100 text-sm font-semibold mb-8 border border-[#0096D6]/20"
+                            className="mb-8 inline-flex items-center rounded-full border border-[#0096D6]/20 bg-slate-900/60 px-4 py-2 text-sm font-semibold text-slate-100 shadow-md"
                         >
-                            <span className="relative flex h-3 w-3 mr-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#44B78B] opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#44B78B]"></span>
+                            <span className="relative mr-2 flex h-3 w-3">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#44B78B] opacity-75"></span>
+                                <span className="relative inline-flex h-3 w-3 rounded-full bg-[#44B78B]"></span>
                             </span>
                             Современные цифровые продукты
                         </motion.div>
 
-                        <h1 className="text-5xl md:text-7xl font-bold leading-[1.1] mb-8 tracking-tight text-slate-50">
+                        <h1 className="mb-8 text-4xl font-bold leading-[1.08] tracking-tight text-slate-50 sm:text-5xl md:text-6xl xl:text-7xl">
                             Создаём цифровые продукты <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
+                            <span className="bg-gradient-to-r from-[#0096D6] to-[#44B78B] bg-clip-text text-transparent">
                                 для продаж и сервиса
-                            </span>, а не просто красивые страницы
+                            </span>
+                            , а не просто красивые страницы
                         </h1>
 
-                        <p className="text-xl text-slate-400 mb-10 max-w-lg leading-relaxed">
-                            Telegram Mini App, AI-агенты, персональные CRM, браузерные расширения, MVP и AI-системы под реальную работу бизнеса.
-                            <span className="font-semibold text-slate-50"> От интерфейса заявки до внутреннего инструмента команды.</span>
+                        <p className="mb-10 max-w-2xl text-xl leading-relaxed text-slate-400">
+                            Telegram Mini App, AI-агенты, персональные CRM, браузерные расширения, MVP и AI-системы под
+                            реальную работу бизнеса.
+                            <span className="font-semibold text-slate-50">
+                                {" "}От интерфейса заявки до внутреннего инструмента команды.
+                            </span>
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-5">
+                        <div className="flex flex-col gap-5 sm:flex-row">
                             <motion.button
-                                whileHover={{ scale: 1.03, boxShadow: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)" }}
+                                whileHover={{
+                                    scale: 1.03,
+                                    boxShadow:
+                                        "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+                                }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="px-8 py-4 bg-[#0096D6] text-white rounded-2xl font-semibold text-lg shadow-lg shadow-[#0096D6]/30 flex items-center justify-center gap-2 transition-all"
+                                onClick={() => document.getElementById("form")?.scrollIntoView({ behavior: "smooth" })}
+                                className="flex items-center justify-center gap-2 rounded-2xl bg-[#0096D6] px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-[#0096D6]/30 transition-all"
                             >
                                 Получить план продукта
-                                <ArrowRight className="w-5 h-5" />
+                                <ArrowRight className="h-5 w-5" />
                             </motion.button>
 
                             <Link to="/projects">
                                 <motion.button
                                     whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="px-8 py-4 bg-transparent text-slate-300 border border-slate-700 rounded-2xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2 transition-all backdrop-blur-sm"
+                                    className="flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-transparent px-8 py-4 text-lg font-semibold text-slate-300 shadow-sm transition-all backdrop-blur-sm"
                                 >
-                                    <Play className="w-5 h-5 fill-current" />
+                                    <Play className="h-5 w-5 fill-current" />
                                     Наши проекты
                                 </motion.button>
                             </Link>
                         </div>
                     </motion.div>
 
-                    {/* Right Content - 3D Object Container */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
                         animate={{ opacity: 1, scale: 1, rotate: 0 }}
                         transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                        className="relative flex-1 flex items-center justify-center perspective-1000 h-[600px]"
+                        className="perspective-1000 relative flex h-[600px] flex-1 items-center justify-center"
                     >
-                        {/* 3D Card Content */}
                         <div ref={cardRef} className="hero-card">
-                            <div className="card-inner w-[320px] h-[520px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] rounded-[60px] shadow-2xl flex items-center justify-center relative overflow-hidden group transform transition-transform hover:scale-105 duration-500">
-                                {/* Glass effect overlay */}
-                                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm z-10" />
-                                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/30 to-transparent z-20" />
+                            <div className="group relative flex h-[520px] w-[320px] transform items-center justify-center overflow-hidden rounded-[60px] bg-gradient-to-br from-[#0096D6] to-[#44B78B] shadow-2xl transition-transform duration-500 hover:scale-105">
+                                <div className="absolute inset-0 z-10 bg-white/20 backdrop-blur-sm" />
+                                <div className="absolute inset-0 z-20 bg-gradient-to-tr from-transparent via-white/30 to-transparent" />
 
-                                {/* Content inside the placeholder */}
-                                <div className="relative z-30 text-white text-center p-8">
-                                    <Zap className="w-24 h-24 mx-auto mb-6 text-white drop-shadow-lg" />
-                                    <div className="text-4xl font-bold mb-2 drop-shadow-md">DIGITAL AI</div>
+                                <div className="relative z-30 p-8 text-center text-white">
+                                    <Zap className="mx-auto mb-6 h-24 w-24 text-white drop-shadow-lg" />
+                                    <div className="mb-2 text-4xl font-bold drop-shadow-md">DIGITAL AI</div>
                                     <p className="text-lg font-medium opacity-90">Интерфейсы, CRM и AI-системы</p>
                                 </div>
 
-                                {/* Shine effect */}
-                                <div className="absolute -top-[100%] -left-[100%] w-[200%] h-[200%] bg-gradient-to-br from-transparent via-white/40 to-transparent rotate-45 animate-shine pointer-events-none" />
+                                <div className="pointer-events-none absolute -left-[100%] -top-[100%] h-[200%] w-[200%] rotate-45 animate-shine bg-gradient-to-br from-transparent via-white/40 to-transparent" />
                             </div>
                         </div>
 
-                        {/* Floating Elements around the object */}
                         <motion.div
                             animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute top-32 -right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl z-30 border border-white/50"
+                            className="absolute -right-4 top-32 z-30 rounded-2xl border border-white/50 bg-white/90 p-4 shadow-xl backdrop-blur-md"
                         >
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-[#44B78B]">
-                                    <Zap className="w-6 h-6" />
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-[#44B78B]">
+                                    <Zap className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <div className="font-bold text-slate-800 text-lg">+127%</div>
+                                    <div className="text-lg font-bold text-slate-800">+127%</div>
                                     <div className="text-xs text-slate-500">Рост эффективности</div>
                                 </div>
                             </div>
@@ -189,21 +188,20 @@ export const Hero = () => {
                         <motion.div
                             animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
                             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                            className="absolute bottom-40 -left-8 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl z-30 border border-white/50"
+                            className="absolute -left-8 bottom-40 z-30 rounded-2xl border border-white/50 bg-white/90 p-4 shadow-xl backdrop-blur-md"
                         >
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-[#0096D6]">
-                                    <Zap className="w-6 h-6" />
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 text-[#0096D6]">
+                                    <Zap className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <div className="font-bold text-slate-800 text-lg">24/7</div>
+                                    <div className="text-lg font-bold text-slate-800">24/7</div>
                                     <div className="text-xs text-slate-500">Работает цифровой сервис</div>
                                 </div>
                             </div>
                         </motion.div>
 
-                        {/* Background Glow for the Object */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-[#0096D6]/20 to-[#44B78B]/20 rounded-full blur-[100px] -z-10" />
+                        <div className="absolute left-1/2 top-1/2 -z-10 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-[#0096D6]/20 to-[#44B78B]/20 blur-[100px]" />
                     </motion.div>
                 </div>
             </div>

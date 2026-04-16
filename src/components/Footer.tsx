@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Phone } from "lucide-react";
+import { MessengerLinks } from "./MessengerLinks";
 
 export const Footer = () => {
   return (
@@ -68,7 +69,8 @@ export const Footer = () => {
                 <Phone className="w-4 h-4 mr-2" />
                 8-905-824-85-64
               </a>
-              <div className="flex items-center space-x-3">
+              <MessengerLinks variant="footer" />
+              <div className="hidden">
                 <a
                   href="https://t.me/centrlp"
                   target="_blank"
@@ -92,7 +94,7 @@ export const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="https://vk.com/centrlp"
+                  href="https://vk.me/centrlp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 flex items-center justify-center rounded-full bg-[#0077FF] text-white hover:opacity-80 transition-opacity"

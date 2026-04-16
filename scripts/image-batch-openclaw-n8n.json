@@ -1,0 +1,12 @@
+[
+  {
+    "out": "public/og/services/openclaw-ai.png",
+    "skipIfExists": false,
+    "prompt": "Use case: stylized-concept. Asset type: website service hero and OG card. Primary request: create a premium modern isometric 3D illustration for a business service page about OpenClaw as a self-hosted AI agent for Telegram, CRM and internal business processes. Scene/backdrop: soft airy abstract workspace with subtle depth, no text. Subject: a glowing Telegram-like chat panel connected to a secure server rack, CRM dashboard cards, workflow nodes and an AI assistant core, showing business automation and controlled infrastructure. Style/medium: polished 3D isometric product illustration, clean editorial tech aesthetic, premium and calm, not chaotic. Composition/framing: wide 16:9 composition, strong central focal cluster, balanced negative space, suitable for landing page hero and social preview. Lighting/mood: soft studio lighting, luminous and trustworthy. Color palette: brand sky blue #0096D6, mint green #44B78B, white, pale cyan glass accents. Materials/textures: translucent glass UI cards, matte hardware, subtle glow lines, soft shadows. Constraints: no text, no logos, no watermark, no people, no clutter, no dark cyberpunk mood."
+  },
+  {
+    "out": "public/og/services/n8n-automation.png",
+    "skipIfExists": false,
+    "prompt": "Use case: stylized-concept. Asset type: website service hero and OG card. Primary request: create a premium modern isometric 3D illustration for a business service page about n8n automation connecting leads, CRM, Telegram, notifications and AI scenarios. Scene/backdrop: bright abstract operations control space with layered workflow depth, no text. Subject: interconnected workflow blocks, message events, CRM panels, trigger nodes, notification streams and a small AI decision hub, clearly communicating orchestration and automation between business systems. Style/medium: polished 3D isometric illustration, clean editorial product rendering, premium and structured, not abstract chaos. Composition/framing: wide 16:9 composition with a clear center and branching flows, suitable for landing page hero and social preview. Lighting/mood: soft clean light, confident and organized. Color palette: brand sky blue #0096D6, mint green #44B78B, white, subtle teal and cyan accents. Materials/textures: semi-transparent interface cards, smooth plastic and glass, gentle reflections, soft shadows. Constraints: no text, no watermark, no logos, no people, no messy wires, no purple palette, no dark background."
+  }
+]

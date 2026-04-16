@@ -1,0 +1,36 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="128" y1="88" x2="1070" y2="624" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0096D6" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#44B78B" stop-opacity="0.18"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="608" y1="170" x2="918" y2="456" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0096D6"/>
+      <stop offset="1" stop-color="#44B78B"/>
+    </linearGradient>
+    <filter id="shadow" x="160" y="96" width="880" height="528" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#0D2B3A" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="720" rx="40" fill="#F8FCFF"/>
+  <circle cx="1020" cy="128" r="138" fill="#0096D6" fill-opacity="0.08"/>
+  <circle cx="196" cy="610" r="176" fill="#44B78B" fill-opacity="0.10"/>
+  <g filter="url(#shadow)">
+    <rect x="210" y="146" width="780" height="428" rx="34" fill="url(#bg)"/>
+    <rect x="246" y="182" width="298" height="356" rx="28" fill="white" stroke="#D7EEF8"/>
+    <rect x="580" y="182" width="374" height="356" rx="28" fill="white" stroke="#D7EEF8"/>
+    <rect x="286" y="238" width="214" height="74" rx="26" fill="#EEF6FB"/>
+    <rect x="286" y="334" width="176" height="74" rx="26" fill="#EEF6FB"/>
+    <rect x="286" y="430" width="194" height="74" rx="26" fill="#0096D6" fill-opacity="0.12"/>
+    <rect x="624" y="226" width="286" height="92" rx="26" fill="url(#accent)"/>
+    <rect x="624" y="344" width="286" height="72" rx="24" fill="#EAF8F2"/>
+    <rect x="624" y="438" width="204" height="56" rx="20" fill="#E8F7FF"/>
+    <circle cx="770" cy="272" r="24" fill="white" fill-opacity="0.9"/>
+    <path d="M740 354H878" stroke="#44B78B" stroke-width="14" stroke-linecap="round"/>
+    <path d="M648 382H852" stroke="#C5EADF" stroke-width="14" stroke-linecap="round"/>
+    <path d="M648 466H792" stroke="#BEE8F4" stroke-width="14" stroke-linecap="round"/>
+    <path d="M544 274H580" stroke="#C3E7F6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M544 372H580" stroke="#C3E7F6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M544 468H580" stroke="#C3E7F6" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

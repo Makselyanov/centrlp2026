@@ -7,6 +7,19 @@ interface MarkdownRendererProps {
   className?: string;
 }
 
+type ListType = 'bullet' | 'numbered';
+
+type ListItemProps = React.LiHTMLAttributes<HTMLLIElement> & {
+  'data-list'?: ListType;
+  'data-index'?: number;
+};
+
+type CodeRendererProps = React.HTMLAttributes<HTMLElement> & {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+};
+
 /**
  * Editorial markdown renderer for blog posts.
  * Single coherent design language across every element — no clashing styles.
@@ -14,10 +27,10 @@ interface MarkdownRendererProps {
  */
 export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererProps) => {
   // Helper: Get text from node recursively
-  const getText = (node: any): string => {
+  const getText = (node: React.ReactNode): string => {
     if (typeof node === 'string') return node;
     if (Array.isArray(node)) return node.map(getText).join('');
-    if (node && typeof node === 'object' && 'props' in node && node.props.children) {
+    if (React.isValidElement<{ children?: React.ReactNode }>(node) && node.props.children) {
       return getText(node.props.children);
     }
     return '';
@@ -79,7 +92,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
             <ul className="my-6 space-y-2.5" {...props}>
               {React.Children.map(children, (child) =>
                 React.isValidElement(child)
-                  ? React.cloneElement(child as React.ReactElement<any>, { 'data-list': 'bullet' })
+                  ? React.cloneElement(child as React.ReactElement<ListItemProps>, { 'data-list': 'bullet' })
                   : child
               )}
             </ul>
@@ -92,7 +105,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
             return (
               <ol className="my-6 space-y-3" {...props}>
                 {items.map((child, i) =>
-                  React.cloneElement(child as React.ReactElement<any>, {
+                  React.cloneElement(child as React.ReactElement<ListItemProps>, {
                     'data-list': 'numbered',
                     'data-index': i + 1,
                   })
@@ -101,7 +114,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
             );
           },
 
-          li: ({ node, children, ...props }: any) => {
+          li: ({ node, children, ...props }: ListItemProps) => {
             const listType = props['data-list'];
             const index = props['data-index'];
             // Strip our custom props from rendered element
@@ -138,7 +151,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
           ),
 
           // ── Inline code ─────────────────────────────────────────────
-          code: ({ node, inline, className, ...props }: any) => {
+          code: ({ node, className, ...props }: CodeRendererProps) => {
             const isInline = !className?.includes('language-');
             return isInline ? (
               <code className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[0.92em] font-mono text-slate-900 border border-slate-200" {...props} />
@@ -148,7 +161,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
           },
 
           // ── Code blocks: ALWAYS editorial light (no dark terminal) ──
-          pre: ({ node, children, ...props }: any) => (
+          pre: ({ node, children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
             <div className="my-7 rounded-2xl border border-slate-200 bg-slate-50/70 shadow-sm">
               <pre className="overflow-x-auto bg-transparent p-5 text-[15px] leading-[1.75] text-slate-800 whitespace-pre-wrap break-words font-mono" {...props}>
                 {children}

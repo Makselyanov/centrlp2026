@@ -13,6 +13,71 @@ const AI = () => {
     { text: "Воронки", top: "10%", left: "50%", delay: 0.5 },
   ];
 
+  const serviceCards = [
+    {
+      icon: MessageSquare,
+      title: "Автоответы 24/7 и help-боты",
+      image: "/images/ai/ai-autoanswers-messenger.svg",
+      imageAlt: "AI-автоответы для сайта и мессенджеров",
+      text: "ИИ-ассистент, который работает круглосуточно: отвечает на вопросы, собирает заявки, консультирует по товарам и услугам. Клиент получает ответ мгновенно, даже когда вы спите.",
+      mode: "examples" as const,
+      examples: [
+        { title: "Для мебельной мастерской:", text: "«Сколько стоит кухня 3 на 4 метра?» → Бот задаёт уточняющие вопросы по материалам, фурнитуре и даёт примерный расчёт за 2 минуты." },
+        { title: "Для СТО:", text: "«Сколько стоит полировка фар?» → Бот уточняет марку авто, тип фар, предлагает удобное время записи." },
+        { title: "Для клининга:", text: "«Хочу заказать уборку двушки» → Бот запрашивает площадь, тип уборки, считает стоимость и записывает клиента." }
+      ]
+    },
+    {
+      icon: Brain,
+      title: "ИИ-скрипты продаж",
+      image: "/images/ai/ai-sales-assistant.svg",
+      imageAlt: "AI-ассистент для менеджера по продажам",
+      text: "Умный ассистент для вашего менеджера или мастера. Подсказывает правильные ответы на возражения, напоминает о допродажах, помогает довести клиента до сделки.",
+      mode: "bullets" as const,
+      bullets: [
+        "Анализирует вопрос клиента и предлагает готовый ответ",
+        "Подсказывает, как закрыть возражение «дорого» или «подумаю»",
+        "Напоминает о допродажах и комплексных пакетах",
+        "Помогает новичкам продавать как опытным менеджерам"
+      ],
+      note: "Клиент говорит «дорого». ИИ мгновенно подсказывает менеджеру: «Предложите рассрочку 0-0-6 или акцию на комплексный пакет со скидкой 15%».",
+      noteTone: "primary"
+    },
+    {
+      icon: FileText,
+      title: "Генерация текстов и A/B-вариантов",
+      image: "/images/ai/ai-content-ab-lab.svg",
+      imageAlt: "AI-генерация маркетинговых текстов и A/B-тестов",
+      text: "ИИ создаёт тексты для объявлений, постов, страниц сайта. Генерирует 5–10 вариантов заголовков и офферов, которые можно сразу тестировать в рекламе.",
+      mode: "chips" as const,
+      chips: [
+        "Заголовки для рекламы",
+        "Тексты для постов",
+        "Описания товаров",
+        "Адаптация под сегменты"
+      ],
+      note: "Все тексты проходят модерацию специалиста, чтобы соответствовать требованиям рекламного законодательства и звучать естественно для вашей ниши.",
+      noteTone: "warning"
+    },
+    {
+      icon: TrendingUp,
+      title: "A/B-тесты на основе ИИ",
+      image: "/images/ai/ai-content-ab-lab.svg",
+      imageAlt: "AI-лаборатория тестирования рекламных гипотез",
+      text: "ИИ генерирует несколько вариантов ключевых блоков сайта или объявлений, запускает их в тест и автоматически отключает слабые варианты. Вы получаете проверенные рабочие связки.",
+      mode: "steps" as const,
+      steps: [
+        "ИИ создаёт 3–5 вариантов заголовка или оффера",
+        "Запускаем их одновременно в рекламе",
+        "Через 3–7 дней анализируем данные Метрики",
+        "Отключаем варианты с высоким CPL",
+        "Масштабируем лучший вариант"
+      ],
+      note: "Снижение стоимости заявки на 20–40% за счёт постоянного тестирования и отключения неэффективных вариантов.",
+      noteTone: "success"
+    }
+  ];
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
@@ -125,6 +190,24 @@ const AI = () => {
               <CheckCircle className="w-4 h-4 text-green-500" />
               <span>Работаем с реальными проектами: сайты, реклама, аналитика</span>
             </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-12 md:mt-16"
+            >
+              <div className="relative overflow-hidden rounded-[28px] border border-primary/10 bg-white/70 p-3 shadow-2xl shadow-primary/10 backdrop-blur-sm">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0096D6]/8 via-transparent to-[#44B78B]/8" />
+                <img
+                  src="/images/ai/ai-hero-command-center.svg"
+                  alt="AI-командный центр для продаж, аналитики и автоматизации"
+                  className="relative z-10 w-full rounded-[22px] border border-white/70"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -189,182 +272,114 @@ const AI = () => {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="p-8 shadow-card bg-card h-full border-primary/10 hover:border-primary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-primary/10 rounded-xl">
-                    <MessageSquare className="w-8 h-8 text-primary" />
+            {serviceCards.map((card, i) => (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card className="overflow-hidden shadow-card bg-card h-full border-primary/10 hover:border-primary/30 transition-colors">
+                  <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10">
+                    <img
+                      src={card.image}
+                      alt={card.imageAlt}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
-                  <h3 className="text-2xl font-bold">Автоответы 24/7 и help-боты</h3>
-                </div>
-                <p className="text-muted-foreground mb-8 text-lg">
-                  ИИ-ассистент, который работает круглосуточно: отвечает на вопросы, собирает заявки,
-                  консультирует по товарам и услугам. Клиент получает ответ мгновенно, даже когда вы
-                  спите.
-                </p>
-                <div className="space-y-4">
-                  {[
-                    { title: "Для мебельной мастерской:", text: "«Сколько стоит кухня 3 на 4 метра?» → Бот задаёт уточняющие вопросы по материалам, фурнитуре и даёт примерный расчёт за 2 минуты." },
-                    { title: "Для СТО:", text: "«Сколько стоит полировка фар?» → Бот уточняет марку авто, тип фар, предлагает удобное время записи." },
-                    { title: "Для клининга:", text: "«Хочу заказать уборку двушки» → Бот запрашивает площадь, тип уборки, считает стоимость и записывает клиента." }
-                  ].map((example, i) => (
-                    <div key={i} className="bg-muted/30 rounded-xl p-4 border border-border/50">
-                      <p className="font-semibold mb-2 text-primary">{example.title}</p>
-                      <p className="text-sm text-muted-foreground">{example.text}</p>
+                  <div className="p-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="p-3 bg-primary/10 rounded-xl">
+                        <card.icon className="w-8 h-8 text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-bold">{card.title}</h3>
                     </div>
-                  ))}
-                </div>
-              </Card>
-            </motion.div>
+                    <p className="text-muted-foreground mb-8 text-lg">{card.text}</p>
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="p-8 shadow-card bg-card h-full border-primary/10 hover:border-primary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-primary/10 rounded-xl">
-                    <Brain className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold">ИИ-скрипты продаж</h3>
-                </div>
-                <p className="text-muted-foreground mb-8 text-lg">
-                  Умный ассистент для вашего менеджера или мастера. Подсказывает правильные ответы на
-                  возражения, напоминает о допродажах, помогает довести клиента до сделки.
-                </p>
-                <div className="space-y-6">
-                  <div>
-                    <p className="font-semibold mb-4 flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-yellow-500" />
-                      Что делает ИИ-ассистент:
-                    </p>
-                    <ul className="space-y-3 text-sm text-muted-foreground">
-                      {[
-                        "Анализирует вопрос клиента и предлагает готовый ответ",
-                        "Подсказывает, как закрыть возражение «дорого» или «подумаю»",
-                        "Напоминает о допродажах и комплексных пакетах",
-                        "Помогает новичкам продавать как опытным менеджерам"
-                      ].map((item, i) => (
-                        <li key={i} className="flex items-start bg-background p-3 rounded-lg border shadow-sm">
-                          <CheckCircle className="w-4 h-4 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="bg-primary/5 rounded-xl p-5 border border-primary/10">
-                    <p className="font-semibold mb-2 text-primary">Пример работы:</p>
-                    <p className="text-sm text-muted-foreground italic">
-                      "Клиент говорит «дорого». ИИ мгновенно подсказывает менеджеру: «Предложите
-                      рассрочку 0-0-6 или акцию на комплексный пакет со скидкой 15%»."
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
+                    {card.mode === "examples" && (
+                      <div className="space-y-4">
+                        {card.examples.map((example, idx) => (
+                          <div key={idx} className="bg-muted/30 rounded-xl p-4 border border-border/50">
+                            <p className="font-semibold mb-2 text-primary">{example.title}</p>
+                            <p className="text-sm text-muted-foreground">{example.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="p-8 shadow-card bg-card h-full border-primary/10 hover:border-primary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-primary/10 rounded-xl">
-                    <FileText className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold">Генерация текстов и A/B-вариантов</h3>
-                </div>
-                <p className="text-muted-foreground mb-8 text-lg">
-                  ИИ создаёт тексты для объявлений, постов, страниц сайта. Генерирует 5–10 вариантов
-                  заголовков и офферов, которые можно сразу тестировать в рекламе.
-                </p>
-                <div className="space-y-6">
-                  <div>
-                    <p className="font-semibold mb-4">Что генерирует ИИ:</p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {[
-                        "Заголовки для рекламы",
-                        "Тексты для постов",
-                        "Описания товаров",
-                        "Адаптация под сегменты"
-                      ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-2 bg-muted/30 p-3 rounded-lg text-sm">
-                          <Zap className="w-4 h-4 text-primary" />
-                          <span>{item}</span>
+                    {card.mode === "bullets" && (
+                      <div className="space-y-6">
+                        <div>
+                          <p className="font-semibold mb-4 flex items-center gap-2">
+                            <Zap className="w-4 h-4 text-yellow-500" />
+                            Что делает ИИ-ассистент:
+                          </p>
+                          <ul className="space-y-3 text-sm text-muted-foreground">
+                            {card.bullets.map((item, idx) => (
+                              <li key={idx} className="flex items-start bg-background p-3 rounded-lg border shadow-sm">
+                                <CheckCircle className="w-4 h-4 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/20">
-                    <p className="font-semibold mb-2 text-yellow-600 flex items-center gap-2">
-                      <Shield className="w-4 h-4" /> Важно:
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Все тексты проходят модерацию специалиста, чтобы соответствовать требованиям
-                      рекламного законодательства и звучать естественно для вашей ниши.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
+                        <div className="bg-primary/5 rounded-xl p-5 border border-primary/10">
+                          <p className="font-semibold mb-2 text-primary">Пример работы:</p>
+                          <p className="text-sm text-muted-foreground italic">"{card.note}"</p>
+                        </div>
+                      </div>
+                    )}
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card className="p-8 shadow-card bg-card h-full border-primary/10 hover:border-primary/30 transition-colors">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-primary/10 rounded-xl">
-                    <TrendingUp className="w-8 h-8 text-primary" />
+                    {card.mode === "chips" && (
+                      <div className="space-y-6">
+                        <div>
+                          <p className="font-semibold mb-4">Что генерирует ИИ:</p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {card.chips.map((item, idx) => (
+                              <div key={idx} className="flex items-center gap-2 bg-muted/30 p-3 rounded-lg text-sm">
+                                <Zap className="w-4 h-4 text-primary" />
+                                <span>{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="bg-yellow-500/10 rounded-xl p-4 border border-yellow-500/20">
+                          <p className="font-semibold mb-2 text-yellow-600 flex items-center gap-2">
+                            <Shield className="w-4 h-4" /> Важно:
+                          </p>
+                          <p className="text-sm text-muted-foreground">{card.note}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    {card.mode === "steps" && (
+                      <div className="space-y-6">
+                        <div className="bg-background rounded-xl p-6 shadow-inner border">
+                          <p className="font-semibold mb-4">Алгоритм работы:</p>
+                          <ol className="space-y-3 text-sm text-muted-foreground">
+                            {card.steps.map((step, idx) => (
+                              <li key={idx} className="flex gap-3">
+                                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">
+                                  {idx + 1}
+                                </span>
+                                <span>{step}</span>
+                              </li>
+                            ))}
+                          </ol>
+                        </div>
+                        <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/20">
+                          <p className="font-semibold mb-2 text-green-600">Результат:</p>
+                          <p className="text-sm text-muted-foreground">{card.note}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <h3 className="text-2xl font-bold">A/B-тесты на основе ИИ</h3>
-                </div>
-                <p className="text-muted-foreground mb-8 text-lg">
-                  ИИ генерирует несколько вариантов ключевых блоков сайта или объявлений, запускает
-                  их в тест и автоматически отключает слабые варианты. Вы получаете проверенные
-                  рабочие связки.
-                </p>
-                <div className="space-y-6">
-                  <div className="bg-background rounded-xl p-6 shadow-inner border">
-                    <p className="font-semibold mb-4">Алгоритм работы:</p>
-                    <ol className="space-y-3 text-sm text-muted-foreground">
-                      {[
-                        "ИИ создаёт 3–5 вариантов заголовка или оффера",
-                        "Запускаем их одновременно в рекламе",
-                        "Через 3–7 дней анализируем данные Метрики",
-                        "Отключаем варианты с высоким CPL",
-                        "Масштабируем лучший вариант"
-                      ].map((step, i) => (
-                        <li key={i} className="flex gap-3">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">
-                            {i + 1}
-                          </span>
-                          <span>{step}</span>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                  <div className="bg-green-500/10 rounded-xl p-4 border border-green-500/20">
-                    <p className="font-semibold mb-2 text-green-600">Результат:</p>
-                    <p className="text-sm text-muted-foreground">
-                      Снижение стоимости заявки на 20–40% за счёт постоянного тестирования и
-                      отключения неэффективных вариантов.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </motion.div>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -378,6 +393,24 @@ const AI = () => {
               Создаём базу знаний, которая обучает бота отвечать на вопросы клиентов так, как
               ответили бы вы
             </p>
+          </motion.div>
+
+          <motion.div
+            className="max-w-5xl mx-auto mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="relative overflow-hidden rounded-[28px] border border-primary/10 bg-white p-3 shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0096D6]/8 via-transparent to-[#44B78B]/8" />
+              <img
+                src="/images/ai/ai-knowledge-compliance.svg"
+                alt="База знаний, защита данных и комплаенс для AI-бота"
+                className="relative z-10 w-full rounded-[22px] border border-white/70"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">

@@ -1,5 +1,11 @@
 # CentrLP.ru
 
+## AI Context
+
+- Shared handoff for Claude/Codex: `plans/AI_HANDOFF.md`
+- This file is not updated automatically from chat history.
+- After major project changes, update `plans/AI_HANDOFF.md` in the same commit.
+
 Основной маркетинговый сайт `centrlp.ru`.
 
 По состоянию на `2026-03-26` этот проект был восстановлен локально из живого server working tree, потому что в `G:\mvp` локальной копии не было.
@@ -56,12 +62,12 @@ npm run preview
 
 ## Текущее состояние, которое важно знать
 
-- Локальный `origin` у этого проекта сейчас указывает на `git@github.com:Makselyanov/centrlp2026.git`.
-- Это означает, что `centrlp.ru` сейчас не соответствует цели "всё деплоится через личный git на сервере".
-- На сервере в `/var/www/centrlp` лежит рабочее дерево с большим количеством незакоммиченных изменений.
-- В `.github/workflows/static.yml` есть workflow под GitHub Pages, но продакшн фактически раздаётся через nginx с сервера `90.156.168.115`.
+- Основной `origin` у проекта уже указывает на личный git на сервере: `ssh://root@90.156.168.115/home/deploy/git/centrlp.git`.
+- GitHub оставлен как дополнительный remote `github`, но не является основным продакшн-источником.
+- Продакшн продолжает раздаваться через nginx с сервера `90.156.168.115` из `/var/www/centrlp/dist`.
+- В `.github/workflows/static.yml` до сих пор лежит старый workflow под GitHub Pages, и он уже не отражает основную схему публикации.
 
-Иными словами: текущая схема публикации у основного сайта смешанная и требует приведения к одному источнику правды.
+Иными словами: основная git-схема уже переведена на личный серверный remote, но документацию и остатки старой GitHub Pages-схемы ещё нужно держать в актуальном состоянии.
 
 ## Документация
 

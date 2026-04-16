@@ -126,6 +126,11 @@ export default function TelegramMiniApp() {
           text: "Если хотите, чтобы часть заявок и клиентских вопросов обрабатывалась автоматически.",
           href: "/services/ai-agents",
         },
+        {
+          title: "Telegram AI-консультант",
+          text: "Если внутри Telegram нужен не только интерфейс, но и сервисный консультант для записи, FAQ, напоминаний и сопровождения клиента.",
+          href: "/services/telegram-service-agent",
+        },
       ]}
       faqItems={[
         {

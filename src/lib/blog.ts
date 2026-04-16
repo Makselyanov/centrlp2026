@@ -1,4 +1,3 @@
-// @ts-ignore
 import matter from 'gray-matter';
 
 export interface BlogPost {
@@ -10,8 +9,18 @@ export interface BlogPost {
     tags?: string[];
     source?: string;
     readTime?: number;
-    [key: string]: any;
+    [key: string]: unknown;
 }
+
+type BlogFrontmatter = {
+    slug?: string;
+    title?: string;
+    date?: string;
+    description?: string;
+    tags?: string[] | string;
+    source?: string;
+    [key: string]: unknown;
+};
 
 // Импортируем все md файлы
 const globModules = import.meta.glob<string>('/content/posts/*.md', {
@@ -36,7 +45,7 @@ const parseMarkdown = (filePath: string, content: string): BlogPost | null => {
     try {
         const fileName = filePath.split('/').pop()?.replace('.md', '') || '';
         
-        let frontmatter: any = {};
+        let frontmatter: BlogFrontmatter = {};
         let markdownContent = content;
         
         // Пробуем распарсить как YAML frontmatter (---...---)

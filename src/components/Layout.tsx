@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { trackMetric } from "@/lib/metrics";
 
 // OG image mapping: exact pathname → image filename (relative to /og/).
 // For /blog/<slug> and /services/<slug> we point to per-item generated covers.
@@ -14,6 +15,8 @@ const ogImageMap: Record<string, string> = {
   "/contacts": "contacts.png",
   "/blog": "blog.png",
   "/ai": "ai.png",
+  "/ai-turagent": "ai-turagent.png",
+  "/metcoin": "metcoin.png",
   "/barter": "barter.png",
   "/cases": "cases.png",
   "/business-plans": "business-plans.png",
@@ -161,6 +164,24 @@ export const Layout = ({ children, title, description }: LayoutProps) => {
     }
     twitterUrl.setAttribute('content', canonicalUrl);
   }, [title, description, location.pathname]);
+
+  useEffect(() => {
+    const handleMetricClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      const metricTarget = target?.closest<HTMLElement>("[data-metric]");
+      const metricName = metricTarget?.dataset.metric;
+
+      if (!metricName) return;
+
+      trackMetric(metricName, {
+        path: location.pathname,
+        text: metricTarget.textContent?.trim().slice(0, 120),
+      });
+    };
+
+    document.addEventListener("click", handleMetricClick);
+    return () => document.removeEventListener("click", handleMetricClick);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col">

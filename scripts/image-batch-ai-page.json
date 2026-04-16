@@ -1,0 +1,27 @@
+[
+  {
+    "out": "public/images/ai/ai-hero-command-center.png",
+    "skipIfExists": false,
+    "prompt": "Modern minimalist 3D isometric illustration for a premium business website. A compact AI command center for marketing and sales: floating dashboard screens with chat inbox, analytics chart, lead funnel, document card and automation flow connected around a central glowing AI core. Informative, product-like, not abstract. Clean premium render, soft depth, subtle glass panels, realistic interface hints, no text, no logos, no watermark. Soft pastel gradient background blending sky blue #0096D6 into mint green #44B78B. Wide 16:9 composition."
+  },
+  {
+    "out": "public/images/ai/ai-autoanswers-messenger.png",
+    "skipIfExists": false,
+    "prompt": "Modern minimalist 3D isometric illustration for a premium business website. A messenger-style AI auto-response scene: client messages entering from website, Telegram and WhatsApp into one smart assistant panel, with quick replies, lead qualification chips, schedule picker and order summary. Informative business automation visual, product-focused, not abstract. Clean premium render, soft shadows, subtle glass UI, no text, no logos, no watermark. Soft pastel gradient background blending sky blue #0096D6 into mint green #44B78B. Wide 16:9 composition."
+  },
+  {
+    "out": "public/images/ai/ai-sales-assistant.png",
+    "skipIfExists": false,
+    "prompt": "Modern minimalist 3D isometric illustration for a premium business website. An AI sales assistant helping a manager during a live conversation: one panel with customer objection, second panel with AI suggestion cards, upsell recommendation, discount option and follow-up reminder. Must feel like a practical sales tool for business teams, informative and concrete, not abstract. Clean premium render, subtle glassmorphism, no text, no logos, no watermark. Soft pastel gradient background blending sky blue #0096D6 into mint green #44B78B. Wide 16:9 composition."
+  },
+  {
+    "out": "public/images/ai/ai-content-ab-lab.png",
+    "skipIfExists": false,
+    "prompt": "Modern minimalist 3D isometric illustration for a premium business website. An AI content and A/B testing lab: several ad cards and landing headline variants on one side, charts with winner selection on the other, with arrows showing testing and optimization. Informative visual about generating marketing texts and improving conversion, concrete and business-oriented, not abstract. Clean premium render, soft gradients, glass panels, no text, no logos, no watermark. Soft pastel gradient background blending sky blue #0096D6 into mint green #44B78B. Wide 16:9 composition."
+  },
+  {
+    "out": "public/images/ai/ai-knowledge-compliance.png",
+    "skipIfExists": false,
+    "prompt": "Modern minimalist 3D isometric illustration for a premium business website. AI knowledge base and compliance scene: layered document cards, FAQ blocks, secure database cylinder, shield icon, consent checkbox panel and routed escalation to human operator. Must feel like reliable business infrastructure, informative and concrete, not abstract. Clean premium render, soft depth, premium UI surfaces, no text, no logos, no watermark. Soft pastel gradient background blending sky blue #0096D6 into mint green #44B78B. Wide 16:9 composition."
+  }
+]

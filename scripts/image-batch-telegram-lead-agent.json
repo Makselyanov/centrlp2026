@@ -1,0 +1,7 @@
+[
+  {
+    "out": "public/og/services/telegram-lead-agent.png",
+    "skipIfExists": false,
+    "prompt": "Use case: stylized-concept. Asset type: website service hero and OG card. Primary request: create a premium modern isometric 3D illustration for a business service page about a Telegram AI lead agent that answers clients, qualifies leads, writes to CRM and triggers workflows. Scene/backdrop: bright editorial tech environment with calm depth, no text. Subject: a glowing Telegram-style chat interface connected to CRM cards, lead qualification chips, workflow paths, notification streams and a compact AI core, clearly showing sales automation and client intake. Style/medium: polished 3D isometric product illustration, clean premium business-tech aesthetic, structured and trustworthy, not chaotic. Composition/framing: wide 16:9 composition with one strong focal cluster and balanced negative space, suitable for landing page hero and social preview. Lighting/mood: soft studio light, airy and confident. Color palette: brand sky blue #0096D6, mint green #44B78B, white, pale cyan glass accents. Materials/textures: translucent UI cards, soft glass, gentle reflections, soft shadows, subtle glow lines. Constraints: no text, no watermark, no logos, no people, no dark cyberpunk mood, no purple palette."
+  }
+]

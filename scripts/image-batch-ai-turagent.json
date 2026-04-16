@@ -1,0 +1,32 @@
+[
+  {
+    "out": "public/images/verticals/ai-turagent-first-contact.png",
+    "skipIfExists": false,
+    "prompt": "Premium product-render illustration for CentrLP. One consistent visual language for a travel agency AI concierge page: elegant semi-realistic 3D product scene, matte smartphone, soft glass UI cards, precise service interface details, soft studio shadows, airy background gradient from #0096D6 to #44B78B. Scene 1: first contact and qualification. Show a client messaging from ads or website chat, AI concierge collecting destination, dates, budget and travelers, with a small manager handoff card in the composition. Use icon-only interface elements and empty UI placeholders. Absolutely no readable words, no letters, no numbers, no logos, no watermark, no abstract shapes as main subject, wide 16:10."
+  },
+  {
+    "out": "public/images/verticals/ai-turagent-docs.png",
+    "skipIfExists": false,
+    "prompt": "Premium product-render illustration for CentrLP in the exact same visual language: elegant semi-realistic 3D, matte smartphone, soft glass UI cards, white studio scene with atmospheric gradient in #0096D6 and #44B78B. Scene 2: pre-trip documents and reminders. Show voucher, insurance policy, passport/visa checklist, airport reminder, online check-in notification and a calm messenger thread around one central device. Informative, commercial, polished. Use icon-only cards and blank UI placeholders. Absolutely no readable words, no letters, no numbers, no logos, no watermark, wide 16:10."
+  },
+  {
+    "out": "public/images/verticals/ai-turagent-upsell.png",
+    "skipIfExists": false,
+    "prompt": "Premium product-render illustration for CentrLP in the same visual language as the other scenes: elegant semi-realistic 3D, central smartphone, soft glass cards, white studio background with blue-to-mint gradient ambience. Scene 3: natural upsell during service. Show insurance, transfer, excursions, extra baggage and early check-in as clear product cards inside a messenger flow, with payment confirmation and subtle trust signals. Practical and informative, not abstract. Use icon-only cards and blank UI placeholders. Absolutely no readable words, no letters, no numbers, no logos, no watermark, wide 16:10."
+  },
+  {
+    "out": "public/images/verticals/ai-turagent-control.png",
+    "skipIfExists": false,
+    "prompt": "Premium product-render illustration for CentrLP in the same visual language: elegant semi-realistic 3D SaaS composition, clean dashboard panels, soft glass cards, matte screens, white studio background with subtle #0096D6 and #44B78B gradients. Scene 4: manager control center. Show CRM-style dashboard with traveler cards, statuses, reminders, unread chats, task queue and automation checkpoints, all practical and trustworthy. Use icon-only interface cues and blank UI placeholders. Absolutely no readable words, no letters, no numbers, no logos, no watermark, wide 16:10."
+  },
+  {
+    "out": "public/images/verticals/ai-turagent-return.png",
+    "skipIfExists": false,
+    "prompt": "Premium product-render illustration for CentrLP in the same visual language as the full set: elegant semi-realistic 3D, central smartphone, soft glass interface cards, studio-white environment with airy gradient accents #0096D6 and #44B78B. Scene 5: return, review and repeat sale. Show post-trip follow-up, review request, loyalty offer, next destination suggestion and returning-customer profile in a clear service workflow. Informative, premium, not abstract. Use icon-only cards and blank UI placeholders. Absolutely no readable words, no letters, no numbers, no logos, no watermark, wide 16:10."
+  },
+  {
+    "out": "public/og/ai-turagent.png",
+    "skipIfExists": false,
+    "prompt": "Open Graph hero image for CentrLP in the same premium visual language as the page illustrations: semi-realistic 3D product render, central smartphone, travel agency AI concierge, glass UI cards, voucher, insurance, reminders, upsell cards and CRM control elements arranged as one coherent composition. White studio background with soft brand gradients #0096D6 and #44B78B, strong focal center, commercial and trustworthy. Use icon-only elements and empty UI placeholders. Absolutely no readable words, no letters, no numbers, no logos, no watermark, wide 1200x630 composition."
+  }
+]

@@ -9,16 +9,21 @@ import {
   BriefcaseBusiness,
   Chrome,
   Compass,
+  Globe,
   Layers3,
+  Languages,
   LineChart,
   MessageSquare,
+  PhoneCall,
   Rocket,
   ScanSearch,
+  ShieldCheck,
   Sparkles,
   Target,
   Workflow,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { trackMetric } from "@/lib/metrics";
 
 const primaryProducts = [
   {
@@ -223,6 +228,24 @@ const processSteps = [
   },
 ];
 
+const complianceFocus = [
+  {
+    title: "Домен и регистратор",
+    text: "Проверяем, где живёт домен, кто администратор и что лучше заранее привести в порядок, чтобы рабочий сайт не зависел от хаоса в доступах и продлении.",
+    icon: Globe,
+  },
+  {
+    title: "Персональные данные и формы",
+    text: "Смотрим, как сайт, формы, CRM, аналитика и мессенджеры собирают данные клиента, и помогаем привести этот маршрут к более чистой и понятной схеме.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Публичные тексты и интерфейсы",
+    text: "Проверяем страницы услуг, кнопки, карточки, заголовки и публичные формулировки, чтобы сайт оставался сильным и аккуратным по смыслу и подаче.",
+    icon: Languages,
+  },
+];
+
 const Index = () => {
   return (
     <Layout
@@ -341,6 +364,39 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center mb-14">
+            <div className="mb-4 inline-flex items-center rounded-full border border-[#0096D6]/15 bg-gradient-to-r from-[#0096D6]/[0.07] to-[#44B78B]/[0.07] px-4 py-2 text-sm font-semibold text-[#0096D6]">
+              Следим за новыми требованиями и помогаем внедрять правки в сайт
+            </div>
+            <h2 className="mb-4">CentrLP помогает не только запускать digital-продукты, но и вовремя приводить сайт и процессы в порядок</h2>
+            <p className="text-xl text-muted-foreground">
+              Это наш дополнительный сильный оффер: проверяем домен, формы, персональные данные,
+              публичные тексты и цифровой маршрут заявки, а затем помогаем быстро внести нужные изменения.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {complianceFocus.map((item) => (
+              <Card key={item.title} className="p-7 shadow-card h-full flex flex-col">
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-5">
+                  <item.icon className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                <p className="text-muted-foreground flex-1">{item.text}</p>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Button size="lg" asChild>
+              <Link to="/services/compliance-2026">Открыть услугу Compliance 2026</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 gradient-hero">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -422,10 +478,47 @@ const Index = () => {
       <section id="form" className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="mb-4">Нужен продукт, который реально работает на продажи и процессы?</h2>
+            <div className="mb-4 inline-flex items-center rounded-full border border-[#0096D6]/15 bg-gradient-to-r from-[#0096D6]/[0.07] to-[#44B78B]/[0.07] px-4 py-2 text-sm font-semibold text-[#0096D6]">
+              Быстрый разбор проекта
+            </div>
+            <h2 className="mb-4">Нужны заявки и понятный цифровой сценарий уже сейчас?</h2>
             <p className="text-xl text-muted-foreground">
-              Расскажите задачу. Предложим, что лучше подойдёт: сайт, Mini App, CRM, AI-агент, browser extension, MVP или связка нескольких решений.
+              Оставьте контакт, и мы предложим 2-3 рабочих варианта под вашу задачу:
+              Telegram, AI, CRM, сайт, реклама или связку из них.
             </p>
+          </div>
+          <div className="mb-8 flex flex-wrap justify-center gap-3">
+            <span className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 shadow-sm">
+              Ответ обычно в течение 15 минут
+            </span>
+            <span className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 shadow-sm">
+              Подскажем самый короткий путь к заявкам
+            </span>
+            <span className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 shadow-sm">
+              Без длинных презентаций и абстракции
+            </span>
+          </div>
+          <div className="mb-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a
+              href="https://t.me/centrlp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#0096D6]/15 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:border-[#0096D6]/40 hover:text-[#0096D6]"
+              data-metric="messenger-click"
+              onClick={() => trackMetric("messenger_click_fastlane", { placement: "home_form", messenger: "telegram" })}
+            >
+              <MessageSquare className="h-4 w-4" />
+              Написать в Telegram
+            </a>
+            <a
+              href="tel:+79058248564"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#44B78B]/20 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:border-[#44B78B]/40 hover:text-[#44B78B]"
+              data-metric="phone-click"
+              onClick={() => trackMetric("phone_click_fastlane", { placement: "home_form" })}
+            >
+              <PhoneCall className="h-4 w-4" />
+              Позвонить сейчас
+            </a>
           </div>
           <div className="max-w-2xl mx-auto">
             <ContactForm />
