@@ -67,7 +67,7 @@ export const Header = () => {
         }`}
     >
       <div className="container mx-auto px-4">
-        <div className="grid h-20 grid-cols-[minmax(180px,220px),minmax(0,1fr),auto] items-center gap-x-6 xl:gap-x-8">
+        <div className="grid h-20 grid-cols-[minmax(144px,176px),minmax(0,1fr),auto] items-center gap-x-4 xl:gap-x-6">
           {/* Logo */}
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
@@ -77,7 +77,7 @@ export const Header = () => {
             />
             <div className="min-w-0">
               <div className="text-base font-bold leading-none text-foreground">CentrLP</div>
-              <div className="mt-1 truncate text-[11px] font-medium uppercase tracking-[0.18em] text-primary/80">
+              <div className="mt-1 hidden 2xl:block truncate text-[11px] font-medium uppercase tracking-[0.18em] text-primary/80">
                 Digital Products
               </div>
             </div>
@@ -85,7 +85,7 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex justify-center">
-            <div className="flex items-center gap-3 xl:gap-4 whitespace-nowrap">
+            <div className="flex items-center gap-2.5 xl:gap-3 whitespace-nowrap">
               {/* Services Dropdown */}
               <div
                 className="relative shrink-0"
@@ -94,7 +94,7 @@ export const Header = () => {
               >
                 <Link
                   to="/services"
-                  className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
+                  className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
                 >
                   Услуги
                   <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
@@ -146,13 +146,13 @@ export const Header = () => {
 
               <Link
                 to="/ai"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 ИИ-внедрение
               </Link>
               <Link
                 to="/business-plans"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 Бизнес-планы и расчёты
               </Link>
@@ -165,7 +165,7 @@ export const Header = () => {
               >
                 <Link
                   to="/barter"
-                  className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
+                  className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors flex items-center gap-1 whitespace-nowrap"
                 >
                   Бартер
                   <ChevronDown className={`w-4 h-4 transition-transform ${isBarterOpen ? 'rotate-180' : ''}`} />
@@ -206,31 +206,31 @@ export const Header = () => {
 
               <Link
                 to="/blog"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 Инсайты
               </Link>
               <Link
                 to="/projects"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 Проекты
               </Link>
               <Link
                 to="/prices"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 Цены
               </Link>
               <Link
                 to="/about"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 О нас
               </Link>
               <Link
                 to="/contacts"
-                className="text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+                className="text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               >
                 Контакты
               </Link>
@@ -238,18 +238,18 @@ export const Header = () => {
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden lg:flex items-center gap-3 xl:gap-4 whitespace-nowrap shrink-0">
+          <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 whitespace-nowrap shrink-0">
             <MessengerLinks variant="header" className="pr-1" />
             <a
               href="tel:+79058248564"
-              className="inline-flex items-center gap-2 text-[13px] xl:text-sm font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="inline-flex items-center gap-1.5 text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               data-metric="phone-click"
             >
               <Phone className="w-4 h-4" />
               8&#8209;905&#8209;824&#8209;85&#8209;64
             </a>
             <a href="#form">
-              <Button className="animate-gentle-pulse shadow-button px-5">Оставить заявку</Button>
+              <Button className="animate-gentle-pulse px-4 text-xs xl:text-sm shadow-button">Оставить заявку</Button>
             </a>
           </div>
 

@@ -16,7 +16,7 @@ interface MessengerLinksProps {
   onMessengerClick?: (messenger: Messenger) => void;
 }
 
-const maxLogo = "/assets/messengers/max-logo.svg";
+const maxMark = "/assets/messengers/max-mark.svg";
 
 const links: Array<{
   messenger: Messenger;
@@ -32,9 +32,9 @@ const links: Array<{
     className: "bg-[#0A84FF] text-white hover:bg-[#006CE0]",
     icon: (
       <img
-        src={maxLogo}
+        src={maxMark}
         alt=""
-        className="h-3.5 w-auto brightness-0 invert"
+        className="h-4 w-4 brightness-0 invert"
         loading="lazy"
         decoding="async"
       />
@@ -114,7 +114,7 @@ const variantClasses: Record<
     wrapper: "flex flex-wrap items-center gap-2.5",
     link: "rounded-full border border-transparent px-3.5 py-2 text-sm font-semibold shadow-sm transition-all duration-200",
     showText: true,
-    maxText: "Написать в MAX",
+    maxText: "MAX",
     emphasizeMax: true,
   },
   toast: {
