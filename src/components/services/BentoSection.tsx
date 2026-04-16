@@ -19,8 +19,8 @@ interface BentoSectionProps {
 
 const toneClasses: Record<Tone, string> = {
   white: "bg-white",
-  slate: "bg-slate-100/80 border-y border-slate-200/70",
-  tint: "bg-gradient-to-b from-[#0096D6]/[0.05] via-[#44B78B]/[0.03] to-[#0096D6]/[0.05] border-y border-[#0096D6]/10",
+  slate: "bg-slate-50/70",
+  tint: "bg-gradient-to-b from-white via-[#0096D6]/[0.025] to-white",
 };
 
 export const BentoSection = ({
