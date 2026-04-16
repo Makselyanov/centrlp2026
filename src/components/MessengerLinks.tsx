@@ -75,30 +75,47 @@ const links: Array<{
   },
 ];
 
-const variantClasses: Record<Variant, { wrapper: string; link: string; showText: boolean; maxText: string }> = {
+const variantClasses: Record<
+  Variant,
+  {
+    wrapper: string;
+    link: string;
+    showText: boolean;
+    maxText: string;
+    emphasizeMax?: boolean;
+    iconOnlyOthers?: boolean;
+  }
+> = {
   header: {
     wrapper: "flex items-center gap-2",
-    link: "h-8 rounded-full px-2.5 text-xs font-semibold shadow-sm transition-colors",
+    link: "h-9 rounded-full px-3 text-xs font-semibold shadow-sm transition-all duration-200",
     showText: false,
     maxText: "MAX",
+    emphasizeMax: true,
+    iconOnlyOthers: true,
   },
   mobile: {
     wrapper: "flex flex-wrap items-center gap-2",
-    link: "h-10 rounded-full px-3 text-sm font-semibold transition-colors",
+    link: "h-10 rounded-full px-3 text-sm font-semibold transition-all duration-200",
     showText: false,
     maxText: "MAX",
+    emphasizeMax: true,
+    iconOnlyOthers: true,
   },
   footer: {
     wrapper: "flex flex-wrap items-center gap-2",
-    link: "h-10 rounded-full px-3 text-sm font-semibold transition-colors",
+    link: "h-10 rounded-full px-3 text-sm font-semibold transition-all duration-200",
     showText: false,
     maxText: "MAX",
+    emphasizeMax: true,
+    iconOnlyOthers: true,
   },
   fastlane: {
-    wrapper: "flex flex-wrap gap-3",
-    link: "rounded-xl border border-transparent px-3 py-2 text-sm font-medium shadow-sm transition-colors",
+    wrapper: "flex flex-wrap items-center gap-2.5",
+    link: "rounded-full border border-transparent px-3.5 py-2 text-sm font-semibold shadow-sm transition-all duration-200",
     showText: true,
-    maxText: "MAX",
+    maxText: "Написать в MAX",
+    emphasizeMax: true,
   },
   toast: {
     wrapper: "flex flex-wrap gap-2",
@@ -119,6 +136,8 @@ export const MessengerLinks = ({
     <div className={cn(styles.wrapper, className)}>
       {links.map((link) => {
         const isMax = link.messenger === "max";
+        const showLabel = isMax ? styles.emphasizeMax ?? true : styles.showText && !styles.iconOnlyOthers;
+        const isIconOnly = !isMax && styles.iconOnlyOthers;
 
         return (
           <a
@@ -130,16 +149,17 @@ export const MessengerLinks = ({
               "inline-flex items-center justify-center gap-2",
               styles.link,
               link.className,
-              isMax && variant === "header" && "min-w-[76px] px-3",
-              isMax && (variant === "mobile" || variant === "footer") && "min-w-[88px]",
+              isMax && styles.emphasizeMax && "min-w-[92px] px-4",
+              isIconOnly && "w-9 min-w-0 px-0",
             )}
             data-metric="messenger-click"
             aria-label={isMax ? "Написать в MAX" : link.label}
+            title={isMax ? "MAX" : link.label}
             onClick={() => onMessengerClick?.(link.messenger)}
           >
             {link.icon}
-            {(styles.showText || isMax) && (
-              <span className={cn(!styles.showText && !isMax && "sr-only")}>
+            {showLabel && (
+              <span>
                 {isMax ? styles.maxText : link.label}
               </span>
             )}

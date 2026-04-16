@@ -138,7 +138,10 @@ export const ContactForm = () => {
             Достаточно оставить контакт, чтобы быстро обсудить задачу и удобный
             формат связи без лишней переписки.
           </p>
-          <div className="mt-4 flex flex-wrap gap-3">
+          <div className="mt-4">
+            <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Главный канал связи
+            </div>
             <MessengerLinks
               variant="fastlane"
               onMessengerClick={(messenger) =>
@@ -148,9 +151,15 @@ export const ContactForm = () => {
                 })
               }
             />
+          </div>
+          <div className="mt-4">
+            <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Дополнительно
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
             <a
               href="tel:+79058248564"
-              className="inline-flex items-center gap-2 rounded-xl border border-[#44B78B]/20 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-[#44B78B]/40 hover:text-[#44B78B]"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-[#44B78B]/40 hover:text-[#44B78B]"
               data-metric="phone-click"
               onClick={() =>
                 trackMetric("phone_click_fastlane", {
@@ -161,6 +170,10 @@ export const ContactForm = () => {
               <PhoneCall className="h-4 w-4" />
               Быстрый звонок
             </a>
+            <div className="text-xs leading-5 text-slate-500">
+              Telegram, WhatsApp и VK тоже доступны, если так удобнее.
+            </div>
+            </div>
           </div>
         </div>
 
