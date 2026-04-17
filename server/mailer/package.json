@@ -1,0 +1,16 @@
+{
+  "name": "centrlp-mailer",
+  "version": "1.0.0",
+  "description": "Lead form mailer — accepts POST from centrlp.ru and sends email via Yandex SMTP. All data stays on RF server per ФЗ-242.",
+  "private": true,
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "nodemailer": "^6.9.16"
+  }
+}

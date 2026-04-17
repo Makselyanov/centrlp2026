@@ -39,7 +39,7 @@ export const ContactForm = () => {
     try {
       trackMetric("form_submit_attempt", { path: location.pathname });
 
-      const response = await fetch("https://formsubmit.co/ajax/1@centrlp.ru", {
+      const response = await fetch("/api/lead", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,8 +50,6 @@ export const ContactForm = () => {
           page_path: location.pathname,
           page_url: typeof window !== "undefined" ? window.location.href : "",
           lead_source: "centrlp.ru",
-          _subject: `Новая заявка CentrLP: ${location.pathname}`,
-          _captcha: "false",
         }),
       });
 
