@@ -262,10 +262,13 @@ export const ContactForm = () => {
               required
             />
             <Label htmlFor="privacy" className="cursor-pointer text-sm leading-relaxed">
-              Согласен на{" "}
+              Даю согласие ООО «ААМХ» на обработку указанных мной персональных данных
+              (ФИО, телефон, email, контент обращения) в целях рассмотрения заявки
+              и связи со мной на условиях{" "}
               <Link to="/privacy" className="text-primary hover:underline">
-                обработку персональных данных
+                Политики конфиденциальности
               </Link>
+              .
             </Label>
           </div>
 
@@ -279,10 +282,11 @@ export const ContactForm = () => {
               required
             />
             <Label htmlFor="cookies" className="cursor-pointer text-sm leading-relaxed">
-              Согласен на{" "}
+              Ознакомлен(а) с{" "}
               <Link to="/cookies" className="text-primary hover:underline">
-                использование cookie
-              </Link>
+                Политикой использования cookie
+              </Link>{" "}
+              и согласен(а) на использование cookie-файлов.
             </Label>
           </div>
         </div>
