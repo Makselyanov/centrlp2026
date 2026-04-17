@@ -3,10 +3,58 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import WebGLFluidEnhanced from "webgl-fluid-enhanced";
 
 export const Hero = () => {
     const cardRef = useRef<HTMLDivElement>(null);
     const heroRef = useRef<HTMLElement>(null);
+    const fluidContainerRef = useRef<HTMLDivElement>(null);
+
+    // WebGL Fluid Simulation — self-hosted open-source (MIT, PavelDoGreat).
+    // All compute runs client-side, no external HTTP calls. Brand palette.
+    useEffect(() => {
+        const container = fluidContainerRef.current;
+        if (!container) return;
+
+        // Respect prefers-reduced-motion and skip on small/touch-only devices
+        // to avoid GPU churn where the decorative effect isn't worth it.
+        const prefersReduced = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (prefersReduced) return;
+
+        const sim = new WebGLFluidEnhanced(container);
+        sim.setConfig({
+            simResolution: 128,
+            dyeResolution: 1024,
+            densityDissipation: 1.2,
+            velocityDissipation: 0.3,
+            pressure: 0.8,
+            pressureIterations: 20,
+            curl: 10,
+            splatRadius: 0.15,
+            splatForce: 3000,
+            shading: true,
+            colorful: false,
+            colorUpdateSpeed: 5,
+            colorPalette: ["#0096D6", "#44B78B", "#0096D6"],
+            hover: true,
+            backgroundColor: "#040f1e",
+            transparent: true,
+            brightness: 0.45,
+            bloom: false,
+            sunrays: false,
+        });
+        sim.start();
+
+        return () => {
+            try {
+                sim.stop();
+            } catch {
+                /* noop */
+            }
+        };
+    }, []);
 
     useEffect(() => {
         const hero = heroRef.current;
@@ -79,9 +127,15 @@ export const Hero = () => {
                 }}
             />
 
-            <div className="hero-webgl">
-                <div className="webgl" data-us-project="jSQIShw8nRxgcNnhfv18"></div>
-            </div>
+            <div
+                ref={fluidContainerRef}
+                className="absolute inset-0 z-0 opacity-70 mix-blend-screen"
+                aria-hidden="true"
+            />
+            <div
+                className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[#040f1e]/20 to-[#040f1e]/60"
+                aria-hidden="true"
+            />
 
             <div className="container mx-auto relative z-10">
                 <div className="flex flex-col items-center gap-12 lg:flex-row">

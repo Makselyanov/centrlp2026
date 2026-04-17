@@ -185,23 +185,11 @@ All colors MUST be HSL.
   overflow: hidden;
 }
 
-.hero-webgl {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-/* Сам WebGL canvas */
-.hero-bg .webgl {
-  position: absolute !important;
-  inset: -20% !important;
-  width: 140% !important;
-  height: 140% !important;
-  opacity: 0.85;
-  mix-blend-mode: screen;
-  pointer-events: none;
+/* WebGL Fluid canvas injected by webgl-fluid-enhanced fills the container. */
+.hero-bg canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Карточка поверх */
