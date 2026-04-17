@@ -93,37 +93,14 @@ const Cookies = () => {
             </ul>
 
             <h3 className="text-lg font-semibold text-foreground mt-6 mb-2">
-              2.3. Рекламные (таргетированные)
-            </h3>
-            <p>
-              Используются для показа рекламных материалов Оператора Пользователям,
-              которые ранее посещали Сайт, на сторонних рекламных площадках (ретаргетинг).
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                <strong>VK Pixel (remixlang, remixsid)</strong> (ООО «В Контакте») —
-                идентификатор для таргетинга рекламы в социальной сети ВКонтакте.
-                Срок хранения: до 1 года. Политика:{" "}
-                <a
-                  href="https://vk.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  vk.com/privacy
-                </a>
-                .
-              </li>
-            </ul>
-
-            <h3 className="text-lg font-semibold text-foreground mt-6 mb-2">
-              2.4. Функциональные (виджеты)
+              2.3. Функциональные (виджеты)
             </h3>
             <ul className="list-disc pl-6 space-y-2">
               <li>
                 <strong>Envybox (обратный звонок)</strong> — виджет обратного звонка
-                и всплывающих форм. Срок хранения: в соответствии с политикой поставщика.
-                Сайт:{" "}
+                и всплывающих форм. Обрабатывает телефонный номер Пользователя
+                и, при согласии, запись разговора. Срок хранения: в соответствии
+                с политикой поставщика. Сайт:{" "}
                 <a
                   href="https://envybox.io"
                   target="_blank"
