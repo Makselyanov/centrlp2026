@@ -17,7 +17,13 @@ const About = () => {
     {
       year: "2017",
       title: "Трансформация",
-      description: "Я закрыл ИП и перешёл на самозанятость (НПД). Оптимизация процессов и фокус на эффективности.",
+      description: "Закрыл ИП и перешёл на самозанятость (НПД). Оптимизация процессов и фокус на эффективности.",
+      icon: Briefcase
+    },
+    {
+      year: "2026",
+      title: "ООО «ААМХ»",
+      description: "Оформил ООО для масштабирования и работы с крупными клиентами. Бренд — CentrLP, юрлицо — ООО «ААМХ».",
       icon: Briefcase
     },
     {
@@ -31,7 +37,7 @@ const About = () => {
   return (
     <Layout
       title="О компании CentrLP — агентство интернет-маркетинга в Тюмени"
-      description="CentrLP — агентство развития бизнеса в Тюмени. Создаём сайты, настраиваем рекламу, внедряем ИИ. НПД Кузнецов М.В., ИНН 720321829472."
+      description="CentrLP — агентство развития бизнеса в Тюмени. Создаём сайты, настраиваем рекламу, внедряем ИИ. ООО «ААМХ», ИНН 7203606424."
     >
       {/* About Me Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50">
@@ -167,7 +173,7 @@ const About = () => {
               <div className="p-4 bg-background rounded-xl border border-border/50">
                 <CheckCircle className="w-8 h-8 text-[#44B78B] mb-3" />
                 <h4 className="font-bold mb-1">Прозрачность</h4>
-                <p className="text-sm text-muted-foreground">Официально, по договору НПД</p>
+                <p className="text-sm text-muted-foreground">Официально, по договору от ООО «ААМХ»</p>
               </div>
             </div>
           </motion.div>

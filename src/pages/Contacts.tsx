@@ -12,7 +12,7 @@ const Contacts = () => {
   const [copied, setCopied] = useState(false);
 
   const copyInn = () => {
-    navigator.clipboard.writeText("720321829472");
+    navigator.clipboard.writeText("7203606424");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -42,7 +42,7 @@ const Contacts = () => {
   return (
     <Layout
       title="Контакты CentrLP — Тюмень, телефон, Telegram, WhatsApp"
-      description="Свяжитесь с CentrLP: 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: Тюмень, Солнечный проезд, 22. Консультация бесплатна."
+      description="Свяжитесь с CentrLP: 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: Тюмень, проезд Заречный, 39А. Консультация бесплатна."
     >
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
@@ -212,9 +212,9 @@ const Contacts = () => {
                       <MapPin className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg mb-1">Офис</h3>
+                      <h3 className="font-bold text-lg mb-1">Адрес</h3>
                       <p className="text-muted-foreground">
-                        г. Тюмень, Солнечный проезд, 22
+                        625022, г. Тюмень, проезд Заречный, д. 39А
                       </p>
                     </div>
                   </div>
@@ -230,10 +230,10 @@ const Contacts = () => {
                     <div className="w-full">
                       <h3 className="font-bold text-lg mb-1">Реквизиты</h3>
                       <p className="text-muted-foreground mb-3 text-sm">
-                        НПД Кузнецов Максим Владимирович
+                        ООО «ААМХ» · ОГРН 1267200004818
                       </p>
                       <div className="flex items-center gap-2 bg-secondary p-2 rounded-lg w-full max-w-xs">
-                        <span className="font-mono text-sm flex-grow">ИНН 720321829472</span>
+                        <span className="font-mono text-sm flex-grow">ИНН 7203606424</span>
                         <Button size="icon" variant="ghost" className="h-8 w-8" onClick={copyInn}>
                           {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                         </Button>
