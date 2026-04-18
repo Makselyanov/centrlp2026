@@ -138,11 +138,16 @@ export const Hero = () => {
                 }}
             />
 
+            {/* Wrapper locks the fluid canvas to the hero. The library mutates
+                the inline style of whatever container we hand it (sets
+                position:relative + display:flex), so we pass it the inner
+                div and keep absolute positioning on this outer wrapper. */}
             <div
-                ref={fluidContainerRef}
-                className="absolute inset-0 z-0 opacity-70 mix-blend-screen"
+                className="absolute inset-0 z-0 overflow-hidden opacity-70 mix-blend-screen"
                 aria-hidden="true"
-            />
+            >
+                <div ref={fluidContainerRef} className="h-full w-full" />
+            </div>
             <div
                 className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[#040f1e]/20 to-[#040f1e]/60"
                 aria-hidden="true"
