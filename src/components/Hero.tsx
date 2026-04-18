@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import WebGLFluidEnhanced from "webgl-fluid-enhanced";
 
+export const Hero = () => {
     const sectionRef = useRef<HTMLElement>(null);
     const cardRef = useRef<HTMLDivElement>(null);
     const fluidContainerRef = useRef<HTMLDivElement>(null);
