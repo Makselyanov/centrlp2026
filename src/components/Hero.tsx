@@ -5,20 +5,15 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import WebGLFluidEnhanced from "webgl-fluid-enhanced";
 
-    const sectionRef = useRef<HTMLElement>(null);
+export const Hero = () => {
     const cardRef = useRef<HTMLDivElement>(null);
     const fluidContainerRef = useRef<HTMLDivElement>(null);
 
     // WebGL Fluid Simulation — self-hosted open-source (MIT, PavelDoGreat).
     // All compute runs client-side, no external HTTP calls. Brand palette.
-    //
-    // We forward mousemove from the whole section to sim.splatAtLocation so
-    // the effect follows the cursor even over the text (content is above
-    // the canvas in z-order and would otherwise swallow the events).
     useEffect(() => {
         const container = fluidContainerRef.current;
-        const section = sectionRef.current;
-        if (!container || !section) return;
+        if (!container) return;
 
         // Respect prefers-reduced-motion.
         const prefersReduced = window.matchMedia(
@@ -27,43 +22,10 @@ import WebGLFluidEnhanced from "webgl-fluid-enhanced";
         if (prefersReduced) return;
 
         let sim: WebGLFluidEnhanced | null = null;
-        let canvas: HTMLCanvasElement | null = null;
-        let prevX = -1;
-        let prevY = -1;
-        const palette = ["#0096D6", "#44B78B"];
-        let paletteIdx = 0;
-        let lastSplatAt = 0;
-
-        const handleMouseMove = (e: MouseEvent) => {
-            if (!sim || !canvas) return;
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            if (prevX < 0) {
-                prevX = x;
-                prevY = y;
-                return;
-            }
-            const dx = (x - prevX) * 5;
-            const dy = (y - prevY) * 5;
-            prevX = x;
-            prevY = y;
-            // Throttle to ~60 fps worth of splats regardless of mouse rate
-            const now = performance.now();
-            if (now - lastSplatAt < 16) return;
-            lastSplatAt = now;
-            const color = palette[paletteIdx];
-            paletteIdx = (paletteIdx + 1) % palette.length;
-            sim.splatAtLocation(x, y, dx, dy, color);
-        };
-
-        const handleMouseLeave = () => {
-            prevX = -1;
-            prevY = -1;
-        };
 
         // Wait for layout so container has non-zero dimensions before
-        // the library runs its first resizeCanvas().
+        // the library runs its first resizeCanvas() — otherwise the canvas
+        // initializes at 0×0 / 300×150 and the effect appears mispositioned.
         const start = () => {
             if (container.clientWidth === 0 || container.clientHeight === 0) {
                 requestAnimationFrame(start);
@@ -83,8 +45,8 @@ import WebGLFluidEnhanced from "webgl-fluid-enhanced";
                 shading: true,
                 colorful: false,
                 colorUpdateSpeed: 5,
-                colorPalette: palette,
-                hover: false, // we drive splats from the section-level handler
+                colorPalette: ["#0096D6", "#44B78B", "#0096D6"],
+                hover: true,
                 backgroundColor: "#040f1e",
                 transparent: true,
                 brightness: 0.75,
@@ -92,15 +54,10 @@ import WebGLFluidEnhanced from "webgl-fluid-enhanced";
                 sunrays: false,
             });
             sim.start();
-            canvas = container.querySelector("canvas");
-            section.addEventListener("mousemove", handleMouseMove);
-            section.addEventListener("mouseleave", handleMouseLeave);
         };
         requestAnimationFrame(start);
 
         return () => {
-            section.removeEventListener("mousemove", handleMouseMove);
-            section.removeEventListener("mouseleave", handleMouseLeave);
             try {
                 sim?.stop();
             } catch {
@@ -135,7 +92,6 @@ import WebGLFluidEnhanced from "webgl-fluid-enhanced";
 
     return (
         <section
-            ref={sectionRef}
             id="hero"
             className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-40 md:py-52 text-slate-50"
         >
