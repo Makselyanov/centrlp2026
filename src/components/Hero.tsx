@@ -16,40 +16,51 @@ export const Hero = () => {
         const container = fluidContainerRef.current;
         if (!container) return;
 
-        // Respect prefers-reduced-motion and skip on small/touch-only devices
-        // to avoid GPU churn where the decorative effect isn't worth it.
+        // Respect prefers-reduced-motion.
         const prefersReduced = window.matchMedia(
             "(prefers-reduced-motion: reduce)",
         ).matches;
         if (prefersReduced) return;
 
-        const sim = new WebGLFluidEnhanced(container);
-        sim.setConfig({
-            simResolution: 128,
-            dyeResolution: 1024,
-            densityDissipation: 1.2,
-            velocityDissipation: 0.3,
-            pressure: 0.8,
-            pressureIterations: 20,
-            curl: 10,
-            splatRadius: 0.15,
-            splatForce: 3000,
-            shading: true,
-            colorful: false,
-            colorUpdateSpeed: 5,
-            colorPalette: ["#0096D6", "#44B78B", "#0096D6"],
-            hover: true,
-            backgroundColor: "#040f1e",
-            transparent: true,
-            brightness: 0.45,
-            bloom: false,
-            sunrays: false,
-        });
-        sim.start();
+        let sim: WebGLFluidEnhanced | null = null;
+
+        // Wait for layout so container has non-zero dimensions before
+        // the library runs its first resizeCanvas() — otherwise the canvas
+        // initializes at 0×0 / 300×150 and the effect appears mispositioned.
+        const start = () => {
+            if (container.clientWidth === 0 || container.clientHeight === 0) {
+                requestAnimationFrame(start);
+                return;
+            }
+            sim = new WebGLFluidEnhanced(container);
+            sim.setConfig({
+                simResolution: 128,
+                dyeResolution: 1024,
+                densityDissipation: 1.2,
+                velocityDissipation: 0.3,
+                pressure: 0.8,
+                pressureIterations: 20,
+                curl: 10,
+                splatRadius: 0.15,
+                splatForce: 3000,
+                shading: true,
+                colorful: false,
+                colorUpdateSpeed: 5,
+                colorPalette: ["#0096D6", "#44B78B", "#0096D6"],
+                hover: true,
+                backgroundColor: "#040f1e",
+                transparent: true,
+                brightness: 0.45,
+                bloom: false,
+                sunrays: false,
+            });
+            sim.start();
+        };
+        requestAnimationFrame(start);
 
         return () => {
             try {
-                sim.stop();
+                sim?.stop();
             } catch {
                 /* noop */
             }
