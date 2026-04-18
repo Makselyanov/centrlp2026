@@ -7,7 +7,6 @@ import WebGLFluidEnhanced from "webgl-fluid-enhanced";
 
 export const Hero = () => {
     const cardRef = useRef<HTMLDivElement>(null);
-    const heroRef = useRef<HTMLElement>(null);
     const fluidContainerRef = useRef<HTMLDivElement>(null);
 
     // WebGL Fluid Simulation — self-hosted open-source (MIT, PavelDoGreat).
@@ -68,36 +67,6 @@ export const Hero = () => {
     }, []);
 
     useEffect(() => {
-        const hero = heroRef.current;
-        if (!hero) return;
-
-        let rafId: number;
-        const updatePosition = (x: number, y: number) => {
-            hero.style.setProperty("--mx", `${x}px`);
-            hero.style.setProperty("--my", `${y}px`);
-        };
-
-        const handleMouseMove = (e: MouseEvent) => {
-            if (rafId) return;
-
-            const rect = hero.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            rafId = requestAnimationFrame(() => {
-                updatePosition(x, y);
-                rafId = 0;
-            });
-        };
-
-        hero.addEventListener("mousemove", handleMouseMove);
-        return () => {
-            hero.removeEventListener("mousemove", handleMouseMove);
-            if (rafId) cancelAnimationFrame(rafId);
-        };
-    }, []);
-
-    useEffect(() => {
         const card = cardRef.current;
         if (!card) return;
 
@@ -123,21 +92,9 @@ export const Hero = () => {
 
     return (
         <section
-            ref={heroRef}
             id="hero"
-            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-40 md:py-52 text-slate-50 group"
+            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-40 md:py-52 text-slate-50"
         >
-            <div
-                className="pointer-events-none absolute inset-0 z-[1] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover:opacity-100"
-                style={{
-                    background: `
-                        radial-gradient(600px circle at var(--mx) var(--my), rgba(255,255,255,0.18), transparent 40%),
-                        radial-gradient(1100px circle at var(--mx) var(--my), rgba(255,255,255,0.08), transparent 40%)
-                    `,
-                    filter: "blur(25px)",
-                }}
-            />
-
             {/* Wrapper locks the fluid canvas to the hero. The library mutates
                 the inline style of whatever container we hand it (sets
                 position:relative + display:flex), so we pass it the inner
