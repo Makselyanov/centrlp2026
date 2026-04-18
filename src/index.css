@@ -185,9 +185,22 @@ All colors MUST be HSL.
   overflow: hidden;
 }
 
-/* WebGL Fluid canvas injected by webgl-fluid-enhanced fills the container. */
+/* WebGL Fluid canvas injected by webgl-fluid-enhanced fills the container.
+   The library writes display:flex + justify/align:center on the container
+   it's given, which shrinks the canvas. Force the container and canvas
+   back to a full-size block. */
+.hero-fluid {
+  display: block !important;
+  position: static !important;
+  align-items: stretch !important;
+  justify-content: stretch !important;
+}
+
+.hero-fluid canvas,
 .hero-bg canvas {
-  display: block;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
 }

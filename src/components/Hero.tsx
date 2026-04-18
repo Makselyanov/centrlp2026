@@ -125,7 +125,7 @@ export const Hero = () => {
         <section
             ref={heroRef}
             id="hero"
-            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-24 text-slate-50 group"
+            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-32 md:py-36 text-slate-50 group"
         >
             <div
                 className="pointer-events-none absolute inset-0 z-[1] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover:opacity-100"
@@ -146,7 +146,7 @@ export const Hero = () => {
                 className="absolute inset-0 z-0 overflow-hidden opacity-70 mix-blend-screen"
                 aria-hidden="true"
             >
-                <div ref={fluidContainerRef} className="h-full w-full" />
+                <div ref={fluidContainerRef} className="hero-fluid h-full w-full" />
             </div>
             <div
                 className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[#040f1e]/20 to-[#040f1e]/60"
