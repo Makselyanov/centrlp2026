@@ -106,7 +106,7 @@ export const Hero = () => {
                 <div ref={fluidContainerRef} className="hero-fluid h-full w-full" />
             </div>
 
-            <div className="container mx-auto relative z-10">
+            <div className="container mx-auto relative z-10 pointer-events-none">
                 <div className="flex flex-col items-center gap-12 lg:flex-row">
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -152,13 +152,13 @@ export const Hero = () => {
                                 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => document.getElementById("form")?.scrollIntoView({ behavior: "smooth" })}
-                                className="flex items-center justify-center gap-2 rounded-2xl bg-[#0096D6] px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-[#0096D6]/30 transition-all"
+                                className="pointer-events-auto flex items-center justify-center gap-2 rounded-2xl bg-[#0096D6] px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-[#0096D6]/30 transition-all"
                             >
                                 Получить план продукта
                                 <ArrowRight className="h-5 w-5" />
                             </motion.button>
 
-                            <Link to="/projects">
+                            <Link to="/projects" className="pointer-events-auto">
                                 <motion.button
                                     whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                     whileTap={{ scale: 0.98 }}
