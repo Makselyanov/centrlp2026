@@ -36,13 +36,13 @@ export const Hero = () => {
             sim.setConfig({
                 simResolution: 128,
                 dyeResolution: 1024,
-                densityDissipation: 1.2,
-                velocityDissipation: 0.3,
+                densityDissipation: 0.9,
+                velocityDissipation: 0.25,
                 pressure: 0.8,
                 pressureIterations: 20,
-                curl: 10,
-                splatRadius: 0.15,
-                splatForce: 3000,
+                curl: 12,
+                splatRadius: 0.2,
+                splatForce: 4500,
                 shading: true,
                 colorful: false,
                 colorUpdateSpeed: 5,
@@ -50,7 +50,7 @@ export const Hero = () => {
                 hover: true,
                 backgroundColor: "#040f1e",
                 transparent: true,
-                brightness: 0.45,
+                brightness: 0.75,
                 bloom: false,
                 sunrays: false,
             });
@@ -125,7 +125,7 @@ export const Hero = () => {
         <section
             ref={heroRef}
             id="hero"
-            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-32 md:py-36 text-slate-50 group"
+            className="relative w-full overflow-hidden hero-bg bg-gradient-to-br from-[#040f1e] via-[#050b16] to-[#040f1e] py-40 md:py-52 text-slate-50 group"
         >
             <div
                 className="pointer-events-none absolute inset-0 z-[1] opacity-0 mix-blend-screen transition-opacity duration-300 group-hover:opacity-100"
@@ -143,15 +143,11 @@ export const Hero = () => {
                 position:relative + display:flex), so we pass it the inner
                 div and keep absolute positioning on this outer wrapper. */}
             <div
-                className="absolute inset-0 z-0 overflow-hidden opacity-70 mix-blend-screen"
+                className="absolute inset-0 z-0 overflow-hidden opacity-90 mix-blend-screen"
                 aria-hidden="true"
             >
                 <div ref={fluidContainerRef} className="hero-fluid h-full w-full" />
             </div>
-            <div
-                className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-[#040f1e]/20 to-[#040f1e]/60"
-                aria-hidden="true"
-            />
 
             <div className="container mx-auto relative z-10">
                 <div className="flex flex-col items-center gap-12 lg:flex-row">
