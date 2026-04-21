@@ -64,36 +64,10 @@ export const ContactForm = () => {
         description: (
           <div>
             <p className="mb-3">
-              Спасибо. Мы свяжемся с вами в ближайшее время. Если удобнее, можно сразу
-              продолжить диалог в мессенджере.
+              Спасибо. Мы свяжемся с вами в ближайшее время. Если удобнее, можно
+              сразу продолжить диалог в мессенджере.
             </p>
             <MessengerLinks variant="toast" />
-            <div className="hidden">
-              <a
-                href="https://t.me/centrlp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-md bg-[#0088cc] px-3 py-1 text-sm text-white hover:opacity-80"
-              >
-                Telegram
-              </a>
-              <a
-                href="https://wa.me/79058248564"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-md bg-[#25D366] px-3 py-1 text-sm text-white hover:opacity-80"
-              >
-                WhatsApp
-              </a>
-              <a
-                href="https://vk.me/centrlp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center rounded-md bg-[#0077FF] px-3 py-1 text-sm text-white hover:opacity-80"
-              >
-                ВКонтакте
-              </a>
-            </div>
           </div>
         ),
       });
@@ -121,7 +95,7 @@ export const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-7 shadow-sm md:p-8"
+      className="mx-auto w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-7 shadow-sm md:p-8"
       data-metric="form-submit"
     >
       <div className="space-y-6">
@@ -136,6 +110,7 @@ export const ContactForm = () => {
             Достаточно оставить контакт, чтобы быстро обсудить задачу и удобный
             формат связи без лишней переписки.
           </p>
+
           <div className="mt-4">
             <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
               Главный канал связи
@@ -150,77 +125,82 @@ export const ContactForm = () => {
               }
             />
           </div>
+
           <div className="mt-4">
             <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
               Дополнительно
             </div>
             <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="tel:+79058248564"
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-[#44B78B]/40 hover:text-[#44B78B]"
-              data-metric="phone-click"
-              onClick={() =>
-                trackMetric("phone_click_fastlane", {
-                  path: location.pathname,
-                })
-              }
-            >
-              <PhoneCall className="h-4 w-4" />
-              Быстрый звонок
-            </a>
-            <div className="text-xs leading-5 text-slate-500">
-              Telegram, WhatsApp и VK тоже доступны, если так удобнее.
-            </div>
+              <a
+                href="tel:+79058248564"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-[#44B78B]/40 hover:text-[#44B78B]"
+                data-metric="phone-click"
+                onClick={() =>
+                  trackMetric("phone_click_fastlane", {
+                    path: location.pathname,
+                  })
+                }
+              >
+                <PhoneCall className="h-4 w-4" />
+                Быстрый звонок
+              </a>
+              <div className="text-xs leading-5 text-slate-500">
+                Telegram, WhatsApp и VK тоже доступны, если так удобнее.
+              </div>
             </div>
           </div>
         </div>
 
-        <div>
-          <Label htmlFor="name">Имя *</Label>
-          <Input
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            required
-            className="mt-2"
-          />
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <Label htmlFor="name">Имя *</Label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              required
+              className="mt-2"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="phone">Телефон *</Label>
+            <Input
+              id="phone"
+              name="phone"
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              required
+              className="mt-2"
+            />
+          </div>
         </div>
 
-        <div>
-          <Label htmlFor="phone">Телефон *</Label>
-          <Input
-            id="phone"
-            name="phone"
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            required
-            className="mt-2"
-          />
-        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <Label htmlFor="business">Бизнес / ниша</Label>
+            <Input
+              id="business"
+              name="business"
+              value={formData.business}
+              onChange={(e) => setFormData({ ...formData, business: e.target.value })}
+              className="mt-2"
+              placeholder="Например: услуги, клиника, студия, e-commerce"
+            />
+          </div>
 
-        <div>
-          <Label htmlFor="business">Бизнес / ниша</Label>
-          <Input
-            id="business"
-            name="business"
-            value={formData.business}
-            onChange={(e) => setFormData({ ...formData, business: e.target.value })}
-            className="mt-2"
-            placeholder="Например: услуги, клиника, студия, e-commerce"
-          />
-        </div>
-
-        <div>
-          <Label htmlFor="city">Город</Label>
-          <Input
-            id="city"
-            name="city"
-            value={formData.city}
-            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-            className="mt-2"
-          />
+          <div>
+            <Label htmlFor="city">Город</Label>
+            <Input
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              className="mt-2"
+            />
+          </div>
         </div>
 
         <div>
@@ -260,11 +240,10 @@ export const ContactForm = () => {
               required
             />
             <Label htmlFor="privacy" className="cursor-pointer text-sm leading-relaxed">
-              Даю согласие ООО «ААМХ» на обработку указанных мной персональных данных
-              (ФИО, телефон, email, контент обращения) в целях рассмотрения заявки
-              и связи со мной на условиях{" "}
+              Даю согласие на обработку персональных данных для рассмотрения заявки
+              и обратной связи на условиях{" "}
               <Link to="/privacy" className="text-primary hover:underline">
-                Политики конфиденциальности
+                политики конфиденциальности
               </Link>
               .
             </Label>
@@ -282,7 +261,7 @@ export const ContactForm = () => {
             <Label htmlFor="cookies" className="cursor-pointer text-sm leading-relaxed">
               Ознакомлен(а) с{" "}
               <Link to="/cookies" className="text-primary hover:underline">
-                Политикой использования cookie
+                политикой использования cookie
               </Link>{" "}
               и согласен(а) на использование cookie-файлов.
             </Label>
