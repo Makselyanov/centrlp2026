@@ -313,6 +313,30 @@ const heroHighlights = [
   "CRM, сайты и аналитика",
 ];
 
+const visualSystemCards = [
+  {
+    title: "Продуктовый стек",
+    image: "/images/services/services-product-stack.svg",
+    alt: "Архитектура цифрового продукта: канал, AI, CRM, аналитика и автоматизация",
+    text: "Показываем не набор отдельных услуг, а рабочую связку: точка входа клиента, AI-логика, CRM, аналитика и автоматизация действий команды.",
+    points: ["Telegram, Max, сайт или Mini App", "AI-агент и сценарии", "CRM, n8n и аналитика"],
+  },
+  {
+    title: "Готовые сборки запуска",
+    image: "/images/services/services-launch-bundles.svg",
+    alt: "Три формата запуска цифровой системы: пилот, MVP и полноценная система",
+    text: "Можно начать с маленького пилота, собрать MVP под одну задачу или сразу строить полноценную систему под входящие заявки и сервис.",
+    points: ["пилот на 1 гипотезу", "MVP под задачу бизнеса", "масштабируемая система"],
+  },
+  {
+    title: "Нишевые сценарии",
+    image: "/images/services/services-industry-map.svg",
+    alt: "Карта нишевых сценариев для турагентств, СТО, мебели, клининга и сервисных компаний",
+    text: "Для разных ниш нужны разные маршруты клиента. Поэтому мы собираем не универсальный шаблон, а сценарий под конкретный рынок и тип заявки.",
+    points: ["турагентства", "СТО и сервис", "мебель, клининг, обучение"],
+  },
+];
+
 const systemBlueprint = [
   {
     title: "Канал и интерфейс",
@@ -527,6 +551,64 @@ const Services = () => {
                 </span>
               ))}
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden bg-white py-20">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-10 top-10 h-52 w-52 rounded-full bg-[#0096D6]/10 blur-3xl" />
+          <div className="absolute right-0 bottom-0 h-64 w-64 rounded-full bg-[#44B78B]/10 blur-3xl" />
+        </div>
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto mb-12 max-w-4xl text-center">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#0096D6]/15 bg-white/85 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur">
+              <Workflow className="h-4 w-4 text-[#0096D6]" />
+              Услуги как собираемая архитектура бизнеса
+            </div>
+            <h2 className="mb-4 bg-[linear-gradient(135deg,#007DB3_0%,#0096D6_38%,#44B78B_100%)] bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-4xl">
+              Не просто список работ, а система: канал, AI, CRM, автоматизация и рост
+            </h2>
+            <p className="mx-auto max-w-3xl text-lg leading-8 text-slate-600">
+              Так быстрее понять, что именно заказывать: отдельную страницу, AI-оператора, Mini App, CRM или связку,
+              где каждый блок усиливает следующий.
+            </p>
+          </div>
+
+          <div className="grid gap-7 lg:grid-cols-3">
+            {visualSystemCards.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+              >
+                <Card className="h-full overflow-hidden rounded-[30px] border border-white/70 bg-white/90 shadow-[0_22px_80px_-38px_rgba(0,150,214,0.34)]">
+                  <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-950">
+                    <img
+                      src={item.image}
+                      alt={item.alt}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="p-7">
+                    <h3 className="mb-3 text-2xl font-bold tracking-tight text-slate-900">{item.title}</h3>
+                    <p className="mb-5 text-base leading-7 text-slate-600">{item.text}</p>
+                    <div className="space-y-3">
+                      {item.points.map((point) => (
+                        <div key={point} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3">
+                          <Sparkles className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#44B78B]" />
+                          <span className="text-sm leading-6 text-slate-700">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

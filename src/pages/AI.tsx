@@ -78,6 +78,30 @@ const AI = () => {
     }
   ];
 
+  const aiVisualCases = [
+    {
+      title: "AI на входящем потоке",
+      image: "/images/ai/ai-lead-orchestra.svg",
+      alt: "AI распределяет входящие заявки между каналами, CRM и менеджером",
+      text: "Заявка больше не висит в чате без статуса: AI принимает обращение, уточняет задачу, ставит метку и передает контекст в CRM или менеджеру.",
+      points: ["Telegram, Max, сайт и формы", "квалификация лида", "передача в CRM без ручного копирования"],
+    },
+    {
+      title: "AI как помощник команды",
+      image: "/images/ai/ai-team-copilot.svg",
+      alt: "AI-помощник подсказывает менеджеру ответы, действия и следующие шаги",
+      text: "Система не заменяет команду, а снимает рутину: подсказывает ответы, находит данные, напоминает о следующем шаге и помогает не терять заявки.",
+      points: ["подсказки менеджеру", "база знаний", "сценарии follow-up"],
+    },
+    {
+      title: "AI как цикл роста",
+      image: "/images/ai/ai-growth-loop.svg",
+      alt: "AI связывает заявки, аналитику, гипотезы и повторные улучшения продукта",
+      text: "AI полезен не только в переписке. Он помогает видеть повторяющиеся вопросы, слабые места оффера и точки, где сайт или реклама должны стать сильнее.",
+      points: ["анализ вопросов", "гипотезы улучшений", "связь с рекламой и сайтом"],
+    },
+  ];
+
   const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
@@ -257,6 +281,65 @@ const AI = () => {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* Context Visuals */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.035] to-white py-20">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-0 top-20 h-56 w-56 rounded-full bg-[#0096D6]/10 blur-3xl" />
+          <div className="absolute right-0 bottom-10 h-64 w-64 rounded-full bg-[#44B78B]/10 blur-3xl" />
+        </div>
+        <div className="container relative mx-auto px-4">
+          <motion.div className="mx-auto mb-12 max-w-3xl text-center" {...fadeInUp}>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#0096D6]/15 bg-white/85 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur">
+              <Brain className="h-4 w-4 text-[#0096D6]" />
+              AI должен быть встроен в процесс, а не висеть отдельным ботом
+            </div>
+            <h2 className="mb-4 bg-[linear-gradient(135deg,#007DB3_0%,#0096D6_38%,#44B78B_100%)] bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-4xl">
+              Три рабочих сценария, где нейросети быстро дают пользу
+            </h2>
+            <p className="text-lg leading-8 text-slate-600">
+              Мы показываем AI не абстрактной картинкой, а как часть маршрута заявки: от первого сообщения до CRM,
+              аналитики, повторного касания и улучшения продаж.
+            </p>
+          </motion.div>
+
+          <div className="grid gap-7 lg:grid-cols-3">
+            {aiVisualCases.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+              >
+                <Card className="h-full overflow-hidden rounded-[30px] border border-white/70 bg-white/90 shadow-[0_22px_80px_-38px_rgba(0,150,214,0.38)] backdrop-blur">
+                  <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-950">
+                    <img
+                      src={item.image}
+                      alt={item.alt}
+                      className="absolute inset-0 h-full w-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="p-7">
+                    <h3 className="mb-3 text-2xl font-bold tracking-tight text-slate-900">{item.title}</h3>
+                    <p className="mb-5 text-base leading-7 text-slate-600">{item.text}</p>
+                    <div className="space-y-3">
+                      {item.points.map((point) => (
+                        <div key={point} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3">
+                          <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#44B78B]" />
+                          <span className="text-sm leading-6 text-slate-700">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
