@@ -11,7 +11,7 @@ import {
 export default function TelegramLeadAgent() {
   return (
     <ServicePageTemplate
-      title="Telegram AI-агент для заявок — квалификация, ответы и передача в CRM | CentrLP"
+      title="Telegram AI-агент для заявок и CRM | CentrLP"
       description="Внедрение Telegram AI-агента для заявок: ответы клиентам, квалификация обращений, запись, передача в CRM, маршрутизация через n8n и self-hosted сценарии на базе OpenClaw."
       slug="telegram-lead-agent"
       breadcrumbName="Telegram AI-агент для заявок"

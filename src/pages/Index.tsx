@@ -249,8 +249,8 @@ const complianceFocus = [
 const Index = () => {
   return (
     <Layout
-      title="CentrLP — Telegram Mini App, CRM, AI-агенты, MVP и цифровые продукты | Тюмень"
-      description="CentrLP разрабатывает современные цифровые продукты для бизнеса: Telegram Mini App, AI-агенты, персональные CRM, browser extensions, MVP, AI-системы, сайты и запуск роста."
+      title="CentrLP — Telegram Mini App, CRM, AI и сайты | Тюмень"
+      description="CentrLP разрабатывает Telegram Mini App, AI-системы, CRM, сайты и цифровые продукты для бизнеса. От заявки и записи до внутреннего сервиса команды."
     >
       <Hero />
 

@@ -4,7 +4,7 @@ import { Bot, ClipboardCheck, MessageSquareText, Search, Sparkles, Workflow } fr
 export default function AIAgents() {
   return (
     <ServicePageTemplate
-      title="AI-агенты для бизнеса — заявки, ответы, классификация и действия | CentrLP"
+      title="AI-агенты для бизнеса — заявки, ответы и действия | CentrLP"
       description="Разработка AI-агентов для бизнеса: обработка заявок, ответы клиентам, классификация обращений, генерация контента, поиск информации и внутренние действия."
       slug="ai-agents"
       breadcrumbName="AI-агенты"

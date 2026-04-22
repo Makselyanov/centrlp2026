@@ -10,7 +10,7 @@ import {
 export default function N8nAutomation() {
   return (
     <ServicePageTemplate
-      title="n8n-автоматизация для бизнеса — заявки, CRM, Telegram и AI-сценарии | CentrLP"
+      title="n8n для бизнеса — заявки, CRM и AI-сценарии | CentrLP"
       description="Внедрение n8n-автоматизации для бизнеса: маршрутизация заявок, CRM, Telegram, уведомления, AI-сценарии, OpenClaw и внутренние процессы в одной управляемой системе."
       slug="n8n-automation"
       breadcrumbName="n8n-автоматизация"

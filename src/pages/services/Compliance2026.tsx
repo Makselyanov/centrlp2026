@@ -4,8 +4,8 @@ import { FileText, Globe, Languages, ShieldCheck, UserRoundCheck, Workflow } fro
 export default function Compliance2026() {
   return (
     <ServicePageTemplate
-      title="Compliance 2026 для бизнеса — домен, персональные данные, язык сайта и цифровые требования | CentrLP"
-      description="CentrLP помогает бизнесу привести сайт, домен, формы, документы и цифровые сценарии в порядок под новые требования 2026: проверка домена и регистратора, персональные данные, публичные тексты, интерфейсы, формы и маршрут исправлений."
+      title="Compliance 2026 — домен, формы и данные бизнеса | CentrLP"
+      description="Помогаем привести сайт, домен, формы и цифровые сценарии в порядок под требования 2026: проверка домена, данных, текстов, интерфейсов и плана исправлений."
       slug="compliance-2026"
       breadcrumbName="Compliance 2026"
       schemaName="Compliance 2026 для бизнеса"

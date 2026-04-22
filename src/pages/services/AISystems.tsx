@@ -4,7 +4,7 @@ import { Brain, Clapperboard, Database, Layers3, Sparkles, WandSparkles } from "
 export default function AISystems() {
   return (
     <ServicePageTemplate
-      title="AI-системы и нейросети для бизнеса — автоматизация, контент, видео, знания | CentrLP"
+      title="AI-системы для бизнеса — автоматизация, контент и знания | CentrLP"
       description="AI-системы для бизнеса: нейросети, автоматизация, обучение корпоративных ассистентов на базе знаний, генерация контента и видео, внутренние AI-инструменты."
       slug="ai-systems"
       breadcrumbName="AI-системы"

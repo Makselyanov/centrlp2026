@@ -4,7 +4,7 @@ import { Bot, CalendarDays, MessageCircleMore, ShoppingBag, Smartphone, UserRoun
 export default function TelegramMiniApp() {
   return (
     <ServicePageTemplate
-      title="Telegram Mini App для бизнеса — продажи, заявки, запись и личный кабинет | CentrLP"
+      title="Telegram Mini App для бизнеса — продажи и личный кабинет | CentrLP"
       description="Разработка Telegram Mini App для бизнеса: продажи, бронирование, заявки, личный кабинет клиента, внутренние сервисы и интеграции с CRM. Запуск под ключ."
       slug="telegram-mini-app"
       breadcrumbName="Telegram Mini App"

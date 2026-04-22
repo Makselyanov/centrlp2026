@@ -4,7 +4,7 @@ import { Bot, Database, Lock, MessageSquareText, Server, Workflow } from "lucide
 export default function OpenClawAI() {
   return (
     <ServicePageTemplate
-      title="OpenClaw для бизнеса — self-hosted AI-агент в Telegram, CRM и внутренних процессах | CentrLP"
+      title="OpenClaw для бизнеса — self-hosted AI в Telegram и CRM | CentrLP"
       description="Внедрение OpenClaw для бизнеса: self-hosted AI-агент в Telegram, обработка заявок, help-сценарии, связка с CRM, n8n и внутренними процессами на вашей инфраструктуре."
       slug="openclaw-ai"
       breadcrumbName="OpenClaw для бизнеса"

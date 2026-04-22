@@ -11,7 +11,7 @@ import {
 export default function TelegramServiceAgent() {
   return (
     <ServicePageTemplate
-      title="Telegram AI-консультант для записи и сервиса — ответы, сопровождение и CRM | CentrLP"
+      title="Telegram AI-консультант для записи и сервиса | CentrLP"
       description="Внедрение Telegram AI-консультанта для записи, сервиса и сопровождения клиента: FAQ, подтверждения, напоминания, статусы, маршрутизация в CRM и n8n, OpenClaw-сценарии."
       slug="telegram-service-agent"
       breadcrumbName="Telegram AI-консультант"

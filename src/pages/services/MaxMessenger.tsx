@@ -4,7 +4,7 @@ import { Compass, MessageCircle, Rocket, Store, Users, Workflow } from "lucide-r
 export default function MaxMessenger() {
   return (
     <ServicePageTemplate
-      title="Решения для мессенджера Max — ранний рынок, продажи, сервис и CRM-сценарии | CentrLP"
+      title="Решения для Max — продажи, сервис и CRM-сценарии | CentrLP"
       description="Запуск решений для мессенджера Max: ранний выход на рынок, продажи, сервис, клиентские кабинеты, AI-сценарии, CRM, n8n и автоматизация для бизнеса."
       slug="max-messenger"
       breadcrumbName="Решения для Max"
