@@ -14,11 +14,15 @@ const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 
 // --- HELPERS ---
 
+function toGitPath(targetPath) {
+    return targetPath.split(path.sep).join('/');
+}
+
 function getGitLastmod(targetPath) {
     try {
         const output = execFileSync(
             'git',
-            ['log', '-1', '--format=%cs', '--', targetPath],
+            ['log', '-1', '--format=%cs', '--', toGitPath(targetPath)],
             { cwd: ROOT_DIR, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }
         ).trim();
 
