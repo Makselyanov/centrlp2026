@@ -21,6 +21,8 @@ const BlogPost = () => {
 
     const post = slug ? getPostBySlug(slug) : undefined;
     const relatedPosts = slug ? getRelatedPosts(slug, 3) : [];
+    const metaTitle = post?.seoTitle || post?.title || "";
+    const metaDescription = post?.seoDescription || post?.description || "";
 
     // Генерируем оглавление
     useEffect(() => {
@@ -41,7 +43,7 @@ const BlogPost = () => {
             "@context": "https://schema.org",
             "@type": "Article",
             "headline": post.title,
-            "description": post.description,
+            "description": metaDescription || post.description,
             "datePublished": post.date,
             "dateModified": post.date,
             "author": {
@@ -442,8 +444,8 @@ const BlogPost = () => {
 
     return (
         <Layout
-            title={`${post.title} — CentrLP блог`}
-            description={post.description}
+            title={metaTitle}
+            description={metaDescription}
         >
             {/* Progress Bar - using ref and scaleX transform */}
             <div

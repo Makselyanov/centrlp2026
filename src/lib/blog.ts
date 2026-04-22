@@ -3,8 +3,10 @@ import matter from 'gray-matter';
 export interface BlogPost {
     slug: string;
     title: string;
+    seoTitle?: string;
     date: string;
     description: string;
+    seoDescription?: string;
     content: string;
     tags?: string[];
     source?: string;
@@ -15,8 +17,10 @@ export interface BlogPost {
 type BlogFrontmatter = {
     slug?: string;
     title?: string;
+    seoTitle?: string;
     date?: string;
     description?: string;
+    seoDescription?: string;
     tags?: string[] | string;
     source?: string;
     [key: string]: unknown;
@@ -165,6 +169,15 @@ const parseMarkdown = (filePath: string, content: string): BlogPost | null => {
             description = description.substring(0, 217) + '...';
         }
 
+        const seoTitle =
+            typeof frontmatter.seoTitle === 'string' && frontmatter.seoTitle.trim()
+                ? frontmatter.seoTitle.trim()
+                : undefined;
+        const seoDescription =
+            typeof frontmatter.seoDescription === 'string' && frontmatter.seoDescription.trim()
+                ? frontmatter.seoDescription.trim()
+                : undefined;
+
         // ===== TAGS =====
         let tags: string[] = [];
         if (frontmatter.tags) {
@@ -191,8 +204,10 @@ const parseMarkdown = (filePath: string, content: string): BlogPost | null => {
         return {
             slug,
             title,
+            seoTitle,
             date,
             description,
+            seoDescription,
             content: markdownContent,
             tags,
             source,

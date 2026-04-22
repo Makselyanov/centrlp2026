@@ -231,14 +231,14 @@ function collectBlogPostMeta() {
       const parsed = matter(raw);
       const data = parsed.data || {};
       const slug = data.slug || file.replace(/\.md$/i, "").replace(/^\d{4}-\d{2}-\d{2}-/, "");
-      const title = data.title || slug;
-      const description = data.description || "";
+      const title = data.seoTitle || data.title || slug;
+      const description = data.seoDescription || data.description || "";
 
       if (!title || !description) return null;
 
       return {
         path: `/blog/${slug}`,
-        title: `${title} — CentrLP блог`,
+        title,
         description,
       };
     })

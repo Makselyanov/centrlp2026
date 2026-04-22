@@ -1,5 +1,6 @@
 ---
 title: "Как развернуть OpenClaw на собственном хостинге Beget: пошаговая инструкция 2026"
+seoTitle: "Как развернуть OpenClaw на Beget: инструкция"
 date: "2026-04-04"
 tags: ["OpenClaw", "Beget", "VPS", "хостинг", "инструкция", "ИИ агент", "DevOps", "self-hosted"]
 description: "Пошаговое руководство по установке OpenClaw на VPS Beget: выбор тарифа, настройка Ubuntu, Node.js, ключей API и автозапуска. Готовое решение за 30 минут."
