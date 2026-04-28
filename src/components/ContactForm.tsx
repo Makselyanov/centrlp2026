@@ -95,7 +95,7 @@ export const ContactForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-7 shadow-sm md:p-8"
+      className="mx-auto w-full max-w-3xl rounded-2xl border border-slate-200 bg-white p-7 shadow-sm md:p-8"
       data-metric="form-submit"
     >
       <div className="space-y-6">
@@ -240,12 +240,11 @@ export const ContactForm = () => {
               required
             />
             <Label htmlFor="privacy" className="cursor-pointer text-sm leading-relaxed">
-              Даю согласие на обработку персональных данных для рассмотрения заявки
-              и обратной связи на условиях{" "}
+              Согласен(а) с{" "}
               <Link to="/privacy" className="text-primary hover:underline">
-                политики конфиденциальности
+                политикой конфиденциальности
               </Link>
-              .
+              {" "}и условиями обработки данных по заявке.
             </Label>
           </div>
 
@@ -259,11 +258,11 @@ export const ContactForm = () => {
               required
             />
             <Label htmlFor="cookies" className="cursor-pointer text-sm leading-relaxed">
-              Ознакомлен(а) с{" "}
+              Согласен(а) с{" "}
               <Link to="/cookies" className="text-primary hover:underline">
-                политикой использования cookie
+                политикой cookie
               </Link>{" "}
-              и согласен(а) на использование cookie-файлов.
+              и использованием cookie-файлов.
             </Label>
           </div>
         </div>

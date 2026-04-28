@@ -6,7 +6,6 @@ import { Calendar, ArrowLeft, Copy, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 
 // Brand gradient constant (from /prices page)
@@ -161,12 +160,7 @@ const BlogPost = () => {
                         <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10 max-w-4xl">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="text-center py-20"
-                        >
+                        <div className="text-center py-20">
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
                             <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
                             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
@@ -178,7 +172,7 @@ const BlogPost = () => {
                                     Вернуться в блог
                                 </Button>
                             </Link>
-                        </motion.div>
+                        </div>
                     </div>
                 </section>
             </Layout>
@@ -194,12 +188,7 @@ const BlogPost = () => {
                         <div className="absolute bottom-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-[#44B78B]/10 blur-[120px]" />
                     </div>
                     <div className="container mx-auto px-4 relative z-10 max-w-4xl">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="text-center py-20"
-                        >
+                        <div className="text-center py-20">
                             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 mb-4">404</h1>
                             <p className="text-2xl font-semibold text-slate-700 mb-3">Статья не найдена</p>
                             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
@@ -211,7 +200,7 @@ const BlogPost = () => {
                                     Вернуться в блог
                                 </Button>
                             </Link>
-                        </motion.div>
+                        </div>
                     </div>
                 </section>
             </Layout>
@@ -237,12 +226,7 @@ const BlogPost = () => {
 
     // Hero Section Component
     const HeroSection = () => (
-        <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative pt-12 pb-12 mb-12 bg-gradient-to-r from-slate-50 via-blue-50/20 to-slate-50 border-b border-slate-200/50"
-        >
+        <section className="relative pt-12 pb-12 mb-12 bg-gradient-to-r from-slate-50 via-blue-50/20 to-slate-50 border-b border-slate-200/50">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                 <Link to="/blog" className="inline-block mb-6">
                     <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
@@ -311,29 +295,19 @@ const BlogPost = () => {
                     />
                 </div>
             </div>
-        </motion.section>
+        </section>
     );
 
     // Layout with TOC Component
     const LayoutWithToc = () => (
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] items-start">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="min-w-0"
-            >
+            <div className="min-w-0">
                 <article className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-slate-200/60 shadow-sm">
                     <EnhancedMarkdown content={post.content} />
                 </article>
-            </motion.div>
+            </div>
 
-            <motion.aside
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="hidden lg:block sticky top-24 h-fit"
-            >
+            <aside className="hidden lg:block sticky top-24 h-fit">
                 <div className="bg-white/60 backdrop-blur-sm border border-white/50 rounded-2xl p-6 shadow-sm">
                     <h3 className="text-sm font-semibold text-slate-900 mb-4 uppercase tracking-wide">
                         Оглавление
@@ -353,32 +327,22 @@ const BlogPost = () => {
                         ))}
                     </nav>
                 </div>
-            </motion.aside>
+            </aside>
         </div>
     );
 
     // Layout without TOC Component
     const LayoutNoToc = () => (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mx-auto w-full max-w-3xl"
-        >
+        <div className="mx-auto w-full max-w-3xl">
             <article className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl border border-slate-200/60 shadow-sm">
                 <EnhancedMarkdown content={post.content} />
             </article>
-        </motion.div>
+        </div>
     );
 
     // CTA Block Component
     const CTABlock = () => (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className={`mt-12 p-[1px] bg-gradient-to-r ${BRAND_GRADIENT} rounded-2xl shadow-lg`}
-        >
+        <div className={`mt-12 p-[1px] bg-gradient-to-r ${BRAND_GRADIENT} rounded-2xl shadow-lg`}>
             <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl p-8 md:p-10 border border-white/40 dark:border-white/10">
                 <div className="flex flex-col gap-6">
                     <div>
@@ -403,7 +367,7 @@ const BlogPost = () => {
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 
     // Related Posts Component

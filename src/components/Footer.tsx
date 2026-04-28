@@ -138,15 +138,6 @@ export const Footer = () => {
           </p>
         </div>
       </div>
-
-      {/* Envybox Integration */}
-      <link rel="stylesheet" href="https://cdn.envybox.io/widget/cbk.css" />
-      <script
-        type="text/javascript"
-        src="https://cdn.envybox.io/widget/cbk.js?wcb_code=528a9824dc4bc4c6b0c7a45e8beea4ca"
-        charSet="UTF-8"
-        async
-      ></script>
     </footer>
   );
 };
