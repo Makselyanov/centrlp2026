@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /dzen-rss.xml
 
 Host: centrlp.ru
 Sitemap: https://centrlp.ru/sitemap.xml
