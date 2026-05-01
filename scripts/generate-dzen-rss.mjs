@@ -85,6 +85,9 @@ function readPosts() {
 }
 
 function renderFeed(posts) {
+  const lastBuildDate = posts[0]?.date
+    ? posts[0].date.toUTCString()
+    : new Date('2026-01-01T00:00:00Z').toUTCString();
   const items = posts.map(post => `    <item>
       <title>${escapeXml(post.title)}</title>
       <link>${escapeXml(post.url)}</link>
@@ -105,7 +108,7 @@ ${post.tags.slice(0, 6).map(tag => `      <category>${escapeXml(tag)}</category>
     <link>${SITE_URL}/blog</link>
     <description>Экспертные статьи CentrLP: сайты, маркетинг, CRM, Яндекс Директ, AI-автоматизация и контент-завод.</description>
     <language>ru</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <lastBuildDate>${lastBuildDate}</lastBuildDate>
 ${items}
   </channel>
 </rss>
