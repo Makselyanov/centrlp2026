@@ -37,7 +37,7 @@ const loadYandexMetrika = () => {
     clickmap: true,
     trackLinks: true,
     accurateTrackBounce: true,
-    webvisor: true,
+    webvisor: false,
   });
 };
 

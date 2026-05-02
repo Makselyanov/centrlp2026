@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import emailjs from "emailjs-com";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { Layout } from "@/components/Layout";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,11 +24,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { packagePrices } from "@/data/pricing";
 
-// === EmailJS constants (твой аккаунт) ===
-const EMAILJS_SERVICE_ID = "service_ep2g9me";
-const EMAILJS_TEMPLATE_ID = "template_b0xrz8b";
-const EMAILJS_PUBLIC_KEY = "yzcN-4Aotl3kVqWIT";
+const CONSENT_VERSION = "consent-v1.0-2026-05-02";
+const PRIVACY_VERSION = "privacy-v2.0-2026-04-17";
+const COOKIES_VERSION = "cookies-v2.0-2026-04-17";
+const startPackagePrice = packagePrices[0]?.price || "от 75 000 ₽";
+const salesPackagePrice = packagePrices[1]?.price || "от 140 000 ₽";
 
 // --- Types & Data ---
 
@@ -94,7 +95,7 @@ const SERVICES: Service[] = [
         title: "Дизайн и прототипирование",
         description:
             "Прототип и дизайн экранов без разработки — подходит, если у вас уже есть разработчики.",
-        basePrice: 15000,
+        basePrice: 25000,
         type: "one_time",
     },
     {
@@ -103,7 +104,7 @@ const SERVICES: Service[] = [
         title: "Фирменный стиль и логотип",
         description:
             "Логотип, базовый гайд по стилю, цвета, шрифты, примеры использования.",
-        basePrice: 15000,
+        basePrice: 25000,
         type: "one_time",
     },
     {
@@ -112,7 +113,7 @@ const SERVICES: Service[] = [
         title: "Нейминг и продающие офферы",
         description:
             "Помощь с названием, позиционированием и формулировкой основных офферов.",
-        basePrice: 15000,
+        basePrice: 20000,
         type: "one_time",
     },
     {
@@ -208,7 +209,7 @@ const SERVICES: Service[] = [
         title: "Ведение Яндекс (месяц)",
         description:
             "Оптимизация, тест гипотез, отчётность по заявкам и цене лида.",
-        basePrice: 20000,
+        basePrice: 30000,
         type: "monthly",
     },
     {
@@ -217,7 +218,7 @@ const SERVICES: Service[] = [
         title: "Настройка VK Ads",
         description:
             "Аудитории, креативы, связка с сайтом/сообществом, пиксели.",
-        basePrice: 25000,
+        basePrice: 30000,
         type: "one_time",
     },
     {
@@ -274,7 +275,7 @@ const SERVICES: Service[] = [
         title: "Бартер для мебельщиков",
         description:
             "Работаем за мебель, встроенные решения, шоу-румные проекты. Считаем по обычным ставкам, но оплата работой/продуктом.",
-        basePrice: 60000,
+        basePrice: 80000,
         type: "barter",
     },
     {
@@ -283,7 +284,7 @@ const SERVICES: Service[] = [
         title: "Бартер для СТО / детейлинга",
         description:
             "Реклама и упаковка в обмен на обслуживание авто: оклейка, детейлинг, ГБО и т.п.",
-        basePrice: 60000,
+        basePrice: 80000,
         type: "barter",
     },
     {
@@ -292,7 +293,7 @@ const SERVICES: Service[] = [
         title: "Бартер для клининга",
         description:
             "Сайт, реклама, упаковка в обмен на клининг офисов/помещений.",
-        basePrice: 50000,
+        basePrice: 80000,
         type: "barter",
     },
     {
@@ -300,7 +301,7 @@ const SERVICES: Service[] = [
         group: "Бартер-пакеты",
         title: "Бартер для бьюти-сфера",
         description: "Маркетинг в обмен на услуги салона, студий красоты.",
-        basePrice: 40000,
+        basePrice: 80000,
         type: "barter",
     },
     {
@@ -309,7 +310,7 @@ const SERVICES: Service[] = [
         title: "Бартер для турагентств",
         description:
             "Маркетинг и AI-процессы в обмен на туры/услуги турагентства.",
-        basePrice: 50000,
+        basePrice: 80000,
         type: "barter",
     },
 ];
@@ -329,10 +330,12 @@ export function AiPlanPage() {
         phone: "",
         messenger: "",
         consentPersonalData: false,
+        cookiesAccepted: false,
         consentMarketing: false,
     });
     const [errors, setErrors] = useState<{
         consentPersonalData?: string;
+        cookiesAccepted?: string;
         name?: string;
         phone?: string;
         messenger?: string;
@@ -375,6 +378,9 @@ export function AiPlanPage() {
             newErrors.consentPersonalData =
                 "Нужно согласиться с обработкой персональных данных";
         }
+        if (!formData.cookiesAccepted) {
+            newErrors.cookiesAccepted = "Нужно подтвердить ознакомление с политикой cookie";
+        }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -389,23 +395,49 @@ export function AiPlanPage() {
 
         try {
             const totals = calculateTotal();
+            const selectedServices = formData.selectedServices
+                .map((id) => SERVICES.find((service) => service.id === id)?.title)
+                .filter(Boolean)
+                .join(", ");
 
-            const templateParams = {
-                ...formData,
-                selectedServices: formData.selectedServices.join(", "),
-                selectedPackage: selectedPackage,
-                totalOneTime: totals.oneTime,
-                totalMonthly: totals.monthly,
-                totalBarter: totals.barter,
-            };
+            const response = await fetch("/api/lead", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: formData.name,
+                    phone: formData.phone,
+                    business: formData.niche || formData.businessFormat,
+                    comment: [
+                        "AI-план / калькулятор",
+                        `Ниша: ${formData.niche || "не указана"}`,
+                        `Формат бизнеса: ${formData.businessFormat || "не указан"}`,
+                        `Ситуация: ${formData.currentSituation || "не указана"}`,
+                        `Цели: ${formData.goals || "не указаны"}`,
+                        `Выбранные услуги: ${selectedServices || "не выбраны"}`,
+                        `Пакет: ${selectedPackage}`,
+                        `Бюджет: ${formData.budget || "не указан"}`,
+                        `Мессенджер: ${formData.messenger}`,
+                        `Разово: ${totals.oneTime} ₽`,
+                        `Ежемесячно: ${totals.monthly} ₽/мес`,
+                        `Бартерный эквивалент: ${totals.barter} ₽`,
+                        `Маркетинговая рассылка: ${formData.consentMarketing ? "да" : "нет"}`,
+                    ].join("\n"),
+                    page_path: "/ai-plan",
+                    page_url: typeof window !== "undefined" ? window.location.href : "",
+                    lead_source: "centrlp.ru/ai-plan",
+                    privacyAccepted: formData.consentPersonalData,
+                    cookiesAccepted: formData.cookiesAccepted,
+                    consent_version: CONSENT_VERSION,
+                    privacy_version: PRIVACY_VERSION,
+                    cookies_version: COOKIES_VERSION,
+                }),
+            });
 
-            // Отправка письма через EmailJS
-            await emailjs.send(
-                EMAILJS_SERVICE_ID,
-                EMAILJS_TEMPLATE_ID,
-                templateParams,
-                EMAILJS_PUBLIC_KEY,
-            );
+            if (!response.ok) {
+                throw new Error(`Lead request failed with status ${response.status}`);
+            }
 
             toast({
                 title: "Заявка отправлена!",
@@ -419,9 +451,11 @@ export function AiPlanPage() {
                 phone: "",
                 messenger: "",
                 consentPersonalData: false,
+                cookiesAccepted: false,
+                consentMarketing: false,
             }));
         } catch (error) {
-            console.error("EmailJS Error:", error);
+            console.error("AI plan lead send error:", error);
             toast({
                 title: "Ошибка отправки",
                 description: "Не удалось отправить заявку. Попробуйте позже.",
@@ -1113,16 +1147,76 @@ export function AiPlanPage() {
                                                                         на
                                                                         обработку
                                                                         персональных
-                                                                        данных и
-                                                                        принимаю
-                                                                        условия
-                                                                        политики
-                                                                        конфиденциальности.
+                                                                        данных по{" "}
+                                                                        <Link
+                                                                            to="/consent"
+                                                                            className="text-primary underline hover:text-primary/80"
+                                                                        >
+                                                                            согласию
+                                                                        </Link>{" "}
+                                                                        и ознакомлен(а) с{" "}
+                                                                        <Link
+                                                                            to="/privacy"
+                                                                            className="text-primary underline hover:text-primary/80"
+                                                                        >
+                                                                            политикой конфиденциальности
+                                                                        </Link>.
                                                                     </Label>
                                                                     {errors.consentPersonalData && (
                                                                         <p className="text-xs text-red-500 font-medium">
                                                                             {
                                                                                 errors.consentPersonalData
+                                                                            }
+                                                                        </p>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="flex items-start space-x-3">
+                                                                <Checkbox
+                                                                    id="cookiesAccepted"
+                                                                    checked={
+                                                                        formData.cookiesAccepted
+                                                                    }
+                                                                    onCheckedChange={(
+                                                                        checked,
+                                                                    ) => {
+                                                                        setFormData(
+                                                                            {
+                                                                                ...formData,
+                                                                                cookiesAccepted:
+                                                                                    checked as boolean,
+                                                                            },
+                                                                        );
+                                                                        if (
+                                                                            checked
+                                                                        )
+                                                                            setErrors(
+                                                                                {
+                                                                                    ...errors,
+                                                                                    cookiesAccepted:
+                                                                                        undefined,
+                                                                                },
+                                                                            );
+                                                                    }}
+                                                                />
+                                                                <div className="grid gap-1.5 leading-none">
+                                                                    <Label
+                                                                        htmlFor="cookiesAccepted"
+                                                                        className="text-sm font-medium leading-snug cursor-pointer"
+                                                                    >
+                                                                        Я ознакомлен(а) с{" "}
+                                                                        <Link
+                                                                            to="/cookies"
+                                                                            className="text-primary underline hover:text-primary/80"
+                                                                        >
+                                                                            политикой cookie
+                                                                        </Link>.
+                                                                    </Label>
+                                                                    {errors.cookiesAccepted && (
+                                                                        <p className="text-xs text-red-500 font-medium">
+                                                                            {
+                                                                                errors.cookiesAccepted
                                                                             }
                                                                         </p>
                                                                     )}
@@ -1355,7 +1449,7 @@ export function AiPlanPage() {
                                                     Старт
                                                 </span>
                                                 <span className="text-sm font-semibold text-primary">
-                                                    от 60 000 ₽
+                                                    {startPackagePrice}
                                                 </span>
                                             </div>
                                             <ul className="text-xs text-slate-600 space-y-1 mb-3">
@@ -1404,7 +1498,7 @@ export function AiPlanPage() {
                                                     Под ключ
                                                 </span>
                                                 <span className="text-sm font-semibold text-primary">
-                                                    от 80 000 ₽
+                                                    {salesPackagePrice}
                                                 </span>
                                             </div>
                                             <ul className="text-xs text-slate-600 space-y-1 mb-3">

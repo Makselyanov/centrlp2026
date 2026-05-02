@@ -10,6 +10,7 @@ import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 const Contacts = () => {
   useAutoBreadcrumb("Контакты");
   const [copied, setCopied] = useState(false);
+  const [mapVisible, setMapVisible] = useState(false);
 
   const copyInn = () => {
     navigator.clipboard.writeText("7203606424");
@@ -267,14 +268,30 @@ const Contacts = () => {
       </section>
 
       {/* Map */}
-      <section className="h-[400px] w-full bg-secondary relative grayscale hover:grayscale-0 transition-all duration-700">
-        <iframe
-          src="https://yandex.ru/map-widget/v1/?um=constructor%3A644fd3fd8f74799009f60c932487dc7ef6b4d7208f53ac7e5e596cb6eec650ac&source=constructor"
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          className="absolute inset-0"
-        />
+      <section className="h-[400px] w-full bg-secondary relative overflow-hidden">
+        {mapVisible ? (
+          <iframe
+            title="Карта офиса CentrLP в Тюмени"
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3A644fd3fd8f74799009f60c932487dc7ef6b4d7208f53ac7e5e596cb6eec650ac&source=constructor"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            className="absolute inset-0 grayscale transition-all duration-700 hover:grayscale-0"
+          />
+        ) : (
+          <div className="flex h-full flex-col items-center justify-center gap-4 bg-slate-100 px-4 text-center">
+            <MapPin className="h-10 w-10 text-primary" />
+            <div>
+              <h2 className="text-xl font-bold text-slate-900">Тюмень, проезд Заречный, 39А</h2>
+              <p className="mt-2 max-w-xl text-sm text-slate-600">
+                Офис и встречи по предварительной договоренности.
+              </p>
+            </div>
+            <Button type="button" onClick={() => setMapVisible(true)}>
+              Показать карту
+            </Button>
+          </div>
+        )}
       </section>
     </Layout>
   );

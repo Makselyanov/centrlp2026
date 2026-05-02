@@ -201,6 +201,14 @@ app.post("/api/lead", async (req, res) => {
     return res.status(400).json({ ok: false, error: "missing_required_consents" });
   }
 
+  const consentVersion = String(body.consent_version || "").trim().slice(0, 120);
+  const privacyVersion = String(body.privacy_version || "").trim().slice(0, 120);
+  const cookiesVersion = String(body.cookies_version || "").trim().slice(0, 120);
+
+  if (!consentVersion || !privacyVersion || !cookiesVersion) {
+    return res.status(400).json({ ok: false, error: "missing_consent_versions" });
+  }
+
   const lead = {
     received_at: new Date().toISOString(),
     name,
@@ -214,9 +222,9 @@ app.post("/api/lead", async (req, res) => {
     lead_source: String(body.lead_source || "centrlp.ru").trim().slice(0, 120),
     privacy_accepted: Boolean(body.privacyAccepted),
     cookies_accepted: Boolean(body.cookiesAccepted),
-    consent_version: String(body.consent_version || "").trim().slice(0, 120),
-    privacy_version: String(body.privacy_version || "").trim().slice(0, 120),
-    cookies_version: String(body.cookies_version || "").trim().slice(0, 120),
+    consent_version: consentVersion,
+    privacy_version: privacyVersion,
+    cookies_version: cookiesVersion,
     ip,
     user_agent: String(req.headers["user-agent"] || "").slice(0, 300),
   };

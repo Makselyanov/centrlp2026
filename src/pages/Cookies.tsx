@@ -2,6 +2,12 @@ import { Layout } from "@/components/Layout";
 import { Link } from "react-router-dom";
 
 const Cookies = () => {
+  const resetCookieChoice = () => {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem("cookie-consent");
+    window.location.reload();
+  };
+
   return (
     <Layout
       title="Политика использования cookie | CentrLP"
@@ -74,9 +80,10 @@ const Cookies = () => {
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
-                <strong>_ym_uid, _ym_d, _ym_isad, _ym_visorc</strong> (ООО «Яндекс»,
+                <strong>_ym_uid, _ym_d, _ym_isad</strong> (ООО «Яндекс»,
                 Яндекс.Метрика) — уникальный идентификатор посетителя, дата первого
-                визита, вебвизор. Срок хранения: до 1 года. Политика Яндекс.Метрики:{" "}
+                визита и признаки визита. Вебвизор на сайте отключён. Срок хранения: до 1 года.
+                Политика Яндекс.Метрики:{" "}
                 <a
                   href="https://yandex.ru/legal/confidential/"
                   target="_blank"
@@ -108,10 +115,6 @@ const Cookies = () => {
                 сбор обезличенной статистики посещаемости и поведения Пользователей
                 для улучшения Сайта;
               </li>
-              <li>
-                показ рекламных материалов Оператора Пользователям, ранее посещавшим
-                Сайт, на сторонних рекламных площадках;
-              </li>
               <li>обеспечение безопасности и защиты от мошеннических действий.</li>
             </ul>
 
@@ -132,6 +135,13 @@ const Cookies = () => {
               очистки cookie сайта или изменения настроек браузера в соответствии
               с разделом 5 настоящей Политики.
             </p>
+            <button
+              type="button"
+              onClick={resetCookieChoice}
+              className="mt-2 rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              Изменить выбор cookie
+            </button>
 
             <h2 className="text-xl font-semibold text-foreground mt-8 mb-4">
               5. Как отключить cookie
