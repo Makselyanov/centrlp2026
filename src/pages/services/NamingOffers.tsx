@@ -248,7 +248,7 @@ export default function NamingOffers() {
             {[
               {
                 name: "Нейминг",
-                price: "от 15 000 ₽",
+                price: "от 20 000 ₽",
                 period: "Срок: 3–5 дней",
                 features: [
                   "5–10 вариантов названий",
@@ -259,7 +259,7 @@ export default function NamingOffers() {
               },
               {
                 name: "Офферы",
-                price: "от 20 000 ₽",
+                price: "от 25 000 ₽",
                 period: "Срок: 5–7 дней",
                 features: [
                   "Анализ аудитории и конкурентов",
@@ -272,7 +272,7 @@ export default function NamingOffers() {
               },
               {
                 name: "Нейминг + Офферы",
-                price: "от 30 000 ₽",
+                price: "от 35 000 ₽",
                 period: "Срок: 7–10 дней",
                 features: [
                   "Название (10 вариантов)",

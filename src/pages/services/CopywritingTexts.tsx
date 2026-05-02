@@ -15,7 +15,7 @@ import { useAutoBreadcrumb, useServiceSchema, useFaqSchema } from "@/components/
 
 const CopywritingTexts = () => {
   const faqItems = [
-    { question: "Сколько стоит написание текстов для сайта?", answer: "SEO-тексты — от 15 000 ₽ за пакет до 5 страниц. Продающие тексты для лендингов и коммерческих страниц — от 25 000 ₽. Рекламные объявления для Яндекс, VK, Telegram — от 10 000 ₽ за пакет 15–20 объявлений." },
+    { question: "Сколько стоит написание текстов для сайта?", answer: "SEO-тексты — от 12 000 ₽ за пакет до 5 страниц. Продающие тексты для лендингов и коммерческих страниц — от 25 000 ₽. Рекламные объявления для Яндекс, VK, Telegram — от 12 000 ₽ за пакет 15–20 объявлений." },
     { question: "Какие сроки написания текстов?", answer: "SEO-тексты для сайта — 5–7 рабочих дней. Продающие тексты для лендинга — 7–10 дней с учётом аналитики и итераций. Рекламные объявления — 3–5 дней. В стоимость входят правки и согласование." },
     { question: "Что входит в услугу копирайтинга?", answer: "Полный цикл: анализ ниши и конкурентов, сбор ключевых слов, написание текстов с SEO-оптимизацией, продающая структура (заголовки, офферы, CTA), AI-усиление и редактура. Финальный текст без воды, штампов и канцелярита." },
   ];
@@ -475,7 +475,7 @@ const CopywritingTexts = () => {
             <Card className="hover:shadow-xl transition-all duration-300 border-border/50">
               <CardHeader>
                 <h3 className="text-2xl font-bold">SEO-тексты</h3>
-                <div className="text-3xl font-bold text-primary mt-2">от 15 000 ₽</div>
+                <div className="text-3xl font-bold text-primary mt-2">от 12 000 ₽</div>
                 <p className="text-sm text-muted-foreground mt-2">Для продвижения в поиске</p>
               </CardHeader>
               <CardContent>
@@ -538,7 +538,7 @@ const CopywritingTexts = () => {
             <Card className="hover:shadow-xl transition-all duration-300 border-border/50">
               <CardHeader>
                 <h3 className="text-2xl font-bold">Рекламные тексты</h3>
-                <div className="text-3xl font-bold text-primary mt-2">от 10 000 ₽</div>
+                <div className="text-3xl font-bold text-primary mt-2">от 12 000 ₽</div>
                 <p className="text-sm text-muted-foreground mt-2">Для Яндекс, VK, Telegram</p>
               </CardHeader>
               <CardContent>

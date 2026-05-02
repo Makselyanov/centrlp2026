@@ -162,6 +162,12 @@ export const Footer = () => {
               >
                 Политика использования cookie
               </Link>
+              <Link
+                to="/consent"
+                className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                Согласие на обработку персональных данных
+              </Link>
             </div>
           </div>
         </div>

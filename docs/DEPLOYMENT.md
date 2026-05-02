@@ -37,13 +37,15 @@
 `nginx` использует:
 
 - `root /var/www/centrlp/dist`
-- `try_files $uri $uri/ /index.html`
+- `try_files $uri $uri/index.html $uri/ @centrlp_not_found`
+- неизвестные маршруты получают настоящий `404`
 
-Это обычная схема для Vite SPA:
+Это strict prerender-схема:
 
 1. проект собирается в `dist`
-2. nginx раздаёт `dist`
-3. React Router внутри обрабатывает маршруты
+2. `scripts/prerender-route-heads.mjs` создаёт `dist/<route>/index.html`
+3. nginx отдаёт только физически собранные маршруты
+4. прямой заход на новый URL работает только после `npm run build`
 
 ## Что считать текущим источником правды
 
@@ -70,8 +72,10 @@
 1. Работать в локальной копии `G:\mvp\centrlp`.
 2. Проверять `git status`, `npm run lint`, `npm run build`.
 3. Публиковать изменения в серверный git `origin`.
-4. Отдельно контролировать, что рабочее дерево `/var/www/centrlp` и собранный `dist` действительно обновлены.
-5. После важных релизов перепроверять live-страницы и SEO-артефакты (`sitemap.xml`, `robots.txt`, prerendered heads).
+4. Обновлять production working tree до того же коммита: `git pull --ff-only origin main`.
+5. На production запускать `npm ci` при изменении зависимостей и `npm run build` для обновления `dist`.
+6. Отдельно контролировать, что рабочее дерево `/var/www/centrlp` и собранный `dist` действительно обновлены.
+7. После важных релизов перепроверять live-страницы и SEO-артефакты (`sitemap.xml`, `robots.txt`, prerendered heads).
 
 ## Что ещё осталось улучшить в эксплуатации
 

@@ -77,6 +77,19 @@ const floatingIcons = [
   { icon: Bot, className: "bottom-20 right-[12%]", color: "text-[#44B78B]/14", duration: 7, y: 16, rotate: -4 },
 ];
 
+const formatServicePrice = (price?: string) => {
+  if (!price) {
+    return null;
+  }
+
+  const value = Number(price);
+  if (!Number.isFinite(value)) {
+    return price;
+  }
+
+  return `${value.toLocaleString("ru-RU")} ₽`;
+};
+
 export const ServicePageTemplate = ({
   title,
   description,
@@ -107,6 +120,8 @@ export const ServicePageTemplate = ({
   useAutoBreadcrumb(breadcrumbName);
   useServiceSchema({ name: schemaName, description: schemaDescription, price });
   useFaqSchema(faqItems);
+
+  const formattedPrice = formatServicePrice(price);
 
   return (
     <Layout title={title} description={description}>
@@ -176,7 +191,7 @@ export const ServicePageTemplate = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.24 }}
-              className="mb-10 flex flex-wrap justify-center gap-2.5"
+              className="mb-8 flex flex-wrap justify-center gap-2.5"
             >
               {heroPoints.map((point, index) => (
                 <motion.div
@@ -190,6 +205,30 @@ export const ServicePageTemplate = ({
                 </motion.div>
               ))}
             </motion.div>
+
+            {formattedPrice && (
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.28 }}
+                className="mx-auto mb-10 grid max-w-2xl gap-3 rounded-[28px] border border-[#0096D6]/15 bg-white/88 p-4 text-left shadow-[0_18px_70px_-38px_rgba(0,150,214,0.42)] backdrop-blur-sm sm:grid-cols-[1fr_auto] sm:items-center sm:p-5"
+              >
+                <div>
+                  <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0b7cb0]">
+                    Ориентир стоимости
+                  </div>
+                  <div className="text-2xl font-bold tracking-tight text-slate-950">от {formattedPrice}</div>
+                  <p className="mt-1 text-sm leading-6 text-slate-600">
+                    Точная смета зависит от сценария, интеграций, контента и объёма внедрения.
+                  </p>
+                </div>
+                <Button variant="outline" asChild className="border-slate-300 bg-white">
+                  <Link to="/prices">
+                    Весь прайс <ArrowRight className="ml-1.5 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+            )}
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}

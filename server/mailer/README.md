@@ -26,6 +26,7 @@ SMTP_PASS=<пароль приложения Яндекс, scope=SMTP-only>
 LEAD_TO=1@centrlp.ru
 LEAD_FROM=1@centrlp.ru
 PORT=3021
+LEAD_LOG_RETENTION_DAYS=183
 ```
 
 ## Развёртывание
@@ -60,7 +61,8 @@ location = /api/lead {
 - Honeypot поле `website` — бот заполнит, человек не увидит.
 - Ограничение размера JSON: 16 KB.
 - Обрезка длины каждого поля.
-- Лог-файл `logs/leads.jsonl` (append-only JSONL) — audit trail.
+- Лог-файл `logs/leads.jsonl` — audit trail с автоматической очисткой старых
+  записей по `LEAD_LOG_RETENTION_DAYS` (по умолчанию 183 дня).
 
 ## Наблюдение
 

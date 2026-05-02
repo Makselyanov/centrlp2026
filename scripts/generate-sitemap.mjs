@@ -93,14 +93,14 @@ function getPriority(route) {
     if (route === '/services' || route === '/prices' || route === '/projects') return '0.9';
     if (route.startsWith('/services/') || route === '/contacts' || route === '/about') return '0.8';
     if (route.startsWith('/blog/')) return '0.7';
-    if (route === '/privacy' || route === '/cookies') return '0.3';
+    if (route === '/privacy' || route === '/cookies' || route === '/consent') return '0.3';
     return '0.7';
 }
 
 function getChangefreq(route) {
     if (route === '/' || route === '/blog') return 'daily';
     if (route.startsWith('/blog/')) return 'monthly';
-    if (route === '/privacy' || route === '/cookies') return 'yearly';
+    if (route === '/privacy' || route === '/cookies' || route === '/consent') return 'yearly';
     return 'weekly';
 }
 

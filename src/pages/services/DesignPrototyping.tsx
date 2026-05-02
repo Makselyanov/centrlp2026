@@ -314,7 +314,7 @@ const DesignPrototypingPage = () => {
             {[
               {
                 name: "Прототип",
-                price: "от 15 000 ₽",
+                price: "от 25 000 ₽",
                 period: "Срок: 3–5 дней",
                 features: [
                   "Схема структуры страниц",

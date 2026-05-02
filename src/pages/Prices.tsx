@@ -2,9 +2,33 @@ import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, Zap, Star, TrendingUp, Shield, Target, BarChart, PenTool, Layout as LayoutIcon, MessageSquare, Search, Briefcase, RefreshCw, HelpCircle, CheckCircle, ArrowUpRight, Sparkles, ArrowRight } from "lucide-react";
+import {
+  Zap,
+  Star,
+  TrendingUp,
+  Shield,
+  Target,
+  BarChart,
+  PenTool,
+  Layout as LayoutIcon,
+  MessageSquare,
+  Search,
+  Briefcase,
+  RefreshCw,
+  HelpCircle,
+  CheckCircle,
+  ArrowUpRight,
+  Sparkles,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { useAutoBreadcrumb } from "@/components/SeoSchemas";
+import {
+  packagePrices,
+  pricingGroups,
+  pricingUpdatedAt,
+  servicePrices,
+  type ServicePriceCategory,
+} from "@/data/pricing";
 
 const Prices = () => {
   useAutoBreadcrumb("Цены");
@@ -38,90 +62,66 @@ const Prices = () => {
     }
   };
 
-  const packages = [
+  const packageStyles = [
     {
       id: "start",
-      title: "Старт",
-      price: "от 60 000 ₽",
-      description: "Быстрая упаковка малого бизнеса с фокусом на получении заявок в первые 7–14 дней.",
-      features: [
-        "Сайт 5–7 страниц (прототип → дизайн → сборка)",
-        "Квиз на 5–10 шагов с ИИ-оптимизацией",
-        "Подключение Метрики, целей, событий",
-        "Базовая SEO-структура",
-        "Оформление ВКонтакте (обложка, меню)",
-        "5–7 продающих текстовых блоков"
-      ],
-      solve: "Отсутствие упаковки, низкая конверсия, дорогие заявки.",
       icon: Zap,
-      popular: false,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/20"
+      borderColor: "border-blue-500/20",
     },
     {
-      id: "full",
-      title: "Продажи под ключ",
-      price: "от 80 000 ₽",
-      description: "Полный цикл маркетинга для стабильного потока заявок.",
-      features: [
-        "Сайт 7–12 страниц + сложный квиз",
-        "ИИ-бот 24/7 + автоответы",
-        "Настройка рекламы (Яндекс + ВК)",
-        "A/B-тестирование с нейросетями",
-        "Контент-план (10 единиц) + креативы",
-        "Ежедневный контроль и корректировки"
-      ],
-      solve: "Низкий поток лидов, устаревшие процессы, потеря клиентов.",
+      id: "sales",
       icon: Star,
-      popular: true,
       color: "text-primary",
       bgColor: "bg-primary/10",
-      borderColor: "border-primary/50"
+      borderColor: "border-primary/50",
     },
     {
-      id: "ads",
-      title: "Ведение рекламы",
-      price: "от 20 000 ₽/мес",
-      description: "Профессиональное сопровождение трафика с прогнозом и аналитикой.",
-      features: [
-        "Яндекс.Директ — 20 000 ₽/мес",
-        "ВКонтакте Ads — 30 000 ₽/мес",
-        "Холодные/тёплые сегменты, ретаргетинг",
-        "A/B-тесты объявлений на основе ИИ",
-        "Еженедельные отчёты и прогнозы"
-      ],
-      solve: "Дорогая заявка, нестабильный поток, отсутствие аналитики.",
+      id: "automation",
       icon: TrendingUp,
-      popular: false,
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/20"
-    }
+      borderColor: "border-purple-500/20",
+    },
   ];
 
-  const services = [
-    { title: "Квиз «Продажа под ключ»", price: "15–35к ₽", desc: "Многошаговый квиз с продуманной логикой и ИИ-оптимизацией.", solve: "Рост конверсии", icon: HelpCircle },
-    { title: "ИИ-скрипты продаж", price: "10–25к ₽", desc: "Сценарии обработки возражений, FAQ-модуль, подсказки.", solve: "Порядок в продажах", icon: MessageSquare },
-    { title: "Генерация текста и A/B", price: "10–20к ₽", desc: "SEO-тексты, заголовки, офферы, варианты лендинга.", solve: "Сильный оффер", icon: PenTool },
-    { title: "Сайт под ключ (5–10 стр)", price: "45–70к ₽", desc: "Полная сборка с адаптивом, SEO и аналитикой.", solve: "Продающий сайт", icon: LayoutIcon },
-    { title: "Оформление ВКонтакте", price: "12–25к ₽", desc: "Обложки, меню, закреп, посты, CTA-блоки.", solve: "Упаковка соцсетей", icon: LayoutIcon },
-    { title: "Настройка Яндекс.Директ", price: "от 20к ₽", desc: "Поиск + РСЯ, минус-слова, ИИ-заголовки.", solve: "Целевой трафик", icon: Search },
-    { title: "Настройка рекламы ВК", price: "от 18к ₽", desc: "Прогрев, лид-формы, ретаргетинг.", solve: "Заявки из соцсетей", icon: Target },
-    { title: "Фирменный стиль + лого", price: "18–40к ₽", desc: "Стиль, логотип, шаблоны, цвета.", solve: "Узнаваемость", icon: PenTool },
-    { title: "Контент-план + креативы", price: "от 15к ₽", desc: "Посты, баннеры, сторис, объявления.", solve: "Вовлечение", icon: MessageSquare },
-    { title: "Бизнес-план и финмодель", price: "от 25к ₽", desc: "Юнит-экономика, окупаемость, сметы.", solve: "Понимание цифр", icon: BarChart },
-    { title: "Маркетинговая стратегия", price: "18–45к ₽", desc: "Позиционирование, медиаплан, гипотезы.", solve: "План действий", icon: Target },
-    { title: "Анализ конкурентов", price: "8–18к ₽", desc: "Разбор офферов, цен, структуры сайтов.", solve: "Отстройка", icon: Search },
-    { title: "Юнит-экономика", price: "10–20к ₽", desc: "Модель, сценарии «минимум/норма/оптимум».", solve: "Рентабельность", icon: BarChart },
-  ];
+  const packages = packagePrices.map((pkg, index) => ({
+    ...pkg,
+    ...packageStyles[index],
+    solve: pkg.result,
+    popular: Boolean(pkg.highlighted),
+  }));
+
+  const categoryIcon: Record<ServicePriceCategory, typeof LayoutIcon> = {
+    product: LayoutIcon,
+    ai: MessageSquare,
+    growth: Search,
+    packaging: PenTool,
+    industry: Briefcase,
+    compliance: Shield,
+  };
+
+  const categorySolve = pricingGroups.reduce<Record<ServicePriceCategory, string>>((acc, group) => {
+    acc[group.id] = group.title;
+    return acc;
+  }, {} as Record<ServicePriceCategory, string>);
+
+  const services = servicePrices.map((service) => ({
+    title: service.title,
+    price: service.price,
+    desc: service.description,
+    solve: categorySolve[service.category],
+    icon: categoryIcon[service.category],
+    href: service.href,
+  }));
 
   const tickerItems = ["Маркетинг", "Разработка", "Дизайн", "Аналитика", "Автоматизация", "AI-Решения", "Трафик", "Упаковка", "Стратегия"];
 
   return (
     <Layout
-      title="Цены на создание сайтов, рекламу и маркетинг | CentrLP Тюмень"
-      description="Прозрачные цены на услуги CentrLP: сайт от 60 000 ₽, пакет под ключ от 80 000 ₽, ведение рекламы от 20 000 ₽/мес. Оплата по договору 50/50."
+      title="Цены на сайты, рекламу, AI и compliance | CentrLP Тюмень"
+      description="Прайс-лист CentrLP: сайт от 45 000 ₽, стартовая упаковка от 75 000 ₽, продажи под ключ от 140 000 ₽, compliance-аудит от 45 000 ₽."
     >
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 min-h-[80vh] flex flex-col justify-center">
@@ -161,7 +161,7 @@ const Prices = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Прайс-лист 2025</span>
+            <span>Прайс-лист: {pricingUpdatedAt}</span>
           </motion.div>
 
           <motion.h1
@@ -298,7 +298,7 @@ const Prices = () => {
             </div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Отдельные услуги</h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Усильте конкретные показатели вашего бизнеса с помощью наших специализированных инструментов
+              Единый прайс для страниц услуг, карточек и SEO-разметки. Если цена повторяется на сайте, она должна совпадать здесь.
             </p>
           </motion.div>
 

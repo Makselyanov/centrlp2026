@@ -259,6 +259,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://centrlp.ru/consent</loc>
+    <lastmod>2026-04-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://centrlp.ru/contacts</loc>
     <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>

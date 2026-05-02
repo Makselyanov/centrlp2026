@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { servicePriceByHref } from "@/data/pricing";
 import { motion } from "framer-motion";
 import {
   Bot,
@@ -34,6 +35,24 @@ type ServiceCard = {
   icon: LucideIcon;
   featured?: boolean;
   badge?: string;
+};
+
+const PriceBadge = ({ href }: { href: string }) => {
+  const price = servicePriceByHref[href];
+
+  if (!price) {
+    return null;
+  }
+
+  return (
+    <div className="mb-5 rounded-2xl border border-[#0096D6]/15 bg-gradient-to-r from-[#0096D6]/[0.07] to-[#44B78B]/[0.07] px-4 py-3">
+      <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0b7cb0]">
+        Ориентир стоимости
+      </div>
+      <div className="text-lg font-bold text-slate-900">{price.price}</div>
+      {price.note && <div className="mt-1 text-xs leading-5 text-slate-500">{price.note}</div>}
+    </div>
+  );
 };
 
 const productServices: ServiceCard[] = [
@@ -289,6 +308,7 @@ const renderGroup = (title: string, description: string, cards: ServiceCard[]) =
             </div>
             <h3 className="mb-4 text-2xl font-bold">{item.title}</h3>
             <p className="mb-6 text-muted-foreground">{item.description}</p>
+            <PriceBadge href={item.href} />
             <ul className="mb-8 flex-1 space-y-3">
               {item.bullets.map((bullet) => (
                 <li key={bullet} className="flex items-start">
@@ -812,6 +832,7 @@ const Services = () => {
                 <item.icon className="mb-4 h-12 w-12 text-primary" />
                 <h3 className="mb-4 text-2xl font-bold">{item.title}</h3>
                 <p className="mb-6 text-muted-foreground">{item.description}</p>
+                <PriceBadge href={item.href} />
                 <ul className="mb-8 flex-1 space-y-3">
                   {item.bullets.map((bullet) => (
                     <li key={bullet} className="flex items-start">
@@ -914,6 +935,7 @@ const Services = () => {
                 <item.icon className="mb-4 h-12 w-12 text-primary" />
                 <h3 className="mb-4 text-2xl font-bold">{item.title}</h3>
                 <p className="mb-6 text-muted-foreground">{item.description}</p>
+                <PriceBadge href={item.href} />
                 <ul className="mb-8 flex-1 space-y-3">
                   {item.bullets.map((bullet) => (
                     <li key={bullet} className="flex items-start">

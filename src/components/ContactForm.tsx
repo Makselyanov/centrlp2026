@@ -50,6 +50,9 @@ export const ContactForm = () => {
           page_path: location.pathname,
           page_url: typeof window !== "undefined" ? window.location.href : "",
           lead_source: "centrlp.ru",
+          consent_version: "consent-v1.0-2026-05-02",
+          privacy_version: "privacy-v2.0-2026-04-17",
+          cookies_version: "cookies-v2.0-2026-04-17",
         }),
       });
 
@@ -240,11 +243,15 @@ export const ContactForm = () => {
               required
             />
             <Label htmlFor="privacy" className="cursor-pointer text-sm leading-relaxed">
-              Согласен(а) с{" "}
+              Даю{" "}
+              <Link to="/consent" className="text-primary hover:underline">
+                согласие на обработку персональных данных
+              </Link>{" "}
+              и ознакомлен(а) с{" "}
               <Link to="/privacy" className="text-primary hover:underline">
-                политикой конфиденциальности
+                политикой обработки персональных данных
               </Link>
-              {" "}и условиями обработки данных по заявке.
+              .
             </Label>
           </div>
 

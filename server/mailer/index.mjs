@@ -36,6 +36,7 @@ const {
   LEAD_TO,
   LEAD_FROM,
   PORT = "3021",
+  LEAD_LOG_RETENTION_DAYS = "183",
 } = process.env;
 
 if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
@@ -79,10 +80,12 @@ function rateLimit(ip) {
   return entry.count <= limit;
 }
 
-// Log file — append-only JSON lines for audit trail.
+// Log file — JSON lines for audit trail, pruned to match the public retention term.
 const LOG_DIR = path.join(__dirname, "logs");
 fs.mkdirSync(LOG_DIR, { recursive: true });
 const LOG_FILE = path.join(LOG_DIR, "leads.jsonl");
+const LEAD_LOG_RETENTION_MS =
+  Math.max(Number(LEAD_LOG_RETENTION_DAYS) || 183, 1) * 24 * 60 * 60 * 1000;
 
 function logLead(entry) {
   try {
@@ -91,6 +94,32 @@ function logLead(entry) {
     console.error("[mailer] log write failed:", e.message);
   }
 }
+
+function pruneLeadLog() {
+  try {
+    if (!fs.existsSync(LOG_FILE)) return;
+
+    const cutoff = Date.now() - LEAD_LOG_RETENTION_MS;
+    const lines = fs.readFileSync(LOG_FILE, "utf8").split("\n");
+    const kept = lines.filter((line) => {
+      if (!line.trim()) return false;
+      try {
+        const entry = JSON.parse(line);
+        const receivedAt = new Date(entry.received_at || 0).getTime();
+        return Number.isFinite(receivedAt) && receivedAt >= cutoff;
+      } catch {
+        return true;
+      }
+    });
+
+    fs.writeFileSync(LOG_FILE, kept.length ? kept.join("\n") + "\n" : "", "utf8");
+  } catch (e) {
+    console.error("[mailer] log prune failed:", e.message);
+  }
+}
+
+pruneLeadLog();
+setInterval(pruneLeadLog, 24 * 60 * 60 * 1000).unref();
 
 function esc(v) {
   // Minimal HTML escape for values embedded into the email body
@@ -113,6 +142,9 @@ function renderEmail(lead) {
     ["Страница", lead.page_path],
     ["URL", lead.page_url],
     ["Источник", lead.lead_source],
+    ["Согласие ПДн", lead.consent_version],
+    ["Политика ПДн", lead.privacy_version],
+    ["Политика cookie", lead.cookies_version],
     ["IP", lead.ip],
     ["User-Agent", lead.user_agent],
     ["Время (UTC)", lead.received_at],
@@ -165,6 +197,10 @@ app.post("/api/lead", async (req, res) => {
     return res.status(400).json({ ok: false, error: "missing_required_fields" });
   }
 
+  if (body.privacyAccepted !== true || body.cookiesAccepted !== true) {
+    return res.status(400).json({ ok: false, error: "missing_required_consents" });
+  }
+
   const lead = {
     received_at: new Date().toISOString(),
     name,
@@ -178,6 +214,9 @@ app.post("/api/lead", async (req, res) => {
     lead_source: String(body.lead_source || "centrlp.ru").trim().slice(0, 120),
     privacy_accepted: Boolean(body.privacyAccepted),
     cookies_accepted: Boolean(body.cookiesAccepted),
+    consent_version: String(body.consent_version || "").trim().slice(0, 120),
+    privacy_version: String(body.privacy_version || "").trim().slice(0, 120),
+    cookies_version: String(body.cookies_version || "").trim().slice(0, 120),
     ip,
     user_agent: String(req.headers["user-agent"] || "").slice(0, 300),
   };
