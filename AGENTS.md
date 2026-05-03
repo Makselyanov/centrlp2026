@@ -2,6 +2,29 @@
 
 These rules are mandatory for every future session in this repository.
 
+## Portfolio Completion Protocol
+
+Also follow `G:\mvp\AGENTS.md`. CentrLP already uses the strict rule: local edit, commit, push, deploy, verify. Keep that as the default for all site/product work unless the user explicitly asks for a draft-only session.
+
+Every final report must say whether the work is committed, pushed, deployed, whether local git is clean, and whether production git is clean when production was touched.
+
+## Public Content Boundary
+
+Public CentrLP pages, landing sections, blog/SEO pages, legal pages, meta tags,
+sitemap entries, JSON-LD, RSS, OpenGraph text, and any user-facing artifact must
+never contain agent/user meta-dialogue.
+
+Forbidden in public content: `здесь будут`, `потом добавим`, `надо придумать`,
+`мы обсудили`, `в диалоге`, `черновик`, `план`, `структура будет`, `Codex`,
+`Claude`, `агент`, `implementation plan`, `TODO`, `draft`, `placeholder`,
+`handoff`, internal reasoning, prompts, commit/deploy notes, or task lists.
+
+All public text must be finished product/editorial/legal copy for an external
+reader. Internal planning belongs only in internal docs, plans, handoff files,
+or issues that are not included in the publish artifact. Before publish or
+deploy, read the rendered artifact and stop if it contains meta markers,
+future-structure language, or placeholders disguised as copy.
+
 ## Canonical Paths
 
 - Local working copy: `G:\mvp\centrlp`
