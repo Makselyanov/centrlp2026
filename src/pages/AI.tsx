@@ -184,11 +184,11 @@ const AI = () => {
         <img
           src="/images/ai/crm-centrlp-preview.png"
           alt="CentrLP CRM с маршрутом заявки, сделками, задачами и нейросетью"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-55"
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-70"
           loading="eager"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.88)_46%,rgba(2,6,23,0.52)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.84)_46%,rgba(2,6,23,0.24)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background to-transparent" />
 
         <div className="container relative z-10 mx-auto flex min-h-[88vh] items-end px-4 pb-20 pt-32">
