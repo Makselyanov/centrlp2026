@@ -391,7 +391,7 @@ const Index = () => {
 
           <div className="text-center">
             <Button size="lg" asChild>
-              <Link to="/services/compliance-2026">Открыть услугу Compliance 2026</Link>
+              <Link to="/services/compliance-2026">Открыть проверку сайта по персональным данным</Link>
             </Button>
           </div>
         </div>

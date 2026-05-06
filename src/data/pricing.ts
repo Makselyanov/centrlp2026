@@ -296,7 +296,7 @@ export const servicePrices: ServicePrice[] = [
     seoPriority: "high",
   },
   {
-    title: "Compliance 2026",
+    title: "Проверка сайта по персональным данным",
     href: "/services/compliance-2026",
     price: "от 45 000 ₽",
     description: "Проверка сайта, домена, форм, cookie, аналитики, персональных данных и маршрута заявки.",
@@ -369,7 +369,7 @@ export const pricingGroups: Array<{
   },
   {
     id: "compliance",
-    title: "Compliance и порядок в digital-контуре",
+    title: "Персональные данные и порядок в цифровом контуре",
     description: "Отдельная линия про сайт, формы, cookie, данные, домен и публичные тексты под требования 2026.",
   },
   {
@@ -381,7 +381,7 @@ export const pricingGroups: Array<{
 
 export const seoFocusPages = [
   {
-    title: "Compliance 2026",
+    title: "Проверка сайта по персональным данным",
     href: "/services/compliance-2026",
     reason: "Свежий спрос вокруг персональных данных, cookie, доменов, форм и проверок РКН.",
   },

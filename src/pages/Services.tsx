@@ -198,7 +198,7 @@ const growthServices: ServiceCard[] = [
     icon: ScanSearch,
   },
   {
-    title: "Compliance 2026",
+    title: "Проверка сайта по персональным данным",
     description: "Проверяем сайт, домен, формы, публичные тексты и цифровой контур под новые требования 2026 и помогаем быстро внедрить правки без хаоса.",
     href: "/services/compliance-2026",
     bullets: ["Домен и регистратор", "Персональные данные", "Публичные тексты и интерфейсы"],
@@ -805,7 +805,7 @@ const Services = () => {
 
           <div className="mt-10 flex justify-center">
             <Button asChild className="border-0 bg-[linear-gradient(135deg,#0096D6_0%,#44B78B_100%)] text-white shadow-[0_18px_50px_-24px_rgba(0,150,214,0.7)]">
-              <Link to="/services/compliance-2026">Открыть услугу Compliance 2026</Link>
+              <Link to="/services/compliance-2026">Открыть проверку сайта по персональным данным</Link>
             </Button>
           </div>
         </div>

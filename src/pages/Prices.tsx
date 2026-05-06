@@ -120,8 +120,8 @@ const Prices = () => {
 
   return (
     <Layout
-      title="Цены на сайты, рекламу, AI и compliance | CentrLP Тюмень"
-      description="Прайс-лист CentrLP: сайт от 45 000 ₽, стартовая упаковка от 75 000 ₽, продажи под ключ от 140 000 ₽, compliance-аудит от 45 000 ₽."
+      title="Цены на сайты, рекламу, нейросети и проверку данных | CentrLP Тюмень"
+      description="Прайс-лист CentrLP: сайт от 45 000 ₽, стартовая упаковка от 75 000 ₽, продажи под ключ от 140 000 ₽, проверка сайта по персональным данным от 45 000 ₽."
     >
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 min-h-[80vh] flex flex-col justify-center">

@@ -4,11 +4,11 @@ import { FileText, Globe, Languages, ShieldCheck, UserRoundCheck, Workflow } fro
 export default function Compliance2026() {
   return (
     <ServicePageTemplate
-      title="Compliance 2026 — домен, формы и данные бизнеса | CentrLP"
+      title="Проверка сайта по персональным данным — домен, формы и данные бизнеса | CentrLP"
       description="Помогаем привести сайт, домен, формы и цифровые сценарии в порядок под требования 2026: проверка домена, данных, текстов, интерфейсов и плана исправлений."
       slug="compliance-2026"
-      breadcrumbName="Compliance 2026"
-      schemaName="Compliance 2026 для бизнеса"
+      breadcrumbName="Проверка сайта по персональным данным"
+      schemaName="Проверка сайта по персональным данным для бизнеса"
       schemaDescription="Аудит сайта, домена, форм, персональных данных и публичных текстов под требования 2026 с внедрением изменений в цифровой контур бизнеса."
       price="45000"
       badge="Сайт и процессы под требования 2026"
@@ -39,7 +39,7 @@ export default function Compliance2026() {
           text: "Когда у компании много вывесок, экранов, посадочных, карточек услуг, CTA, навигации и рекламных материалов, которые нужно привести к единообразию и порядку.",
         },
       ]}
-      deliverablesTitle="Что входит в compliance-аудит и внедрение"
+      deliverablesTitle="Что входит в проверку сайта и внедрение правок"
       deliverablesDescription="Мы не ограничиваемся списком замечаний. На выходе вы получаете маршрут исправлений и помощь во внедрении изменений в сайт и цифровые сценарии."
       deliverables={[
         {
