@@ -37,6 +37,11 @@ const Prices = () => {
     element?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToPackages = () => {
+    const element = document.getElementById('packages');
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const tags = [
     { text: "Скидки", top: "15%", left: "10%", delay: 0 },
     { text: "Пакеты", top: "25%", right: "15%", delay: 1.5 },
@@ -63,6 +68,13 @@ const Prices = () => {
   };
 
   const packageStyles = [
+    {
+      id: "express",
+      icon: Target,
+      color: "text-emerald-600",
+      bgColor: "bg-emerald-500/10",
+      borderColor: "border-emerald-500/20",
+    },
     {
       id: "start",
       icon: Zap,
@@ -121,7 +133,7 @@ const Prices = () => {
   return (
     <Layout
       title="Цены на сайты, рекламу, нейросети и проверку данных | CentrLP Тюмень"
-      description="Прайс-лист CentrLP: сайт от 45 000 ₽, стартовая упаковка от 75 000 ₽, продажи под ключ от 140 000 ₽, проверка сайта по персональным данным от 45 000 ₽."
+      description="Прайс-лист CentrLP: экспресс-разбор заявок от 15 000 ₽, сайт от 45 000 ₽, стартовая упаковка от 75 000 ₽, продажи под ключ от 140 000 ₽, проверка сайта по персональным данным от 45 000 ₽."
     >
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 min-h-[80vh] flex flex-col justify-center">
@@ -170,9 +182,9 @@ const Prices = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-tight"
           >
-            Инвестируйте в <br />
+            Сначала понять, где <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
-              Рост Бизнеса
+              теряются заявки
             </span>
           </motion.h1>
 
@@ -182,8 +194,8 @@ const Prices = () => {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Прозрачные цены. Понятные этапы. <br className="hidden md:block" />
-            Гарантия результата по договору.
+            Можно начать с короткого разбора за 48 часов, а уже потом вкладываться
+            в сайт, рекламу, CRM или нейросетевые сценарии.
           </motion.p>
 
           <motion.div
@@ -193,9 +205,9 @@ const Prices = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button size="lg" className="h-16 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_30px_-10px_rgba(var(--primary-rgb),0.5)] transition-all hover:scale-105" onClick={scrollToForm}>
-              Рассчитать проект
+              Получить экспресс-разбор
             </Button>
-            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full border-2 transition-all hover:scale-105">
+            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full border-2 transition-all hover:scale-105" onClick={scrollToPackages}>
               Смотреть пакеты
             </Button>
           </motion.div>
@@ -214,16 +226,16 @@ const Prices = () => {
       </section>
 
       {/* Packages */}
-      <section className="py-24 relative bg-background">
+      <section id="packages" className="py-24 relative bg-background">
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Комплексные пакеты</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Пакеты под разный уровень риска</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Готовые решения для быстрого старта и масштабирования
+              От короткой проверки заявок до полноценного сайта, продаж и автоматизации
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 items-start">
+          <div className="grid gap-8 items-start md:grid-cols-2 xl:grid-cols-4">
             {packages.map((pkg, index) => (
               <motion.div
                 key={index}

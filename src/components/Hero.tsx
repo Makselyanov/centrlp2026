@@ -124,22 +124,22 @@ export const Hero = () => {
                                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#44B78B] opacity-75"></span>
                                 <span className="relative inline-flex h-3 w-3 rounded-full bg-[#44B78B]"></span>
                             </span>
-                            Современные цифровые продукты
+                            Быстрый вход без рекламного бюджета
                         </motion.div>
 
                         <h1 className="mb-8 text-4xl font-bold leading-[1.08] tracking-tight text-slate-50 sm:text-5xl md:text-6xl xl:text-7xl">
-                            Создаём цифровые продукты <br />
+                            Сайт не даёт заявки? <br />
                             <span className="bg-gradient-to-r from-[#0096D6] to-[#44B78B] bg-clip-text text-transparent">
-                                для продаж и сервиса
+                                Найдём, где они теряются
                             </span>
-                            , а не просто красивые страницы
+                            {" "}за 48 часов
                         </h1>
 
                         <p className="mb-10 max-w-2xl text-xl leading-relaxed text-slate-400">
-                            Telegram Mini App, AI-агенты, персональные CRM, браузерные расширения, MVP и AI-системы под
-                            реальную работу бизнеса.
+                            Разбираем первый экран, форму, путь обращения, Метрику и смысл предложения, чтобы понять,
+                            почему посетитель не становится заявкой.
                             <span className="font-semibold text-slate-50">
-                                {" "}От интерфейса заявки до внутреннего инструмента команды.
+                                {" "}После разбора можно точечно доработать сайт, CRM, бота или нейросетевой сценарий.
                             </span>
                         </p>
 
@@ -154,18 +154,18 @@ export const Hero = () => {
                                 onClick={() => document.getElementById("form")?.scrollIntoView({ behavior: "smooth" })}
                                 className="pointer-events-auto flex items-center justify-center gap-2 rounded-2xl bg-[#0096D6] px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-[#0096D6]/30 transition-all"
                             >
-                                Получить план продукта
+                                Получить разбор заявок
                                 <ArrowRight className="h-5 w-5" />
                             </motion.button>
 
-                            <Link to="/projects" className="pointer-events-auto">
+                            <Link to="/prices#express" className="pointer-events-auto">
                                 <motion.button
                                     whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                     whileTap={{ scale: 0.98 }}
                                     className="flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-transparent px-8 py-4 text-lg font-semibold text-slate-300 shadow-sm transition-all backdrop-blur-sm"
                                 >
                                     <Play className="h-5 w-5 fill-current" />
-                                    Наши проекты
+                                    Цена от 15 000 ₽
                                 </motion.button>
                             </Link>
                         </div>
@@ -184,8 +184,8 @@ export const Hero = () => {
 
                                 <div className="relative z-30 p-8 text-center text-white">
                                     <Zap className="mx-auto mb-6 h-24 w-24 text-white drop-shadow-lg" />
-                                    <div className="mb-2 text-4xl font-bold drop-shadow-md">DIGITAL AI</div>
-                                    <p className="text-lg font-medium opacity-90">Интерфейсы, CRM и AI-системы</p>
+                                    <div className="mb-2 text-4xl font-bold drop-shadow-md">ЗАЯВКИ</div>
+                                    <p className="text-lg font-medium opacity-90">Сайт, CRM и нейросетевые сценарии</p>
                                 </div>
 
                                 <div className="pointer-events-none absolute -left-[100%] -top-[100%] h-[200%] w-[200%] rotate-45 animate-shine bg-gradient-to-br from-transparent via-white/40 to-transparent" />

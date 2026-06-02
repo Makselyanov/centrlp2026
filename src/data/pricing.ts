@@ -25,9 +25,22 @@ export type PackagePrice = {
   highlighted?: boolean;
 };
 
-export const pricingUpdatedAt = "май 2026";
+export const pricingUpdatedAt = "июнь 2026";
 
 export const packagePrices: PackagePrice[] = [
+  {
+    title: "Экспресс-разбор заявок",
+    price: "от 15 000 ₽",
+    description: "Когда заявок мало или они не доходят до менеджера, а большой проект начинать рискованно.",
+    features: [
+      "Проверка первого экрана, формы и пути до заявки",
+      "5-7 конкретных правок по текстам, кнопкам и структуре",
+      "Проверка Метрики, целей и событий заявки",
+      "Короткий список внедрения на 2-3 дня",
+    ],
+    result: "Понятно, где теряются обращения и с каких правок начать без большого бюджета.",
+    highlighted: true,
+  },
   {
     title: "Стартовая упаковка",
     price: "от 75 000 ₽",
@@ -51,7 +64,6 @@ export const packagePrices: PackagePrice[] = [
       "Контентные блоки, кейсы и посадочные смыслы",
     ],
     result: "Не просто сайт, а система получения и обработки заявок.",
-    highlighted: true,
   },
   {
     title: "AI + CRM + автоматизация",
@@ -68,6 +80,15 @@ export const packagePrices: PackagePrice[] = [
 ];
 
 export const servicePrices: ServicePrice[] = [
+  {
+    title: "Экспресс-разбор заявок и сайта",
+    href: "/prices#express",
+    price: "от 15 000 ₽",
+    description: "За 48 часов проверяем сайт, форму, предложение, Метрику и путь обращения, чтобы найти причины потери заявок.",
+    category: "growth",
+    note: "Подходит как первый шаг перед доработкой сайта, рекламой или внедрением CRM.",
+    seoPriority: "high",
+  },
   {
     title: "Сайт под ключ",
     href: "/services/website-development",

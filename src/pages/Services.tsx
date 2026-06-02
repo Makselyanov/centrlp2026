@@ -170,6 +170,15 @@ const aiServices: ServiceCard[] = [
 
 const growthServices: ServiceCard[] = [
   {
+    title: "Экспресс-разбор заявок",
+    description: "За 48 часов проверяем сайт, форму, предложение, Метрику и путь обращения, чтобы найти причины потери заявок.",
+    href: "/prices#express",
+    bullets: ["Первый экран и кнопки", "Форма и маршрут заявки", "5-7 быстрых правок"],
+    icon: ScanSearch,
+    featured: true,
+    badge: "Быстрый вход",
+  },
+  {
     title: "Сайт под ключ",
     description: "Многостраничный сайт для продаж, SEO и вывода цифрового продукта в нормальный коммерческий контур.",
     href: "/services/website-development",
@@ -204,7 +213,7 @@ const growthServices: ServiceCard[] = [
     bullets: ["Домен и регистратор", "Персональные данные", "Публичные тексты и интерфейсы"],
     icon: ShieldCheck,
     featured: true,
-    badge: "Новый secondary-оффер",
+    badge: "Новая услуга",
   },
 ];
 

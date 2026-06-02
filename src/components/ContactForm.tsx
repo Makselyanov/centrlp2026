@@ -10,6 +10,13 @@ import { useToast } from "@/hooks/use-toast";
 import { trackMetric } from "@/lib/metrics";
 import { MessengerLinks } from "./MessengerLinks";
 
+const goalOptions = [
+  "Экспресс-разбор заявок",
+  "Проверка сайта по персональным данным",
+  "Сайт или посадочная страница",
+  "Бот, CRM или автоматизация",
+];
+
 export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
@@ -19,6 +26,7 @@ export const ContactForm = () => {
     business: "",
     city: "",
     link: "",
+    goal: "Экспресс-разбор заявок",
     comment: "",
     privacyAccepted: false,
     cookiesAccepted: false,
@@ -81,6 +89,7 @@ export const ContactForm = () => {
         business: "",
         city: "",
         link: "",
+        goal: "Экспресс-разбор заявок",
         comment: "",
         privacyAccepted: false,
         cookiesAccepted: false,
@@ -107,11 +116,11 @@ export const ContactForm = () => {
             Быстрый старт
           </div>
           <h3 className="text-lg font-bold text-slate-900">
-            Имя и телефон уже достаточно, чтобы мы начали.
+            Можно начать с короткого разбора сайта и пути заявки.
           </h3>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Достаточно оставить контакт, чтобы быстро обсудить задачу и удобный
-            формат связи без лишней переписки.
+            Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнём с проверки формы,
+            первого экрана, Метрики и маршрута обращения.
           </p>
 
           <div className="mt-4">
@@ -220,6 +229,30 @@ export const ContactForm = () => {
         </div>
 
         <div>
+          <Label>Что важнее сейчас</Label>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            {goalOptions.map((goal) => {
+              const active = formData.goal === goal;
+
+              return (
+                <button
+                  key={goal}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, goal })}
+                  className={`rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${
+                    active
+                      ? "border-[#0096D6] bg-[#0096D6]/10 text-slate-950"
+                      : "border-slate-200 bg-white text-slate-600 hover:border-[#44B78B]/40 hover:text-slate-900"
+                  }`}
+                >
+                  {goal}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div>
           <Label htmlFor="comment">Что хотите получить</Label>
           <Textarea
             id="comment"
@@ -228,7 +261,7 @@ export const ContactForm = () => {
             onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
             className="mt-2"
             rows={4}
-            placeholder="Например: больше заявок, Telegram-воронка, CRM, AI-агент, быстрый MVP"
+            placeholder="Например: понять, почему сайт не даёт заявок; проверить форму и Метрику; связать заявки с CRM"
           />
         </div>
 
@@ -275,7 +308,7 @@ export const ContactForm = () => {
         </div>
 
         <Button type="submit" size="lg" className="w-full">
-          Получить 2-3 сценария под проект
+          Получить разбор заявок
         </Button>
 
         <p className="text-center text-xs leading-5 text-slate-500">
