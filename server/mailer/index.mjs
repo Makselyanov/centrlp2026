@@ -198,7 +198,7 @@ app.post("/api/lead", async (req, res) => {
     return res.status(400).json({ ok: false, error: "missing_required_fields" });
   }
 
-  if (body.privacyAccepted !== true || body.cookiesAccepted !== true) {
+  if (body.privacyAccepted !== true) {
     return res.status(400).json({ ok: false, error: "missing_required_consents" });
   }
 

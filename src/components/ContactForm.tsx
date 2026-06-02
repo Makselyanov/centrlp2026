@@ -35,10 +35,10 @@ export const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.privacyAccepted || !formData.cookiesAccepted) {
+    if (!formData.privacyAccepted) {
       toast({
         title: "Ошибка",
-        description: "Нужно согласие на обработку данных и использование cookie",
+        description: "Нужно согласие на обработку персональных данных",
         variant: "destructive",
       });
       return;
@@ -295,14 +295,13 @@ export const ContactForm = () => {
               onCheckedChange={(checked) =>
                 setFormData({ ...formData, cookiesAccepted: checked as boolean })
               }
-              required
             />
             <Label htmlFor="cookies" className="cursor-pointer text-sm leading-relaxed">
-              Согласен(а) с{" "}
+              Разрешаю аналитические cookie и ознакомлен(а) с{" "}
               <Link to="/cookies" className="text-primary hover:underline">
                 политикой cookie
-              </Link>{" "}
-              и использованием cookie-файлов.
+              </Link>
+              . Это не обязательно для отправки заявки.
             </Label>
           </div>
         </div>

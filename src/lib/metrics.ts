@@ -5,6 +5,8 @@ declare global {
   }
 }
 
+const METRIKA_ID = 50135101;
+
 export const trackMetric = (goal: string, params?: Record<string, unknown>) => {
   if (typeof window === "undefined") return;
 
@@ -16,7 +18,7 @@ export const trackMetric = (goal: string, params?: Record<string, unknown>) => {
     );
 
     if (typeof window.ym === "function") {
-      window.ym("reachGoal", goal, params ?? {});
+      window.ym(METRIKA_ID, "reachGoal", goal, params ?? {});
     }
 
     if (Array.isArray(window.dataLayer)) {
@@ -30,4 +32,3 @@ export const trackMetric = (goal: string, params?: Record<string, unknown>) => {
     console.warn("Metric tracking failed", error);
   }
 };
-
