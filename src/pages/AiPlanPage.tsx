@@ -335,7 +335,6 @@ export function AiPlanPage() {
     });
     const [errors, setErrors] = useState<{
         consentPersonalData?: string;
-        cookiesAccepted?: string;
         name?: string;
         phone?: string;
         messenger?: string;
@@ -377,9 +376,6 @@ export function AiPlanPage() {
         if (!formData.consentPersonalData) {
             newErrors.consentPersonalData =
                 "Нужно согласиться с обработкой персональных данных";
-        }
-        if (!formData.cookiesAccepted) {
-            newErrors.cookiesAccepted = "Нужно подтвердить ознакомление с политикой cookie";
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -1188,16 +1184,6 @@ export function AiPlanPage() {
                                                                                     checked as boolean,
                                                                             },
                                                                         );
-                                                                        if (
-                                                                            checked
-                                                                        )
-                                                                            setErrors(
-                                                                                {
-                                                                                    ...errors,
-                                                                                    cookiesAccepted:
-                                                                                        undefined,
-                                                                                },
-                                                                            );
                                                                     }}
                                                                 />
                                                                 <div className="grid gap-1.5 leading-none">
@@ -1205,21 +1191,19 @@ export function AiPlanPage() {
                                                                         htmlFor="cookiesAccepted"
                                                                         className="text-sm font-medium leading-snug cursor-pointer"
                                                                     >
-                                                                        Я ознакомлен(а) с{" "}
+                                                                        Разрешаю использовать
+                                                                        аналитические файлы
+                                                                        cookie согласно{" "}
                                                                         <Link
                                                                             to="/cookies"
                                                                             className="text-primary underline hover:text-primary/80"
                                                                         >
-                                                                            политикой cookie
-                                                                        </Link>.
+                                                                            политике
+                                                                            использования cookie
+                                                                        </Link>
+                                                                        . Это не обязательно
+                                                                        для отправки заявки.
                                                                     </Label>
-                                                                    {errors.cookiesAccepted && (
-                                                                        <p className="text-xs text-red-500 font-medium">
-                                                                            {
-                                                                                errors.cookiesAccepted
-                                                                            }
-                                                                        </p>
-                                                                    )}
                                                                 </div>
                                                             </div>
 
