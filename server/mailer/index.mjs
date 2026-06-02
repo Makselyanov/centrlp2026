@@ -137,6 +137,7 @@ function renderEmail(lead) {
     ["Телефон", lead.phone],
     ["Бизнес / ниша", lead.business],
     ["Город", lead.city],
+    ["Что важнее сейчас", lead.goal],
     ["Ссылка", lead.link],
     ["Комментарий", lead.comment],
     ["Страница", lead.page_path],
@@ -168,7 +169,7 @@ function renderEmail(lead) {
   return html;
 }
 
-app.get("/health", (_req, res) => {
+app.get(["/health", "/api/lead/health"], (_req, res) => {
   res.json({ ok: true, service: "centrlp-mailer", port: PORT });
 });
 
@@ -215,6 +216,7 @@ app.post("/api/lead", async (req, res) => {
     phone,
     business: String(body.business || "").trim().slice(0, 300),
     city: String(body.city || "").trim().slice(0, 120),
+    goal: String(body.goal || "").trim().slice(0, 200),
     link: String(body.link || "").trim().slice(0, 500),
     comment: String(body.comment || "").trim().slice(0, 4000),
     page_path: String(body.page_path || "").trim().slice(0, 500),
