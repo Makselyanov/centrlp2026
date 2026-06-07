@@ -35,6 +35,82 @@ function readText(filePath) {
   return fs.readFileSync(filePath, "utf8");
 }
 
+function stripInlineMarkdown(value) {
+  return String(value)
+    .replace(/!\[[^\]]*]\([^)]+\)/g, "")
+    .replace(/\[([^\]]+)]\(([^)]+)\)/g, "$1")
+    .replace(/[`*_~]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function hasUnsafePublicMarker(value) {
+  return /SEO-метаданные|Self-review|Target keyword|Финальный status|TODO|draft|placeholder|черновик|здесь будут|потом добавим|надо придумать|implementation plan|handoff|Codex|Claude|CTA|обсуждается|комплаенс/i.test(
+    String(value),
+  );
+}
+
+function markdownToStaticHtml(markdown, title, description) {
+  const html = [];
+  const lines = String(markdown).split(/\r?\n/);
+  let paragraph = [];
+  let inFence = false;
+
+  const flushParagraph = () => {
+    const text = stripInlineMarkdown(paragraph.join(" "));
+    paragraph = [];
+    if (text) {
+      html.push(`<p>${escapeHtml(text)}</p>`);
+    }
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (line.startsWith("```")) {
+      inFence = !inFence;
+      flushParagraph();
+      continue;
+    }
+
+    if (inFence) continue;
+
+    if (!line) {
+      flushParagraph();
+      continue;
+    }
+
+    const heading = line.match(/^(#{1,3})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      const level = Math.min(heading[1].length, 3);
+      html.push(`<h${level}>${escapeHtml(stripInlineMarkdown(heading[2]))}</h${level}>`);
+      continue;
+    }
+
+    if (/^\|/.test(line) || /^[-:| ]+$/.test(line)) {
+      flushParagraph();
+      continue;
+    }
+
+    paragraph.push(line.replace(/^>\s?/, "").replace(/^[-*]\s+/, ""));
+  }
+
+  flushParagraph();
+
+  const intro = [
+    `<h1>${escapeHtml(title)}</h1>`,
+    description ? `<p>${escapeHtml(description)}</p>` : "",
+  ].join("");
+
+  const body = html.join("\n");
+
+  return `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;">
+  ${intro}
+  ${body}
+</main>`;
+}
+
 function getOgImage(pathname) {
   if (ogImageMap[pathname]) return ogImageMap[pathname];
   // For blog posts and services, we generate per-item OG images.
@@ -134,6 +210,13 @@ function applyMeta(template, meta) {
     `<meta name="twitter:url" content="${canonical}" />`,
   );
 
+  if (meta.staticHtml) {
+    html = html.replace(
+      /<div\s+id=["']root["']\s*>\s*<\/div>/i,
+      `<div id="root">${meta.staticHtml}</div>`,
+    );
+  }
+
   return html;
 }
 
@@ -208,10 +291,15 @@ function collectStaticRouteMeta() {
 
       if (!title || !description) return null;
 
+      const staticHtmlSource = `${title}\n${description}`;
+
       return {
         path: route.path,
         title,
         description,
+        staticHtml: hasUnsafePublicMarker(staticHtmlSource)
+          ? ""
+          : `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></main>`,
       };
     })
     .filter(Boolean);
@@ -236,10 +324,15 @@ function collectBlogPostMeta() {
 
       if (!title || !description) return null;
 
+      const staticSource = `${title}\n${description}\n${parsed.content}`;
+
       return {
         path: `/blog/${slug}`,
         title,
         description,
+        staticHtml: hasUnsafePublicMarker(staticSource)
+          ? ""
+          : markdownToStaticHtml(parsed.content, title, description),
       };
     })
     .filter(Boolean);
@@ -253,6 +346,7 @@ function main() {
 
   const template = readText(templatePath);
   const routes = [...collectStaticRouteMeta(), ...collectBlogPostMeta()];
+  const staticBodyCount = routes.filter((route) => route.staticHtml).length;
 
   for (const route of routes) {
     const html = applyMeta(template, route);
@@ -265,7 +359,7 @@ function main() {
     fs.writeFileSync(path.join(distDir, "404.html"), html, "utf8");
   }
 
-  console.log(`Prerendered route heads for ${routes.length} routes`);
+  console.log(`Prerendered route heads for ${routes.length} routes; static bodies for ${staticBodyCount} routes`);
 }
 
 main();

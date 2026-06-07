@@ -106,7 +106,7 @@ ${post.tags.slice(0, 6).map(tag => `      <category>${escapeXml(tag)}</category>
   <channel>
     <title>CentrLP — статьи о сайтах, маркетинге и автоматизации</title>
     <link>${SITE_URL}/blog</link>
-    <description>Экспертные статьи CentrLP: сайты, маркетинг, CRM, Яндекс Директ, AI-автоматизация и контент-завод.</description>
+    <description>Экспертные статьи CentrLP: сайты, маркетинг, CRM, Яндекс Директ, ИИ-автоматизация и контент-завод.</description>
     <language>ru</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
 ${items}

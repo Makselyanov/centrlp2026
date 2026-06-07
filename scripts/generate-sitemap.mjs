@@ -11,6 +11,7 @@ const SRC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../s
 const CONTENT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../content/posts');
 const OUTPUT_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public/sitemap.xml');
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 
 // --- HELPERS ---
 
@@ -87,6 +88,32 @@ function getBlogRoutes() {
     return blogRoutes;
 }
 
+function getPublicIndexRoutes() {
+    if (!fs.existsSync(PUBLIC_DIR)) {
+        console.warn('Public dir not found, skipping standalone public routes.');
+        return [];
+    }
+
+    return fs
+        .readdirSync(PUBLIC_DIR, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .map((entry) => {
+            const indexPath = path.join(PUBLIC_DIR, entry.name, 'index.html');
+            if (!fs.existsSync(indexPath)) {
+                return null;
+            }
+
+            const stat = fs.statSync(indexPath);
+            const gitLastmod = getGitLastmod(path.relative(ROOT_DIR, indexPath));
+
+            return {
+                route: `/${entry.name}`,
+                lastmod: gitLastmod || stat.mtime.toISOString().split('T')[0],
+            };
+        })
+        .filter(Boolean);
+}
+
 // Priority mapping for better SEO
 function getPriority(route) {
     if (route === '/') return '1.0';
@@ -143,7 +170,8 @@ try {
 
     const staticRoutes = getStaticRoutes();
     const blogRoutes = getBlogRoutes();
-    const allRoutes = normalizeRoutes(staticRoutes, blogRoutes);
+    const publicIndexRoutes = getPublicIndexRoutes();
+    const allRoutes = normalizeRoutes(staticRoutes, [...blogRoutes, ...publicIndexRoutes]);
 
     const xml = generateSitemap(allRoutes);
 
