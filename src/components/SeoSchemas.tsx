@@ -11,6 +11,13 @@ interface BreadcrumbItem {
   url: string;
 }
 
+interface ItemListEntry {
+  name: string;
+  description: string;
+  url?: string;
+  image?: string;
+}
+
 export const useFaqSchema = (faqItems: FaqItem[]) => {
   useEffect(() => {
     if (faqItems.length === 0) return;
@@ -71,6 +78,46 @@ export const useBreadcrumbSchema = (items: BreadcrumbItem[]) => {
       document.getElementById('breadcrumb-jsonld')?.remove();
     };
   }, [items]);
+};
+
+export const useItemListSchema = (items: ItemListEntry[], pageUrl: string, pageName: string) => {
+  useEffect(() => {
+    if (items.length === 0) return;
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": pageName,
+      "url": pageUrl,
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": items.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "CreativeWork",
+            "name": item.name,
+            "description": item.description,
+            "url": item.url || pageUrl,
+            ...(item.image && { "image": item.image }),
+          },
+        })),
+      },
+    };
+
+    let script = document.getElementById('itemlist-jsonld') as HTMLScriptElement;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'itemlist-jsonld';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(schema);
+
+    return () => {
+      document.getElementById('itemlist-jsonld')?.remove();
+    };
+  }, [items, pageUrl, pageName]);
 };
 
 /**
