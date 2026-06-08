@@ -31,8 +31,10 @@ type ProjectCategory = "all" | "sites" | "automation" | "support";
 
 interface ProjectScreen {
   src: string;
+  video?: string;
   title: string;
   note: string;
+  aspect?: "wide" | "tall";
 }
 
 interface ProjectStrength {
@@ -199,8 +201,10 @@ const projects: Project[] = [
     screens: [
       {
         src: "/projects/gallery/crm-hero.jpg",
-        title: "Публичная витрина",
-        note: "Система объясняется через маршрут заявки, а не через закрытые клиентские данные.",
+        video: "/projects/gallery/crm-hero.webm",
+        title: "Живая витрина",
+        note: "Движение интерфейса показывает, что система реагирует на действия, а не остается плоской картинкой.",
+        aspect: "tall",
       },
       {
         src: "/projects/gallery/crm-route.jpg",
@@ -368,7 +372,8 @@ const projects: Project[] = [
       {
         src: "/projects/gallery/cshm-hero.jpg",
         title: "Первый экран",
-        note: "Сразу видны услуга, города работы, телефон и путь к расчету.",
+        note: "Сразу видны услуга, города работы, телефон, кнопки и путь к расчету.",
+        aspect: "tall",
       },
       {
         src: "/projects/gallery/cshm-services.jpg",
@@ -436,9 +441,32 @@ const summary = [
   { value: "1", label: "система заявок" },
 ];
 
+const heroReel: Array<{ src: string; video?: string; title: string; text: string }> = [
+  {
+    src: "/projects/gallery/rosomaha-dealers.jpg",
+    title: "Каталог",
+    text: "модели, цены и переход к заявке",
+  },
+  {
+    src: "/projects/gallery/metallteh-catalog.jpg",
+    title: "Производство",
+    text: "категории изделий и расчет",
+  },
+  {
+    src: "/projects/gallery/crm-hero.jpg",
+    video: "/projects/gallery/crm-hero.webm",
+    title: "CRM",
+    text: "заявки, звонки и контроль",
+  },
+];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0 },
+};
+
+const startPreviewVideo = (video: HTMLVideoElement) => {
+  void video.play().catch(() => undefined);
 };
 
 const BrowserFrame = ({
@@ -452,8 +480,8 @@ const BrowserFrame = ({
 }) => (
   <figure
     className={cn(
-      "overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm",
-      featured ? "ring-1 ring-[#0096D6]/10" : "",
+      "overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition-shadow duration-300",
+      featured ? "shadow-lg shadow-slate-200/75 ring-1 ring-[#0096D6]/10" : "",
     )}
   >
     <div className="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2">
@@ -462,13 +490,35 @@ const BrowserFrame = ({
       <span className="h-2.5 w-2.5 rounded-full bg-[#44B78B]" />
       <span className="ml-2 truncate text-xs font-medium text-slate-500">{screen.title}</span>
     </div>
-    <div className="aspect-[2/1] bg-slate-950">
-      <img
-        src={screen.src}
-        alt={`${screen.title} проекта CentrLP`}
-        className="h-full w-full object-contain object-top"
-        loading={eager ? "eager" : "lazy"}
-      />
+    <div className={cn("relative bg-slate-950", screen.aspect === "tall" ? "aspect-[3/2]" : "aspect-[2/1]")}>
+      {screen.video ? (
+        <>
+          <video
+            className="h-full w-full object-contain object-top"
+            poster={screen.src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload={eager ? "auto" : "metadata"}
+            onCanPlay={(event) => startPreviewVideo(event.currentTarget)}
+            onMouseEnter={(event) => startPreviewVideo(event.currentTarget)}
+          >
+            <source src={screen.video} type="video/webm" />
+          </video>
+          <div className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#007DB3] shadow-sm backdrop-blur">
+            <Sparkles className="h-3.5 w-3.5" />
+            видео
+          </div>
+        </>
+      ) : (
+        <img
+          src={screen.src}
+          alt={`${screen.title} проекта CentrLP`}
+          className="h-full w-full object-contain object-top"
+          loading={eager ? "eager" : "lazy"}
+        />
+      )}
     </div>
     <figcaption className="border-t border-slate-200 bg-white p-4">
       <div className="text-sm font-semibold text-slate-950">{screen.title}</div>
@@ -524,6 +574,63 @@ const Projects = () => {
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-slate-600 md:text-xl">
               Показываем работы не одним обрезанным кадром, а несколькими экранами: первый контакт, структура, доверие, расчет и путь обращения.
             </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.08 }}
+            className="mx-auto mt-10 grid max-w-6xl gap-4 lg:grid-cols-[1.05fr_0.9fr_1.05fr] lg:items-start"
+          >
+            {heroReel.map((item, index) => (
+              <div
+                key={item.title}
+                className={cn(
+                  "group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg shadow-slate-200/70",
+                  index === 1 && "lg:mt-10",
+                )}
+              >
+                <div className="flex items-center gap-2 border-b border-slate-200 bg-slate-50 px-4 py-3">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#ff6b6b]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#ffd166]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#44B78B]" />
+                  <span className="ml-2 truncate text-xs font-semibold text-slate-500">{item.title}</span>
+                </div>
+                <div className="relative aspect-[16/10] bg-slate-950 p-2">
+                  {item.video ? (
+                    <>
+                      <video
+                        className="h-full w-full rounded-md object-contain object-top"
+                        poster={item.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        onCanPlay={(event) => startPreviewVideo(event.currentTarget)}
+                        onMouseEnter={(event) => startPreviewVideo(event.currentTarget)}
+                      >
+                        <source src={item.video} type="video/webm" />
+                      </video>
+                      <div className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#007DB3] shadow-sm">
+                        движение
+                      </div>
+                    </>
+                  ) : (
+                    <img
+                      src={item.src}
+                      alt={`${item.title} проекта CentrLP`}
+                      className="h-full w-full rounded-md object-contain object-top transition-transform duration-500 group-hover:scale-[1.015]"
+                      loading="eager"
+                    />
+                  )}
+                </div>
+                <div className="flex items-center justify-between gap-4 px-4 py-3">
+                  <div className="text-sm font-bold text-slate-950">{item.title}</div>
+                  <div className="text-right text-xs leading-snug text-slate-500">{item.text}</div>
+                </div>
+              </div>
+            ))}
           </motion.div>
 
           <motion.div
@@ -699,7 +806,7 @@ const Projects = () => {
                       </div>
                     </div>
 
-                    <div className="grid content-start gap-4">
+                    <div className="grid content-start gap-4 rounded-lg border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[#0096D6]/[0.06] p-3 md:p-4">
                       <BrowserFrame screen={project.screens[0]} featured eager={index < 2} />
                       <div className="grid gap-4 md:grid-cols-2">
                         {project.screens.slice(1).map((screen) => (
