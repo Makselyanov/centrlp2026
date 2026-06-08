@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import WebGLFluidEnhanced from "webgl-fluid-enhanced";
 
@@ -158,7 +157,7 @@ export const Hero = () => {
                                 <ArrowRight className="h-5 w-5" />
                             </motion.button>
 
-                            <Link to="/prices#express" className="pointer-events-auto">
+                            <a href="/proverka-saita-i-zayavok-za-48-chasov" className="pointer-events-auto">
                                 <motion.button
                                     whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
                                     whileTap={{ scale: 0.98 }}
@@ -167,7 +166,7 @@ export const Hero = () => {
                                     <Play className="h-5 w-5 fill-current" />
                                     Цена от 15 000 ₽
                                 </motion.button>
-                            </Link>
+                            </a>
                         </div>
                     </motion.div>
 
