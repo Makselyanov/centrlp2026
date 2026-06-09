@@ -82,7 +82,7 @@ export const packagePrices: PackagePrice[] = [
 export const servicePrices: ServicePrice[] = [
   {
     title: "Экспресс-разбор заявок и сайта",
-    href: "/prices#express",
+    href: "/proverka-saita-i-zayavok-za-48-chasov",
     price: "от 15 000 ₽",
     description: "За 48 часов проверяем сайт, форму, предложение, Метрику и путь обращения, чтобы найти причины потери заявок.",
     category: "growth",

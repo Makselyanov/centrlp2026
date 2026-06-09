@@ -172,7 +172,7 @@ const growthServices: ServiceCard[] = [
   {
     title: "Экспресс-разбор заявок",
     description: "За 48 часов проверяем сайт, форму, предложение, Метрику и путь обращения, чтобы найти причины потери заявок.",
-    href: "/prices#express",
+    href: "/proverka-saita-i-zayavok-za-48-chasov",
     bullets: ["Первый экран и кнопки", "Форма и маршрут заявки", "5-7 быстрых правок"],
     icon: ScanSearch,
     featured: true,

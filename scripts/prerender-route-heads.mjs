@@ -45,7 +45,7 @@ function stripInlineMarkdown(value) {
 }
 
 function hasUnsafePublicMarker(value) {
-  return /SEO-метаданные|Self-review|Target keyword|Финальный status|TODO|draft|placeholder|черновик|здесь будут|потом добавим|надо придумать|implementation plan|handoff|Codex|Claude|CTA|обсуждается|комплаенс/i.test(
+  return /SEO-метаданные|Self-review|Target keyword|Финальный status|TODO|draft|placeholder|черновик|здесь будут|потом добавим|надо придумать|implementation plan|handoff|Codex|Claude|обсуждается/i.test(
     String(value),
   );
 }

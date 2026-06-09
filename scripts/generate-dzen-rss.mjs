@@ -35,6 +35,7 @@ function stripMarkdown(markdown = '') {
     .replace(/^#{1,6}\s+/gm, '')
     .replace(/^>\s?/gm, '')
     .replace(/[*_~`>#|]/g, '')
+    .replace(/[^\S\r\n]+$/gm, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim();
 }

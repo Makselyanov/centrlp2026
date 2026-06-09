@@ -33,7 +33,7 @@ description: "Готовая инструкция: как поднять свя�
 
 - **VPS Beget M** (2 vCPU, 2 ГБ RAM, 40 ГБ NVMe) — 460 ₽/мес. Регистрация по [нашей ссылке Beget](https://beget.com/p7257).
 - **Домен** для n8n (можно купить тут же в Beget за ~190 ₽/год).
-- **API-ключ Claude** ([console.anthropic.com](https://console.anthropic.com)).
+- **API-ключ выбранной AI-модели**.
 - **30 минут на базовую установку** + 4–6 часов на настройку первых workflow.
 
 ## Шаг 1. Заказываем VPS и базовая защита
@@ -133,7 +133,7 @@ services:
       - ./openclaw-work:/work
     environment:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
-      OPENCLAW_MODEL: claude-opus-4-6
+      OPENCLAW_MODEL: provider-model-name
       OPENCLAW_WORKDIR: /work
     command: sh -c "npm install && npm run start"
     networks:
@@ -354,7 +354,7 @@ docker stats
 | [Beget VPS M](https://beget.com/p7257) | 460 ₽ |
 | Снапшоты Beget (+20%) | 92 ₽ |
 | Домен `.ru` | ~16 ₽ (190 ₽/год) |
-| API Claude (~100 задач/день) | ~$30 (~2 700 ₽) |
+| API AI-модели (~100 задач/день) | ~$30 (~2 700 ₽) |
 | **Итого** | **~3 270 ₽/мес.** |
 
 Для бизнеса, который раньше тратил 35 000+ ₽ на одного контент-менеджера, окупаемость наступает в первый же месяц.

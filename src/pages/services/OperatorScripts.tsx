@@ -180,7 +180,7 @@ const OperatorScripts = () => {
               { icon: Target, title: "Единый стандарт", desc: "Все говорят с клиентами одинаково качественно" },
               { icon: FileText, title: "Готовые ответы", desc: "База FAQ экономит время на повторах" },
               { icon: CheckCircle, title: "Меньше ошибок", desc: "Операторы знают, как реагировать в любой ситуации" },
-              { icon: Headphones, title: "Уверенность команды", desc: "Менеджеры чувствуют себя увереннее в диалоге" }
+              { icon: Headphones, title: "Уверенность команды", desc: "Менеджеры чувствуют себя увереннее в разговоре" }
             ].map((item, index) => (
               <Card key={index} className="hover-scale">
                 <CardContent className="pt-6 text-center">
