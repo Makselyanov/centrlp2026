@@ -17,6 +17,13 @@ const goalOptions = [
   "Бот, CRM или автоматизация",
 ];
 
+const submitLabelByGoal: Record<string, string> = {
+  "Экспресс-разбор заявок": "Получить экспресс-разбор",
+  "Проверка сайта по персональным данным": "Получить проверку сайта",
+  "Сайт или посадочная страница": "Обсудить сайт и посадочную",
+  "Бот, CRM или автоматизация": "Обсудить CRM и автоматизацию",
+};
+
 export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
@@ -307,7 +314,7 @@ export const ContactForm = () => {
         </div>
 
         <Button type="submit" size="lg" className="w-full">
-          Получить разбор заявок
+          {submitLabelByGoal[formData.goal] ?? "Получить разбор заявки"}
         </Button>
 
         <p className="text-center text-xs leading-5 text-slate-500">

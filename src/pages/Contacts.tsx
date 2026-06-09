@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
-import { Phone, MapPin, FileText, MessageCircle, Mail, ArrowRight, Copy, CheckCircle2, XCircle } from "lucide-react";
+import { Phone, MapPin, FileText, MessageCircle, Mail, ArrowRight, Copy, CheckCircle2, XCircle, ScanSearch } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -43,7 +43,7 @@ const Contacts = () => {
   return (
     <Layout
       title="Контакты CentrLP — Тюмень, телефон, Telegram, WhatsApp"
-      description="Свяжитесь с CentrLP: 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: Тюмень, проезд Заречный, 39А. Консультация бесплатна."
+      description="Свяжитесь с CentrLP: 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: Тюмень, проезд Солнечный, 22. Консультация бесплатна."
     >
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
@@ -96,6 +96,54 @@ const Contacts = () => {
               Открыты к диалогу, встречам и новым вызовам.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      <section className="bg-white py-10">
+        <div className="container mx-auto px-4">
+          <Card className="mx-auto max-w-5xl overflow-hidden border-[#0096D6]/15 bg-gradient-to-r from-[#0096D6]/[0.06] via-white to-[#44B78B]/[0.08] p-8 shadow-[0_22px_70px_-36px_rgba(0,150,214,0.45)]">
+            <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#0096D6]/15 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#0096D6]">
+                  <ScanSearch className="h-4 w-4" />
+                  Быстрый вход
+                </div>
+                <h2 className="text-3xl font-bold leading-tight text-slate-900 md:text-4xl">
+                  Если заявок с сайта мало, не обязательно начинать с большого проекта.
+                </h2>
+                <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
+                  Можно начать с экспресс-разбора за 48 часов: проверим первый экран, форму,
+                  путь обращения, быстрые контакты и Метрику, чтобы понять, где именно теряется клиент.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/80 bg-white/90 p-5 shadow-sm">
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#0096D6]">
+                    Что получите
+                  </div>
+                  <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-700">
+                    <li>Короткий список потерь и быстрых правок по приоритету</li>
+                    <li>Понимание, что чинить на сайте до рекламы и больших вложений</li>
+                    <li>Следующий шаг: доработка сайта, CRM, аналитики или формы</li>
+                  </ul>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button asChild size="lg" className="sm:flex-1">
+                    <a href="/proverka-saita-i-zayavok-za-48-chasov">Открыть экспресс-разбор</a>
+                  </Button>
+                  <Button
+                    type="button"
+                    size="lg"
+                    variant="outline"
+                    className="sm:flex-1"
+                    onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}
+                  >
+                    Сразу оставить заявку
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
 
@@ -215,7 +263,7 @@ const Contacts = () => {
                     <div>
                       <h3 className="font-bold text-lg mb-1">Адрес</h3>
                       <p className="text-muted-foreground">
-                        625022, г. Тюмень, проезд Заречный, д. 39А
+                        625022, г. Тюмень, проезд Солнечный, 22
                       </p>
                     </div>
                   </div>
@@ -232,6 +280,9 @@ const Contacts = () => {
                       <h3 className="font-bold text-lg mb-1">Реквизиты</h3>
                       <p className="text-muted-foreground mb-3 text-sm">
                         ООО «ААМХ» · ОГРН 1267200004818
+                      </p>
+                      <p className="text-muted-foreground mb-3 text-sm">
+                        Юридический адрес: 625022, г. Тюмень, проезд Заречный, д. 39А, к. 1, кв. 88
                       </p>
                       <div className="flex items-center gap-2 bg-secondary p-2 rounded-lg w-full max-w-xs">
                         <span className="font-mono text-sm flex-grow">ИНН 7203606424</span>
@@ -251,6 +302,7 @@ const Contacts = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
+              id="contact-form"
             >
               <Card className="p-8 shadow-lg border-primary/10">
                 <div className="mb-6">
@@ -272,7 +324,7 @@ const Contacts = () => {
         {mapVisible ? (
           <iframe
             title="Карта офиса CentrLP в Тюмени"
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3A644fd3fd8f74799009f60c932487dc7ef6b4d7208f53ac7e5e596cb6eec650ac&source=constructor"
+            src="https://yandex.ru/map-widget/v1/?text=%D0%A2%D1%8E%D0%BC%D0%B5%D0%BD%D1%8C%2C%20%D0%BF%D1%80%D0%BE%D0%B5%D0%B7%D0%B4%20%D0%A1%D0%BE%D0%BB%D0%BD%D0%B5%D1%87%D0%BD%D1%8B%D0%B9%2C%2022&z=16"
             width="100%"
             height="100%"
             frameBorder="0"
@@ -282,7 +334,7 @@ const Contacts = () => {
           <div className="flex h-full flex-col items-center justify-center gap-4 bg-slate-100 px-4 text-center">
             <MapPin className="h-10 w-10 text-primary" />
             <div>
-              <h2 className="text-xl font-bold text-slate-900">Тюмень, проезд Заречный, 39А</h2>
+              <h2 className="text-xl font-bold text-slate-900">Тюмень, проезд Солнечный, 22</h2>
               <p className="mt-2 max-w-xl text-sm text-slate-600">
                 Офис и встречи по предварительной договоренности.
               </p>

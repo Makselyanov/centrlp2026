@@ -65,7 +65,9 @@ export const Footer = () => {
               <br />
               ОГРН 1267200004818
               <br />
-              625022, г. Тюмень, проезд Заречный, д. 39А, к. 1, кв. 88
+              Офис и встречи: 625022, г. Тюмень, проезд Солнечный, 22
+              <br />
+              Юридический адрес: 625022, г. Тюмень, проезд Заречный, д. 39А, к. 1, кв. 88
             </p>
             <details className="text-sm text-muted-foreground">
               <summary className="cursor-pointer hover:text-primary transition-colors mb-2">

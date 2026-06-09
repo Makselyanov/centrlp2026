@@ -185,7 +185,9 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
         "telephone": "+7-905-824-85-64",
         "address": {
           "@type": "PostalAddress",
+          "streetAddress": "проезд Солнечный, 22",
           "addressLocality": "Тюмень",
+          "postalCode": "625022",
           "addressCountry": "RU"
         }
       },

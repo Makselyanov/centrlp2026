@@ -820,6 +820,48 @@ const Services = () => {
         </div>
       </section>
 
+      <section className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <Card className="overflow-hidden border-[#0096D6]/15 bg-gradient-to-r from-[#0096D6]/[0.07] via-white to-[#44B78B]/[0.06] p-8 shadow-[0_24px_80px_-42px_rgba(0,150,214,0.42)]">
+            <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+              <div>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#0096D6]/15 bg-white/90 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#0096D6]">
+                  <ScanSearch className="h-4 w-4" />
+                  Короткий старт без большого проекта
+                </div>
+                <h2 className="text-3xl font-bold leading-tight text-slate-900 md:text-4xl">
+                  Если сайт уже есть, но заявок мало, начните не с переделки всего сайта, а с короткого разбора.
+                </h2>
+                <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
+                  За 48 часов проверяем первый экран, форму, быстрые контакты, путь обращения и Метрику.
+                  После этого понятно, что исправить сразу, а что уже требует сайта, CRM, трафика или автоматизации.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-white/80 bg-white/90 p-5 shadow-sm">
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-[#0096D6]">
+                    Подходит, когда
+                  </div>
+                  <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-700">
+                    <li>обращения есть, но сайт не доводит до заявки</li>
+                    <li>неясно, работает ли форма и что видит менеджер после отправки</li>
+                    <li>нужно быстро понять, куда вложить следующий рубль и час</li>
+                  </ul>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button asChild size="lg" className="sm:flex-1">
+                    <Link to="/proverka-saita-i-zayavok-za-48-chasov">Открыть экспресс-разбор</Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="sm:flex-1">
+                    <Link to="/contacts">Сразу оставить заявку</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
       {renderGroup(
         "Современные цифровые продукты",
         "Этот блок для тех, кому нужен не просто сайт, а рабочий цифровой инструмент: Mini App, MVP, CRM, ранний заход в новый канал или внутренний сервис команды.",
