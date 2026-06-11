@@ -60,7 +60,8 @@
 </script>
 <style>
 body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;max-width:820px;margin:0 auto;padding:24px;color:#0f172a;line-height:1.65}
-a{color:#0369a1}h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:1.2em 0 .55em}h2{font-size:1.55rem;margin-top:2em}h3{font-size:1.12rem;margin-top:1.3em}.lead{font-size:1.15rem;color:#334155}.box{border:1px solid #dbeafe;background:#eff6ff;border-radius:14px;padding:18px 20px;margin:24px 0}.price{font-size:1.2rem;font-weight:700}.crumbs{font-size:.9rem;color:#64748b;margin:0 0 28px}.crumbs a{color:#0369a1;text-decoration:none}.cards{display:grid;gap:14px;margin:18px 0}.card{border:1px solid #e2e8f0;border-radius:12px;padding:16px;background:#fff}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}.fact{border:1px solid #bae6fd;background:#f0f9ff;border-radius:12px;padding:14px}.fact strong{display:block;color:#075985}.faq details{border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin:10px 0;background:#fff}.faq summary{font-weight:700;cursor:pointer}.footer{color:#64748b;font-size:.9em;margin-top:40px;border-top:1px solid #e2e8f0;padding-top:18px}
+a{color:#0369a1}h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:1.2em 0 .55em}h2{font-size:1.55rem;margin-top:2em}h3{font-size:1.12rem;margin-top:1.3em}.lead{font-size:1.15rem;color:#334155}.box{border:1px solid #dbeafe;background:#eff6ff;border-radius:14px;padding:18px 20px;margin:24px 0}.price{font-size:1.2rem;font-weight:700}.crumbs{font-size:.9rem;color:#64748b;margin:0 0 28px}.crumbs a{color:#0369a1;text-decoration:none}.cards{display:grid;gap:14px;margin:18px 0}.card{border:1px solid #e2e8f0;border-radius:12px;padding:16px;background:#fff}.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}.fact{border:1px solid #bae6fd;background:#f0f9ff;border-radius:12px;padding:14px}.fact strong{display:block;color:#075985}.faq details{border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;margin:10px 0;background:#fff}.faq summary{font-weight:700;cursor:pointer}.cta-form{border:1px solid #cbd5e1;border-radius:18px;background:#fff;padding:22px;margin:28px 0;box-shadow:0 12px 30px rgba(15,23,42,.06)}.cta-form h2{margin-top:0}.cta-form-grid{display:grid;gap:14px}.cta-form-row{display:grid;gap:14px}.cta-form label{display:block;font-weight:600;color:#0f172a;margin-bottom:6px}.cta-form input,.cta-form textarea{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:12px;padding:12px 14px;font:inherit;color:#0f172a;background:#fff}.cta-form textarea{min-height:120px;resize:vertical}.cta-form small{display:block;color:#475569;margin-top:6px}.cta-form .check{display:flex;align-items:flex-start;gap:10px;font-size:.95rem;color:#334155}.cta-form .check input{width:18px;height:18px;margin-top:2px}.cta-form button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:14px;background:#0096d6;color:#fff;padding:14px 18px;font:inherit;font-weight:700;cursor:pointer}.cta-form button[disabled]{opacity:.7;cursor:wait}.cta-form-status{margin-top:12px;font-size:.95rem}.cta-form-status[data-state="success"]{color:#166534}.cta-form-status[data-state="error"]{color:#b91c1c}.footer{color:#64748b;font-size:.9em;margin-top:40px;border-top:1px solid #e2e8f0;padding-top:18px}
+@media (min-width:700px){.cta-form-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -80,6 +81,47 @@ a{color:#0369a1}h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:1.2e
   <div class="fact"><strong>Адрес</strong>625022, г. Тюмень, проезд Солнечный, 22</div>
   <div class="fact"><strong>Срок</strong>48 часов после получения ссылки и вводных</div>
 </div>
+<section class="cta-form" aria-labelledby="lead-form-title">
+  <h2 id="lead-form-title">Отправить ссылку на сайт сейчас</h2>
+  <p>Оставьте контакт и ссылку. В ответе ориентируемся на короткий рабочий вывод: где теряются обращения и какой следующий шаг даст результат быстрее всего.</p>
+  <form id="lead-form" class="cta-form-grid">
+    <div class="cta-form-row">
+      <div>
+        <label for="name">Имя *</label>
+        <input id="name" name="name" type="text" required autocomplete="name">
+      </div>
+      <div>
+        <label for="phone">Телефон или Telegram *</label>
+        <input id="phone" name="phone" type="text" required autocomplete="tel">
+      </div>
+    </div>
+    <div class="cta-form-row">
+      <div>
+        <label for="business">Бизнес / ниша</label>
+        <input id="business" name="business" type="text" placeholder="Например: клиника, производство, услуги">
+      </div>
+      <div>
+        <label for="city">Город</label>
+        <input id="city" name="city" type="text" placeholder="Тюмень">
+      </div>
+    </div>
+    <div>
+      <label for="link">Ссылка на сайт или карточку *</label>
+      <input id="link" name="link" type="url" required placeholder="https://">
+      <small>Если сайта нет, можно прислать страницу в Яндекс Бизнес, 2ГИС, VK или Telegram.</small>
+    </div>
+    <div>
+      <label for="comment">Где, по ощущениям, теряются заявки</label>
+      <textarea id="comment" name="comment" placeholder="Например: звонков мало, форма подозрительно молчит, реклама есть, а обращений почти нет"></textarea>
+    </div>
+    <label class="check" for="privacyAccepted">
+      <input id="privacyAccepted" name="privacyAccepted" type="checkbox" required>
+      <span>Даю согласие на обработку персональных данных и ознакомлен(а) с <a href="/consent">согласием</a> и <a href="/privacy">политикой обработки персональных данных</a>.</span>
+    </label>
+    <button type="submit" id="lead-form-submit">Получить разбор за 48 часов</button>
+    <div id="lead-form-status" class="cta-form-status" aria-live="polite"></div>
+  </form>
+</section>
 <h2>Что именно проверяем</h2>
 <div class="cards">
   <div class="card"><h3>Первый экран и оффер</h3><p>Понимает ли человек за 5-10 секунд, что вы предлагаете, кому это нужно и почему стоит оставить контакт именно сейчас.</p></div>
@@ -104,5 +146,64 @@ a{color:#0369a1}h1{font-size:clamp(2rem,5vw,3.6rem);line-height:1.08;margin:1.2e
 <p>Если после разбора нужен следующий шаг, можно перейти к <a href="/razrabotka-sajtov-tyumen">доработке сайта в Тюмени</a>, <a href="/sozdanie-lendinga-tyumen">посадочной под рекламу</a>, <a href="/nastroyka-yandex-direct-tyumen">подготовке Яндекс Директ</a> или <a href="/contacts">связаться напрямую</a>.</p>
 </main>
 <p class="footer">© 2026 CentrLP</p>
+<script>
+const leadForm = document.getElementById('lead-form');
+const leadFormStatus = document.getElementById('lead-form-status');
+const leadFormSubmit = document.getElementById('lead-form-submit');
+
+if (leadForm && leadFormStatus && leadFormSubmit) {
+  leadForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    leadFormStatus.textContent = '';
+    leadFormStatus.dataset.state = '';
+    leadFormSubmit.disabled = true;
+    leadFormSubmit.textContent = 'Отправляем...';
+
+    const formData = new FormData(leadForm);
+    const payload = {
+      name: String(formData.get('name') || '').trim(),
+      phone: String(formData.get('phone') || '').trim(),
+      business: String(formData.get('business') || '').trim(),
+      city: String(formData.get('city') || '').trim(),
+      link: String(formData.get('link') || '').trim(),
+      goal: 'Экспресс-разбор заявок',
+      comment: String(formData.get('comment') || '').trim(),
+      privacyAccepted: formData.get('privacyAccepted') === 'on',
+      cookiesAccepted: false,
+      page_path: '/proverka-saita-i-zayavok-za-48-chasov',
+      page_url: window.location.href,
+      lead_source: 'centrlp.ru/express-audit',
+      consent_version: 'consent-v1.0-2026-05-02',
+      privacy_version: 'privacy-v2.0-2026-04-17',
+      cookies_version: 'cookies-v2.0-2026-04-17'
+    };
+
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('send_failed');
+      }
+
+      leadForm.reset();
+      leadFormStatus.dataset.state = 'success';
+      leadFormStatus.textContent = 'Заявка отправлена. Если задача срочная, можно сразу продублировать её в Telegram: @centrlp.';
+    } catch (error) {
+      leadFormStatus.dataset.state = 'error';
+      leadFormStatus.textContent = 'Не удалось отправить заявку с этой страницы. Напишите в Telegram @centrlp или позвоните +7 905 824-85-64.';
+    } finally {
+      leadFormSubmit.disabled = false;
+      leadFormSubmit.textContent = 'Получить разбор за 48 часов';
+    }
+  });
+}
+</script>
 </body>
 </html>
