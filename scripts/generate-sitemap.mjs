@@ -103,6 +103,11 @@ function getPublicIndexRoutes() {
                 return null;
             }
 
+            const html = fs.readFileSync(indexPath, 'utf8');
+            if (/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html)) {
+                return null;
+            }
+
             const stat = fs.statSync(indexPath);
             const gitLastmod = getGitLastmod(path.relative(ROOT_DIR, indexPath));
 

@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="yandex" content="noindex, nofollow, noarchive">
+    <title>Демонстрационный экран - мастер на час</title>
+    <style>
+      :root {
+        --aqua: #66b8be;
+        --aqua-dark: #4faab0;
+        --red: #e92b21;
+        --white: #ffffff;
+        --ink: #161616;
+        --muted: #eef5f6;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #111;
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      body::after {
+        content: "ДЕМОНСТРАЦИОННЫЙ ПРОСМОТР";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        display: grid;
+        place-items: center;
+        color: rgba(255, 255, 255, 0.1);
+        font-size: clamp(22px, 4.2vw, 58px);
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-align: center;
+        transform: rotate(-18deg);
+        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+      }
+
+      a,
+      button {
+        -webkit-user-drag: none;
+      }
+
+      .page {
+        width: min(1126px, 100vw);
+        min-height: 100vh;
+        margin: 0 auto;
+        background: var(--white);
+        position: relative;
+        overflow: hidden;
+        border: 4px solid #151515;
+      }
+
+      .page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 80;
+        background:
+          linear-gradient(90deg, rgba(255, 255, 255, 0.34), transparent 10%, transparent 90%, rgba(255, 255, 255, 0.34)),
+          repeating-linear-gradient(-32deg, transparent 0 170px, rgba(255, 255, 255, 0.12) 172px 174px, transparent 176px 340px);
+        mix-blend-mode: overlay;
+      }
+
+      .tool-pattern {
+        background-color: var(--aqua);
+        background-image:
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168' viewBox='0 0 168 168'%3E%3Cg fill='none' stroke='white' stroke-opacity='.72' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M24 30h42M37 17v26M51 17v26M88 24l18 18-40 40-18-18zM113 18l12 12M19 96h58M33 83v26M121 76a24 24 0 0 0 22 36l-22 22a24 24 0 0 1-22-36zM52 127l48-48M44 119l16 16M12 142c22-18 36-20 58-8M100 143h48M118 128v30M136 128v30%22/%3E%3Ccircle cx='139' cy='43' r='6'/%3E%3Ccircle cx='19' cy='62' r='4'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 168px 168px;
+      }
+
+      .hero {
+        position: relative;
+        min-height: 420px;
+        background: var(--aqua);
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 100%;
+        background: var(--red);
+        z-index: 5;
+      }
+
+      .top-row {
+        position: relative;
+        z-index: 12;
+        display: grid;
+        grid-template-columns: minmax(260px, 1fr) auto auto minmax(250px, 1fr);
+        gap: 42px;
+        align-items: start;
+        padding: 24px 72px 0 56px;
+      }
+
+      .nav-button {
+        min-width: 185px;
+        height: 40px;
+        border: 0;
+        background: var(--red);
+        color: var(--white);
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 40px;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .contacts {
+        color: var(--white);
+        font-weight: 900;
+        text-align: left;
+        font-size: 18px;
+        line-height: 1.35;
+      }
+
+      .contacts .city {
+        display: block;
+        font-size: 21px;
+        margin-bottom: 7px;
+      }
+
+      .contacts .phone {
+        display: inline-block;
+        background: var(--red);
+        padding: 8px 12px;
+        font-size: 18px;
+        letter-spacing: 0.01em;
+      }
+
+      .person {
+        position: absolute;
+        left: -6px;
+        top: 12px;
+        z-index: 9;
+        width: 320px;
+        height: 410px;
+      }
+
+      .head {
+        position: absolute;
+        left: 38px;
+        top: 8px;
+        width: 138px;
+        height: 154px;
+        border-radius: 54% 46% 48% 52%;
+        background:
+          radial-gradient(circle at 68% 48%, #f0b68c 0 6px, transparent 7px),
+          radial-gradient(circle at 37% 52%, #1d1d1d 0 5px, transparent 6px),
+          radial-gradient(circle at 72% 54%, #1d1d1d 0 5px, transparent 6px),
+          linear-gradient(145deg, #ffd4ad 0%, #e29b73 68%, #c27658 100%);
+        box-shadow: inset 12px 4px 0 rgba(255, 255, 255, 0.28), 0 10px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      .head::before {
+        content: "";
+        position: absolute;
+        left: -3px;
+        top: -6px;
+        width: 114px;
+        height: 58px;
+        border-radius: 50% 48% 42% 35%;
+        background: linear-gradient(150deg, #463024, #181818);
+        transform: rotate(-15deg);
+      }
+
+      .head::after {
+        content: "";
+        position: absolute;
+        left: 42px;
+        top: 105px;
+        width: 54px;
+        height: 16px;
+        border-bottom: 5px solid #712c25;
+        border-radius: 0 0 60% 60%;
+        transform: rotate(6deg);
+      }
+
+      .neck {
+        position: absolute;
+        left: 82px;
+        top: 145px;
+        width: 70px;
+        height: 68px;
+        background: #c98163;
+        transform: rotate(-7deg);
+      }
+
+      .body-shape {
+        position: absolute;
+        left: -16px;
+        top: 178px;
+        width: 215px;
+        height: 246px;
+        background: #101010;
+        border-radius: 54% 32% 0 0;
+        transform: rotate(1deg);
+        box-shadow: 16px 0 0 rgba(0, 0, 0, 0.12);
+      }
+
+      .arm {
+        position: absolute;
+        left: 166px;
+        top: 216px;
+        width: 56px;
+        height: 118px;
+        background: linear-gradient(#efb389, #c97958);
+        border-radius: 28px;
+        transform: rotate(-32deg);
+        z-index: 2;
+      }
+
+      .drill {
+        position: absolute;
+        left: 190px;
+        top: 212px;
+        width: 98px;
+        height: 150px;
+        transform: rotate(-27deg);
+        z-index: 3;
+      }
+
+      .drill::before {
+        content: "";
+        position: absolute;
+        left: 22px;
+        top: 28px;
+        width: 62px;
+        height: 68px;
+        border-radius: 18px 18px 12px 12px;
+        background: linear-gradient(135deg, #2d2d2d, #595959 40%, #161616);
+        box-shadow: inset 0 0 0 5px #888, 0 4px 10px rgba(0, 0, 0, 0.35);
+      }
+
+      .drill::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 4px;
+        width: 102px;
+        height: 24px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #131313, #a2a2a2 52%, #1b1b1b 72%);
+      }
+
+      .hero-copy {
+        position: absolute;
+        z-index: 12;
+        top: 124px;
+        right: 108px;
+        width: 268px;
+        color: #fff;
+        font-size: 14px;
+        line-height: 1.34;
+        font-weight: 900;
+      }
+
+      .word-master {
+        position: absolute;
+        z-index: 14;
+        left: 48px;
+        bottom: -21px;
+        color: var(--red);
+        font-size: clamp(84px, 13vw, 160px);
+        font-weight: 1000;
+        line-height: 0.82;
+        letter-spacing: -0.07em;
+      }
+
+      .word-hour {
+        position: absolute;
+        z-index: 15;
+        left: 408px;
+        bottom: -94px;
+        color: rgba(97, 181, 188, 0.96);
+        font-size: clamp(78px, 13vw, 154px);
+        font-weight: 1000;
+        line-height: 0.82;
+        letter-spacing: -0.075em;
+      }
+
+      .offer {
+        position: relative;
+        min-height: 660px;
+        padding: 146px 62px 30px;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%2366b8be' stroke-opacity='.22' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M24 52h72M42 29v48M72 29v48M134 30l31 31-70 70-31-31zM192 27l20 20M32 155h93M54 133v45M182 116a36 36 0 0 0 34 54l-36 36a36 36 0 0 1-34-54zM78 207l72-72M64 194l25 25M16 226c34-26 58-29 91-12M156 225h76M186 204v48M216 204v48%22/%3E%3Ccircle cx='217' cy='72' r='9'/%3E%3Ccircle cx='30' cy='100' r='7'/%3E%3C/g%3E%3C/svg%3E");
+        background-size: 520px 520px;
+        overflow: hidden;
+      }
+
+      .dash-line {
+        position: absolute;
+        left: 155px;
+        top: 170px;
+        width: 765px;
+        height: 120px;
+        pointer-events: none;
+      }
+
+      .dash-line svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .label {
+        display: inline-block;
+        position: relative;
+        z-index: 5;
+        background: var(--red);
+        color: #fff;
+        padding: 9px 21px;
+        font-size: 21px;
+        font-weight: 1000;
+        text-transform: uppercase;
+        margin-bottom: 70px;
+      }
+
+      .columns {
+        position: relative;
+        z-index: 4;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 18px;
+        align-items: start;
+      }
+
+      .col {
+        font-size: 14px;
+        line-height: 1.28;
+        color: #181818;
+      }
+
+      .col strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .round-cta {
+        position: absolute;
+        right: 52px;
+        bottom: 36px;
+        width: 224px;
+        height: 224px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        background: var(--red);
+        color: #fff;
+        padding: 26px;
+        font-size: 19px;
+        line-height: 1.22;
+        font-weight: 1000;
+        box-shadow: 0 0 0 12px #fff, 0 0 0 15px rgba(102, 184, 190, 0.95);
+      }
+
+      .round-cta::before {
+        content: "";
+        position: absolute;
+        inset: -28px;
+        border: 2px dashed rgba(102, 184, 190, 0.9);
+        border-radius: 50%;
+      }
+
+      .corner-a,
+      .corner-b {
+        position: absolute;
+        width: 54px;
+        height: 54px;
+        background: var(--aqua);
+        bottom: 0;
+      }
+
+      .corner-a {
+        left: 0;
+      }
+
+      .corner-b {
+        right: 0;
+      }
+
+      .footer-bar {
+        position: relative;
+        min-height: 112px;
+        background: var(--aqua);
+        display: flex;
+        align-items: center;
+        gap: 48px;
+        padding: 24px 70px 24px 92px;
+        color: #fff;
+        font-weight: 900;
+      }
+
+      .footer-bar::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 54px;
+        height: 100%;
+        background: var(--red);
+      }
+
+      .card-icon {
+        width: 52px;
+        height: 32px;
+        border: 5px solid #fff;
+        border-radius: 7px;
+        position: relative;
+        flex: 0 0 auto;
+      }
+
+      .card-icon::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 9px;
+        height: 5px;
+        background: #fff;
+      }
+
+      .pay-text {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        line-height: 1.12;
+        max-width: 260px;
+      }
+
+      .messengers {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .messenger {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--aqua);
+        display: grid;
+        place-items: center;
+        font-weight: 1000;
+        font-size: 18px;
+      }
+
+      .hidden-contact {
+        margin-left: auto;
+        font-size: 18px;
+      }
+
+      @media (max-width: 960px) {
+        .page {
+          border-width: 0;
+        }
+
+        .hero {
+          min-height: 590px;
+        }
+
+        .top-row {
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          padding: 20px 56px 0 24px;
+        }
+
+        .top-row::before {
+          content: "";
+          display: none;
+        }
+
+        .contacts {
+          grid-column: 1 / -1;
+          justify-self: end;
+          margin-right: 24px;
+        }
+
+        .person {
+          transform: scale(0.82);
+          transform-origin: left top;
+        }
+
+        .hero-copy {
+          top: 200px;
+          right: 66px;
+          width: min(300px, calc(100vw - 90px));
+        }
+
+        .word-master {
+          left: 26px;
+          bottom: 72px;
+          font-size: clamp(82px, 20vw, 132px);
+        }
+
+        .word-hour {
+          left: 22px;
+          bottom: -26px;
+          font-size: clamp(78px, 20vw, 128px);
+        }
+
+        .offer {
+          padding: 86px 28px 280px;
+        }
+
+        .label {
+          margin-bottom: 36px;
+        }
+
+        .columns {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 22px;
+        }
+
+        .dash-line {
+          display: none;
+        }
+
+        .round-cta {
+          right: 40px;
+          bottom: 50px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .hero {
+          min-height: 660px;
+        }
+
+        .hero::after {
+          width: 24px;
+        }
+
+        .top-row {
+          grid-template-columns: 1fr;
+          padding-right: 34px;
+        }
+
+        .nav-button {
+          width: 175px;
+        }
+
+        .contacts {
+          justify-self: start;
+          margin-right: 0;
+        }
+
+        .person {
+          top: 180px;
+          transform: scale(0.62);
+        }
+
+        .hero-copy {
+          top: 210px;
+          right: 38px;
+          left: auto;
+          width: 220px;
+          font-size: 13px;
+        }
+
+        .word-master {
+          bottom: 85px;
+          font-size: clamp(62px, 19vw, 92px);
+        }
+
+        .word-hour {
+          bottom: 16px;
+          font-size: clamp(58px, 18vw, 86px);
+        }
+
+        .offer {
+          padding: 62px 22px 285px;
+        }
+
+        .columns {
+          grid-template-columns: 1fr;
+        }
+
+        .round-cta {
+          left: 50%;
+          right: auto;
+          transform: translateX(-50%);
+          width: 208px;
+          height: 208px;
+          font-size: 17px;
+        }
+
+        .footer-bar {
+          padding: 28px 28px 28px 74px;
+          flex-wrap: wrap;
+          gap: 20px;
+        }
+
+        .hidden-contact {
+          margin-left: 0;
+          width: 100%;
+        }
+      }
+
+      @media print {
+        body {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body oncontextmenu="return false">
+    <main class="page" aria-label="Демонстрационный экран сайта мастер на час">
+      <section class="hero tool-pattern">
+        <div class="top-row">
+          <div aria-hidden="true"></div>
+          <a class="nav-button" href="#services" tabindex="-1">Услуги</a>
+          <a class="nav-button" href="#portfolio" tabindex="-1">Портфолио</a>
+          <div class="contacts">
+            <span class="city">● Тюмень</span>
+            <span class="phone">● +7 919 954 51 55</span>
+          </div>
+        </div>
+
+        <div class="person" aria-hidden="true">
+          <div class="head"></div>
+          <div class="neck"></div>
+          <div class="body-shape"></div>
+          <div class="arm"></div>
+          <div class="drill"></div>
+        </div>
+
+        <div class="hero-copy">
+          Здравствуйте, я Виталий, частный мастер с опытом работы более 15 лет.
+          Оказываю услуги по сборке мебели, установке техники, а также в сфере
+          бытового ремонта. Оперативный выезд во все районы г. Тюмени. У вас
+          накопились не решенные вопросы по дому, которые требуют быстрого и
+          качественного решения? Тогда обратитесь ко мне - мастеру на час!
+        </div>
+
+        <div class="word-master">МАСТЕР</div>
+        <div class="word-hour">НА ЧАС</div>
+      </section>
+
+      <section class="offer" id="services">
+        <div class="dash-line" aria-hidden="true">
+          <svg viewBox="0 0 765 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 8C120 46 212 40 320 48C445 57 535 90 610 100" stroke="#66B8BE" stroke-width="2" stroke-dasharray="10 8"/>
+            <path d="M13 25C118 63 222 65 348 72C475 79 566 101 746 20" stroke="#66B8BE" stroke-width="2" stroke-dasharray="10 8"/>
+            <path d="M6 86C72 24 127 25 185 58C244 91 310 72 390 92" stroke="#66B8BE" stroke-width="2" stroke-dasharray="10 8"/>
+          </svg>
+        </div>
+
+        <div class="label">Что я предлагаю:</div>
+
+        <div class="columns">
+          <div class="col">
+            <strong>Универсальное решение проблем.</strong>
+            Выполняю широкий спектр работ: повесить телевизор, установка полок и
+            зеркал, сборка мебели, замена розеток и выключателей, подключение
+            бытовой техники и многое другое.
+          </div>
+          <div class="col">
+            <strong>Опыт и надежность.</strong>
+            Работаем в этой сфере уже 15 лет. За это время накопил обширный
+            опыт и множество довольных клиентов.
+          </div>
+          <div class="col">
+            <strong>Время выполнения работ.</strong>
+            Можем оговорить при оформлении заказа и назначить удобное для вас.
+          </div>
+          <div class="col">
+            <strong>Услуга "Офисный переезд".</strong>
+            Сборка, разборка и перевозка офисной мебели.
+          </div>
+          <div class="col">
+            <strong>Цена оговаривается до начала работ.</strong>
+            Цена договорная и зависит от сложности выполняемой работы.
+            Оговоренная цена работы повышению не подлежит.
+          </div>
+          <div class="col">
+            <strong>Подборка и закуп материалов.</strong>
+            Доставка до объекта и аккуратная подготовка рабочего места.
+          </div>
+        </div>
+
+        <div class="round-cta">
+          Обращайтесь!<br>
+          Решим ваши вопросы<br>
+          в кратчайшие сроки,<br>
+          качественно<br>
+          и не дорого!
+        </div>
+
+        <div class="corner-a" aria-hidden="true"></div>
+        <div class="corner-b" aria-hidden="true"></div>
+      </section>
+
+      <section class="footer-bar" id="portfolio">
+        <div class="pay-text">
+          <span class="card-icon" aria-hidden="true"></span>
+          <span>Наличный<br>и безналичный расчет</span>
+        </div>
+        <div class="messengers" aria-label="Мессенджеры">
+          <span class="messenger">☎</span>
+          <span class="messenger">↗</span>
+          <span class="messenger">vk</span>
+        </div>
+        <div class="hidden-contact">Быстрый выезд по Тюмени</div>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        const blocked = ["copy", "cut", "dragstart", "selectstart", "contextmenu"];
+        for (const name of blocked) {
+          document.addEventListener(name, (event) => event.preventDefault(), { capture: true });
+        }
+
+        document.addEventListener("keydown", (event) => {
+          const key = String(event.key || "").toLowerCase();
+          if ((event.ctrlKey || event.metaKey) && ["c", "s", "p", "u", "a"].includes(key)) {
+            event.preventDefault();
+          }
+        }, { capture: true });
+      })();
+    </script>
+  </body>
+</html>
