@@ -160,6 +160,10 @@
         pointer-events: none;
       }
 
+      .hotspot--mobile {
+        display: none;
+      }
+
       @keyframes cta-breathe {
         0%,
         100% {
@@ -182,6 +186,23 @@
         }
       }
 
+      @media (max-width: 640px) {
+        .preview {
+          width: min(390px, 100vw);
+          aspect-ratio: 390 / 1840;
+          background-image: url("/79199545155/preview-mobile.png?v=20260613a");
+          box-shadow: 0 0 0 2px #111;
+        }
+
+        .hotspot--desktop {
+          display: none;
+        }
+
+        .hotspot--mobile {
+          display: block;
+        }
+      }
+
       @media print {
         body {
           display: none !important;
@@ -197,14 +218,22 @@
       aria-label="First screen preview"
     >
       <span class="shield" aria-hidden="true"></span>
-      <a class="hotspot hotspot--red" href="#preview" aria-label="Services" style="--x:33.0365%; --y:4.0816%; --w:16.4737%; --h:2.7211%;">Services</a>
-      <a class="hotspot hotspot--red" href="#preview" aria-label="Portfolio" style="--x:53.4283%; --y:4.0816%; --w:16.4737%; --h:2.7211%;">Portfolio</a>
-      <a class="hotspot hotspot--red" href="tel:+79199545155" aria-label="Call +7 919 954 51 55" style="--x:73.4639%; --y:4.0816%; --w:16.4737%; --h:2.7211%;">Call</a>
-      <a class="hotspot hotspot--red hotspot--cta" href="tel:+79199545155" aria-label="Call the master" style="--x:75.0668%; --y:61.9048%; --w:20.4809%; --h:17.3847%;">Call the master</a>
-      <span class="hotspot hotspot--pay" aria-hidden="true" style="--x:7.8362%; --y:84.8073%; --w:19.5904%; --h:4.1572%;"></span>
-      <a class="hotspot hotspot--circle" href="tel:+79199545155" aria-label="Contact in MAX" style="--x:33.7489%; --y:85.2608%; --w:3.3838%; --h:2.8723%;">MAX</a>
-      <a class="hotspot hotspot--circle" href="tel:+79199545155" aria-label="Contact in Telegram" style="--x:38.2903%; --y:85.2608%; --w:3.3838%; --h:2.8723%;">Telegram</a>
-      <a class="hotspot hotspot--circle" href="tel:+79199545155" aria-label="Contact in VK" style="--x:42.8317%; --y:85.2608%; --w:3.3838%; --h:2.8723%;">VK</a>
+      <a class="hotspot hotspot--desktop hotspot--red" href="#preview" aria-label="Services" style="--x:33.0365%; --y:4.0816%; --w:16.4737%; --h:2.7211%;">Services</a>
+      <a class="hotspot hotspot--desktop hotspot--red" href="#preview" aria-label="Portfolio" style="--x:53.4283%; --y:4.0816%; --w:16.4737%; --h:2.7211%;">Portfolio</a>
+      <a class="hotspot hotspot--desktop hotspot--red" href="tel:+79199545155" aria-label="Call +7 919 954 51 55" style="--x:73.4639%; --y:4.0816%; --w:16.4737%; --h:2.7211%;">Call</a>
+      <a class="hotspot hotspot--desktop hotspot--red hotspot--cta" href="tel:+79199545155" aria-label="Call the master" style="--x:75.0668%; --y:61.9048%; --w:20.4809%; --h:17.3847%;">Call the master</a>
+      <span class="hotspot hotspot--desktop hotspot--pay" aria-hidden="true" style="--x:7.8362%; --y:84.8073%; --w:19.5904%; --h:4.1572%;"></span>
+      <a class="hotspot hotspot--desktop hotspot--circle" href="tel:+79199545155" aria-label="Contact in MAX" style="--x:33.7489%; --y:85.2608%; --w:3.3838%; --h:2.8723%;">MAX</a>
+      <a class="hotspot hotspot--desktop hotspot--circle" href="tel:+79199545155" aria-label="Contact in Telegram" style="--x:38.2903%; --y:85.2608%; --w:3.3838%; --h:2.8723%;">Telegram</a>
+      <a class="hotspot hotspot--desktop hotspot--circle" href="tel:+79199545155" aria-label="Contact in VK" style="--x:42.8317%; --y:85.2608%; --w:3.3838%; --h:2.8723%;">VK</a>
+      <a class="hotspot hotspot--mobile hotspot--red" href="#preview" aria-label="Services" style="--x:33.8462%; --y:0.9783%; --w:22.0513%; --h:1.8478%;">Services</a>
+      <a class="hotspot hotspot--mobile hotspot--red" href="#preview" aria-label="Portfolio" style="--x:57.9487%; --y:0.9783%; --w:31.2821%; --h:1.8478%;">Portfolio</a>
+      <a class="hotspot hotspot--mobile hotspot--red" href="tel:+79199545155" aria-label="Call +7 919 954 51 55" style="--x:55.8974%; --y:5.3261%; --w:37.4359%; --h:1.9565%;">Call</a>
+      <a class="hotspot hotspot--mobile hotspot--red" href="tel:+79199545155" aria-label="Fast call out in Tyumen" style="--x:7.6923%; --y:27.2826%; --w:84.6154%; --h:2.6087%;">Fast call out</a>
+      <a class="hotspot hotspot--mobile hotspot--red hotspot--cta" href="tel:+79199545155" aria-label="Call the master" style="--x:18.7179%; --y:75.9783%; --w:62.5641%; --h:13.2609%;">Call the master</a>
+      <a class="hotspot hotspot--mobile hotspot--circle" href="tel:+79199545155" aria-label="Contact in MAX" style="--x:59.4872%; --y:96.6304%; --w:9.2308%; --h:1.9565%;">MAX</a>
+      <a class="hotspot hotspot--mobile hotspot--circle" href="tel:+79199545155" aria-label="Contact in Telegram" style="--x:70.2564%; --y:96.6304%; --w:9.2308%; --h:1.9565%;">Telegram</a>
+      <a class="hotspot hotspot--mobile hotspot--circle" href="tel:+79199545155" aria-label="Contact in VK" style="--x:81.0256%; --y:96.6304%; --w:9.2308%; --h:1.9565%;">VK</a>
     </main>
 
     <script>
