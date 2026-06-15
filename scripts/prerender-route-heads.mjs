@@ -35,13 +35,48 @@ function readText(filePath) {
   return fs.readFileSync(filePath, "utf8");
 }
 
-function stripInlineMarkdown(value) {
-  return String(value)
-    .replace(/!\[[^\]]*]\([^)]+\)/g, "")
-    .replace(/\[([^\]]+)]\(([^)]+)\)/g, "$1")
+function stripMarkdownMarks(value, { trim = true } = {}) {
+  const text = String(value)
     .replace(/[`*_~]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/\s+/g, " ");
+
+  return trim ? text.trim() : text;
+}
+
+function stripInlineMarkdown(value) {
+  return stripMarkdownMarks(
+    String(value)
+      .replace(/!\[[^\]]*]\([^)]+\)/g, "")
+      .replace(/\[([^\]]+)]\(([^)]+)\)/g, "$1"),
+  );
+}
+
+function renderInlineMarkdown(value) {
+  const source = String(value);
+  const html = [];
+  const linkRegex = /(!?)\[([^\]]*)]\(([^)\s]+)(?:\s+"[^"]*")?\)/g;
+  let lastIndex = 0;
+
+  for (const match of source.matchAll(linkRegex)) {
+    html.push(escapeHtml(stripMarkdownMarks(source.slice(lastIndex, match.index), { trim: false })));
+
+    const isImage = match[1] === "!";
+    const label = stripMarkdownMarks(match[2]);
+    const href = match[3];
+
+    if (isImage) {
+      if (label) html.push(escapeHtml(label));
+    } else if (/^(https?:\/\/|\/|mailto:|tel:)/i.test(href)) {
+      html.push(`<a href="${escapeHtml(href)}">${escapeHtml(label || href)}</a>`);
+    } else {
+      html.push(escapeHtml(label || href));
+    }
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  html.push(escapeHtml(stripMarkdownMarks(source.slice(lastIndex), { trim: false })));
+  return html.join("");
 }
 
 function hasUnsafePublicMarker(value) {
@@ -57,10 +92,10 @@ function markdownToStaticHtml(markdown, title, description) {
   let inFence = false;
 
   const flushParagraph = () => {
-    const text = stripInlineMarkdown(paragraph.join(" "));
+    const text = renderInlineMarkdown(paragraph.join(" "));
     paragraph = [];
     if (text) {
-      html.push(`<p>${escapeHtml(text)}</p>`);
+      html.push(`<p>${text}</p>`);
     }
   };
 
@@ -104,10 +139,16 @@ function markdownToStaticHtml(markdown, title, description) {
   ].join("");
 
   const body = html.join("\n");
+  const cta = `<section style="margin-top: 32px; padding: 22px; border: 1px solid #bae6fd; border-radius: 16px; background: #f0f9ff;">
+  <h2 style="margin-top: 0;">Сайт есть, но заявок мало?</h2>
+  <p>Проверим первый экран, форму, быстрые контакты, Метрику и путь обращения за 48 часов. На выходе будет список правок, с которых стоит начинать рост заявок.</p>
+  <p><a href="/proverka-saita-i-zayavok-za-48-chasov">Получить разбор за 48 часов</a> · <a href="/contacts">Связаться</a></p>
+</section>`;
 
   return `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;">
   ${intro}
   ${body}
+  ${cta}
 </main>`;
 }
 

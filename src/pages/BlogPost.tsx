@@ -347,16 +347,16 @@ const BlogPost = () => {
                 <div className="flex flex-col gap-6">
                     <div>
                         <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
-                            Готовы повысить эффективность?
+                            Сайт есть, но заявок мало?
                         </h3>
                         <p className="text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed">
-                            Наша команда поможет вам разработать и реализовать стратегию, которая приведет к реальным результатам для вашего бизнеса.
+                            Проверим первый экран, форму, быстрые контакты, Метрику и путь обращения за 48 часов. На выходе будет список правок, с которых стоит начинать рост заявок.
                         </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <Link to="/services/yandex-direct" className="flex-1">
+                        <Link to="/proverka-saita-i-zayavok-za-48-chasov" className="flex-1">
                             <Button className={`w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
-                                Заказать аудит
+                                Получить разбор за 48 часов
                             </Button>
                         </Link>
                         <Link to="/contacts" className="flex-1">

@@ -552,7 +552,7 @@ const Projects = () => {
   return (
     <Layout
       title="Проекты CentrLP — сайты, каталоги, системы заявок и сопровождение"
-      description="Портфолио CentrLP: сайты, каталоги, системы заявок, автоматизация и сопровождение. Показываем не один скриншот, а несколько экранов и объясняем, какую задачу закрывает каждый проект."
+      description="Портфолио CentrLP: сайты, каталоги, системы заявок и автоматизация. Показываем несколько экранов и задачу, которую закрывает каждый проект."
     >
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-white via-[#0096D6]/[0.035] to-white pt-32">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.035]" />
