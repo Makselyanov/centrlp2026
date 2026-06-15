@@ -9,21 +9,160 @@ import { trackMetric } from "@/lib/metrics";
 import {
   ArrowRight,
   BarChart3,
+  Bot,
   CheckCircle2,
   Clock3,
+  DatabaseZap,
+  FileSearch,
+  Gauge,
+  Megaphone,
   MessageCircle,
+  MessagesSquare,
+  MonitorSmartphone,
   MousePointerClick,
   Phone,
+  Route,
   SearchCheck,
   ShieldCheck,
   Sparkles,
   Target,
   TrendingUp,
+  type LucideIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
+
+const getOptimizedImageSrc = (src: string) => (src.endsWith(".png") ? src.replace(/\.png$/, ".webp") : undefined);
+
+type LandingVisual = {
+  imageSrc: string;
+  imageAlt: string;
+  eyebrow: string;
+  title: string;
+  text: string;
+  flow: Array<{
+    icon: LucideIcon;
+    label: string;
+    detail: string;
+  }>;
+  stats: Array<{
+    value: string;
+    label: string;
+  }>;
+};
+
+const landingVisuals: Record<LandingPageKey, LandingVisual> = {
+  expressAudit: {
+    imageSrc: "/og/services/web-analytics.png",
+    imageAlt: "Визуализация проверки воронки сайта, аналитики и пути заявки",
+    eyebrow: "Карта проверки",
+    title: "Смотрим путь заявки целиком",
+    text: "Разбор не упирается в один экран. Мы связываем источник трафика, первый экран, быстрые действия, форму, аналитику и скорость ответа.",
+    flow: [
+      { icon: Megaphone, label: "Трафик", detail: "откуда приходит человек" },
+      { icon: MonitorSmartphone, label: "Первый экран", detail: "понятен ли оффер" },
+      { icon: MousePointerClick, label: "Действие", detail: "клик, звонок или чат" },
+      { icon: Route, label: "Заявка", detail: "форма, CRM и ответ" },
+    ],
+    stats: [
+      { value: "48 ч", label: "на первичный вывод" },
+      { value: "5-7", label: "приоритетных правок" },
+      { value: "4", label: "точки потери заявки" },
+    ],
+  },
+  websiteDevelopmentTyumen: {
+    imageSrc: "/og/services/website-development.png",
+    imageAlt: "Фирменная иллюстрация разработки сайта как интерфейса продаж",
+    eyebrow: "Сайт как система",
+    title: "Собираем не страницу, а маршрут к обращению",
+    text: "Визуальная часть, структура, быстрые контакты, форма, аналитика и SEO-основа работают вместе, чтобы сайт выдерживал рекламный трафик.",
+    flow: [
+      { icon: FileSearch, label: "Смысл", detail: "услуга и сегмент" },
+      { icon: MonitorSmartphone, label: "Экран", detail: "структура и доверие" },
+      { icon: MousePointerClick, label: "CTA", detail: "один понятный шаг" },
+      { icon: BarChart3, label: "Данные", detail: "цели и события" },
+    ],
+    stats: [
+      { value: "от 45к", label: "первый запуск" },
+      { value: "4", label: "слоя проверки" },
+      { value: "SEO", label: "база с первого дня" },
+    ],
+  },
+  landingTyumen: {
+    imageSrc: "/og/services/website-development.png",
+    imageAlt: "Иллюстрация посадочной страницы с оффером, формой и CTA",
+    eyebrow: "Лендинг под гипотезу",
+    title: "Один оффер, один сценарий, один главный шаг",
+    text: "Посадочная страница нужна, когда важно быстро проверить спрос рекламой и увидеть, где человек теряет интерес.",
+    flow: [
+      { icon: Target, label: "Гипотеза", detail: "кому и что предлагаем" },
+      { icon: MonitorSmartphone, label: "Оффер", detail: "первый экран" },
+      { icon: MousePointerClick, label: "Клик", detail: "кнопка или мессенджер" },
+      { icon: Gauge, label: "Вывод", detail: "что усиливать" },
+    ],
+    stats: [
+      { value: "1", label: "главный оффер" },
+      { value: "1", label: "целевое действие" },
+      { value: "45к+", label: "запуск под рекламу" },
+    ],
+  },
+  yandexDirectTyumen: {
+    imageSrc: "/og/services/yandex-direct.png",
+    imageAlt: "Фирменная иллюстрация связки Яндекс Директ, посадочной страницы и заявки",
+    eyebrow: "Реклама без пустоты",
+    title: "Связываем запрос, объявление, страницу и заявку",
+    text: "Директ работает лучше, когда посадочная страница и цели Метрики готовы до старта, а первые клики сразу дают данные для правок.",
+    flow: [
+      { icon: SearchCheck, label: "Запрос", detail: "намерение клиента" },
+      { icon: Megaphone, label: "Объявление", detail: "обещание и сегмент" },
+      { icon: MonitorSmartphone, label: "Страница", detail: "оффер и доверие" },
+      { icon: BarChart3, label: "Цель", detail: "заявка в Метрике" },
+    ],
+    stats: [
+      { value: "20к+", label: "настройка" },
+      { value: "РСЯ", label: "и поиск отдельно" },
+      { value: "цели", label: "до запуска" },
+    ],
+  },
+  crmBusiness: {
+    imageSrc: "/images/ai/crm-centrlp-preview.png",
+    imageAlt: "Пример интерфейса CentrLP CRM для контроля заявок, звонков и сделок",
+    eyebrow: "Заявка под контролем",
+    title: "После сайта обращение не должно теряться",
+    text: "CRM показывает источник заявки, ответственного, статус, следующий шаг и скорость реакции команды.",
+    flow: [
+      { icon: MessagesSquare, label: "Каналы", detail: "сайт, звонки, чаты" },
+      { icon: DatabaseZap, label: "CRM", detail: "карточка обращения" },
+      { icon: Route, label: "Статус", detail: "этап и задача" },
+      { icon: BarChart3, label: "Контроль", detail: "видно руководителю" },
+    ],
+    stats: [
+      { value: "все", label: "каналы в одном месте" },
+      { value: "статус", label: "у каждой заявки" },
+      { value: "отчет", label: "для руководителя" },
+    ],
+  },
+  aiAutomation: {
+    imageSrc: "/images/ai/ai-hero-command-center.svg",
+    imageAlt: "Иллюстрация AI-командного центра для заявок, ответов и автоматизации",
+    eyebrow: "AI внутри процесса",
+    title: "Автоматизация работает только там, где понятен маршрут",
+    text: "AI помогает отвечать быстрее, собирать вводные и передавать человеку уже подготовленное обращение.",
+    flow: [
+      { icon: MessagesSquare, label: "Вопрос", detail: "человек пишет" },
+      { icon: FileSearch, label: "Знания", detail: "правила и база" },
+      { icon: Bot, label: "AI", detail: "ответ и уточнения" },
+      { icon: DatabaseZap, label: "CRM", detail: "фиксация результата" },
+    ],
+    stats: [
+      { value: "пилот", label: "с узкого сценария" },
+      { value: "24/7", label: "первичный ответ" },
+      { value: "CRM", label: "без потери контекста" },
+    ],
+  },
+};
 
 const scrollToForm = () => {
   document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -78,8 +217,102 @@ const ProcessStep = ({
   </div>
 );
 
+const LandingHeroImage = ({ visual }: { visual: LandingVisual }) => {
+  const webpSrc = getOptimizedImageSrc(visual.imageSrc);
+
+  return (
+    <picture>
+      {webpSrc ? <source srcSet={webpSrc} type="image/webp" /> : null}
+      <img
+        src={visual.imageSrc}
+        alt={visual.imageAlt}
+        loading="eager"
+        decoding="async"
+        className="h-full w-full object-cover"
+      />
+    </picture>
+  );
+};
+
+const LandingFlowSection = ({ visual }: { visual: LandingVisual }) => (
+  <section className="bg-white py-14 md:py-20">
+    <div className="container mx-auto px-4">
+      <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+        <div className="relative overflow-hidden rounded-3xl border border-[#0096D6]/15 bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10 p-5 shadow-[0_24px_90px_-54px_rgba(0,150,214,0.75)] md:p-6">
+          <div className="pointer-events-none absolute left-0 top-0 h-48 w-48 rounded-full bg-[#0096D6]/12 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-0 right-8 h-56 w-56 rounded-full bg-[#44B78B]/14 blur-3xl" />
+          <div className="relative">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#0096D6]/20 bg-white/85 px-4 py-2 text-sm font-semibold text-[#0096D6] shadow-sm">
+                <Route className="h-4 w-4" />
+                Маршрут заявки
+              </div>
+              <div className="rounded-full bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                01-04
+              </div>
+            </div>
+
+            <div className="relative grid gap-3 md:grid-cols-4">
+              <span className="pointer-events-none absolute left-8 right-8 top-[2.15rem] hidden h-px bg-gradient-to-r from-[#0096D6]/20 via-[#0096D6]/50 to-[#44B78B]/30 md:block" />
+              {visual.flow.map((step, index) => {
+                const Icon = step.icon;
+
+                return (
+                  <div
+                    key={step.label}
+                    className="group relative z-10 rounded-2xl border border-white/90 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#0096D6]/30 hover:shadow-md"
+                  >
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#0096D6] to-[#44B78B] text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div className="text-sm font-bold text-[#0096D6]/55">{String(index + 1).padStart(2, "0")}</div>
+                    </div>
+                    <div className="text-base font-bold text-slate-900">{step.label}</div>
+                    <div className="mt-1 text-sm leading-6 text-slate-600">{step.detail}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-5 rounded-2xl border border-white/80 bg-white/75 p-4 text-sm leading-7 text-slate-700 shadow-sm">
+              Так видно, где ломается путь от клика до ответа, и какие правки быстрее влияют на заявки.
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#0096D6]">
+            <span className="h-px w-8 bg-[#0096D6]" />
+            {visual.eyebrow}
+          </div>
+          <h2 className="mb-4 break-words border-l-[3px] border-[#0096D6] pl-4 text-2xl font-bold tracking-tight text-slate-900 sm:text-[28px] md:text-[34px]">
+            {visual.title}
+          </h2>
+          <p className="mb-8 pl-4 text-lg leading-relaxed text-slate-600">{visual.text}</p>
+
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            {visual.stats.map((stat) => (
+              <div
+                key={`${stat.value}-${stat.label}`}
+                className="rounded-2xl border border-[#0096D6]/10 bg-gradient-to-br from-white via-[#0096D6]/[0.035] to-[#44B78B]/[0.055] p-4 text-center shadow-sm"
+              >
+                <div className="mb-1 bg-gradient-to-r from-[#0096D6] to-[#44B78B] bg-clip-text text-2xl font-bold text-transparent">
+                  {stat.value}
+                </div>
+                <div className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
   const page = landingPages[pageKey];
+  const visual = landingVisuals[pageKey];
   useAutoBreadcrumb(page.schemaName);
   useFaqSchema(page.faq);
   useServiceSchema({
@@ -158,6 +391,11 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
               <Card className="relative overflow-hidden border-[#0096D6]/15 bg-white/85 p-6 shadow-[0_28px_90px_-42px_rgba(0,150,214,0.65)] backdrop-blur">
                 <div className="absolute right-0 top-0 h-28 w-28 rounded-bl-[4rem] bg-gradient-to-br from-[#0096D6]/18 to-[#44B78B]/18" />
                 <div className="relative">
+                  <div className="mb-6 overflow-hidden rounded-2xl border border-[#0096D6]/10 bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10 p-2 shadow-sm">
+                    <div className="aspect-[16/10] overflow-hidden rounded-xl bg-white">
+                      <LandingHeroImage visual={visual} />
+                    </div>
+                  </div>
                   <div className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#0096D6]">
                     Стоимость входа
                   </div>
@@ -175,6 +413,8 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
           </div>
         </div>
       </section>
+
+      <LandingFlowSection visual={visual} />
 
       <section className="bg-white py-20 md:py-24">
         <div className="container mx-auto px-4">
