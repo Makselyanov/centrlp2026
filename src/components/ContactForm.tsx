@@ -54,6 +54,8 @@ export const ContactForm = () => {
     try {
       trackMetric("form_submit_attempt", { path: location.pathname });
 
+      const pagePath = location.pathname === "/" ? "/" : location.pathname.replace(/\/$/, "");
+
       const response = await fetch("/api/lead", {
         method: "POST",
         headers: {
@@ -64,7 +66,7 @@ export const ContactForm = () => {
           ...formData,
           page_path: location.pathname,
           page_url: typeof window !== "undefined" ? window.location.href : "",
-          lead_source: "centrlp.ru",
+          lead_source: `centrlp.ru${pagePath}`,
           consent_version: "consent-v1.0-2026-05-02",
           privacy_version: "privacy-v2.0-2026-04-17",
           cookies_version: "cookies-v2.0-2026-04-17",

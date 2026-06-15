@@ -242,9 +242,9 @@ export const Header = () => {
               <Phone className="w-4 h-4" />
               8&#8209;905&#8209;824&#8209;85&#8209;64
             </a>
-            <a href="#form">
+            <Link to="/contacts#contact-form">
               <Button className="animate-gentle-pulse px-4 text-xs xl:text-sm shadow-button">Оставить заявку</Button>
-            </a>
+            </Link>
           </div>
 
           <div className="hidden items-center gap-2 lg:flex xl:hidden">

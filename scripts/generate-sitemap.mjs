@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { execFileSync } from 'child_process';
+import { landingRouteMeta } from '../src/data/landingPageMeta.mjs';
 
 // --- CONFIG ---
 const envSiteUrl = process.env.SITE_URL || 'https://centrlp.ru';
@@ -12,6 +13,12 @@ const CONTENT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const OUTPUT_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public/sitemap.xml');
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
+const LANDING_ROUTE_PATHS = new Set(landingRouteMeta.map(({ path: routePath }) => routePath));
+const LANDING_ROUTE_LASTMOD_FILES = [
+    'src/data/landingPageMeta.mjs',
+    'src/data/landingPages.ts',
+    'src/pages/LandingPages.tsx',
+];
 
 // --- HELPERS ---
 
@@ -35,6 +42,37 @@ function getGitLastmod(targetPath) {
     }
 
     return null;
+}
+
+function getFileLastmod(targetPath) {
+    const gitLastmod = getGitLastmod(targetPath);
+    if (gitLastmod) {
+        return gitLastmod;
+    }
+
+    const absolutePath = path.isAbsolute(targetPath) ? targetPath : path.join(ROOT_DIR, targetPath);
+    if (!fs.existsSync(absolutePath)) {
+        return null;
+    }
+
+    return fs.statSync(absolutePath).mtime.toISOString().split('T')[0];
+}
+
+function getLatestLastmod(paths) {
+    const dates = paths
+        .map((targetPath) => getFileLastmod(targetPath))
+        .filter(Boolean)
+        .sort();
+
+    return dates.at(-1) || null;
+}
+
+function getLandingRouteLastmod(route) {
+    if (!LANDING_ROUTE_PATHS.has(route)) {
+        return null;
+    }
+
+    return getLatestLastmod(LANDING_ROUTE_LASTMOD_FILES);
 }
 
 function getStaticRoutes() {
@@ -140,7 +178,7 @@ function normalizeRoutes(staticRoutes, blogRoutes) {
     const staticLastmod = getGitLastmod('src/App.tsx') || new Date().toISOString().split('T')[0];
     const normalizedStatic = staticRoutes.map(route => ({
         route,
-        lastmod: staticLastmod,
+        lastmod: getLandingRouteLastmod(route) || staticLastmod,
     }));
 
     return [...normalizedStatic, ...blogRoutes]

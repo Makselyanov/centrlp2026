@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-sitemap.mjs && node scripts/generate-dzen-rss.mjs && vite build && node scripts/prerender-route-heads.mjs",
+    "build": "node scripts/audit-public-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-dzen-rss.mjs && vite build && node scripts/prerender-route-heads.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "audit:public-pages": "node scripts/audit-public-pages.mjs",
     "seo:yandex": "node scripts/yandex-webmaster-report.mjs",
     "seo:gsc": "node scripts/gsc-report.mjs",
     "seo:report": "node scripts/yandex-webmaster-report.mjs"

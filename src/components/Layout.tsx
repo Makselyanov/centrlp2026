@@ -20,6 +20,12 @@ const ogImageMap: Record<string, string> = {
   "/barter": "barter.png",
   "/cases": "cases.png",
   "/business-plans": "business-plans.png",
+  "/proverka-saita-i-zayavok-za-48-chasov": "website-development.png",
+  "/razrabotka-sajtov-tyumen": "website-development.png",
+  "/sozdanie-lendinga-tyumen": "website-development.png",
+  "/nastroyka-yandex-direct-tyumen": "yandex-direct.png",
+  "/crm-dlya-biznesa": "services/custom-crm.png",
+  "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
 };
 
 function getOgImage(pathname: string): string {

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { landingRouteMeta } from "../src/data/landingPageMeta.mjs";
 
 const rootDir = process.cwd();
 const distDir = path.join(rootDir, "dist");
@@ -21,6 +22,12 @@ const ogImageMap = {
   "/barter": "barter.png",
   "/cases": "cases.png",
   "/business-plans": "business-plans.png",
+  "/proverka-saita-i-zayavok-za-48-chasov": "website-development.png",
+  "/razrabotka-sajtov-tyumen": "website-development.png",
+  "/sozdanie-lendinga-tyumen": "website-development.png",
+  "/nastroyka-yandex-direct-tyumen": "yandex-direct.png",
+  "/crm-dlya-biznesa": "services/custom-crm.png",
+  "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
 };
 
 function escapeHtml(value) {
@@ -149,6 +156,54 @@ function markdownToStaticHtml(markdown, title, description) {
   ${intro}
   ${body}
   ${cta}
+</main>`;
+}
+
+function landingStaticHtml(title, description) {
+  const safeTitle = escapeHtml(title);
+  const safeDescription = escapeHtml(description);
+
+  return `<main class="seo-static-content" data-prerender="true" style="min-height: 100vh; margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; background: linear-gradient(135deg, #f8fcff 0%, #ffffff 46%, #e7f7ff 100%);">
+  <header style="border-bottom: 1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.88);">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;">
+      <a href="/" style="display: inline-flex; align-items: center; gap: 10px; color: #0f172a; font-size: 20px; font-weight: 900; text-decoration: none;">
+        <span style="display: inline-flex; width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg,#0096D6,#44B78B);"></span>
+        CentrLP
+      </a>
+      <nav style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; font-size: 14px; font-weight: 700;">
+        <a href="/services" style="color: #334155; text-decoration: none;">Услуги</a>
+        <a href="/prices" style="color: #334155; text-decoration: none;">Цены</a>
+        <a href="/projects" style="color: #334155; text-decoration: none;">Проекты</a>
+        <a href="/contacts" style="color: #008dd2; text-decoration: none;">+7 905 824-85-64</a>
+      </nav>
+    </div>
+  </header>
+  <section style="max-width: 1180px; margin: 0 auto; padding: 86px 20px 70px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 36px; align-items: center;">
+    <div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px; padding: 9px 14px; border: 1px solid rgba(0,150,214,.22); border-radius: 999px; background: rgba(255,255,255,.86); color: #008dd2; font-size: 14px; font-weight: 800;">CentrLP для заявок и трафика</div>
+      <h1 style="margin: 0 0 22px; font-size: clamp(2.2rem, 6vw, 4.6rem); line-height: .98; letter-spacing: 0; background: linear-gradient(90deg, #0096D6, #00B8FF, #0077AA); -webkit-background-clip: text; background-clip: text; color: transparent;">${safeTitle}</h1>
+      <p style="max-width: 760px; margin: 0 0 30px; font-size: 20px; line-height: 1.65; color: #475569;">${safeDescription}</p>
+      <p style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0;">
+        <a href="/contacts#contact-form" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #008dd2; color: #fff; font-weight: 900; text-decoration: none;">Оставить заявку</a>
+        <a href="/services" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1px solid rgba(0,141,210,.25); background: #fff; color: #0f172a; font-weight: 900; text-decoration: none;">Услуги CentrLP</a>
+      </p>
+    </div>
+    <aside style="border: 1px solid rgba(0,150,214,.16); border-radius: 24px; background: rgba(255,255,255,.9); box-shadow: 0 20px 55px rgba(15,23,42,.08); padding: 26px;">
+      <div style="font-size: 13px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #008dd2;">Что проверяем</div>
+      <ul style="margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; color: #334155; line-height: 1.55;">
+        <li>Первый экран, оффер и понятность услуги.</li>
+        <li>Форму, быстрые контакты и путь заявки.</li>
+        <li>Метрику, события и готовность к рекламе.</li>
+        <li>SEO-основу, индексацию и внутренние ссылки.</li>
+      </ul>
+    </aside>
+  </section>
+  <footer style="border-top: 1px solid rgba(15,23,42,.08); background: #0f172a; color: #e2e8f0;">
+    <div style="max-width: 1180px; margin: 0 auto; padding: 26px 20px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 14px;">
+      <span>CentrLP: сайты, реклама, CRM и автоматизация под рост заявок.</span>
+      <span><a href="/contacts" style="color: #7dd3fc; text-decoration: none;">Контакты</a> · <a href="/privacy" style="color: #7dd3fc; text-decoration: none;">Политика</a></span>
+    </div>
+  </footer>
 </main>`;
 }
 
@@ -386,7 +441,14 @@ function main() {
   }
 
   const template = readText(templatePath);
-  const routes = [...collectStaticRouteMeta(), ...collectBlogPostMeta()];
+  const routes = [
+    ...collectStaticRouteMeta(),
+    ...landingRouteMeta.map((route) => ({
+      ...route,
+      staticHtml: landingStaticHtml(route.title, route.description),
+    })),
+    ...collectBlogPostMeta(),
+  ];
   const staticBodyCount = routes.filter((route) => route.staticHtml).length;
 
   for (const route of routes) {

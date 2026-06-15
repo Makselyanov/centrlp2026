@@ -29,6 +29,12 @@ const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default:
 const AiTuragent = lazy(() => import("./pages/AiTuragent"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const ExpressAuditPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.ExpressAuditPage })));
+const WebsiteDevelopmentTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.WebsiteDevelopmentTyumenPage })));
+const LandingTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.LandingTyumenPage })));
+const YandexDirectTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.YandexDirectTyumenPage })));
+const CrmBusinessPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.CrmBusinessPage })));
+const AiAutomationPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.AiAutomationPage })));
 
 // Lazy-loaded service pages
 const WebsiteDevelopment = lazy(() => import("./pages/services/WebsiteDevelopment"));
@@ -122,6 +128,13 @@ const App = () => (
 
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+
+            <Route path="/proverka-saita-i-zayavok-za-48-chasov" element={<ExpressAuditPage />} />
+            <Route path="/razrabotka-sajtov-tyumen" element={<WebsiteDevelopmentTyumenPage />} />
+            <Route path="/sozdanie-lendinga-tyumen" element={<LandingTyumenPage />} />
+            <Route path="/nastroyka-yandex-direct-tyumen" element={<YandexDirectTyumenPage />} />
+            <Route path="/crm-dlya-biznesa" element={<CrmBusinessPage />} />
+            <Route path="/ai-avtomatizaciya-biznesa" element={<AiAutomationPage />} />
 
             <Route path="/ai-plan" element={<AiPlanPage />} />
             <Route path="/ai-turagent" element={<AiTuragent />} />
