@@ -15,25 +15,34 @@ const goalOptions = [
   "Проверка сайта по персональным данным",
   "Сайт или посадочная страница",
   "Бот, CRM или автоматизация",
-];
+] as const;
 
-const submitLabelByGoal: Record<string, string> = {
+const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Экспресс-разбор заявок": "Получить экспресс-разбор",
   "Проверка сайта по персональным данным": "Получить проверку сайта",
   "Сайт или посадочная страница": "Обсудить сайт и посадочную",
   "Бот, CRM или автоматизация": "Обсудить CRM и автоматизацию",
 };
 
+const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
+  if (pathname === "/services/compliance-2026") {
+    return "Проверка сайта по персональным данным";
+  }
+
+  return "Экспресс-разбор заявок";
+};
+
 export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
+  const defaultGoal = getDefaultGoal(location.pathname);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     business: "",
     city: "",
     link: "",
-    goal: "Экспресс-разбор заявок",
+    goal: defaultGoal as (typeof goalOptions)[number],
     comment: "",
     privacyAccepted: false,
     cookiesAccepted: false,
@@ -45,7 +54,7 @@ export const ContactForm = () => {
     if (!formData.privacyAccepted) {
       toast({
         title: "Ошибка",
-        description: "Нужно согласие на обработку персональных данных",
+        description: "Нужно согласие на обработку персональных данных.",
         variant: "destructive",
       });
       return;
@@ -84,8 +93,7 @@ export const ContactForm = () => {
         description: (
           <div>
             <p className="mb-3">
-              Спасибо. Мы свяжемся с вами в ближайшее время. Если удобнее, можно
-              сразу продолжить диалог в мессенджере.
+              Спасибо. Свяжемся с вами в ближайшее время. Если удобнее, можно сразу продолжить диалог в мессенджере.
             </p>
             <MessengerLinks variant="toast" />
           </div>
@@ -98,12 +106,12 @@ export const ContactForm = () => {
         business: "",
         city: "",
         link: "",
-        goal: "Экспресс-разбор заявок",
+        goal: defaultGoal,
         comment: "",
         privacyAccepted: false,
         cookiesAccepted: false,
       });
-    } catch (error) {
+    } catch {
       trackMetric("lead_form_error", { path: location.pathname });
       toast({
         title: "Ошибка отправки",
@@ -125,11 +133,11 @@ export const ContactForm = () => {
             Быстрый старт
           </div>
           <h3 className="text-lg font-bold text-slate-900">
-            Можно начать с короткого разбора сайта и пути заявки.
+            Можно начать с короткого разбора сайта, формы и маршрута заявки.
           </h3>
           <p className="mt-2 text-sm leading-6 text-slate-600">
-            Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнём с проверки формы,
-            первого экрана, Метрики и маршрута обращения.
+            Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнём с проверки формы, первого экрана,
+            Метрики и скорости ответа.
           </p>
 
           <div className="mt-4">
@@ -270,7 +278,7 @@ export const ContactForm = () => {
             onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
             className="mt-2"
             rows={4}
-            placeholder="Например: понять, почему сайт не даёт заявок; проверить форму и Метрику; связать заявки с CRM"
+            placeholder="Например: понять, почему сайт не даёт заявок; проверить форму и Метрику; связать обращения с CRM"
           />
         </div>
 
@@ -316,12 +324,12 @@ export const ContactForm = () => {
         </div>
 
         <Button type="submit" size="lg" className="w-full">
-          {submitLabelByGoal[formData.goal] ?? "Получить разбор заявки"}
+          {submitLabelByGoal[formData.goal]}
         </Button>
 
         <p className="text-center text-xs leading-5 text-slate-500">
-          Обычно отвечаем в течение 15 минут в рабочее время. Если удобнее, можно
-          сразу написать в MAX, Telegram, WhatsApp или VK.
+          Обычно отвечаем в течение 15 минут в рабочее время. Если удобнее, можно сразу написать в MAX, Telegram,
+          WhatsApp или VK.
         </p>
       </div>
     </form>
