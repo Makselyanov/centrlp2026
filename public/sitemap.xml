@@ -367,6 +367,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://centrlp.ru/services/avito-ads</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://centrlp.ru/services/branding</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>

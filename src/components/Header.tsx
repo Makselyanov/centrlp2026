@@ -120,6 +120,7 @@ export const Header = () => {
                         <ul className="space-y-2 text-sm">
                           <li><Link to="/services/yandex-direct" className="text-muted-foreground hover:text-primary transition-colors">Яндекс Директ (поиск + РСЯ)</Link></li>
                           <li><Link to="/services/vk-ads" className="text-muted-foreground hover:text-primary transition-colors">Реклама ВКонтакте (лиды, ретаргет)</Link></li>
+                          <li><Link to="/services/avito-ads" className="text-muted-foreground hover:text-primary transition-colors">Реклама на Авито (объявления, заявки)</Link></li>
                           <li><Link to="/services/web-analytics" className="text-muted-foreground hover:text-primary transition-colors">Веб-аналитика: Метрика, цели, отчёты</Link></li>
                           <li><Link to="/services/ab-testing" className="text-muted-foreground hover:text-primary transition-colors">A/B-тесты креативов и посадочных</Link></li>
                         </ul>
@@ -307,6 +308,7 @@ export const Header = () => {
                       <div className="text-xs space-y-1 ml-2">
                         <Link to="/services/yandex-direct" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Яндекс Директ</Link>
                         <Link to="/services/vk-ads" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Реклама ВКонтакте</Link>
+                        <Link to="/services/avito-ads" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Реклама на Авито</Link>
                         <Link to="/services/web-analytics" className="block text-muted-foreground hover:text-primary transition-colors py-1">• Веб-аналитика</Link>
                         <Link to="/services/ab-testing" className="block text-muted-foreground hover:text-primary transition-colors py-1">• A/B-тесты</Link>
                       </div>

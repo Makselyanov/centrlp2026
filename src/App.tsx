@@ -48,6 +48,7 @@ const OperatorScripts = lazy(() => import("./pages/services/OperatorScripts"));
 const HelpBot = lazy(() => import("./pages/services/HelpBot"));
 const YandexDirect = lazy(() => import("./pages/services/YandexDirect"));
 const VKAds = lazy(() => import("./pages/services/VKAds"));
+const AvitoAds = lazy(() => import("./pages/services/AvitoAds"));
 const WebAnalytics = lazy(() => import("./pages/services/WebAnalytics"));
 const ABTesting = lazy(() => import("./pages/services/ABTesting"));
 const MarketingStrategy = lazy(() => import("./pages/services/MarketingStrategy"));
@@ -107,6 +108,7 @@ const App = () => (
             <Route path="/services/help-bot" element={<HelpBot />} />
             <Route path="/services/yandex-direct" element={<YandexDirect />} />
             <Route path="/services/vk-ads" element={<VKAds />} />
+            <Route path="/services/avito-ads" element={<AvitoAds />} />
             <Route path="/services/web-analytics" element={<WebAnalytics />} />
             <Route path="/services/ab-testing" element={<ABTesting />} />
             <Route path="/services/marketing-strategy" element={<MarketingStrategy />} />

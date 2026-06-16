@@ -205,6 +205,15 @@ export const servicePrices: ServicePrice[] = [
     seoPriority: "medium",
   },
   {
+    title: "Реклама на Авито",
+    href: "/services/avito-ads",
+    price: "от 25 000 ₽",
+    description: "Запуск Авито как канала заявок: профиль, объявления, платное продвижение, ответы и аналитика.",
+    category: "growth",
+    note: "Ведение и оптимизация - от 35 000 ₽/мес. Платные услуги Авито и бюджет продвижения отдельно.",
+    seoPriority: "high",
+  },
+  {
     title: "Веб-аналитика",
     href: "/services/web-analytics",
     price: "от 15 000 ₽",

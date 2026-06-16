@@ -20,6 +20,11 @@
     "prompt": "Modern minimalist 3D isometric illustration, soft pastel gradient background blending sky blue (#0096D6) into mint green (#44B78B), premium product render style, clean composition, soft shadows, subtle rim light, no text, no watermarks, no logos, wide 16:9 composition. Subject: an isometric translucent inbox with floating quick-reply chips and a small lightning bolt icon."
   },
   {
+    "out": "public/og/services/avito-ads.png",
+    "skipIfExists": true,
+    "prompt": "Modern minimalist 3D isometric illustration, soft pastel gradient background blending sky blue (#0096D6) into mint green (#44B78B), premium product render style, clean composition, soft shadows, subtle rim light, no text, no watermarks, no logos, wide 16:9 composition. Subject: an isometric local marketplace listing board with product-service cards, message bubbles, map pin, small analytics chart and promotion arrows."
+  },
+  {
     "out": "public/og/services/branding.png",
     "skipIfExists": true,
     "prompt": "Modern minimalist 3D isometric illustration, soft pastel gradient background blending sky blue (#0096D6) into mint green (#44B78B), premium product render style, clean composition, soft shadows, subtle rim light, no text, no watermarks, no logos, wide 16:9 composition. Subject: an isometric translucent brand-mark hexagon with floating colour swatches, font samples and a small abstract logo shape."

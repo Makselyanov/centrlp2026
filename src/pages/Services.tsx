@@ -15,6 +15,7 @@ import {
   Globe,
   Languages,
   LineChart,
+  Megaphone,
   MessageSquare,
   Palette,
   Rocket,
@@ -191,6 +192,15 @@ const growthServices: ServiceCard[] = [
     href: "/services/yandex-direct",
     bullets: ["Поиск и РСЯ", "Тесты спроса", "Оптимизация CPL"],
     icon: LineChart,
+  },
+  {
+    title: "Реклама на Авито",
+    description: "Запуск Авито как канала заявок: профиль, объявления, платное продвижение, ответы и аналитика.",
+    href: "/services/avito-ads",
+    bullets: ["Профиль и объявления", "Платное продвижение", "Контроль обращений"],
+    icon: Megaphone,
+    featured: true,
+    badge: "Новая услуга",
   },
   {
     title: "Маркетинговая стратегия",
