@@ -13,6 +13,7 @@ import { MessengerLinks } from "./MessengerLinks";
 const goalOptions = [
   "Экспресс-разбор заявок",
   "Проверка сайта по персональным данным",
+  "Маркетинговая стратегия и медиаплан",
   "Сайт или посадочная страница",
   "Бот, CRM или автоматизация",
 ] as const;
@@ -20,6 +21,7 @@ const goalOptions = [
 const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Экспресс-разбор заявок": "Получить экспресс-разбор",
   "Проверка сайта по персональным данным": "Получить проверку сайта",
+  "Маркетинговая стратегия и медиаплан": "Получить расчёт стратегии",
   "Сайт или посадочная страница": "Обсудить сайт и посадочную",
   "Бот, CRM или автоматизация": "Обсудить CRM и автоматизацию",
 };
@@ -27,6 +29,10 @@ const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
 const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
   if (pathname === "/services/compliance-2026") {
     return "Проверка сайта по персональным данным";
+  }
+
+  if (pathname === "/services/marketing-strategy") {
+    return "Маркетинговая стратегия и медиаплан";
   }
 
   return "Экспресс-разбор заявок";
