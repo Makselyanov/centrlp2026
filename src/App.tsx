@@ -4,6 +4,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AppErrorBoundary } from "./components/AppErrorBoundary";
+import { AppFallback } from "./components/AppFallback";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { CookieConsent } from "./components/CookieConsent";
 import Index from "./pages/Index";
@@ -70,15 +72,10 @@ const Compliance2026 = lazy(() => import("./pages/services/Compliance2026"));
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Suspense fallback={<div className="min-h-screen" />}>
-          <Routes>
+const AppRoutes = () => (
+  <AppErrorBoundary>
+    <Suspense fallback={<AppFallback />}>
+      <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
             <Route path="/ai" element={<AI />} />
@@ -142,8 +139,19 @@ const App = () => (
             <Route path="/ai-turagent" element={<AiTuragent />} />
 
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+      </Routes>
+    </Suspense>
+  </AppErrorBoundary>
+);
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <ScrollToTop />
+        <AppRoutes />
         <CookieConsent />
       </BrowserRouter>
     </TooltipProvider>
