@@ -281,7 +281,7 @@ const BarterSTO = () => {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
               <div className="text-sm font-semibold text-primary">Формат сделки</div>
-              <div className="mt-2 text-base text-foreground">Сначала смета сервиса, затем маркетинговый пакет CentrLP с запасом по ценности.</div>
+              <div className="mt-2 text-base text-foreground">Сначала смета и запуск пакета CentrLP, затем сервис закрывает согласованные автоработы.</div>
             </div>
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
               <div className="text-sm font-semibold text-primary">Что получает сервис</div>
@@ -665,8 +665,8 @@ const BarterSTO = () => {
             <h2 className="mt-5">Состав сделки фиксируется до старта: автоработы, маркетинговый пакет, сроки и отдельные расходы</h2>
             <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
               Сервис показывает направление, смету и условия работ. CentrLP показывает состав сайта,
-              квиза, ВК, рекламы и аналитики с запасом к этой смете. Если логика совпадает,
-              договариваемся по составу, фиксируем этапы и работаем как партнёры.
+              квиза, ВК, рекламы и аналитики с запасом к этой смете. Сначала запускаем маркетинговую
+              часть CentrLP, затем сервис закрывает согласованные автоработы по зафиксированным этапам.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" className="shadow-elegant hover-scale">
