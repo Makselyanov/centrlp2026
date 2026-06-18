@@ -223,6 +223,24 @@ const BlogPost = () => {
 
     // Cover image: per-post OG cover from /og/posts/<slug>.png
     const coverSrc = `/og/posts/${post.slug}.png`;
+    const ctaTitle = typeof post.ctaTitle === "string" && post.ctaTitle.trim()
+        ? post.ctaTitle.trim()
+        : "РЎР°Р№С‚ РµСЃС‚СЊ, РЅРѕ Р·Р°СЏРІРѕРє РјР°Р»Рѕ?";
+    const ctaText = typeof post.ctaText === "string" && post.ctaText.trim()
+        ? post.ctaText.trim()
+        : "РџСЂРѕРІРµСЂРёРј РїРµСЂРІС‹Р№ СЌРєСЂР°РЅ, С„РѕСЂРјСѓ, Р±С‹СЃС‚СЂС‹Рµ РєРѕРЅС‚Р°РєС‚С‹, РњРµС‚СЂРёРєСѓ Рё РїСѓС‚СЊ РѕР±СЂР°С‰РµРЅРёСЏ Р·Р° 48 С‡Р°СЃРѕРІ. РќР° РІС‹С…РѕРґРµ Р±СѓРґРµС‚ СЃРїРёСЃРѕРє РїСЂР°РІРѕРє, СЃ РєРѕС‚РѕСЂС‹С… СЃС‚РѕРёС‚ РЅР°С‡РёРЅР°С‚СЊ СЂРѕСЃС‚ Р·Р°СЏРІРѕРє.";
+    const primaryCtaLabel = typeof post.primaryCtaLabel === "string" && post.primaryCtaLabel.trim()
+        ? post.primaryCtaLabel.trim()
+        : "РџРѕР»СѓС‡РёС‚СЊ СЂР°Р·Р±РѕСЂ Р·Р° 48 С‡Р°СЃРѕРІ";
+    const primaryCtaHref = typeof post.primaryCtaHref === "string" && post.primaryCtaHref.trim()
+        ? post.primaryCtaHref.trim()
+        : "/proverka-saita-i-zayavok-za-48-chasov";
+    const secondaryCtaLabel = typeof post.secondaryCtaLabel === "string" && post.secondaryCtaLabel.trim()
+        ? post.secondaryCtaLabel.trim()
+        : "РџРѕР»СѓС‡РёС‚СЊ РєРѕРЅСЃСѓР»СЊС‚Р°С†РёСЋ";
+    const secondaryCtaHref = typeof post.secondaryCtaHref === "string" && post.secondaryCtaHref.trim()
+        ? post.secondaryCtaHref.trim()
+        : "/contacts";
 
     // Hero Section Component
     const HeroSection = () => (
@@ -370,6 +388,35 @@ const BlogPost = () => {
         </div>
     );
 
+    const BlogCtaBlock = () => (
+        <div className={`mt-12 p-[1px] bg-gradient-to-r ${BRAND_GRADIENT} rounded-2xl shadow-lg`}>
+            <div className="bg-white/70 dark:bg-slate-900/50 backdrop-blur-md rounded-2xl p-8 md:p-10 border border-white/40 dark:border-white/10">
+                <div className="flex flex-col gap-6">
+                    <div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                            {ctaTitle}
+                        </h3>
+                        <p className="text-slate-700 dark:text-slate-300 text-base md:text-lg leading-relaxed">
+                            {ctaText}
+                        </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <Link to={primaryCtaHref} className="flex-1">
+                            <Button className={`w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
+                                {primaryCtaLabel}
+                            </Button>
+                        </Link>
+                        <Link to={secondaryCtaHref} className="flex-1">
+                            <Button variant="outline" className="w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
+                                {secondaryCtaLabel}
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
     // Related Posts Component
     const RelatedPosts = () => {
         if (relatedPosts.length === 0) return null;
@@ -426,7 +473,7 @@ const BlogPost = () => {
                         {hasToc ? <LayoutWithToc /> : <LayoutNoToc />}
                     </div>
                     <div className="mx-auto max-w-3xl">
-                        <CTABlock />
+                        <BlogCtaBlock />
                         <RelatedPosts />
                     </div>
                 </div>

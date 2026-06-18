@@ -7,6 +7,12 @@ export interface BlogPost {
     date: string;
     description: string;
     seoDescription?: string;
+    ctaTitle?: string;
+    ctaText?: string;
+    primaryCtaLabel?: string;
+    primaryCtaHref?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaHref?: string;
     content: string;
     tags?: string[];
     source?: string;
@@ -21,6 +27,12 @@ type BlogFrontmatter = {
     date?: string;
     description?: string;
     seoDescription?: string;
+    ctaTitle?: string;
+    ctaText?: string;
+    primaryCtaLabel?: string;
+    primaryCtaHref?: string;
+    secondaryCtaLabel?: string;
+    secondaryCtaHref?: string;
     tags?: string[] | string;
     source?: string;
     [key: string]: unknown;
