@@ -92,7 +92,7 @@ function hasUnsafePublicMarker(value) {
   );
 }
 
-function markdownToStaticHtml(markdown, title, description) {
+function markdownToStaticHtml(markdown, title, description, cta = {}) {
   const html = [];
   const lines = String(markdown).split(/\r?\n/);
   let paragraph = [];
@@ -146,16 +146,22 @@ function markdownToStaticHtml(markdown, title, description) {
   ].join("");
 
   const body = html.join("\n");
-  const cta = `<section style="margin-top: 32px; padding: 22px; border: 1px solid #bae6fd; border-radius: 16px; background: #f0f9ff;">
-  <h2 style="margin-top: 0;">Сайт есть, но заявок мало?</h2>
-  <p>Проверим первый экран, форму, быстрые контакты, Метрику и путь обращения за 48 часов. На выходе будет список правок, с которых стоит начинать рост заявок.</p>
-  <p><a href="/proverka-saita-i-zayavok-za-48-chasov">Получить разбор за 48 часов</a> · <a href="/contacts">Связаться</a></p>
+  const ctaTitle = cta.title || "Сайт есть, но заявок мало?";
+  const ctaText = cta.text || "Проверим первый экран, форму, быстрые контакты, Метрику и путь обращения за 48 часов. На выходе будет список правок, с которых стоит начинать рост заявок.";
+  const primaryCtaLabel = cta.primaryLabel || "Получить разбор за 48 часов";
+  const primaryCtaHref = cta.primaryHref || "/proverka-saita-i-zayavok-za-48-chasov";
+  const secondaryCtaLabel = cta.secondaryLabel || "Связаться";
+  const secondaryCtaHref = cta.secondaryHref || "/contacts";
+  const ctaHtml = `<section style="margin-top: 32px; padding: 22px; border: 1px solid #bae6fd; border-radius: 16px; background: #f0f9ff;">
+  <h2 style="margin-top: 0;">${escapeHtml(ctaTitle)}</h2>
+  <p>${escapeHtml(ctaText)}</p>
+  <p><a href="${escapeHtml(primaryCtaHref)}">${escapeHtml(primaryCtaLabel)}</a> · <a href="${escapeHtml(secondaryCtaHref)}">${escapeHtml(secondaryCtaLabel)}</a></p>
 </section>`;
 
   return `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;">
   ${intro}
   ${body}
-  ${cta}
+  ${ctaHtml}
 </main>`;
 }
 
@@ -417,6 +423,14 @@ function collectBlogPostMeta() {
       const slug = data.slug || file.replace(/\.md$/i, "").replace(/^\d{4}-\d{2}-\d{2}-/, "");
       const title = data.seoTitle || data.title || slug;
       const description = data.seoDescription || data.description || "";
+      const cta = {
+        title: data.ctaTitle,
+        text: data.ctaText,
+        primaryLabel: data.primaryCtaLabel,
+        primaryHref: data.primaryCtaHref,
+        secondaryLabel: data.secondaryCtaLabel,
+        secondaryHref: data.secondaryCtaHref,
+      };
 
       if (!title || !description) return null;
 
@@ -428,7 +442,7 @@ function collectBlogPostMeta() {
         description,
         staticHtml: hasUnsafePublicMarker(staticSource)
           ? ""
-          : markdownToStaticHtml(parsed.content, title, description),
+          : markdownToStaticHtml(parsed.content, title, description, cta),
       };
     })
     .filter(Boolean);
