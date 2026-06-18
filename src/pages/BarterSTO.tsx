@@ -22,76 +22,156 @@ import vkMessages from "@/assets/vk-messages.png";
 
 const offerCards = [
   {
-    title: "Лендинг под конкретные услуги",
-    text: "Не общая визитка, а отдельный оффер под ГБО, плёнку, антикор, автозвук и камеры с нормальной подачей.",
+    title: "Лендинг под Movil и антикор рамных авто",
+    text: "Не общая визитка, а отдельная страница под днище, раму, арки, скрытые полости, фото до расчёта и понятную запись.",
   },
   {
-    title: "Квиз и форма под заявки",
-    text: "Марка авто, задача, удобный способ связи и быстрый выход на связь без лишних шагов.",
+    title: "Квиз и сценарий первичной оценки",
+    text: "Марка авто, проблемные зоны, фото арок/днища/рамы, удобный канал связи и аккуратный маршрут до расчёта.",
   },
   {
-    title: "Запуск рекламы под входящий поток",
-    text: "Яндекс Директ и ВК с аналитикой, чтобы считать не клики, а реальные обращения.",
+    title: "ВК-упаковка с дизайном и быстрыми ответами",
+    text: "Обложка, меню, закреп, тексты услуг, маршрут в сообщения и заготовки ответов, чтобы входящие не терялись.",
   },
   {
-    title: "Оформление и доверие",
-    text: "Соцсети, тексты, структура, быстрые ответы и понятная подача для локального рынка.",
+    title: "Рекламные кампании и аналитика",
+    text: "Подготовка Яндекс Директ, РСЯ и ВК Ads под заявки на антикор. Рекламный бюджет оплачивается отдельно.",
+  },
+];
+
+const valueStack = [
+  {
+    title: "Сайт/лендинг",
+    price: "от 45 000 ₽",
+    text: "Посадочная страница под услугу Movil/антикор с оффером, блоком фото, FAQ и формой заявки.",
+  },
+  {
+    title: "ВК-упаковка",
+    price: "от 30 000 ₽",
+    text: "Дизайн сообщества, обложка, меню, закреп, тексты услуг и путь клиента в сообщения.",
+  },
+  {
+    title: "Чат-бот или автоответы",
+    price: "от 30 000 ₽",
+    text: "Сбор марки авто, зон обработки, фото, телефона и удобного времени для связи.",
+  },
+  {
+    title: "Яндекс/ВК реклама",
+    price: "настройка от 20 000 ₽",
+    text: "Семантика, объявления, аудитории, цели и первые кампании под входящие заявки.",
+  },
+  {
+    title: "Аналитика и цели",
+    price: "от 15 000 ₽",
+    text: "Метрика, цели, события, источники заявок и понятный контроль стоимости обращения.",
+  },
+  {
+    title: "Итоговый пакет",
+    price: "эквивалент 80 000–150 000 ₽",
+    text: "Состав фиксируется под смету работ: частичный антикор, Movil, пескоструй, арки или рама.",
+  },
+];
+
+const dealTiers = [
+  {
+    name: "Стартовый взаимозачёт",
+    price: "30 000–35 000 ₽",
+    service: "Локальный Movil или отдельные зоны без расширенной подготовки.",
+    package:
+      "Разбор упаковки, структура услуги, тексты для VK/2ГИС/сайта, FAQ, список фото для расчёта и шаблон первого ответа.",
+  },
+  {
+    name: "Сильный обмен",
+    price: "55 000–70 000 ₽",
+    service: "Антикор днища, рамы и арок с понятной сметой, материалами и ограничениями.",
+    package:
+      "Мини-лендинг, квиз, тексты услуги, 5 карточек для VK/2ГИС, закреп/меню VK, структура Яндекс/ВК кампаний и 15–20 объявлений.",
+  },
+  {
+    name: "Полный пакет",
+    price: "80 000 ₽+",
+    service: "Антикор с пескоструем, подготовкой и несколькими зонами обработки.",
+    package:
+      "Посадочная страница, VK-упаковка с дизайном, рекламная сборка, аналитика и 1–2 недели докрутки после первых обращений.",
   },
 ];
 
 const serviceNeeds = [
   {
-    icon: Wrench,
-    title: "ГБО",
-    note: "Приоритет №1",
-    text: "Нужен надёжный комплект и монтаж без колхозных компромиссов.",
-  },
-  {
     icon: Droplet,
-    title: "Антикор",
-    note: "Приоритет №2",
-    text: "Особенно актуально для Pajero 2 и тюменских зимних условий.",
+    title: "Movil и скрытые полости",
+    note: "Фокус сделки",
+    text: "Нужна понятная обработка скрытых зон старого рамного внедорожника без лишней имитации.",
   },
   {
     icon: Shield,
-    title: "Плёнка и защита",
-    note: "Приоритет №3",
-    text: "Кузов, фары, пороги или частичная оклейка под практическую задачу.",
+    title: "Антикор днища и рамы",
+    note: "Основной объём",
+    text: "Днище, рама, арки и зоны, где уже видны рыжики после тюменских зим.",
   },
   {
-    icon: Shield,
-    title: "Тонировка",
-    note: "Дополнение",
-    text: "Аккуратная работа, нормальные материалы и внятный результат.",
-  },
-  {
-    icon: Music,
-    title: "Автозвук",
-    note: "Дополнение",
-    text: "Правильная конфигурация без бессмысленного нагромождения железа.",
+    icon: Wrench,
+    title: "Пескоструй и подготовка",
+    note: "По смете",
+    text: "Если без подготовки состав не ляжет нормально, обсуждаем отдельные зоны и честный объём.",
   },
   {
     icon: Camera,
-    title: "Камеры и парктроники",
-    note: "Дополнение",
-    text: "Круговой обзор, передняя/задняя камера и удобная парковка.",
+    title: "Оценка по фото",
+    note: "До решения",
+    text: "Нужен список точных кадров: арки изнутри, дно кузова, рама, проблемные места.",
+  },
+  {
+    icon: Gauge,
+    title: "Смета без сюрпризов",
+    note: "Обязательно",
+    text: "Сначала фиксируем, что входит: материалы, подготовка, зоны, сроки и гарантийная логика.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Гарантия и контроль",
+    note: "Финальный фильтр",
+    text: "Важно заранее понимать, что считается нормальным результатом обработки и как проверяется качество.",
   },
 ];
 
 const fitItems = [
-  "У вас есть понятные и востребованные услуги, которые можно нормально оценить по смете.",
-  "Вы хотите не просто сайт, а входящий поток заявок и систему приёма обращений.",
-  "Вы готовы обсуждать сроки, этапы и эквивалент без хаоса и “давайте как-нибудь”.",
+  "Вы делаете Movil, антикор, пескоструй, обработку рамы, арок и скрытых полостей.",
+  "У вас есть прайс или понятная смета, где видно, какой объём работ стоит от 30 000 ₽ и выше.",
+  "Вам нужен не просто красивый сайт, а упакованная воронка заявок под дорогую услугу.",
 ];
 
 const notFitItems = [
-  "Нужен только красивый сайт без рекламы, оффера и внятной заявки.",
-  "Бартер воспринимается как работа без сроков и без договорённостей.",
-  "Вам нужна просто скидка, а не рабочая схема, где обе стороны получают результат.",
+  "Нужна только разовая скидка без понятного обмена ценностью.",
+  "Нет готовности зафиксировать объём работ, материалы, сроки и ограничения.",
+  "Хотите получить рекламу, но не готовы быстро отвечать на заявки и фото от клиентов.",
+];
+
+const dealInputs = [
+  "какие зоны берёте: арки, днище, рама, скрытые полости, крепления и проблемные места;",
+  "нужен ли пескоструй, мойка, сушка, демонтаж защиты или отдельная подготовка;",
+  "какие материалы входят в смету и где начинается доплата за расходники;",
+  "какие фото нужны до расчёта и когда без подъёмника всё равно не обойтись;",
+  "что считается принятым результатом и какие гарантийные ограничения честно прописываются.",
+];
+
+const clientRequestItems = [
+  "марка, год, город и тип кузова;",
+  "фото арок изнутри, дна кузова, рамы и рыжиков;",
+  "что беспокоит: профилактика, рыжики, скрытые полости, подготовка к зиме;",
+  "удобный канал связи и время для ответа;",
+  "готовность приехать на осмотр, если по фото нельзя посчитать честно.",
+];
+
+const separateCosts = [
+  "рекламный бюджет Яндекс/ВК;",
+  "расходники, материалы и пескоструй сверх согласованной сметы;",
+  "большой многостраничный сайт, CRM и сложные интеграции, если они нужны отдельно;",
+  "ведение рекламы после тестового запуска и доработки за пределами согласованного этапа.",
 ];
 
 const caseTasks = [
-  "собрали новую матрицу рекламных кампаний под керамику, оклейку, шумку, ремонт и детейлинг;",
+  "собрали матрицу рекламных кампаний под дорогие автомобильные услуги, где важны доверие и точная заявка;",
   "перезапустили VK Ads под CPL и реальные входящие, а не под “красивую статистику”;",
   "оттестировали офферы и креативы по сегментам, чтобы рынок начал отвечать;",
   "достроили путь клиента от объявления до сообщения и консультации;",
@@ -100,16 +180,16 @@ const caseTasks = [
 
 const caseResults = [
   "стабильные ежедневные входящие сообщения;",
-  "живые вопросы по керамике, оклейке, шумоизоляции и детейлингу;",
+  "живые вопросы по дорогим автоуслугам, где клиенту нужен расчёт, доверие и быстрый ответ;",
   "записи на осмотр, расчёт стоимости и консультации;",
-  "не всплеск на неделю, а рабочий поток 12 месяцев подряд.",
+  "не всплеск на неделю, а рабочий канал обращений 12 месяцев подряд.",
 ];
 
 const BarterSTO = () => {
   return (
     <Layout
-      title="Бартер для автосервиса — маркетинг в обмен на услуги СТО | CentrLP"
-      description="Бартер с автосервисом: сайт, квиз, реклама и заявки в обмен на услуги по авто для СТО, детейлинга, ГБО, плёнки, автозвука и антикоррозийных работ."
+      title="Бартер для антикор-центра — сайт, ВК и реклама за Movil | CentrLP"
+      description="Бартер под Movil и антикор рамных авто: сайт, квиз, упаковка ВКонтакте, рекламные кампании и аналитика в обмен на работы по днищу, раме и аркам."
     >
       <section
         className="relative overflow-hidden bg-cover bg-center bg-no-repeat pt-28 pb-20"
@@ -123,44 +203,44 @@ const BarterSTO = () => {
             <div className="max-w-3xl">
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white/80 backdrop-blur">
                 <ArrowRightLeft className="h-4 w-4 text-primary" />
-                Бартер для СТО, детейлинга, ГБО, плёнки и автозвука
+                Бартер под Movil, антикор днища, рамы и арок
               </div>
 
               <h1 className="mb-6 text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.32)]">
-                Вы делаете мой Pajero сильнее. Я делаю вашему автосервису входящий поток заявок.
+                Вы берёте понятный объём по антикору Pajero. Взамен получаете пакет заявок под вашу дорогую услугу.
               </h1>
 
               <p className="max-w-2xl text-xl leading-9 text-slate-200">
-                Это не обмен “услуга на услугу” в воздухе. Это понятная сделка: сайт, квиз, реклама и
-                структура заявок для вашей СТО в обмен на конкретные работы по машине с согласованным
-                эквивалентом.
+                Фокус сделки — Movil, антикор днища, рамы и арок. Если ваша работа по смете стоит от
+                30 000 ₽ и выше, в обмен можно собрать не “карточку”, а полноценный пакет: сайт, квиз,
+                ВК-упаковку, рекламные кампании и аналитику.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                   <div className="text-sm font-semibold text-primary">Что получает СТО</div>
-                  <div className="mt-2 text-sm leading-6 text-slate-200">Сайт, квиз, рекламу и маршрут заявки</div>
+                  <div className="mt-2 text-sm leading-6 text-slate-200">Сайт, квиз, ВК-дизайн, рекламу и аналитику</div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                   <div className="text-sm font-semibold text-primary">Что получаю я</div>
-                  <div className="mt-2 text-sm leading-6 text-slate-200">ГБО, антикор, плёнку, тонировку и доработки</div>
+                  <div className="mt-2 text-sm leading-6 text-slate-200">Movil, антикор днища, рамы и арок по Pajero</div>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-                  <div className="text-sm font-semibold text-primary">Что важно</div>
-                  <div className="mt-2 text-sm leading-6 text-slate-200">Прозрачная смета, этапы и нормальная договорённость</div>
+                  <div className="text-sm font-semibold text-primary">Эквивалент</div>
+                  <div className="mt-2 text-sm leading-6 text-slate-200">Пакет CentrLP на 80 000–150 000 ₽ под вашу смету</div>
                 </div>
               </div>
 
               <div className="mt-10 flex flex-wrap gap-4">
                 <Button size="lg" className="shadow-elegant hover-scale">
-                  <a href="#form">Обсудить бартер по СТО</a>
+                  <a href="#form">Обсудить бартер по Movil</a>
                 </Button>
                 <Button
                   variant="outline"
                   size="lg"
                   className="border-white/20 bg-white/5 text-white hover:bg-white/10"
                 >
-                  <a href="#case">Посмотреть кейс по авто-тематике</a>
+                  <a href="#case">Посмотреть авто-кейс</a>
                 </Button>
               </div>
             </div>
@@ -182,15 +262,15 @@ const BarterSTO = () => {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
               <div className="text-sm font-semibold text-primary">Формат сделки</div>
-              <div className="mt-2 text-base text-foreground">Нормальный бартер с эквивалентом по смете, этапами и понятным составом работ.</div>
+              <div className="mt-2 text-base text-foreground">Сначала смета на Movil/антикор, затем пакет маркетинга под сопоставимый эквивалент.</div>
             </div>
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
               <div className="text-sm font-semibold text-primary">Что получает сервис</div>
-              <div className="mt-2 text-base text-foreground">Страницу, квиз, рекламу и более понятный маршрут клиента до обращения и записи.</div>
+              <div className="mt-2 text-base text-foreground">Страницу, квиз, ВК с дизайном, рекламную связку и маршрут заявки до расчёта.</div>
             </div>
             <div className="rounded-2xl border border-border/50 bg-background/90 p-5">
-              <div className="text-sm font-semibold text-primary">Что подтверждает результат</div>
-              <div className="mt-2 text-base text-foreground">Живые скрины, конкретный кейс и реальные автомобильные направления без абстракции.</div>
+              <div className="text-sm font-semibold text-primary">Что не прячем</div>
+              <div className="mt-2 text-base text-foreground">Рекламный бюджет и сторонние расходы считаются отдельно, без размывания сделки.</div>
             </div>
           </div>
         </div>
@@ -202,12 +282,12 @@ const BarterSTO = () => {
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
                 <Gauge className="h-4 w-4" />
-                Конкретный состав работ и результата
+                Пакет под дорогую услугу
               </div>
-              <h2 className="mb-4">Что именно вы получаете взамен бартерной сделки</h2>
+              <h2 className="mb-4">Что именно получает антикор-центр взамен работ по Pajero</h2>
               <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
-                Вместо абстрактного набора услуг здесь собран конкретный пакет работ: посадочная
-                страница, квиз, реклама, аналитика и маршрут обращения до записи.
+                Если Movilka, пескоструй и антикор считаются от 30 000 ₽, пакет с нашей стороны
+                должен выглядеть как полноценная упаковка услуги, а не как один текст в карточке.
               </p>
 
               <div className="mt-8 grid gap-4">
@@ -232,10 +312,61 @@ const BarterSTO = () => {
               <div className="rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/10 via-background to-accent-2/10 p-8">
                 <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Смысл сделки</div>
                 <p className="mt-4 text-lg leading-8 text-foreground">
-                  Пакет собирается вокруг простой задачи: привести входящий поток, упростить
-                  обращение и помочь сервису быстрее доводить людей до записи.
+                  Мы собираем для сервиса витрину и воронку именно под антикор: человек видит услугу,
+                  понимает, какие фото сделать, оставляет заявку и быстрее доходит до расчёта.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border/40 bg-background py-20">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <div>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent-2/10 px-4 py-2 text-sm font-semibold text-accent-2">
+                <BadgeCheck className="h-4 w-4" />
+                Эквивалент по ценам CentrLP
+              </div>
+              <h2>Не “карточка за антикор”, а пакет с понятной ценностью</h2>
+            </div>
+            <p className="text-lg leading-8 text-muted-foreground">
+              Стоимость работ фиксируем не на глаз: сайт, ВК, бот, реклама и аналитика имеют отдельные
+              цены. Поэтому состав бартера можно собрать под реальную смету Movil/антикора: от
+              частичной обработки до пакета с пескоструем.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {valueStack.map((item) => (
+              <Card key={item.title} className="h-full rounded-[1.5rem] border-border/60 p-6 shadow-sm">
+                <div className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">{item.title}</div>
+                <div className="mt-3 text-2xl font-bold text-foreground">{item.price}</div>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.text}</p>
+              </Card>
+            ))}
+          </div>
+
+          <div className="mt-14">
+            <div className="mb-6 max-w-3xl">
+              <h3 className="text-2xl font-bold">Три уровня взаимозачёта по смете</h3>
+              <p className="mt-3 text-base leading-7 text-muted-foreground">
+                Удобнее считать не “сайт за услугу”, а конкретный объём работ с обеих сторон.
+                Чем больше зона обработки и подготовки по машине, тем сильнее пакет на стороне CentrLP.
+              </p>
+            </div>
+            <div className="grid gap-4 lg:grid-cols-3">
+              {dealTiers.map((tier) => (
+                <Card key={tier.name} className="h-full rounded-[1.5rem] border-border/60 p-6 shadow-sm">
+                  <div className="text-sm font-semibold text-primary">{tier.name}</div>
+                  <div className="mt-2 text-2xl font-bold text-foreground">{tier.price}</div>
+                  <div className="mt-4 text-sm font-semibold text-foreground">Со стороны сервиса</div>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">{tier.service}</p>
+                  <div className="mt-4 text-sm font-semibold text-foreground">Со стороны CentrLP</div>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">{tier.package}</p>
+                </Card>
+              ))}
             </div>
           </div>
         </div>
@@ -257,24 +388,24 @@ const BarterSTO = () => {
                 <MessageSquareText className="h-4 w-4" />
                 Понятная логика обращения
               </div>
-              <h2 className="mb-4">Как клиент доходит до записи в автосервис</h2>
+              <h2 className="mb-4">Как клиент доходит до расчёта по антикору</h2>
               <p className="text-lg leading-8 text-muted-foreground">
-                Для локального авто-бизнеса важен понятный путь: увидел предложение, оставил заявку,
-                написал, получил расчёт и записался на нужную услугу.
+                Для Movil и антикора важно быстро отделить реальный запрос от пустого вопроса
+                “сколько стоит”. Поэтому воронка собирает данные, которые мастеру нужны для первичной оценки.
               </p>
 
               <div className="mt-8 space-y-4">
                 <div className="rounded-2xl border border-border/60 bg-background p-5">
                   <div className="font-semibold text-foreground">Шаг 1. Понять предложение</div>
-                  <p className="mt-2 text-muted-foreground">Человек сразу видит, какие услуги продвигаются, что входит в пакет и за счёт чего это приводит к заявке.</p>
+                  <p className="mt-2 text-muted-foreground">Человек видит не абстрактный “антикор”, а обработку днища, рамы, арок и скрытых полостей.</p>
                 </div>
                 <div className="rounded-2xl border border-border/60 bg-background p-5">
-                  <div className="font-semibold text-foreground">Шаг 2. Оставить заявку без лишних шагов</div>
-                  <p className="mt-2 text-muted-foreground">Марка авто, задача, контакт и удобный способ связи собираются в одном простом обращении.</p>
+                  <div className="font-semibold text-foreground">Шаг 2. Прислать правильные фото</div>
+                  <p className="mt-2 text-muted-foreground">Квиз подсказывает, что нужны арки изнутри, дно кузова, рама, рыжики и общий контекст.</p>
                 </div>
                 <div className="rounded-2xl border border-border/60 bg-background p-5">
                   <div className="font-semibold text-foreground">Шаг 3. Получить расчёт и запись</div>
-                  <p className="mt-2 text-muted-foreground">После обращения сервис быстро связывается, согласует детали и переводит интерес в реальную запись.</p>
+                  <p className="mt-2 text-muted-foreground">Сервис быстрее понимает объём: Movil, подготовка, пескоструй, отдельные зоны или полный пакет.</p>
                 </div>
               </div>
             </div>
@@ -285,10 +416,10 @@ const BarterSTO = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="mb-14 text-center">
-            <h2 className="mb-4">Какие работы по машине реально интересны в бартере</h2>
+            <h2 className="mb-4">Какие работы по Pajero интересны в Movilka-бартере</h2>
             <p className="mx-auto max-w-3xl text-lg leading-8 text-muted-foreground">
-              Не список “хотелок”, а понятные направления, которые удобно сопоставить с маркетинговым
-              пакетом и оценить по смете.
+              Не список “хотелок”, а конкретные зоны, которые можно оценить по фото, смете и
+              нормальной технологии обработки.
             </p>
           </div>
 
@@ -319,16 +450,68 @@ const BarterSTO = () => {
 
       <section id="benefits" className="bg-card py-20">
         <div className="container mx-auto px-4">
+          <div className="mb-16">
+            <div className="mb-10 max-w-3xl">
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                <MessageSquareText className="h-4 w-4" />
+                Как считаем сделку
+              </div>
+              <h2>Сначала смета и входные данные, потом взаимозачёт</h2>
+              <p className="mt-4 text-lg leading-8 text-muted-foreground">
+                Антикор нельзя честно оценивать по общим словам. Поэтому бартер начинается с состава
+                работ, фото, материалов и границ ответственности, а не с красивой фразы “давайте обменяемся”.
+              </p>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              <Card className="rounded-[1.5rem] border-border/60 p-6 shadow-sm">
+                <h3 className="text-xl font-bold">Что нужно от сервиса для сметы</h3>
+                <ul className="mt-4 space-y-3">
+                  {dealInputs.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-accent-2" />
+                      <span className="text-sm leading-7 text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+
+              <Card className="rounded-[1.5rem] border-border/60 p-6 shadow-sm">
+                <h3 className="text-xl font-bold">Как выглядит заявка клиента</h3>
+                <ul className="mt-4 space-y-3">
+                  {clientRequestItems.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <CheckCircle2 className="mt-1 h-5 w-5 flex-shrink-0 text-primary" />
+                      <span className="text-sm leading-7 text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+
+              <Card className="rounded-[1.5rem] border-border/60 p-6 shadow-sm">
+                <h3 className="text-xl font-bold">Что считается отдельно</h3>
+                <ul className="mt-4 space-y-3">
+                  {separateCosts.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-primary" />
+                      <span className="text-sm leading-7 text-muted-foreground">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </div>
+          </div>
+
           <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
                 <BadgeCheck className="h-4 w-4" />
                 Условия спокойной сделки
               </div>
-              <h2 className="mb-4">Что помогает бартеру пройти спокойно и по делу</h2>
+              <h2 className="mb-4">Когда такой бартер выгоден обеим сторонам</h2>
               <p className="text-lg leading-8 text-muted-foreground">
-                Здесь важны не красивые обещания, а готовность обсуждать объём работ, сроки,
-                эквивалент и реальную ценность с обеих сторон.
+                Хороший обмен держится на простой логике: у сервиса есть дорогая понятная услуга,
+                а у CentrLP есть сопоставимый пакет, который помогает эту услугу продавать.
               </p>
 
               <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -372,9 +555,9 @@ const BarterSTO = () => {
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 text-center">
               <TrendingUp className="mx-auto mb-6 h-16 w-16 text-primary" />
-              <h2 className="mb-4">Кейс по авто-тематике: как бартер превратился в стабильный поток заявок</h2>
+              <h2 className="mb-4">Кейс по авто-тематике: как упаковка превратилась в стабильный канал обращений</h2>
               <p className="mx-auto max-w-3xl text-lg leading-8 text-muted-foreground">
-                Не “разово что-то настроили”, а год системной работы для авто-направления: реклама,
+                Не “разово что-то настроили”, а системная работа для авто-направления: реклама,
                 офферы, сообщения, структура и постоянная докрутка под живой спрос.
               </p>
             </div>
@@ -462,12 +645,13 @@ const BarterSTO = () => {
             <Car className="mx-auto h-14 w-14 text-primary" />
             <h2 className="mt-5">Если вы хотите проверить бартер на нормальных условиях, давайте считать сделку по смете</h2>
             <p className="mx-auto mt-4 max-w-3xl text-lg leading-8 text-muted-foreground">
-              Без тумана. Вы присылаете список услуг и пример прайса. Я показываю, какой пакет работ
-              по сайту, заявкам и рекламе можно собрать под эквивалент. Если логика совпадает — идём дальше.
+              Без тумана. Вы показываете смету на Movil, антикор, пескоструй или отдельные зоны.
+              Я показываю пакет сайта, ВК, квиза, рекламы и аналитики под сопоставимый эквивалент.
+              Если логика совпадает — фиксируем состав и идём дальше.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Button size="lg" className="shadow-elegant hover-scale">
-                <a href="#form">Оставить заявку на бартер</a>
+                <a href="#form">Оставить заявку на Movilka-бартер</a>
               </Button>
               <Button variant="outline" size="lg" className="hover-scale">
                 <a href="https://centrlp.ru/services" target="_blank" rel="noreferrer">
@@ -485,8 +669,8 @@ const BarterSTO = () => {
             <div className="mb-12 text-center">
               <h2 className="mb-4">Оставьте заявку на бартер</h2>
               <p className="text-lg text-muted-foreground">
-                Напишите, какие услуги есть у вашего автосервиса, в каком городе вы работаете и какой
-                формат сотрудничества вам интересен.
+                Напишите, какие работы по Movil, антикору, пескострую, раме или аркам вы делаете,
+                какой ориентир по смете и какой формат обмена вам интересен.
               </p>
             </div>
             <ContactForm />
