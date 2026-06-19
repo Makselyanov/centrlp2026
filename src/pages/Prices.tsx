@@ -21,6 +21,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 import {
   packagePrices,
@@ -343,17 +344,26 @@ const Prices = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">{service.title}</h3>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                    <Link to={service.href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded-sm">
+                      {service.title}
+                    </Link>
+                  </h3>
                   <p className="text-gray-400 text-sm mb-6 leading-relaxed flex-grow">{service.desc}</p>
 
-                  <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Результат</span>
-                      <span className="text-sm text-gray-300 font-medium">{service.solve}</span>
+                  <div className="mt-auto pt-6 border-t border-white/5">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Результат</span>
+                        <span className="text-sm text-gray-300 font-medium">{service.solve}</span>
+                      </div>
+                      <div className="bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/10 transition-colors">
+                        <span className="text-white font-bold text-sm group-hover:text-primary">{service.price}</span>
+                      </div>
                     </div>
-                    <div className="bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/10 transition-colors">
-                      <span className="text-white font-bold text-sm group-hover:text-primary">{service.price}</span>
-                    </div>
+                    <Button asChild variant="outline" className="mt-4 w-full border-white/15 bg-transparent text-white hover:bg-white hover:text-slate-950">
+                      <Link to={service.href}>Открыть услугу</Link>
+                    </Button>
                   </div>
                 </Card>
               </motion.div>
