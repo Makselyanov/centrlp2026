@@ -27,6 +27,10 @@ const MarketingStrategy = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToPricing = () => {
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const tags = [
     { text: "VK-реклама", top: "15%", left: "8%", delay: 0 },
     { text: "Тренды 2026", top: "22%", right: "10%", delay: 1.5 },
@@ -115,8 +119,8 @@ const MarketingStrategy = () => {
 
   return (
     <Layout
-      title="Маркетинговая стратегия в Тюмени: цена, медиаплан и план продвижения | CentrLP"
-      description="Разработка маркетинговой стратегии в Тюмени: экспресс-формат от 35 000 ₽, медиаплан, юнит-экономика и пошаговый план продвижения для бизнеса без хаотичных тестов."
+      title="План маркетинга в Тюмени: цена, медиаплан и маркетинговая стратегия | CentrLP"
+      description="План маркетинга и медиаплан в Тюмени от 35 000 ₽: каналы, гипотезы, бюджет, юнит-экономика и пошаговый план продвижения без хаотичных тестов."
     >
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
@@ -147,24 +151,24 @@ const MarketingStrategy = () => {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
-            Маркетинговая стратегия <br />
+            План маркетинга <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
               с понятной ценой и планом действий
             </span>
           </h1>
 
           <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Собираем маркетинговый план продвижения для бизнеса в Тюмени: каналы, медиаплан, бюджет,
+            Собираем план маркетинга для бизнеса в Тюмени: каналы, медиаплан, бюджет,
             KPI и гипотезы по лидам. Опираемся на аналитику и AI, чтобы вы понимали не только что делать,
             но и сколько это будет стоить по этапам.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
             <Button size="lg" onClick={scrollToForm}>
-              Получить расчёт стратегии
+              Получить расчет стратегии
             </Button>
-            <Button size="lg" variant="outline" onClick={scrollToForm}>
-              Обсудить маркетинговый план
+            <Button size="lg" variant="outline" onClick={scrollToPricing}>
+              Смотреть состав и цены
             </Button>
           </div>
 
@@ -307,6 +311,7 @@ const MarketingStrategy = () => {
 
       {/* ── Pricing ──────────────────────────────────────────────────── */}
       <BentoSection
+        id="pricing"
         tone="white"
         eyebrow="Стоимость"
         title="Инвестиция в прогнозируемый маркетинг"

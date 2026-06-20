@@ -21,7 +21,7 @@ const goalOptions = [
 const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Экспресс-разбор заявок": "Получить экспресс-разбор",
   "Проверка сайта по персональным данным": "Получить проверку сайта",
-  "Маркетинговая стратегия и медиаплан": "Получить расчёт стратегии",
+  "Маркетинговая стратегия и медиаплан": "Получить расчет стратегии",
   "Сайт или посадочная страница": "Обсудить сайт и посадочную",
   "Бот, CRM или автоматизация": "Обсудить CRM и автоматизацию",
 };
@@ -42,6 +42,17 @@ export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
   const defaultGoal = getDefaultGoal(location.pathname);
+  const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
+  const introTitle = isMarketingStrategyPage
+    ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
+    : "Можно начать с короткого разбора сайта, формы и маршрута заявки.";
+  const introDescription = isMarketingStrategyPage
+    ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
+    : "Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнем с проверки формы, первого экрана, Метрики и скорости ответа.";
+  const commentPlaceholder = isMarketingStrategyPage
+    ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
+    : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -138,13 +149,8 @@ export const ContactForm = () => {
           <div className="mb-2 inline-flex items-center rounded-full border border-[#0096D6]/15 bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0096D6]">
             Быстрый старт
           </div>
-          <h3 className="text-lg font-bold text-slate-900">
-            Можно начать с короткого разбора сайта, формы и маршрута заявки.
-          </h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">
-            Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнём с проверки формы, первого экрана,
-            Метрики и скорости ответа.
-          </p>
+          <h3 className="text-lg font-bold text-slate-900">{introTitle}</h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">{introDescription}</p>
 
           <div className="mt-4">
             <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -213,43 +219,9 @@ export const ContactForm = () => {
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          <div>
-            <Label htmlFor="business">Бизнес / ниша</Label>
-            <Input
-              id="business"
-              name="business"
-              value={formData.business}
-              onChange={(e) => setFormData({ ...formData, business: e.target.value })}
-              className="mt-2"
-              placeholder="Например: услуги, клиника, студия, e-commerce"
-            />
-          </div>
-
-          <div>
-            <Label htmlFor="city">Город</Label>
-            <Input
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              className="mt-2"
-            />
-          </div>
-        </div>
-
-        <div>
-          <Label htmlFor="link">Ссылка на сайт / соцсеть</Label>
-          <Input
-            id="link"
-            name="link"
-            type="url"
-            value={formData.link}
-            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-            className="mt-2"
-            placeholder="https://"
-          />
-        </div>
+        <p className="-mt-2 text-xs leading-5 text-slate-500">
+          Для первого ответа достаточно имени и телефона. Остальные детали можно добавить ниже, если удобно.
+        </p>
 
         <div>
           <Label>Что важнее сейчас</Label>
@@ -284,9 +256,55 @@ export const ContactForm = () => {
             onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
             className="mt-2"
             rows={4}
-            placeholder="Например: понять, почему сайт не даёт заявок; проверить форму и Метрику; связать обращения с CRM"
+            placeholder={commentPlaceholder}
           />
         </div>
+
+        <details className="rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-4">
+          <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700">
+            Уточнить нишу, город и ссылку на сайт
+            <span className="ml-2 text-xs font-normal text-slate-500">(необязательно)</span>
+          </summary>
+          <div className="mt-4 space-y-6">
+            <div className="grid gap-6 md:grid-cols-2">
+              <div>
+                <Label htmlFor="business">Бизнес / ниша</Label>
+                <Input
+                  id="business"
+                  name="business"
+                  value={formData.business}
+                  onChange={(e) => setFormData({ ...formData, business: e.target.value })}
+                  className="mt-2 bg-white"
+                  placeholder="Например: услуги, клиника, студия, e-commerce"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="city">Город</Label>
+                <Input
+                  id="city"
+                  name="city"
+                  value={formData.city}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                  className="mt-2 bg-white"
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="link">Ссылка на сайт / соцсеть</Label>
+              <Input
+                id="link"
+                name="link"
+                type="url"
+                value={formData.link}
+                onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                className="mt-2 bg-white"
+                placeholder="https://"
+              />
+            </div>
+          </div>
+        </details>
 
         <div className="space-y-3">
           <div className="flex items-start space-x-2">
