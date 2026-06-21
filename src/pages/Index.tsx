@@ -192,7 +192,7 @@ const growthServices = [
     icon: LineChart,
   },
   {
-    title: "Маркетинговая стратегия",
+    title: "План маркетинга",
     text: "Формулируем позиционирование, продуктовый контур, офферы и карту гипотез перед запуском.",
     href: "/services/marketing-strategy",
     icon: Target,
@@ -431,9 +431,9 @@ const Index = () => {
       <section className="py-20 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="mb-4">Усиливаем запуск маркетингом и аналитикой</h2>
+            <h2 className="mb-4">Усиливаем запуск маркетингом, планом продвижения и аналитикой</h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Новые продукты лучше растут, когда у них есть сильная посадочная, трафик, аналитика и понятное позиционирование.
+              Новые продукты лучше растут, когда у них есть сильная посадочная, трафик, понятная цена входа, аналитика и план маркетинга с приоритетами.
             </p>
           </div>
 
