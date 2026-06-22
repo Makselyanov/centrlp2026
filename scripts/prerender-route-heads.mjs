@@ -22,6 +22,7 @@ const ogImageMap = {
   "/barter": "barter.png",
   "/cases": "cases.png",
   "/business-plans": "business-plans.png",
+  "/blog/ekspress-audit-saita-net-zayavok-48-chasov": "blog.png",
   "/proverka-saita-i-zayavok-za-48-chasov": "website-development.png",
   "/razrabotka-sajtov-tyumen": "website-development.png",
   "/sozdanie-lendinga-tyumen": "website-development.png",

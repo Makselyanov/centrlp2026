@@ -183,6 +183,11 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
         "name": "CentrLP",
         "url": "https://centrlp.ru",
         "telephone": "+7-905-824-85-64",
+        "sameAs": [
+          "https://vk.com/centrlp",
+          "https://t.me/centrlp_ideas",
+          "https://2gis.ru/tyumen/firm/70000001033718655"
+        ],
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "проезд Солнечный, 22",
@@ -191,10 +196,20 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
           "addressCountry": "RU"
         }
       },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Россия"
-      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Тюмень"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Тюменская область"
+        },
+        {
+          "@type": "Country",
+          "name": "Россия"
+        }
+      ],
       "url": `https://centrlp.ru${location.pathname}`,
       ...(price && {
         "offers": {

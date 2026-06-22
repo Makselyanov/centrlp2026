@@ -221,8 +221,9 @@ const BlogPost = () => {
     // Проверяем наличие TOC
     const hasToc = toc && toc.length > 0;
 
-    // Cover image: per-post OG cover from /og/posts/<slug>.png
-    const coverSrc = `/og/posts/${post.slug}.png`;
+    const coverSrc = post.slug === "ekspress-audit-saita-net-zayavok-48-chasov"
+        ? "/og/blog.png"
+        : `/og/posts/${post.slug}.png`;
     const ctaTitle = typeof post.ctaTitle === "string" && post.ctaTitle.trim()
         ? post.ctaTitle.trim()
         : "РЎР°Р№С‚ РµСЃС‚СЊ, РЅРѕ Р·Р°СЏРІРѕРє РјР°Р»Рѕ?";

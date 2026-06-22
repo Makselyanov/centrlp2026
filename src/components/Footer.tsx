@@ -106,6 +106,26 @@ export const Footer = () => {
                 Контакты
               </Link>
             </div>
+            <div className="mt-5 space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                Услуги в Тюмени
+              </p>
+              <Link to="/proverka-saita-i-zayavok-za-48-chasov" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Проверка сайта и заявок
+              </Link>
+              <Link to="/razrabotka-sajtov-tyumen" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Разработка сайтов
+              </Link>
+              <Link to="/sozdanie-lendinga-tyumen" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Создание лендинга
+              </Link>
+              <Link to="/nastroyka-yandex-direct-tyumen" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Настройка Яндекс Директа
+              </Link>
+              <Link to="/services/marketing-strategy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                План маркетинга
+              </Link>
+            </div>
           </div>
 
           {/* Contacts */}
