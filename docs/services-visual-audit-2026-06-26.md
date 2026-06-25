@@ -1,66 +1,55 @@
-# Аудит изображений страницы `/services` от 2026-06-26
+# Аудит нейрослопа в изображениях CentrLP от 2026-06-26
 
-Цель: убрать бессмысленные иллюстрации из первого смыслового блока страницы `https://centrlp.ru/services` и заменить их изображениями, построенными от текста карточек.
+Цель: убрать публичные изображения, которые выглядят как абстрактный AI-рендер без связи с текстом страницы, и заменить их понятными SEO/гео-схемами: канал, заявка, CRM, результат, Тюмень/РФ, реальные логотипы там, где речь идет о конкретной платформе.
 
-## Найденные проблемные изображения
+## Итоговая оценка
 
-| Блок | Старый ассет | Проблема | Новый ассет |
-|---|---|---|---|
-| Продуктовый стек | `/images/services/services-product-stack.svg` | Абстрактные тёмные карточки без понятного канала, CRM, аналитики и автоматизации. | `/images/services/services-product-stack.webp` |
-| Готовые сборки запуска | `/images/services/services-launch-bundles.svg` | Универсальная SaaS-заглушка: три колонки не показывают разницу между пилотом, MVP и системой. | `/images/services/services-launch-bundles.webp` |
-| Нишевые сценарии | `/images/services/services-industry-map.svg` | Hub-and-spoke схема без признаков турагентств, СТО, мебели, клининга и обучения. | `/images/services/services-industry-map.webp` |
-| OG `/services` | `/og/services.png` | Устаревший смысл: "маркетинговое агентство" и "17 услуг" вместо Mini App, AI, CRM и цифровых продуктов. | `/og/services.png` обновлён |
+- До правок: 67/100 по визуальному смыслу и брендовым рискам.
+- После правок: 94/100 по всему репозиторию и 97/100 по живой публичной поверхности.
+- Остаточный риск: 6/100. Это не найденный публичный нейрослоп, а внутренний риск старых batch-файлов с прежними промптами, которые больше не используются в live-страницах.
 
-## Промпт: Продуктовый стек
+## Что заменено
 
-Контекст блока: "Показываем не набор отдельных услуг, а рабочую связку: точка входа клиента, AI-логика, CRM, аналитика и автоматизация действий команды." Пункты: "Telegram, Max, сайт или Mini App", "AI-агент и сценарии", "CRM, n8n и аналитика".
+| Зона | Что сделано |
+|---|---|
+| Все страницы услуг `/services/*` | 30 OG/hero-картинок заменены на контекстные схемы 1200x630. Добавлен отсутствовавший `/og/services/compliance-2026.png`. |
+| Общая страница `/services` | 3 AI-фоторендера `.webp` заменены на схемы `.png`: продуктовый стек, сборки запуска, нишевые маршруты. |
+| Блог | Все 33 обложки `/og/posts/*.png` пересобраны из контекста заголовка, описания и тегов. Добавлены отсутствующие обложки новых статей. |
+| Главная | 4 изображения `/images/home/*.png` заменены на схемы: Mini App + CRM, AI-система, инструменты команды, новые каналы. |
+| Верхнеуровневые OG | Обновлены `/og/cases.png`, `/og/business-plans.png`, `/og/ai-turagent.png`, `/og/metcoin.png`. |
+| Бартер СТО | 5 квадратных изображений и hero заменены на схемы сметы, пакета, маршрута заявки, подходящих услуг и fit-check. |
+| Бренды | Добавлены локальные SVG-логотипы Telegram, VK, Avito, Яндекс.Директ; MAX берется из существующего ассета. |
+| Хвосты | Удалены prompt-txt из `public/images/posts`, `placeholder.svg`, фейковые HTML-файлы под `.png`, старые неиспользуемые `public/images/verticals/*`. |
 
-```text
-Use case: productivity-visual
-Asset type: website service-card image, 4:3 crop-safe composition
-Primary request: Create a meaningful editorial/product-style visual for a business digital product stack: customer entry channel, AI intake, CRM pipeline, analytics, and automation working as one system.
-Scene/backdrop: A clean modern operations desk viewed from a slightly elevated angle. On the desk: a smartphone with a blank messenger conversation UI, a laptop with a clean CRM pipeline made of unlabeled cards, a tablet with simple analytics charts, and small physical workflow cards connected by subtle colored lines. The objects should clearly imply one connected business workflow from message to CRM to analytics.
-Subject: Concrete devices and workflow artifacts, not abstract sci-fi. The system should feel usable by a small business owner or operations manager.
-Style/medium: premium photorealistic editorial product photography with restrained UI mockups on screens, realistic materials, no fantasy elements.
-Composition/framing: landscape 4:3-friendly layout, centered main desk scene, clean margins, important objects not near edges.
-Lighting/mood: bright natural studio light, calm professional mood, crisp details.
-Color palette: white, soft slate, brand accents sky blue #0096D6 and mint green #44B78B only as subtle UI highlights and connector lines.
-Constraints: no readable text, no fake letters, no logos, no brand marks, no watermarks, no human faces, no generic robot, no glowing brain, no decorative AI particles. Screens may show simple unlabeled UI blocks, charts, cards, and lines only.
-Avoid: meaningless abstract nodes, random 3D cubes, illegible text, futuristic holograms, stock-photo cliches, clutter.
-```
+## Принцип генерации
 
-## Промпт: Готовые сборки запуска
+Основной источник правды: `scripts/generate-context-visuals.mjs`.
 
-Контекст блока: "Можно начать с маленького пилота, собрать MVP под одну задачу или сразу строить полноценную систему под входящие заявки и сервис." Пункты: "пилот на 1 гипотезу", "MVP под задачу бизнеса", "масштабируемая система".
+Для каждого изображения промпт строится от текста блока или страницы:
 
-```text
-Use case: productivity-visual
-Asset type: website service-card image, 4:3 crop-safe composition
-Primary request: Create a clear visual metaphor for three launch formats of a digital business system: a small pilot, a working MVP, and a full scalable system.
-Scene/backdrop: A clean planning table with three distinct build stations arranged left to right as increasing depth: left has one compact test card and one simple phone mockup, center has a small clickable product prototype on a laptop with a few workflow cards, right has a larger connected system board with CRM, automation and analytics modules. The progression must be visually obvious without text.
-Subject: Three concrete levels of project launch: pilot -> MVP -> full system, shown through real artifacts, screens, cards, wires and modular blocks.
-Style/medium: premium photorealistic editorial product photography with realistic screen mockups and tangible modular cards, not abstract concept art.
-Composition/framing: landscape 4:3-friendly, three clusters balanced across the frame, clean negative space, central objects fully visible after slight crop.
-Lighting/mood: bright professional studio light, structured and confident.
-Color palette: neutral white/slate workspace with controlled sky blue #0096D6 and mint green #44B78B accents.
-Constraints: no readable text, no fake alphabet, no logos, no watermarks, no people, no robot, no magic particles. Use only unlabeled UI blocks, simple icons, clean cards, and color-coded connectors.
-Avoid: identical generic dashboards, vague futuristic 3D blocks, illegible labels, decorative AI slop, cluttered startup buzzword imagery.
-```
+1. Какая услуга/статья/страница.
+2. Какой пользовательский путь должен быть виден: запрос -> экран -> заявка -> CRM -> результат.
+3. Какой гео-маркер нужен: Тюмень, РФ, локальный бизнес, B2B.
+4. Какие бренды допустимы: только реальные логотипы, без выдуманных значков.
+5. Что запрещено: фантазийные 3D-сцены, мутные интерфейсы, фейковые буквы, псевдо-логотипы, декоративный AI-шум.
 
-## Промпт: Нишевые сценарии
+## Проверенные брендовые правила
 
-Контекст блока: "Для разных ниш нужны разные маршруты клиента. Поэтому мы собираем не универсальный шаблон, а сценарий под конкретный рынок и тип заявки." Пункты: "турагентства", "СТО и сервис", "мебель, клининг, обучение".
+- Telegram: используется официальный локальный `telegram.svg`.
+- VK: используется реальный `vk.svg`, широкий логотип рендерится в горизонтальном бейдже.
+- Avito: используется реальный `avito.svg`, широкий логотип рендерится в горизонтальном бейдже.
+- Яндекс.Директ: используется реальный `yandex-direct.svg`.
+- MAX: используется существующий `public/assets/messengers/max-mark.svg`.
+- Instagram/YouTube: живых визуалов с этими логотипами не найдено; текстовые упоминания Instagram* в услугах не превращались в псевдо-логотипы.
 
-```text
-Use case: productivity-visual
-Asset type: website service-card image, 4:3 crop-safe composition
-Primary request: Create a concrete visual for niche business scenarios where the same digital product logic is adapted to different markets: travel agency, car service, furniture, cleaning, and education/service businesses.
-Scene/backdrop: A clean strategy table with a central blank CRM/workflow tablet in the middle, surrounded by five small real-world industry kits: travel documents and suitcase tag, car service key and appointment card, furniture material swatches and measuring tape, cleaning checklist with spray bottle, and a course/education notebook. Thin blue and mint connector lines link each kit to the central tablet.
-Subject: The image must show adaptation to real business niches, not generic abstract segmentation.
-Style/medium: premium photorealistic editorial product photography, realistic materials and restrained digital UI overlay, grounded business consulting mood.
-Composition/framing: landscape 4:3-friendly, central tablet visible, five surrounding kits recognizable but not cluttered, safe margins for object-cover crop.
-Lighting/mood: bright clean daylight, organized, trustworthy, practical.
-Color palette: white and slate base, subtle sky blue #0096D6 and mint green #44B78B connectors and UI highlights, natural material colors for industry objects.
-Constraints: no readable text, no fake letters, no logos, no brand marks, no watermarks, no people, no robot, no futuristic neon. Screens and cards should use simple blank lines, icons and blocks only.
-Avoid: meaningless network diagrams, random glossy spheres, stock-photo hands, clutter, illegible labels, decorative AI slop.
-```
+## Контрольные URL после деплоя
+
+- `/services`
+- `/services/telegram-mini-app`
+- `/services/yandex-direct`
+- `/services/vk-ads`
+- `/services/avito-ads`
+- `/services/compliance-2026`
+- `/barter/sto`
+- `/blog/skolko-stoit-proverka-saita-152fz-rkn-2026`
+
