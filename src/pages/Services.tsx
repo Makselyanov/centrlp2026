@@ -355,21 +355,21 @@ const heroHighlights = [
 const visualSystemCards = [
   {
     title: "Продуктовый стек",
-    image: "/images/services/services-product-stack.svg",
+    image: "/images/services/services-product-stack.webp",
     alt: "Архитектура цифрового продукта: канал, AI, CRM, аналитика и автоматизация",
     text: "Показываем не набор отдельных услуг, а рабочую связку: точка входа клиента, AI-логика, CRM, аналитика и автоматизация действий команды.",
     points: ["Telegram, Max, сайт или Mini App", "AI-агент и сценарии", "CRM, n8n и аналитика"],
   },
   {
     title: "Готовые сборки запуска",
-    image: "/images/services/services-launch-bundles.svg",
+    image: "/images/services/services-launch-bundles.webp",
     alt: "Три формата запуска цифровой системы: пилот, MVP и полноценная система",
     text: "Можно начать с маленького пилота, собрать MVP под одну задачу или сразу строить полноценную систему под входящие заявки и сервис.",
     points: ["пилот на 1 гипотезу", "MVP под задачу бизнеса", "масштабируемая система"],
   },
   {
     title: "Нишевые сценарии",
-    image: "/images/services/services-industry-map.svg",
+    image: "/images/services/services-industry-map.webp",
     alt: "Карта нишевых сценариев для турагентств, СТО, мебели, клининга и сервисных компаний",
     text: "Для разных ниш нужны разные маршруты клиента. Поэтому мы собираем не универсальный шаблон, а сценарий под конкретный рынок и тип заявки.",
     points: ["турагентства", "СТО и сервис", "мебель, клининг, обучение"],
