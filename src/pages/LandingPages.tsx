@@ -1,4 +1,5 @@
 import { ContactForm } from "@/components/ContactForm";
+import { ContextVisual } from "@/components/ContextVisual";
 import { Layout } from "@/components/Layout";
 import { MessengerLinks, TELEGRAM_URL } from "@/components/MessengerLinks";
 import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
@@ -35,7 +36,6 @@ const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
 
 type LandingVisual = {
-  imageSrc: string;
   imageAlt: string;
   eyebrow: string;
   title: string;
@@ -53,7 +53,6 @@ type LandingVisual = {
 
 const landingVisuals: Record<LandingPageKey, LandingVisual> = {
   expressAudit: {
-    imageSrc: "/og/services/web-analytics.png",
     imageAlt: "Визуализация проверки воронки сайта, аналитики и пути заявки",
     eyebrow: "Карта проверки",
     title: "Смотрим путь заявки целиком",
@@ -71,7 +70,6 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   websiteDevelopmentTyumen: {
-    imageSrc: "/og/services/website-development.png",
     imageAlt: "Фирменная иллюстрация разработки сайта как интерфейса продаж",
     eyebrow: "Сайт как система",
     title: "Собираем не страницу, а маршрут к обращению",
@@ -89,7 +87,6 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   landingTyumen: {
-    imageSrc: "/og/services/website-development.png",
     imageAlt: "Иллюстрация посадочной страницы с оффером, формой и CTA",
     eyebrow: "Лендинг под гипотезу",
     title: "Один оффер, один сценарий, один главный шаг",
@@ -107,7 +104,6 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   yandexDirectTyumen: {
-    imageSrc: "/og/services/yandex-direct.png",
     imageAlt: "Фирменная иллюстрация связки Яндекс Директ, посадочной страницы и заявки",
     eyebrow: "Реклама без пустоты",
     title: "Связываем запрос, объявление, страницу и заявку",
@@ -125,7 +121,6 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   crmBusiness: {
-    imageSrc: "/images/ai/crm-centrlp-preview.png",
     imageAlt: "Пример интерфейса CentrLP CRM для контроля заявок, звонков и сделок",
     eyebrow: "Заявка под контролем",
     title: "После сайта обращение не должно теряться",
@@ -143,7 +138,6 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   aiAutomation: {
-    imageSrc: "/images/ai/ai-hero-command-center.svg",
     imageAlt: "Иллюстрация AI-командного центра для заявок, ответов и автоматизации",
     eyebrow: "AI внутри процесса",
     title: "Автоматизация работает только там, где понятен маршрут",
@@ -216,12 +210,11 @@ const ProcessStep = ({
 );
 
 const LandingHeroImage = ({ visual }: { visual: LandingVisual }) => (
-  <img
-    src={visual.imageSrc}
-    alt={visual.imageAlt}
-    loading="eager"
-    decoding="async"
-    className="h-full w-full object-cover"
+  <ContextVisual
+    variant="landing-flow"
+    label={visual.imageAlt}
+    icons={visual.flow.map((step) => step.icon)}
+    className="h-full min-h-0"
   />
 );
 

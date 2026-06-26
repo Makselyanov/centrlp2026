@@ -1,6 +1,7 @@
 import { Hero } from "@/components/Hero";
 import { ContactForm } from "@/components/ContactForm";
 import { Layout } from "@/components/Layout";
+import { ContextVisual, type ContextVisualVariant } from "@/components/ContextVisual";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -82,8 +83,7 @@ const digitalBlocks = [
     ],
     href: "/services/mvp-development",
     icon: Layers3,
-    image: "/images/home/digital-products.png",
-    imageAlt: "3D-иллюстрация смартфона с интерфейсом Telegram Mini App",
+    visual: "digital-products" as ContextVisualVariant,
   },
   {
     title: "AI-системы для бизнеса",
@@ -96,8 +96,7 @@ const digitalBlocks = [
     ],
     href: "/services/ai-systems",
     icon: Brain,
-    image: "/images/home/ai-systems.png",
-    imageAlt: "Изометрическая иллюстрация AI-мозга и панели управления",
+    visual: "ai-systems" as ContextVisualVariant,
   },
   {
     title: "Инструменты для команды",
@@ -110,8 +109,7 @@ const digitalBlocks = [
     ],
     href: "/services/browser-extensions",
     icon: ScanSearch,
-    image: "/images/home/team-tools.png",
-    imageAlt: "Изометрическая иллюстрация браузерного дашборда для команды",
+    visual: "team-tools" as ContextVisualVariant,
   },
   {
     title: "Ранний вход в новые каналы",
@@ -124,8 +122,7 @@ const digitalBlocks = [
     ],
     href: "/services/max-messenger",
     icon: Compass,
-    image: "/images/home/new-channels.png",
-    imageAlt: "Изометрическая иллюстрация компаса с тремя путями в новые каналы",
+    visual: "new-channels" as ContextVisualVariant,
   },
 ];
 
@@ -298,14 +295,7 @@ const Index = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {digitalBlocks.map((item) => (
               <Card key={item.href} className="shadow-card bg-card h-full overflow-hidden flex flex-col">
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10">
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt}
-                    loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </div>
+                <ContextVisual variant={item.visual} label={item.title} className="aspect-[16/9]" />
                 <div className="p-8 flex flex-col flex-1">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">

@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { ContextVisual, type ContextVisualVariant } from "@/components/ContextVisual";
 import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -352,25 +353,22 @@ const heroHighlights = [
   "CRM, сайты и аналитика",
 ];
 
-const visualSystemCards = [
+const visualSystemCards: Array<{ title: string; visual: ContextVisualVariant; text: string; points: string[] }> = [
   {
     title: "Продуктовый стек",
-    image: "/images/services/services-product-stack.png",
-    alt: "Архитектура цифрового продукта: канал, AI, CRM, аналитика и автоматизация",
+    visual: "product-stack",
     text: "Показываем не набор отдельных услуг, а рабочую связку: точка входа клиента, AI-логика, CRM, аналитика и автоматизация действий команды.",
     points: ["Telegram, Max, сайт или Mini App", "AI-агент и сценарии", "CRM, n8n и аналитика"],
   },
   {
     title: "Готовые сборки запуска",
-    image: "/images/services/services-launch-bundles.png",
-    alt: "Три формата запуска цифровой системы: пилот, MVP и полноценная система",
+    visual: "launch-bundles",
     text: "Можно начать с маленького пилота, собрать MVP под одну задачу или сразу строить полноценную систему под входящие заявки и сервис.",
     points: ["пилот на 1 гипотезу", "MVP под задачу бизнеса", "масштабируемая система"],
   },
   {
     title: "Нишевые сценарии",
-    image: "/images/services/services-industry-map.png",
-    alt: "Карта нишевых сценариев для турагентств, СТО, мебели, клининга и сервисных компаний",
+    visual: "industry-map",
     text: "Для разных ниш нужны разные маршруты клиента. Поэтому мы собираем не универсальный шаблон, а сценарий под конкретный рынок и тип заявки.",
     points: ["турагентства", "СТО и сервис", "мебель, клининг, обучение"],
   },
@@ -624,15 +622,7 @@ const Services = () => {
                 transition={{ duration: 0.55, delay: index * 0.08 }}
               >
                 <Card className="h-full overflow-hidden rounded-[30px] border border-white/70 bg-white/90 shadow-[0_22px_80px_-38px_rgba(0,150,214,0.34)]">
-                  <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-50">
-                    <img
-                      src={item.image}
-                      alt={item.alt}
-                      className="absolute inset-0 h-full w-full object-contain"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                  <ContextVisual variant={item.visual} label={item.title} className="aspect-[4/3]" />
                   <div className="p-7">
                     <h3 className="mb-3 text-2xl font-bold tracking-tight text-slate-900">{item.title}</h3>
                     <p className="mb-5 text-base leading-7 text-slate-600">{item.text}</p>

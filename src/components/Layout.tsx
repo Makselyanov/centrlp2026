@@ -4,45 +4,11 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { trackMetric } from "@/lib/metrics";
 
-// OG image mapping: exact pathname → image filename (relative to /og/).
-// For /blog/<slug> and /services/<slug> we point to per-item generated covers.
-const ogImageMap: Record<string, string> = {
-  "/": "index.png",
-  "/services": "services.png",
-  "/prices": "prices.png",
-  "/projects": "projects.png",
-  "/about": "about.png",
-  "/contacts": "contacts.png",
-  "/blog": "blog.png",
-  "/ai": "ai.png",
-  "/ai-turagent": "ai-turagent.png",
-  "/metcoin": "metcoin.png",
-  "/barter": "barter.png",
-  "/cases": "cases.png",
-  "/business-plans": "business-plans.png",
-  "/blog/ekspress-audit-saita-net-zayavok-48-chasov": "blog.png",
-  "/proverka-saita-i-zayavok-za-48-chasov": "website-development.png",
-  "/razrabotka-sajtov-tyumen": "website-development.png",
-  "/sozdanie-lendinga-tyumen": "website-development.png",
-  "/nastroyka-yandex-direct-tyumen": "yandex-direct.png",
-  "/crm-dlya-biznesa": "services/custom-crm.png",
-  "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
-};
+// All public previews use the real CentrLP brand image instead of generated covers.
+const BRAND_OG_IMAGE = "brand.jpg";
 
-function getOgImage(pathname: string): string {
-  if (ogImageMap[pathname]) return ogImageMap[pathname];
-  if (pathname.startsWith("/blog/")) {
-    const slug = pathname.replace("/blog/", "").replace(/\/$/, "");
-    if (slug) return `posts/${slug}.png`;
-    return "blog.png";
-  }
-  if (pathname.startsWith("/services/")) {
-    const slug = pathname.replace("/services/", "").replace(/\/$/, "");
-    if (slug) return `services/${slug}.png`;
-    return "services.png";
-  }
-  if (pathname.startsWith("/barter/")) return "barter.png";
-  return "index.png";
+function getOgImage(): string {
+  return BRAND_OG_IMAGE;
 }
 
 interface LayoutProps {
@@ -56,7 +22,7 @@ export const Layout = ({ children, title, description }: LayoutProps) => {
 
   useEffect(() => {
     const canonicalUrl = `https://centrlp.ru${location.pathname === '/' ? '/' : location.pathname}`;
-    const ogImageFile = getOgImage(location.pathname);
+    const ogImageFile = getOgImage();
     const ogImageUrl = `https://centrlp.ru/og/${ogImageFile}`;
     const metaDescriptionContent = description || "CentrLP — сайты, ВК-упаковка, чат-боты и ИИ-маркетинг под ключ в Тюмени.";
     const metaTitleContent = title || "CentrLP";

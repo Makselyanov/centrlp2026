@@ -1,5 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
+import { ContextVisual } from "@/components/ContextVisual";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -181,13 +182,14 @@ const AI = () => {
       description="Внедряем AI вокруг собственной CRM crm.centrlp.ru: заявки, звонки, сделки, задачи, Контент Завод, аналитика руководителя и юридический след по 152-ФЗ."
     >
       <section className="relative min-h-[88vh] overflow-hidden bg-slate-950 text-white">
-        <img
-          src="/images/ai/crm-centrlp-preview.png"
-          alt="CentrLP CRM с маршрутом заявки, сделками, задачами и нейросетью"
-          className="absolute inset-0 h-full w-full object-cover object-center opacity-70"
-          loading="eager"
-          decoding="async"
-        />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,#020617_0%,#083047_55%,#0f3f35_100%)]" />
+        <div className="absolute right-0 top-28 hidden w-[44vw] max-w-2xl lg:block">
+          <ContextVisual
+            variant="ai-systems"
+            label="CentrLP CRM с маршрутом заявки, сделками, задачами и нейросетью"
+            className="aspect-[4/3] rounded-l-[2rem] rounded-r-none border-white/10 bg-white/95 shadow-[0_30px_90px_rgba(0,0,0,0.35)]"
+          />
+        </div>
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.98)_0%,rgba(2,6,23,0.84)_46%,rgba(2,6,23,0.24)_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-background to-transparent" />
 
@@ -292,12 +294,10 @@ const AI = () => {
               transition={{ duration: 0.5 }}
               className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm"
             >
-              <img
-                src="/images/ai/crm-centrlp-preview.png"
-                alt="Превью CentrLP CRM для заявок, звонков, сделок и внедрения нейросети"
-                className="h-full w-full object-cover"
-                loading="lazy"
-                decoding="async"
+              <ContextVisual
+                variant="ai-systems"
+                label="CentrLP CRM для заявок, звонков, сделок и внедрения нейросети"
+                className="aspect-[16/10] rounded-none border-0 shadow-none"
               />
             </motion.div>
           </div>

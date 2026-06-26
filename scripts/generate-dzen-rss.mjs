@@ -47,14 +47,8 @@ function descriptionFrom(content, frontmatter) {
   return plain.slice(0, 240).replace(/\s+\S*$/, '').trim();
 }
 
-function imageFor(slug) {
-  const candidates = [
-    { rel: `og/posts/${slug}.png`, type: 'image/png' },
-    { rel: `og/posts/${slug}.jpg`, type: 'image/jpeg' },
-    { rel: 'og/blog.png', type: 'image/png' },
-  ];
-  const found = candidates.find(item => fs.existsSync(path.join(PUBLIC_DIR, item.rel))) || candidates.at(-1);
-  return { url: `${SITE_URL}/${found.rel}`, type: found.type };
+function imageFor() {
+  return { url: `${SITE_URL}/og/brand.jpg`, type: 'image/jpeg' };
 }
 
 function readPosts() {
@@ -75,7 +69,7 @@ function readPosts() {
         description,
         date: new Date(`${date}T09:00:00+05:00`),
         url: `${SITE_URL}/blog/${slug}`,
-        image: imageFor(slug),
+        image: imageFor(),
         tags: Array.isArray(parsed.data.tags) ? parsed.data.tags : [],
         fullText: stripMarkdown(parsed.content),
       };
