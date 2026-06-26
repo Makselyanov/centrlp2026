@@ -34,8 +34,6 @@ import { Link } from "react-router-dom";
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
 
-const getOptimizedImageSrc = (src: string) => (src.endsWith(".png") ? src.replace(/\.png$/, ".webp") : undefined);
-
 type LandingVisual = {
   imageSrc: string;
   imageAlt: string;
@@ -217,22 +215,15 @@ const ProcessStep = ({
   </div>
 );
 
-const LandingHeroImage = ({ visual }: { visual: LandingVisual }) => {
-  const webpSrc = getOptimizedImageSrc(visual.imageSrc);
-
-  return (
-    <picture>
-      {webpSrc ? <source srcSet={webpSrc} type="image/webp" /> : null}
-      <img
-        src={visual.imageSrc}
-        alt={visual.imageAlt}
-        loading="eager"
-        decoding="async"
-        className="h-full w-full object-cover"
-      />
-    </picture>
-  );
-};
+const LandingHeroImage = ({ visual }: { visual: LandingVisual }) => (
+  <img
+    src={visual.imageSrc}
+    alt={visual.imageAlt}
+    loading="eager"
+    decoding="async"
+    className="h-full w-full object-cover"
+  />
+);
 
 const LandingFlowSection = ({ visual }: { visual: LandingVisual }) => (
   <section className="bg-white py-14 md:py-20">

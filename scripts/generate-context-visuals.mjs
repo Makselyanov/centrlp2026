@@ -20,6 +20,8 @@ const WIDTH = 1200;
 const HEIGHT = 630;
 const HOME_WIDTH = 1200;
 const HOME_HEIGHT = 675;
+const SERVICE_OVERVIEW_WIDTH = 1200;
+const SERVICE_OVERVIEW_HEIGHT = 900;
 
 const colors = {
   ink: "#0f172a",
@@ -61,79 +63,6 @@ function logoDataUri(key) {
   return uri;
 }
 
-function wrapWords(text, maxChars, maxLines = 4) {
-  const words = String(text).split(/\s+/).filter(Boolean);
-  const lines = [];
-  let current = "";
-  for (const word of words) {
-    const test = current ? `${current} ${word}` : word;
-    if (test.length <= maxChars || !current) {
-      current = test;
-      continue;
-    }
-    lines.push(current);
-    current = word;
-    if (lines.length === maxLines - 1) break;
-  }
-  if (current && lines.length < maxLines) lines.push(current);
-  return lines;
-}
-
-function textBlock(lines, x, y, size, weight = 700, fill = colors.ink, lineHeight = size * 1.18) {
-  return lines
-    .map((line, index) => {
-      const escaped = escapeXml(line);
-      return `<text x="${x}" y="${y + index * lineHeight}" fill="${fill}" font-family="Arial, sans-serif" font-size="${size}" font-weight="${weight}">${escaped}</text>`;
-    })
-    .join("");
-}
-
-function pill(label, x, y, options = {}) {
-  const width = options.width ?? Math.max(118, label.length * 8.5 + 34);
-  const fill = options.fill ?? "#ffffff";
-  const stroke = options.stroke ?? "#cbd5e1";
-  const textFill = options.textFill ?? colors.ink;
-  const iconKey = options.logo;
-  const icon = logoDataUri(iconKey);
-  const hasIcon = Boolean(icon);
-  const wideLogo = iconKey === "vk" || iconKey === "avito";
-  const iconWidth = wideLogo ? 58 : 28;
-  const iconHeight = wideLogo ? 22 : 28;
-  const iconMarkup = hasIcon
-    ? `<image href="${icon}" x="${x + 13}" y="${y + (50 - iconHeight) / 2}" width="${iconWidth}" height="${iconHeight}" preserveAspectRatio="xMidYMid meet" />`
-    : "";
-  const textX = hasIcon ? x + (wideLogo ? 82 : 50) : x + 18;
-  return `
-    <g>
-      <rect x="${x}" y="${y}" width="${width}" height="50" rx="18" fill="${fill}" stroke="${stroke}" />
-      ${iconMarkup}
-      <text x="${textX}" y="${y + 31}" fill="${textFill}" font-family="Arial, sans-serif" font-size="17" font-weight="700">${escapeXml(label)}</text>
-    </g>`;
-}
-
-function smallMetric(label, value, x, y, tone = "blue") {
-  const fill = tone === "green" ? colors.softGreen : colors.softBlue;
-  const accent = tone === "green" ? "#168a61" : "#0878ad";
-  return `
-    <g>
-      <rect x="${x}" y="${y}" width="158" height="86" rx="22" fill="${fill}" stroke="#bfdbfe" />
-      <text x="${x + 20}" y="${y + 32}" fill="${accent}" font-family="Arial, sans-serif" font-size="24" font-weight="800">${escapeXml(value)}</text>
-      <text x="${x + 20}" y="${y + 58}" fill="${colors.muted}" font-family="Arial, sans-serif" font-size="14" font-weight="600">${escapeXml(label)}</text>
-    </g>`;
-}
-
-function flowCard(title, subtitle, x, y, index, tone = "blue") {
-  const accent = tone === "green" ? colors.green : colors.blue;
-  return `
-    <g>
-      <rect x="${x}" y="${y}" width="366" height="78" rx="22" fill="#ffffff" stroke="#dbeafe" />
-      <circle cx="${x + 38}" cy="${y + 39}" r="21" fill="${accent}" />
-      <text x="${x + 32}" y="${y + 47}" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="800">${index}</text>
-      <text x="${x + 72}" y="${y + 32}" fill="${colors.ink}" font-family="Arial, sans-serif" font-size="18" font-weight="800">${escapeXml(title)}</text>
-      <text x="${x + 72}" y="${y + 56}" fill="${colors.muted}" font-family="Arial, sans-serif" font-size="14" font-weight="600">${escapeXml(subtitle)}</text>
-    </g>`;
-}
-
 function background(width, height) {
   const rows = [];
   for (let x = 0; x <= width; x += 60) {
@@ -164,32 +93,83 @@ function background(width, height) {
     <circle cx="54" cy="${height - 48}" r="132" fill="#e0f2fe" opacity="0.52" />`;
 }
 
-function conciseSubtitle(item) {
-  if (item.shortSubtitle) return item.shortSubtitle;
-  const steps = (item.flow || [])
-    .slice(0, 3)
-    .map((step) => step[0])
-    .join(", ");
-  return `Маршрут: ${steps}.`;
-}
-
-function compactGeo(geo) {
-  if (!geo) return "Тюмень";
-  if (geo.includes("Тюмень")) return "Тюмень";
-  if (geo.includes("РФ")) return "РФ";
-  return geo;
-}
-
 function renderServiceSvg(item) {
-  const titleLines = wrapWords(item.title, 18, 3);
-  const subtitleLines = wrapWords(conciseSubtitle(item), 38, 3);
-  const brandPills = item.brands
-    .map((brand, index) => pill(brand.label, 660 + index * 162, 94, { logo: brand.logo, width: brand.width ?? 146, stroke: brand.stroke ?? "#cbd5e1" }))
+  const slug = item.slug || "";
+  const logos = (item.brands || [])
+    .filter((brand) => brand.logo)
+    .slice(0, 3)
+    .map((brand, index) => logoDisc(brand.logo, 96 + index * 102, 104 + (index % 2) * 34, 76))
     .join("");
-  const flows = item.flow
-    .slice(0, 4)
-    .map((step, index) => flowCard(step[0], step[1], 668, 208 + index * 92, index + 1, index % 2 ? "green" : "blue"))
-    .join("");
+
+  const channelLogos = logos || `
+    <circle cx="134" cy="142" r="38" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+    <circle cx="234" cy="176" r="38" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+    <circle cx="334" cy="142" r="38" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+  `;
+
+  let scene = "";
+
+  if (slug.includes("yandex")) {
+    scene = `
+      ${logoDisc("yandexDirect", 118, 112, 92)}
+      ${browserPanel(150, 286, 286, 190, "blue")}
+      ${arrowLine(446, 380, 548, 380, "green")}
+      ${growthPanel(562, 118, 286, 178)}
+      ${crmBoard(790, 332, 280, 218)}
+      ${arrowLine(706, 296, 790, 386)}
+    `;
+  } else if (slug.includes("telegram") || slug.includes("max") || slug.includes("chatbot") || slug.includes("auto")) {
+    scene = `
+      ${channelLogos}
+      ${phonePanel(184, 250, 150, 244)}
+      ${arrowLine(356, 374, 486, 374, "green")}
+      ${aiOrb(592, 374, 92)}
+      ${arrowLine(688, 374, 792, 374)}
+      ${crmBoard(812, 254, 276, 228)}
+    `;
+  } else if (slug.includes("website") || slug.includes("design") || slug.includes("copy") || slug.includes("offer") || slug.includes("branding")) {
+    scene = `
+      ${browserPanel(116, 168, 330, 228, "blue")}
+      ${phonePanel(498, 238, 138, 224)}
+      ${arrowLine(654, 348, 760, 348, "green")}
+      ${crmBoard(782, 198, 278, 230)}
+      ${growthPanel(778, 464, 282, 126)}
+    `;
+  } else if (slug.includes("analytics") || slug.includes("ab-testing") || slug.includes("marketing")) {
+    scene = `
+      ${browserPanel(112, 182, 296, 196, "green")}
+      ${growthPanel(456, 116, 300, 198)}
+      ${arrowLine(610, 314, 702, 402, "green")}
+      ${crmBoard(736, 348, 304, 214)}
+      <path d="M190 512 C314 462 404 552 526 492" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" opacity="0.28" />
+    `;
+  } else if (slug.includes("crm") || slug.includes("n8n") || slug.includes("openclaw") || slug.includes("ai")) {
+    scene = `
+      ${browserPanel(112, 292, 244, 158, "blue")}
+      ${arrowLine(370, 372, 498, 372, "green")}
+      ${aiOrb(610, 372, 104)}
+      ${arrowLine(718, 372, 812, 372)}
+      ${crmBoard(832, 236, 284, 246)}
+    `;
+  } else if (slug.includes("avito") || slug.includes("vk")) {
+    scene = `
+      ${channelLogos}
+      ${browserPanel(156, 266, 276, 188, "green")}
+      ${arrowLine(444, 360, 548, 360, "green")}
+      ${phonePanel(578, 238, 136, 224)}
+      ${arrowLine(732, 360, 822, 360)}
+      ${crmBoard(842, 250, 250, 218)}
+    `;
+  } else {
+    scene = `
+      ${channelLogos}
+      ${browserPanel(118, 286, 254, 168, "blue")}
+      ${arrowLine(388, 370, 500, 370, "green")}
+      ${aiOrb(608, 370, 94)}
+      ${arrowLine(708, 370, 812, 370)}
+      ${crmBoard(832, 242, 276, 236)}
+    `;
+  }
 
   return `<!doctype html>
   <html><head><meta charset="utf-8"><style>body{margin:0}</style></head>
@@ -198,38 +178,19 @@ function renderServiceSvg(item) {
     ${background(WIDTH, HEIGHT)}
     <rect x="54" y="54" width="1092" height="522" rx="42" fill="#ffffff" opacity="0.86" filter="url(#shadow)" />
     <rect x="54" y="54" width="1092" height="522" rx="42" fill="none" stroke="#dbeafe" />
-    <rect x="86" y="88" width="124" height="34" rx="17" fill="#eff6ff" />
-    <text x="104" y="111" fill="${colors.blue}" font-family="Arial, sans-serif" font-size="15" font-weight="800">CentrLP · Тюмень</text>
-    <text x="86" y="166" fill="${colors.green}" font-family="Arial, sans-serif" font-size="19" font-weight="800">${escapeXml(item.kicker)}</text>
-    ${textBlock(titleLines, 86, 224, 40, 800, colors.ink, 46)}
-    ${textBlock(subtitleLines, 88, 224 + titleLines.length * 46 + 24, 20, 600, colors.muted, 29)}
-    <g transform="translate(86 470)">
-      ${smallMetric(item.metricLabel ?? "маршрут", item.metricValue ?? "заявка", 0, 0, "blue")}
-      ${smallMetric("гео", compactGeo(item.geo ?? "Тюмень"), 176, 0, "green")}
-      ${smallMetric("результат", item.result ?? "лиды", 352, 0, "blue")}
-    </g>
-    <rect x="636" y="64" width="484" height="498" rx="34" fill="#f8fafc" stroke="#e2e8f0" />
-    ${brandPills}
-    <text x="668" y="178" fill="${colors.ink}" font-family="Arial, sans-serif" font-size="25" font-weight="800">${escapeXml(item.diagramTitle)}</text>
-    ${flows}
-    <g opacity="0.9">
-      <path d="M668 564 C770 520 860 604 1086 540" fill="none" stroke="url(#brand)" stroke-width="8" stroke-linecap="round" opacity="0.35" />
-      <circle cx="1086" cy="540" r="12" fill="${colors.green}" />
-      <circle cx="668" cy="564" r="12" fill="${colors.blue}" />
-    </g>
+    ${scene}
+    <path d="M102 532 C254 474 382 560 528 514 C684 466 774 510 944 532" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" opacity="0.25" />
   </svg>
   </body></html>`;
 }
 
 function renderBlogSvg(post) {
-  const titleLines = wrapWords(post.title, 22, 4);
   const brands = detectBrands(`${post.title} ${post.description} ${(post.tags || []).join(" ")}`);
   const brandMarkup = brands
+    .filter((brand) => brand.logo)
     .slice(0, 3)
-    .map((brand, index) => pill(brand.label, 714 + index * 142, 126, { logo: brand.logo, width: brand.width ?? 128 }))
+    .map((brand, index) => logoDisc(brand.logo, 116 + index * 94, 112 + (index % 2) * 30, 72))
     .join("");
-  const topic = classifyTopic(post);
-  const descLines = wrapWords(`Маршрут: ${topic.steps[0][0]}, ${topic.steps[1][0]}.`, 58, 2);
   return `<!doctype html>
   <html><head><meta charset="utf-8"><style>body{margin:0}</style></head>
   <body>
@@ -237,19 +198,13 @@ function renderBlogSvg(post) {
     ${background(WIDTH, HEIGHT)}
     <rect x="54" y="54" width="1092" height="522" rx="42" fill="#ffffff" opacity="0.88" filter="url(#shadow)" />
     <rect x="54" y="54" width="1092" height="522" rx="42" fill="none" stroke="#dbeafe" />
-    <text x="86" y="112" fill="${colors.blue}" font-family="Arial, sans-serif" font-size="18" font-weight="800">Блог CentrLP · ${escapeXml(topic.geo)}</text>
-    <text x="86" y="166" fill="${colors.green}" font-family="Arial, sans-serif" font-size="19" font-weight="800">${escapeXml(topic.kicker)}</text>
-    ${textBlock(titleLines, 86, 226, 38, 800, colors.ink, 44)}
-    ${textBlock(descLines, 88, 226 + titleLines.length * 44 + 22, 20, 600, colors.muted, 28)}
-    <rect x="688" y="86" width="420" height="408" rx="34" fill="#f8fafc" stroke="#e2e8f0" />
-    ${brandMarkup || pill(topic.primary, 714, 126, { width: 176, fill: "#eff6ff", stroke: "#bfdbfe", textFill: "#0878ad" })}
-    <text x="714" y="234" fill="${colors.ink}" font-family="Arial, sans-serif" font-size="26" font-weight="800">${escapeXml(topic.diagram)}</text>
-    ${flowCard(topic.steps[0][0], topic.steps[0][1], 714, 270, 1, "blue")}
-    ${flowCard(topic.steps[1][0], topic.steps[1][1], 714, 362, 2, "green")}
-    ${smallMetric("читателю", topic.metric, 86, 470, "blue")}
-    ${smallMetric("гео", compactGeo(topic.geo), 264, 470, "green")}
-    ${smallMetric("формат", "гайд", 442, 470, "blue")}
-    <path d="M714 486 C792 454 906 522 1086 470" fill="none" stroke="url(#brand)" stroke-width="8" stroke-linecap="round" opacity="0.32" />
+    ${brandMarkup}
+    ${browserPanel(116, 236, 294, 202, "blue")}
+    ${phonePanel(466, 192, 142, 232)}
+    ${arrowLine(622, 312, 730, 312, "green")}
+    ${aiOrb(822, 312, 92)}
+    ${crmBoard(790, 420, 294, 120)}
+    <path d="M190 512 C330 454 472 550 624 500 C742 462 846 500 1014 464" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" opacity="0.28" />
   </svg>
   </body></html>`;
 }
@@ -257,11 +212,49 @@ function renderBlogSvg(post) {
 function renderHomeSvg(item) {
   const width = HOME_WIDTH;
   const height = HOME_HEIGHT;
-  const titleLines = wrapWords(item.title, 18, 3);
-  const descLines = wrapWords(item.subtitle, 40, 3);
-  const brandPills = item.brands
-    .map((brand, index) => pill(brand.label, 72 + index * 166, 500, { logo: brand.logo, width: brand.width ?? 146 }))
+  const key = path.basename(item.out, ".png");
+  const brandDiscs = (item.brands || [])
+    .filter((brand) => brand.logo)
+    .slice(0, 3)
+    .map((brand, index) => logoDisc(brand.logo, 92 + index * 96, 92 + (index % 2) * 26, 76))
     .join("");
+
+  let scene = "";
+
+  if (key === "digital-products") {
+    scene = `
+      ${brandDiscs}
+      ${phonePanel(172, 250, 146, 240)}
+      ${browserPanel(376, 178, 300, 210, "green")}
+      ${arrowLine(684, 292, 798, 292, "green")}
+      ${crmBoard(820, 206, 286, 228)}
+    `;
+  } else if (key === "ai-systems") {
+    scene = `
+      ${browserPanel(116, 278, 272, 178, "blue")}
+      ${arrowLine(402, 364, 508, 364, "green")}
+      ${aiOrb(624, 364, 110)}
+      ${arrowLine(738, 364, 838, 364)}
+      ${crmBoard(858, 244, 264, 230)}
+    `;
+  } else if (key === "team-tools") {
+    scene = `
+      ${browserPanel(116, 164, 326, 220, "blue")}
+      ${stageCluster(498, 178, 0.84, "green")}
+      ${arrowLine(704, 324, 812, 324, "green")}
+      ${crmBoard(834, 224, 266, 232)}
+    `;
+  } else {
+    scene = `
+      ${brandDiscs}
+      ${phonePanel(198, 250, 142, 232)}
+      ${arrowLine(360, 364, 500, 364, "green")}
+      ${browserPanel(528, 206, 274, 192, "blue")}
+      ${arrowLine(814, 304, 906, 304)}
+      ${crmBoard(920, 210, 226, 210)}
+    `;
+  }
+
   return `<!doctype html>
   <html><head><meta charset="utf-8"><style>body{margin:0}</style></head>
   <body>
@@ -269,67 +262,302 @@ function renderHomeSvg(item) {
     ${background(width, height)}
     <rect x="52" y="52" width="1096" height="571" rx="44" fill="#ffffff" opacity="0.86" filter="url(#shadow)" />
     <rect x="52" y="52" width="1096" height="571" rx="44" fill="none" stroke="#dbeafe" />
-    <text x="72" y="112" fill="${colors.blue}" font-family="Arial, sans-serif" font-size="18" font-weight="800">${escapeXml(item.kicker ?? "CentrLP · цифровые продукты")}</text>
-    ${textBlock(titleLines, 72, 182, 46, 800, colors.ink, 54)}
-    ${textBlock(descLines, 74, 182 + titleLines.length * 54 + 28, 23, 600, colors.muted, 32)}
-    ${brandPills}
-    <g transform="translate(720 118)">
-      <rect x="0" y="0" width="396" height="390" rx="34" fill="#f8fafc" stroke="#dbeafe" />
-      <rect x="36" y="38" width="324" height="74" rx="24" fill="#ffffff" stroke="#dbeafe" />
-      <rect x="60" y="62" width="90" height="14" rx="7" fill="${colors.blue}" opacity="0.72" />
-      <rect x="60" y="86" width="226" height="10" rx="5" fill="#cbd5e1" />
-      <rect x="36" y="142" width="324" height="74" rx="24" fill="#ffffff" stroke="#dbeafe" />
-      <rect x="60" y="166" width="124" height="14" rx="7" fill="${colors.green}" opacity="0.72" />
-      <rect x="60" y="190" width="250" height="10" rx="5" fill="#cbd5e1" />
-      <rect x="36" y="246" width="324" height="98" rx="24" fill="#ffffff" stroke="#dbeafe" />
-      <path d="M74 304 L126 278 L178 300 L230 250 L306 288" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
-      <circle cx="306" cy="288" r="14" fill="${colors.green}" />
-    </g>
+    ${scene}
+    <path d="M116 560 C280 502 424 590 586 532 C744 476 852 538 1058 502" fill="none" stroke="url(#brand)" stroke-width="11" stroke-linecap="round" opacity="0.24" />
   </svg>
   </body></html>`;
 }
 
-const squareCopyOverrides = new Map([
-  ["sto-barter-loop.png", {
-    title: "Бартер со СТО",
-    subtitle: "Смета авторабот, пакет CentrLP, запуск и контроль заявок.",
-  }],
-  ["sto-offer-stack.png", {
-    title: "Пакет для СТО",
-    subtitle: "Лендинг, VK, квиз, реклама, Метрика и FAQ под автоуслугу.",
-  }],
-  ["sto-lead-path.png", {
-    title: "Маршрут заявки",
-    subtitle: "Поиск или VK ведут на страницу, форму, фото и запись.",
-  }],
-  ["sto-service-grid.png", {
-    title: "Подходящие автоуслуги",
-    subtitle: "Работает там, где есть смета, сроки и фото результата.",
-  }],
-  ["sto-fit-check.png", {
-    title: "Fit-check",
-    subtitle: "Чек от 30 000 ₽, прозрачная смета и быстрый ответ.",
-  }],
-]);
+function arrowLine(x1, y1, x2, y2, tone = "blue") {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+  const size = 14;
+  const p1 = `${x2},${y2}`;
+  const p2 = `${x2 - size * Math.cos(angle - 0.45)},${y2 - size * Math.sin(angle - 0.45)}`;
+  const p3 = `${x2 - size * Math.cos(angle + 0.45)},${y2 - size * Math.sin(angle + 0.45)}`;
+  return `
+    <g>
+      <path d="M${x1} ${y1} L${x2} ${y2}" fill="none" stroke="${accent}" stroke-width="7" stroke-linecap="round" opacity="0.72" />
+      <polygon points="${p1} ${p2} ${p3}" fill="${accent}" opacity="0.72" />
+    </g>`;
+}
+
+function logoDisc(key, x, y, size = 78) {
+  const icon = logoDataUri(key);
+  const radius = size / 2;
+  return `
+    <g>
+      <circle cx="${x + radius}" cy="${y + radius}" r="${radius}" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      ${icon ? `<image href="${icon}" x="${x + size * 0.21}" y="${y + size * 0.21}" width="${size * 0.58}" height="${size * 0.58}" preserveAspectRatio="xMidYMid meet" />` : ""}
+    </g>`;
+}
+
+function browserPanel(x, y, w = 252, h = 178, tone = "blue") {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="28" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      <rect x="${x}" y="${y}" width="${w}" height="42" rx="28" fill="#eff6ff" />
+      <circle cx="${x + 28}" cy="${y + 21}" r="6" fill="${colors.blue}" opacity="0.72" />
+      <circle cx="${x + 50}" cy="${y + 21}" r="6" fill="${colors.green}" opacity="0.72" />
+      <rect x="${x + 26}" y="${y + 66}" width="${w - 52}" height="18" rx="9" fill="${accent}" opacity="0.7" />
+      <rect x="${x + 26}" y="${y + 102}" width="${w - 96}" height="12" rx="6" fill="#cbd5e1" />
+      <rect x="${x + 26}" y="${y + 132}" width="${w - 132}" height="20" rx="10" fill="${colors.green}" opacity="0.78" />
+    </g>`;
+}
+
+function phonePanel(x, y, w = 138, h = 238) {
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="34" fill="#0f172a" filter="url(#shadow)" />
+      <rect x="${x + 12}" y="${y + 18}" width="${w - 24}" height="${h - 36}" rx="24" fill="#f8fafc" />
+      <rect x="${x + 34}" y="${y + 48}" width="${w - 68}" height="16" rx="8" fill="${colors.blue}" opacity="0.78" />
+      <rect x="${x + 28}" y="${y + 88}" width="${w - 56}" height="48" rx="18" fill="#dbeafe" />
+      <rect x="${x + 28}" y="${y + 152}" width="${w - 56}" height="48" rx="18" fill="#dcfce7" />
+    </g>`;
+}
+
+function aiOrb(x, y, r = 86) {
+  return `
+    <g>
+      <circle cx="${x}" cy="${y}" r="${r}" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      <circle cx="${x}" cy="${y}" r="${r * 0.54}" fill="url(#brand)" opacity="0.88" />
+      <circle cx="${x - 34}" cy="${y - 28}" r="13" fill="#ffffff" opacity="0.95" />
+      <circle cx="${x + 38}" cy="${y - 18}" r="12" fill="#ffffff" opacity="0.95" />
+      <circle cx="${x + 8}" cy="${y + 42}" r="12" fill="#ffffff" opacity="0.95" />
+      <path d="M${x - 34} ${y - 28} L${x + 38} ${y - 18} L${x + 8} ${y + 42} L${x - 34} ${y - 28}" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.74" />
+    </g>`;
+}
+
+function crmBoard(x, y, w = 284, h = 244) {
+  const colW = (w - 64) / 3;
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="32" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      ${[0, 1, 2].map((col) => `
+        <rect x="${x + 24 + col * (colW + 8)}" y="${y + 32}" width="${colW}" height="${h - 64}" rx="18" fill="${col % 2 ? "#ecfdf5" : "#eff6ff"}" />
+        <rect x="${x + 36 + col * (colW + 8)}" y="${y + 58}" width="${colW - 24}" height="28" rx="12" fill="#ffffff" stroke="#dbeafe" />
+        <rect x="${x + 36 + col * (colW + 8)}" y="${y + 104}" width="${colW - 24}" height="42" rx="14" fill="#ffffff" stroke="#dbeafe" />
+        <rect x="${x + 36 + col * (colW + 8)}" y="${y + 162}" width="${colW - 24}" height="28" rx="12" fill="${col % 2 ? colors.green : colors.blue}" opacity="0.62" />
+      `).join("")}
+    </g>`;
+}
+
+function growthPanel(x, y, w = 262, h = 186) {
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="30" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      <path d="M${x + 38} ${y + 132} L${x + 82} ${y + 96} L${x + 126} ${y + 112} L${x + 174} ${y + 64} L${x + 224} ${y + 78}" fill="none" stroke="url(#brand)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="${x + 224}" cy="${y + 78}" r="16" fill="${colors.green}" />
+      <rect x="${x + 40}" y="${y + 42}" width="54" height="14" rx="7" fill="${colors.blue}" opacity="0.56" />
+      <rect x="${x + 112}" y="${y + 42}" width="92" height="14" rx="7" fill="#cbd5e1" />
+    </g>`;
+}
+
+function stageCluster(x, y, scale = 1, tone = "blue") {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  return `
+    <g transform="translate(${x} ${y}) scale(${scale})">
+      <rect x="0" y="0" width="254" height="292" rx="34" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      <circle cx="68" cy="70" r="34" fill="${accent}" opacity="0.16" />
+      <path d="M54 72 L66 84 L88 54" fill="none" stroke="${accent}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <rect x="36" y="126" width="182" height="32" rx="16" fill="#eff6ff" />
+      <rect x="36" y="178" width="132" height="24" rx="12" fill="#dcfce7" />
+      <rect x="36" y="226" width="168" height="24" rx="12" fill="#e2e8f0" />
+    </g>`;
+}
+
+function rocketIcon(x, y, scale = 1) {
+  return `
+    <g transform="translate(${x} ${y}) scale(${scale})">
+      <path d="M78 10 C122 24 146 70 132 124 L92 84 L52 124 C38 70 52 24 78 10Z" fill="url(#brand)" opacity="0.9" />
+      <circle cx="86" cy="58" r="18" fill="#ffffff" opacity="0.92" />
+      <path d="M58 128 C46 152 42 172 44 196 C66 186 82 172 94 148Z" fill="${colors.blue}" opacity="0.64" />
+      <path d="M122 128 C150 144 166 160 176 182 C146 184 124 176 104 148Z" fill="${colors.green}" opacity="0.64" />
+      <path d="M86 154 C70 184 72 210 86 238 C102 210 104 184 86 154Z" fill="#f59e0b" opacity="0.86" />
+    </g>`;
+}
+
+function industryIcon(type, x, y, tone = "blue") {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  const common = `<rect x="${x}" y="${y}" width="132" height="132" rx="32" fill="#ffffff" stroke="#dbeafe" />`;
+  const icons = {
+    wrench: `<path d="M${x + 38} ${y + 90} L${x + 86} ${y + 42}" stroke="${accent}" stroke-width="12" stroke-linecap="round" /><circle cx="${x + 92}" cy="${y + 36}" r="18" fill="none" stroke="${accent}" stroke-width="10" />`,
+    travel: `<rect x="${x + 36}" y="${y + 54}" width="60" height="48" rx="12" fill="${accent}" opacity="0.78" /><path d="M${x + 52} ${y + 54} V${y + 42} H${x + 80} V${y + 54}" fill="none" stroke="${accent}" stroke-width="9" stroke-linecap="round" />`,
+    furniture: `<path d="M${x + 34} ${y + 78} H${x + 98} V${y + 104} H${x + 34} Z" fill="${accent}" opacity="0.78" /><path d="M${x + 42} ${y + 78} V${y + 48} H${x + 90} V${y + 78}" fill="none" stroke="${accent}" stroke-width="11" stroke-linejoin="round" />`,
+    cleaning: `<path d="M${x + 60} ${y + 34} H${x + 86} L${x + 96} ${y + 100} H${x + 48} Z" fill="${accent}" opacity="0.72" /><circle cx="${x + 40}" cy="${y + 54}" r="8" fill="${colors.green}" /><circle cx="${x + 30}" cy="${y + 78}" r="6" fill="${colors.blue}" />`,
+    b2b: `<rect x="${x + 34}" y="${y + 50}" width="64" height="54" rx="8" fill="${accent}" opacity="0.76" /><path d="M${x + 44} ${y + 50} V${y + 34} H${x + 88} V${y + 50}" fill="none" stroke="${accent}" stroke-width="9" stroke-linejoin="round" /><path d="M${x + 48} ${y + 66} H${x + 84} M${x + 48} ${y + 82} H${x + 84}" stroke="#ffffff" stroke-width="6" stroke-linecap="round" />`,
+    study: `<path d="M${x + 24} ${y + 58} L${x + 66} ${y + 36} L${x + 108} ${y + 58} L${x + 66} ${y + 80} Z" fill="${accent}" opacity="0.78" /><path d="M${x + 44} ${y + 76} V${y + 98} C${x + 58} ${y + 108} ${x + 76} ${y + 108} ${x + 90} ${y + 98} V${y + 76}" fill="none" stroke="${accent}" stroke-width="9" stroke-linecap="round" />`,
+  };
+  return `<g>${common}${icons[type] ?? icons.b2b}</g>`;
+}
+
+function renderServiceOverviewSvg(item) {
+  const width = SERVICE_OVERVIEW_WIDTH;
+  const height = SERVICE_OVERVIEW_HEIGHT;
+  const header = `
+    <rect x="52" y="52" width="1096" height="796" rx="46" fill="#ffffff" opacity="0.9" filter="url(#shadow)" />
+    <rect x="52" y="52" width="1096" height="796" rx="46" fill="none" stroke="#dbeafe" />
+    <circle cx="1100" cy="96" r="118" fill="${colors.softBlue}" opacity="0.82" />
+    <circle cx="100" cy="804" r="128" fill="${colors.softGreen}" opacity="0.68" />
+  `;
+
+  let body = "";
+
+  if (item.variant === "product-stack") {
+    body = `
+      <g transform="translate(100 142)">
+        ${logoDisc("telegram", 0, 34, 88)}
+        ${logoDisc("max", 110, 0, 88)}
+        ${browserPanel(0, 158, 238, 164, "green")}
+        ${phonePanel(276, 92, 132, 226)}
+      </g>
+      ${arrowLine(470, 392, 560, 392, "green")}
+      ${aiOrb(642, 392, 94)}
+      ${arrowLine(736, 392, 820, 392)}
+      ${crmBoard(836, 270, 260, 236)}
+      ${growthPanel(820, 554, 276, 184)}
+      <path d="M924 506 C902 536 888 552 872 568" fill="none" stroke="${colors.green}" stroke-width="7" stroke-linecap="round" opacity="0.55" />
+      <path d="M174 724 C302 660 408 766 540 704 C642 656 696 676 800 724" fill="none" stroke="url(#brand)" stroke-width="12" stroke-linecap="round" opacity="0.28" />
+    `;
+  }
+
+  if (item.variant === "launch-bundles") {
+    body = `
+      <g transform="translate(92 230)">
+        ${stageCluster(0, 74, 0.86, "blue")}
+        <circle cx="114" cy="44" r="36" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+        <path d="M96 44 H132 M114 26 V62" stroke="${colors.blue}" stroke-width="12" stroke-linecap="round" opacity="0.72" />
+      </g>
+      ${arrowLine(342, 456, 430, 456, "green")}
+      <g transform="translate(430 168)">
+        ${stageCluster(0, 104, 1.03, "green")}
+        ${rocketIcon(62, 0, 0.78)}
+      </g>
+      ${arrowLine(704, 456, 804, 456)}
+      <g transform="translate(804 128)">
+        <rect x="0" y="118" width="286" height="384" rx="38" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+        ${logoDisc("yandexDirect", 26, 28, 74)}
+        ${logoDisc("vk", 112, 0, 74)}
+        ${logoDisc("telegram", 198, 28, 74)}
+        ${crmBoard(30, 158, 226, 194)}
+        ${growthPanel(30, 378, 226, 104)}
+      </g>
+    `;
+  }
+
+  if (item.variant === "industry-map") {
+    body = `
+      <g>
+        <rect x="98" y="146" width="604" height="604" rx="48" fill="#f8fafc" stroke="#dbeafe" />
+        ${Array.from({ length: 7 }, (_, index) => `<path d="M${140 + index * 78} 166 L${220 + index * 78} 730" stroke="#dbeafe" stroke-width="4" opacity="0.72" />`).join("")}
+        ${Array.from({ length: 6 }, (_, index) => `<path d="M122 ${220 + index * 86} L676 ${178 + index * 86}" stroke="#dbeafe" stroke-width="4" opacity="0.72" />`).join("")}
+        ${industryIcon("wrench", 156, 204, "blue")}
+        ${industryIcon("travel", 370, 168, "green")}
+        ${industryIcon("furniture", 512, 336, "blue")}
+        ${industryIcon("cleaning", 188, 474, "green")}
+        ${industryIcon("b2b", 386, 548, "blue")}
+        ${industryIcon("study", 536, 600, "green")}
+        <path d="M458 448 C520 392 576 392 636 434" fill="none" stroke="url(#brand)" stroke-width="12" stroke-linecap="round" opacity="0.38" />
+        <circle cx="458" cy="448" r="16" fill="${colors.blue}" />
+        <circle cx="636" cy="434" r="16" fill="${colors.green}" />
+      </g>
+      ${arrowLine(704, 448, 786, 448, "green")}
+      <g transform="translate(786 196)">
+        ${browserPanel(0, 0, 286, 196, "blue")}
+        ${crmBoard(0, 236, 286, 236)}
+        ${growthPanel(0, 514, 286, 144)}
+      </g>
+    `;
+  }
+
+  return `<!doctype html>
+  <html><head><meta charset="utf-8"><style>body{margin:0}</style></head>
+  <body>
+  <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+    ${background(width, height)}
+    ${header}
+    ${body}
+  </svg>
+  </body></html>`;
+}
+
+function carVisual(x, y, scale = 1, color = colors.blue) {
+  return `
+    <g transform="translate(${x} ${y}) scale(${scale})">
+      <path d="M54 118 C78 70 120 50 178 56 L244 82 C286 80 330 94 360 126 L384 168 H34 Z" fill="none" stroke="${color}" stroke-width="14" stroke-linejoin="round" />
+      <circle cx="122" cy="168" r="34" fill="none" stroke="${colors.green}" stroke-width="13" />
+      <circle cx="300" cy="168" r="34" fill="none" stroke="${colors.green}" stroke-width="13" />
+      <path d="M172 60 L192 116 M236 80 L224 124" stroke="${color}" stroke-width="10" stroke-linecap="round" opacity="0.7" />
+    </g>`;
+}
+
+function crossMark(x, y, size = 74) {
+  return `
+    <g>
+      <circle cx="${x + size / 2}" cy="${y + size / 2}" r="${size / 2}" fill="#fee2e2" stroke="#fecaca" />
+      <path d="M${x + 24} ${y + 24} L${x + size - 24} ${y + size - 24} M${x + size - 24} ${y + 24} L${x + 24} ${y + size - 24}" stroke="#ef4444" stroke-width="9" stroke-linecap="round" />
+    </g>`;
+}
 
 function renderSquareSvg(item) {
   const width = 1024;
   const height = 1024;
-  const copy = squareCopyOverrides.get(path.basename(item.out)) ?? item;
-  const titleLines = wrapWords(copy.title, 18, 2);
-  const descLines = wrapWords(copy.subtitle, 31, 3);
-  const chips = item.chips
-    .slice(0, 6)
-    .map((chip, index) => {
-      const x = 82 + (index % 2) * 420;
-      const y = 646 + Math.floor(index / 2) * 92;
-      return pill(chip, x, y, { width: 340, fill: index % 2 ? colors.softGreen : colors.softBlue, stroke: "#bfdbfe" });
-    })
-    .join("");
-  const steps = item.steps
-    .slice(0, 4)
-    .map((step, index) => flowCard(step[0], step[1], 552, 174 + index * 104, index + 1, index % 2 ? "green" : "blue"))
-    .join("");
+  const file = path.basename(item.out);
+  let scene = "";
+
+  if (file.includes("barter-loop")) {
+    scene = `
+      ${carVisual(116, 174, 1.28)}
+      ${arrowLine(484, 406, 604, 406, "green")}
+      ${browserPanel(624, 236, 270, 184, "green")}
+      ${crmBoard(626, 482, 268, 218)}
+      <path d="M274 728 C394 676 478 742 590 704 C694 668 760 692 878 650" fill="none" stroke="url(#brand)" stroke-width="12" stroke-linecap="round" opacity="0.3" />
+    `;
+  } else if (file.includes("offer-stack")) {
+    scene = `
+      ${browserPanel(116, 166, 320, 216, "blue")}
+      ${phonePanel(484, 206, 142, 232)}
+      ${logoDisc("vk", 674, 142, 84)}
+      ${logoDisc("yandexDirect", 778, 182, 84)}
+      ${arrowLine(612, 438, 704, 512, "green")}
+      ${crmBoard(636, 548, 278, 224)}
+    `;
+  } else if (file.includes("lead-path")) {
+    scene = `
+      ${logoDisc("yandexDirect", 126, 142, 86)}
+      ${logoDisc("vk", 238, 112, 86)}
+      ${browserPanel(124, 304, 294, 198, "blue")}
+      ${arrowLine(430, 400, 532, 400, "green")}
+      ${phonePanel(558, 274, 146, 240)}
+      ${arrowLine(724, 400, 814, 400)}
+      ${crmBoard(644, 582, 286, 218)}
+    `;
+  } else if (file.includes("service-grid")) {
+    scene = `
+      ${carVisual(272, 94, 1.06)}
+      ${industryIcon("wrench", 132, 468, "blue")}
+      ${industryIcon("cleaning", 328, 506, "green")}
+      ${industryIcon("b2b", 524, 468, "blue")}
+      ${industryIcon("furniture", 720, 506, "green")}
+      <path d="M204 424 C338 374 496 438 634 390 C720 362 778 374 860 342" fill="none" stroke="url(#brand)" stroke-width="11" stroke-linecap="round" opacity="0.3" />
+    `;
+  } else {
+    scene = `
+      ${carVisual(122, 128, 1.04)}
+      <g transform="translate(130 520)">
+        <circle cx="78" cy="78" r="78" fill="#dcfce7" stroke="#bbf7d0" />
+        <path d="M42 82 L70 110 L118 50" fill="none" stroke="${colors.green}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <g transform="translate(378 520)">
+        <circle cx="78" cy="78" r="78" fill="#dcfce7" stroke="#bbf7d0" />
+        <path d="M42 82 L70 110 L118 50" fill="none" stroke="${colors.green}" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      ${crossMark(648, 520, 156)}
+      ${crmBoard(640, 190, 282, 228)}
+    `;
+  }
+
   return `<!doctype html>
   <html><head><meta charset="utf-8"><style>body{margin:0}</style></head>
   <body>
@@ -337,17 +565,10 @@ function renderSquareSvg(item) {
     ${background(width, height)}
     <rect x="52" y="52" width="920" height="920" rx="54" fill="#ffffff" opacity="0.88" filter="url(#shadow)" />
     <rect x="52" y="52" width="920" height="920" rx="54" fill="none" stroke="#dbeafe" />
-    <text x="82" y="122" fill="${colors.blue}" font-family="Arial, sans-serif" font-size="22" font-weight="800">CentrLP · бартер для СТО</text>
-    <text x="82" y="184" fill="${colors.green}" font-family="Arial, sans-serif" font-size="24" font-weight="800">${escapeXml(item.kicker)}</text>
-    ${textBlock(titleLines, 82, 254, 48, 800, colors.ink, 56)}
-    ${textBlock(descLines, 84, 254 + titleLines.length * 56 + 28, 24, 600, colors.muted, 34)}
-    <rect x="526" y="116" width="392" height="500" rx="40" fill="#f8fafc" stroke="#dbeafe" />
-    <text x="552" y="154" fill="${colors.ink}" font-family="Arial, sans-serif" font-size="25" font-weight="800">${escapeXml(item.diagramTitle)}</text>
-    ${steps}
-    ${chips}
-    <path d="M118 922 C260 872 452 950 892 858" fill="none" stroke="url(#brand)" stroke-width="12" stroke-linecap="round" opacity="0.34" />
-    <circle cx="118" cy="922" r="16" fill="${colors.blue}" />
-    <circle cx="892" cy="858" r="16" fill="${colors.green}" />
+    ${scene}
+    <path d="M118 884 C260 834 452 912 892 820" fill="none" stroke="url(#brand)" stroke-width="12" stroke-linecap="round" opacity="0.28" />
+    <circle cx="118" cy="884" r="16" fill="${colors.blue}" />
+    <circle cx="892" cy="820" r="16" fill="${colors.green}" />
   </svg>
   </body></html>`;
 }
@@ -381,23 +602,25 @@ function renderBarterHeroSvg() {
     <circle cx="448" cy="724" r="34" fill="#44B78B" opacity="0.8" />
     <circle cx="1018" cy="724" r="86" fill="none" stroke="#44B78B" stroke-width="14" opacity="0.86" />
     <circle cx="1018" cy="724" r="34" fill="#44B78B" opacity="0.8" />
-    <g transform="translate(180 146)">
-      <rect x="0" y="0" width="302" height="116" rx="28" fill="#ffffff" opacity="0.12" stroke="#6ee7b7" />
-      <text x="28" y="44" fill="#ffffff" font-family="Arial, sans-serif" font-size="25" font-weight="800">смета СТО</text>
-      <text x="28" y="80" fill="#b6d5e6" font-family="Arial, sans-serif" font-size="20" font-weight="700">работы, сроки, фото</text>
+    <g transform="translate(182 126)">
+      <rect x="0" y="0" width="300" height="190" rx="34" fill="#ffffff" opacity="0.12" stroke="#6ee7b7" />
+      <path d="M54 82 H236 M54 124 H188" stroke="#b6d5e6" stroke-width="18" stroke-linecap="round" />
+      <path d="M76 48 H184" stroke="#58d5ff" stroke-width="18" stroke-linecap="round" />
+      <circle cx="228" cy="132" r="24" fill="#44B78B" opacity="0.82" />
     </g>
-    <g transform="translate(614 106)">
-      <rect x="0" y="0" width="330" height="132" rx="30" fill="#ffffff" opacity="0.13" stroke="#38bdf8" />
-      <text x="28" y="50" fill="#ffffff" font-family="Arial, sans-serif" font-size="26" font-weight="800">пакет CentrLP</text>
-      <text x="28" y="88" fill="#b6d5e6" font-family="Arial, sans-serif" font-size="20" font-weight="700">лендинг, VK, квиз, реклама</text>
+    <g transform="translate(626 84)">
+      <rect x="0" y="0" width="292" height="230" rx="36" fill="#ffffff" opacity="0.13" stroke="#38bdf8" />
+      <rect x="42" y="44" width="208" height="48" rx="18" fill="#58d5ff" opacity="0.5" />
+      <rect x="42" y="116" width="156" height="34" rx="17" fill="#6ee7b7" opacity="0.55" />
+      <rect x="42" y="172" width="190" height="24" rx="12" fill="#b6d5e6" opacity="0.48" />
     </g>
-    <g transform="translate(1052 152)">
-      <rect x="0" y="0" width="298" height="116" rx="28" fill="#ffffff" opacity="0.12" stroke="#6ee7b7" />
-      <text x="28" y="44" fill="#ffffff" font-family="Arial, sans-serif" font-size="25" font-weight="800">заявки</text>
-      <text x="28" y="80" fill="#b6d5e6" font-family="Arial, sans-serif" font-size="20" font-weight="700">маршрут и контроль</text>
+    <g transform="translate(1056 130)">
+      <rect x="0" y="0" width="286" height="188" rx="34" fill="#ffffff" opacity="0.12" stroke="#6ee7b7" />
+      <path d="M52 132 L98 92 L146 118 L202 58 L236 76" fill="none" stroke="#58d5ff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="236" cy="76" r="20" fill="#44B78B" opacity="0.92" />
     </g>
-    <path d="M482 206 C538 174 560 174 614 178" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" />
-    <path d="M944 178 C996 174 1024 190 1052 214" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" />
+    <path d="M482 214 C538 174 570 172 626 178" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" />
+    <path d="M918 178 C982 170 1024 186 1056 214" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" />
   </svg>
   </body></html>`;
 }
@@ -943,24 +1166,24 @@ const homeVisuals = [
 const serviceOverviewVisuals = [
   {
     out: "public/images/services/services-product-stack.png",
+    variant: "product-stack",
     kicker: "CentrLP · продуктовая связка",
-    title: "Продуктовый стек",
-    subtitle: "Сайт, Mini App, CRM, аналитика и автоматизация складываются в один маршрут заявки.",
-    brands: [{ label: "Telegram", logo: "telegram", width: 150 }, { label: "MAX", logo: "max", width: 128 }, { label: "CRM", width: 118 }],
+    title: "Канал → AI → CRM → рост",
+    subtitle: "Клиент проходит понятный путь от мессенджера или сайта до результата, статуса и следующего действия.",
   },
   {
     out: "public/images/services/services-launch-bundles.png",
+    variant: "launch-bundles",
     kicker: "CentrLP · пакеты запуска",
-    title: "Сборки запуска",
-    subtitle: "Страница, квиз, реклама, чат и CRM запускаются как один понятный комплект.",
-    brands: [{ label: "Директ", logo: "yandexDirect", width: 140 }, { label: "VK", logo: "vk", width: 128 }, { label: "заявки", width: 118 }],
+    title: "Пилот → MVP → система",
+    subtitle: "Три формата старта: короткий тест, рабочий MVP и масштабируемая система под заявки.",
   },
   {
     out: "public/images/services/services-industry-map.png",
+    variant: "industry-map",
     kicker: "CentrLP · SEO-гео",
-    title: "Нишевые маршруты",
-    subtitle: "Тюмень, туризм, СТО, клининг, мебель и B2B получают разные сценарии заявки.",
-    brands: [{ label: "Тюмень", width: 132 }, { label: "B2B", width: 104 }, { label: "CRM", width: 118 }],
+    title: "SEO-гео + маршрут",
+    subtitle: "Для каждой ниши собирается свой путь от поискового запроса до заявки в CRM.",
   },
 ];
 
@@ -1078,8 +1301,7 @@ function readBlogPosts() {
     const title = parsed.data.title || raw.match(/^#\s+(.+)$/m)?.[1] || slug;
     const description = parsed.data.description || parsed.data.seoDescription || "";
     const tags = Array.isArray(parsed.data.tags) ? parsed.data.tags : [];
-    const prompt = `Редакционная SEO-обложка: ${title}. Контекст: ${description || tags.join(", ")}. Без AI-рендера, с гео и маршрутом действия.`;
-    return { slug, title, description, tags, prompt };
+    return { slug, title, description, tags };
   });
 }
 
@@ -1117,7 +1339,7 @@ async function main() {
     for (const item of serviceOverviewVisuals) {
       const out = path.join(ROOT, item.out);
       fs.mkdirSync(path.dirname(out), { recursive: true });
-      await renderHtml(browser, renderHomeSvg(item), out, HOME_WIDTH, HOME_HEIGHT);
+      await renderHtml(browser, renderServiceOverviewSvg(item), out, SERVICE_OVERVIEW_WIDTH, SERVICE_OVERVIEW_HEIGHT);
       console.log(`[context-visuals] services ${path.relative(ROOT, out)}`);
     }
 

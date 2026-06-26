@@ -624,11 +624,11 @@ const Services = () => {
                 transition={{ duration: 0.55, delay: index * 0.08 }}
               >
                 <Card className="h-full overflow-hidden rounded-[30px] border border-white/70 bg-white/90 shadow-[0_22px_80px_-38px_rgba(0,150,214,0.34)]">
-                  <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-950">
+                  <div className="relative aspect-[4/3] overflow-hidden border-b border-slate-100 bg-slate-50">
                     <img
                       src={item.image}
                       alt={item.alt}
-                      className="absolute inset-0 h-full w-full object-cover"
+                      className="absolute inset-0 h-full w-full object-contain"
                       loading="lazy"
                       decoding="async"
                     />
