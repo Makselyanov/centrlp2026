@@ -1,5 +1,4 @@
 import { Layout } from "@/components/Layout";
-import { ContextVisual } from "@/components/ContextVisual";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +16,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { ContactForm } from "@/components/ContactForm";
+import heroBackground from "@/assets/barter-sto-hero.png";
 import vkAnalytics from "@/assets/vk-analytics.png";
 import vkMessages from "@/assets/vk-messages.png";
 
@@ -210,7 +210,10 @@ const BarterSTO = () => {
       description="Взаимозачёт для автосервиса: сайт, квиз, упаковка ВКонтакте, рекламные кампании и аналитика в обмен на работы по авто. Антикор, автоэлектрика, сигнализации, автозвук, плёнка, ГБО, ремонт и детейлинг."
     >
       <section
-        className="relative overflow-hidden bg-[linear-gradient(135deg,#050a12_0%,#071a2c_58%,#063029_100%)] pt-28 pb-20"
+        className="relative overflow-hidden bg-cover bg-center bg-no-repeat pt-28 pb-20"
+        style={{
+          backgroundImage: `linear-gradient(135deg, rgba(5, 10, 18, 0.94), rgba(5, 17, 30, 0.88)), url(${heroBackground})`,
+        }}
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(32,181,255,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(53,211,154,0.14),transparent_24%)]" />
         <div className="container relative mx-auto px-4">
@@ -263,11 +266,10 @@ const BarterSTO = () => {
 
             <div className="relative">
               <div className="absolute -inset-6 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(32,181,255,0.18),transparent_45%),radial-gradient(circle_at_bottom,rgba(53,211,154,0.16),transparent_40%)] blur-2xl" />
-              <ContextVisual
-                variant="service-band"
-                label="Бартер автосервиса и CentrLP"
-                icons={[Car, Wrench, ArrowRightLeft, TrendingUp]}
-                className="relative aspect-[16/10] border-white/10 bg-white/95 shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
+              <img
+                src="/images/barter/sto-barter-loop.png"
+                alt="Схема бартерного обмена между автосервисом и CentrLP"
+                className="relative w-full rounded-[2rem] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
               />
             </div>
           </div>
@@ -321,11 +323,10 @@ const BarterSTO = () => {
             </div>
 
             <div className="space-y-6">
-              <ContextVisual
-                variant="service-band"
-                label="Пакет работ для автосервиса"
-                icons={[BadgeCheck, MessageSquareText, Camera, TrendingUp]}
-                className="aspect-[16/10] border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.18)]"
+              <img
+                src="/images/barter/sto-offer-stack.png"
+                alt="Пакет работ, который получает автосервис в рамках бартерной сделки"
+                className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.18)]"
               />
               <div className="rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/10 via-background to-accent-2/10 p-8">
                 <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">Смысл сделки</div>
@@ -394,11 +395,10 @@ const BarterSTO = () => {
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
             <div className="order-2 lg:order-1">
-              <ContextVisual
-                variant="service-band"
-                label="Маршрут заявки от рекламы до записи"
-                icons={[MessageSquareText, Camera, Wrench, CheckCircle2]}
-                className="aspect-[16/10] border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.16)]"
+              <img
+                src="/images/barter/sto-lead-path.png"
+                alt="Маршрут заявки от рекламы до записи в автосервис"
+                className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.16)]"
               />
             </div>
 
@@ -443,11 +443,10 @@ const BarterSTO = () => {
           </div>
 
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <ContextVisual
-              variant="service-band"
-              label="Сетка услуг по автомобилю"
-              icons={[Car, Wrench, Droplet, Music]}
-              className="aspect-[16/10] border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.14)]"
+            <img
+              src="/images/barter/sto-service-grid.png"
+              alt="Сетка услуг по автомобилю, которые интересны в рамках бартерной сделки"
+              className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.14)]"
             />
 
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -561,11 +560,10 @@ const BarterSTO = () => {
               </div>
             </div>
 
-            <ContextVisual
-              variant="service-band"
-              label="Проверка кому подходит бартер для автосервиса"
-              icons={[Shield, BadgeCheck, Camera, CheckCircle2]}
-              className="aspect-[16/10] border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.14)]"
+            <img
+              src="/images/barter/sto-fit-check.png"
+              alt="Визуальная проверка кому подходит бартер для автосервиса"
+              className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.14)]"
             />
           </div>
         </div>

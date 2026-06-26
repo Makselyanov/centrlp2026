@@ -10,7 +10,26 @@ const appPath = path.join(srcDir, "App.tsx");
 const postsDir = path.join(rootDir, "content", "posts");
 const baseUrl = "https://centrlp.ru";
 
-const BRAND_OG_IMAGE = "brand.jpg";
+const ogImageMap = {
+  "/": "index.png",
+  "/services": "services.png",
+  "/prices": "prices.png",
+  "/projects": "projects.png",
+  "/about": "about.png",
+  "/contacts": "contacts.png",
+  "/blog": "blog.png",
+  "/ai": "ai.png",
+  "/barter": "barter.png",
+  "/cases": "cases.png",
+  "/business-plans": "business-plans.png",
+  "/blog/ekspress-audit-saita-net-zayavok-48-chasov": "blog.png",
+  "/proverka-saita-i-zayavok-za-48-chasov": "website-development.png",
+  "/razrabotka-sajtov-tyumen": "website-development.png",
+  "/sozdanie-lendinga-tyumen": "website-development.png",
+  "/nastroyka-yandex-direct-tyumen": "yandex-direct.png",
+  "/crm-dlya-biznesa": "services/custom-crm.png",
+  "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
+};
 
 function escapeHtml(value) {
   return String(value)
@@ -195,8 +214,22 @@ function landingStaticHtml(title, description) {
 </main>`;
 }
 
-function getOgImage() {
-  return BRAND_OG_IMAGE;
+function getOgImage(pathname) {
+  if (ogImageMap[pathname]) return ogImageMap[pathname];
+  // For blog posts and services, we generate per-item OG images.
+  // If the image doesn't exist at runtime, the layout fallback will catch it.
+  if (pathname.startsWith("/blog/")) {
+    const slug = pathname.replace("/blog/", "").replace(/\/$/, "");
+    if (slug) return `posts/${slug}.png`;
+    return "blog.png";
+  }
+  if (pathname.startsWith("/services/")) {
+    const slug = pathname.replace("/services/", "").replace(/\/$/, "");
+    if (slug) return `services/${slug}.png`;
+    return "services.png";
+  }
+  if (pathname.startsWith("/barter/")) return "barter.png";
+  return "index.png";
 }
 
 function ensureTag(html, regex, value, fallback) {
@@ -208,7 +241,7 @@ function ensureTag(html, regex, value, fallback) {
 
 function applyMeta(template, meta) {
   const canonical = `${baseUrl}${meta.path === "/" ? "/" : meta.path}`;
-  const ogImageUrl = `${baseUrl}/og/${getOgImage()}`;
+  const ogImageUrl = `${baseUrl}/og/${getOgImage(meta.path)}`;
   const ogType = meta.path.startsWith("/blog/") ? "article" : "website";
   let html = template;
 

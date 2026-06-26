@@ -1,5 +1,4 @@
 import { Layout } from "@/components/Layout";
-import { ContextVisual } from "@/components/ContextVisual";
 import { getPostBySlug, getRelatedPosts, generateTableOfContents } from "@/lib/blog";
 import { useParams, Link } from "react-router-dom";
 import { EnhancedMarkdown } from "@/components/EnhancedMarkdown";
@@ -222,6 +221,9 @@ const BlogPost = () => {
     // Проверяем наличие TOC
     const hasToc = toc && toc.length > 0;
 
+    const coverSrc = post.slug === "ekspress-audit-saita-net-zayavok-48-chasov"
+        ? "/og/blog.png"
+        : `/og/posts/${post.slug}.png`;
     const ctaTitle = typeof post.ctaTitle === "string" && post.ctaTitle.trim()
         ? post.ctaTitle.trim()
         : "РЎР°Р№С‚ РµСЃС‚СЊ, РЅРѕ Р·Р°СЏРІРѕРє РјР°Р»Рѕ?";
@@ -299,12 +301,18 @@ const BlogPost = () => {
                     </div>
                 </header>
 
-                <ContextVisual
-                    variant="service-band"
-                    slug="content-plan"
-                    label={post.title}
-                    className="aspect-[16/9] rounded-2xl border-white/60 shadow-sm"
-                />
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10 shadow-sm">
+                    <img
+                        src={coverSrc}
+                        alt={`${post.title} — обложка статьи CentrLP`}
+                        loading="eager"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-cover"
+                        onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = 'none';
+                        }}
+                    />
+                </div>
             </div>
         </section>
     );

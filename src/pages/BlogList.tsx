@@ -1,5 +1,4 @@
 import { Layout } from "@/components/Layout";
-import { ContextVisual } from "@/components/ContextVisual";
 import { getAllPosts } from "@/lib/blog";
 import { Link } from "react-router-dom";
 import { Calendar, Tag, ArrowRight, Search, X } from "lucide-react";
@@ -233,12 +232,19 @@ const BlogList = () => {
                                 >
                                     <Link to={`/blog/${post.slug}`}>
                                         <Card className="h-full hover:shadow-xl transition-all duration-300 border-slate-200/50 bg-white/60 backdrop-blur-sm flex flex-col hover:border-[#0096D6]/30 group overflow-hidden">
-                                            <ContextVisual
-                                                variant="service-band"
-                                                slug="content-plan"
-                                                label={post.title}
-                                                className="aspect-[16/9] rounded-none border-0 shadow-none transition-transform duration-500 group-hover:scale-105"
-                                            />
+                                            <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-[#0096D6]/10 via-white to-[#44B78B]/10">
+                                                <img
+                                                    src={`/og/posts/${post.slug}.png`}
+                                                    alt={`${post.title} — обложка`}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                    onError={(e) => {
+                                                        e.currentTarget.onerror = null;
+                                                        e.currentTarget.src = "/og/blog.png";
+                                                    }}
+                                                />
+                                            </div>
                                             <CardHeader className="pb-3">
                                                 <div className="flex justify-between items-start mb-3 gap-2">
                                                     <div className="flex gap-2 flex-wrap">
