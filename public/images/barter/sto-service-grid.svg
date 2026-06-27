@@ -1,0 +1,64 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" rx="48" fill="#07131F"/>
+  <rect x="48" y="48" width="1104" height="804" rx="40" fill="#091927" stroke="#17324A" stroke-width="2"/>
+
+  <text x="108" y="148" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="56" font-weight="700">
+    Что можно взять в бартер по машине
+  </text>
+  <text x="108" y="194" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="24">
+    Работы сгруппированы по приоритету, чтобы быстро согласовать эквивалент и этапы.
+  </text>
+
+  <rect x="108" y="254" width="300" height="180" rx="28" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="144" y="314" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Приоритет 01</text>
+  <text x="144" y="366" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="38" font-weight="700">ГБО</text>
+  <text x="144" y="404" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="20">
+    <tspan x="144" dy="0">Надёжный монтаж</tspan>
+    <tspan x="144" dy="28">с гарантией и настройкой</tspan>
+  </text>
+
+  <rect x="450" y="254" width="300" height="180" rx="28" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="486" y="314" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Приоритет 02</text>
+  <text x="486" y="366" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="38" font-weight="700">Антикор</text>
+  <text x="486" y="404" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="20">
+    <tspan x="486" dy="0">Кузов и днище</tspan>
+    <tspan x="486" dy="28">под тюменские зимы</tspan>
+  </text>
+
+  <rect x="792" y="254" width="300" height="180" rx="28" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="828" y="314" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Приоритет 03</text>
+  <text x="828" y="366" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="38" font-weight="700">Плёнка</text>
+  <text x="828" y="404" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="20">
+    <tspan x="828" dy="0">Защита кузова</tspan>
+    <tspan x="828" dy="28">и внешний вид</tspan>
+  </text>
+
+  <rect x="108" y="480" width="300" height="180" rx="28" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="144" y="540" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Дополнение</text>
+  <text x="144" y="592" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="38" font-weight="700">Тонировка</text>
+  <text x="144" y="630" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="20">
+    <tspan x="144" dy="0">Аккуратная работа</tspan>
+    <tspan x="144" dy="28">и нормальные материалы</tspan>
+  </text>
+
+  <rect x="450" y="480" width="300" height="180" rx="28" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="486" y="540" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Дополнение</text>
+  <text x="486" y="592" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="38" font-weight="700">Автозвук</text>
+  <text x="486" y="630" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="20">
+    <tspan x="486" dy="0">Чистый звук</tspan>
+    <tspan x="486" dy="28">и внятная конфигурация</tspan>
+  </text>
+
+  <rect x="792" y="480" width="300" height="180" rx="28" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="828" y="540" fill="#8FD6FF" font-family="Arial, sans-serif" font-size="20" font-weight="700">Дополнение</text>
+  <text x="828" y="592" fill="#F7FAFC" font-family="Arial, sans-serif" font-size="38" font-weight="700">Камеры</text>
+  <text x="828" y="630" fill="#8FA9BD" font-family="Arial, sans-serif" font-size="20">
+    <tspan x="828" dy="0">Круговой обзор</tspan>
+    <tspan x="828" dy="28">и удобная парковка</tspan>
+  </text>
+
+  <rect x="108" y="714" width="984" height="78" rx="22" fill="#0D1D2C" stroke="#21435F"/>
+  <text x="144" y="763" fill="#DDE8F1" font-family="Arial, sans-serif" font-size="22">
+    Эти работы легко разбить по этапам и сопоставить с пакетом сайта, рекламы и заявок.
+  </text>
+</svg>

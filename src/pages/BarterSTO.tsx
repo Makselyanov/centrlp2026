@@ -267,7 +267,7 @@ const BarterSTO = () => {
             <div className="relative">
               <div className="absolute -inset-6 rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(32,181,255,0.18),transparent_45%),radial-gradient(circle_at_bottom,rgba(53,211,154,0.16),transparent_40%)] blur-2xl" />
               <img
-                src="/images/barter/sto-barter-loop.png"
+                src="/images/barter/sto-barter-loop.svg?v=2"
                 alt="Схема бартерного обмена между автосервисом и CentrLP"
                 className="relative w-full rounded-[2rem] border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.35)]"
               />
@@ -324,7 +324,7 @@ const BarterSTO = () => {
 
             <div className="space-y-6">
               <img
-                src="/images/barter/sto-offer-stack.png"
+                src="/images/barter/sto-offer-stack.svg?v=2"
                 alt="Пакет работ, который получает автосервис в рамках бартерной сделки"
                 className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.18)]"
               />
@@ -396,7 +396,7 @@ const BarterSTO = () => {
           <div className="grid gap-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
             <div className="order-2 lg:order-1">
               <img
-                src="/images/barter/sto-lead-path.png"
+                src="/images/barter/sto-lead-path.svg?v=1"
                 alt="Маршрут заявки от рекламы до записи в автосервис"
                 className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.16)]"
               />
@@ -444,7 +444,7 @@ const BarterSTO = () => {
 
           <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <img
-              src="/images/barter/sto-service-grid.png"
+              src="/images/barter/sto-service-grid.svg?v=1"
               alt="Сетка услуг по автомобилю, которые интересны в рамках бартерной сделки"
               className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.14)]"
             />
@@ -561,7 +561,7 @@ const BarterSTO = () => {
             </div>
 
             <img
-              src="/images/barter/sto-fit-check.png"
+              src="/images/barter/sto-fit-check.svg?v=1"
               alt="Визуальная проверка кому подходит бартер для автосервиса"
               className="w-full rounded-[2rem] border border-border/60 shadow-[0_20px_60px_rgba(7,20,33,0.14)]"
             />
