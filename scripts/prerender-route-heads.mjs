@@ -214,6 +214,220 @@ function landingStaticHtml(title, description) {
 </main>`;
 }
 
+const commercialStaticSections = {
+  "/services/website-development": {
+    lead: "Создаем сайт под ключ в Тюмени: от лендинга под одну услугу до сайта услуг с CRM, аналитикой, SEO-основой и подготовкой к рекламе.",
+    sections: [
+      {
+        title: "Что входит в запуск сайта",
+        items: [
+          "структура страницы или сайта под конкретную услугу и сегмент клиентов",
+          "тексты, первый экран, оффер, быстрые контакты и форма заявки",
+          "базовая SEO-подготовка: title, description, canonical, sitemap и внутренняя перелинковка",
+          "подключение Яндекс.Метрики, целей, событий и проверки пути заявки",
+          "интеграция с CRM или подготовка маршрута заявки для отдела продаж",
+        ],
+      },
+      {
+        title: "Форматы работ",
+        items: [
+          "лендинг под рекламу или проверку спроса — от 45 000 ₽",
+          "сайт услуг для локального бизнеса в Тюмени — от 70 000 ₽",
+          "сайт с CRM, аналитикой и заявками без потерь — от 100 000 ₽",
+        ],
+      },
+      {
+        title: "Когда стоит начинать с аудита",
+        items: [
+          "сайт уже есть, но заявки дорогие или не приходят",
+          "непонятно, где ломается путь от клика до обращения",
+          "перед запуском Директа нужно проверить форму, аналитику и оффер",
+        ],
+      },
+    ],
+    related: [
+      { label: "Проверка сайта и заявок за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
+      { label: "Настройка Яндекс Директ", href: "/services/yandex-direct" },
+      { label: "Персональная CRM", href: "/services/custom-crm" },
+    ],
+  },
+  "/services/yandex-direct": {
+    lead: "Настраиваем и ведем Яндекс Директ для бизнеса в Тюмени так, чтобы трафик вел на готовую посадочную страницу, форму, аналитику и CRM.",
+    sections: [
+      {
+        title: "Что проверяем до запуска рекламы",
+        items: [
+          "посадочную страницу, первый экран, форму и быстрые контакты",
+          "цели Метрики, события формы, клики по телефону и мессенджерам",
+          "семантику поиска, минус-слова, сегменты РСЯ и географию показов",
+          "офферы, цены и обещания, которые видит человек после клика",
+        ],
+      },
+      {
+        title: "Форматы Директа",
+        items: [
+          "настройка поиска — от 20 000 ₽",
+          "РСЯ и ретаргетинг — от 25 000 ₽",
+          "ведение и оптимизация — от 30 000 ₽ в месяц",
+        ],
+      },
+      {
+        title: "Когда реклама не окупается",
+        items: [
+          "заявки уходят в общую почту или теряются без CRM",
+          "нет сквозной аналитики и цели заявки в Метрике",
+          "страница не отвечает на запрос пользователя и не объясняет следующий шаг",
+        ],
+      },
+    ],
+    related: [
+      { label: "Аудит сайта перед рекламой", href: "/blog/audit-saita-pered-zapuskom-reklamy-v-yandekse" },
+      { label: "Сколько стоит Яндекс Директ", href: "/blog/skolko-stoit-yandeks-direkt-v-tyumeni" },
+      { label: "Проверить сайт перед запуском", href: "/proverka-saita-i-zayavok-za-48-chasov" },
+    ],
+  },
+  "/services/marketing-strategy": {
+    lead: "Готовим маркетинговую стратегию и план действий для бизнеса в Тюмени: оффер, каналы, гипотезы, бюджет, приоритеты и контроль заявок.",
+    sections: [
+      {
+        title: "Что входит в маркетинговый план",
+        items: [
+          "разбор продукта, сегментов клиентов и конкурентов",
+          "карта каналов: сайт, Директ, ВК, Telegram, карты и повторные касания",
+          "приоритеты гипотез, бюджет, сроки и ответственные точки контроля",
+          "связка рекламы, сайта, CRM и аналитики для оценки заявок",
+        ],
+      },
+      {
+        title: "Когда нужен план",
+        items: [
+          "реклама уже идет, но непонятно, что масштабировать",
+          "есть сайт и соцсети, но нет единого маршрута заявки",
+          "нужно решить, куда вкладывать бюджет в ближайшие 30-90 дней",
+        ],
+      },
+    ],
+    related: [
+      { label: "Цены на услуги", href: "/prices" },
+      { label: "Веб-аналитика", href: "/services/web-analytics" },
+      { label: "Яндекс Директ", href: "/services/yandex-direct" },
+    ],
+  },
+  "/services/custom-crm": {
+    lead: "Разрабатываем CRM под отдел продаж и сервис: заявки, статусы, ответственные, источники, уведомления и отчеты по воронке.",
+    sections: [
+      {
+        title: "Какие задачи закрывает CRM",
+        items: [
+          "сбор заявок с сайта, форм, мессенджеров и рекламы в одном месте",
+          "статусы лидов, ответственные менеджеры и контроль скорости ответа",
+          "интеграции с Telegram, телефонией, почтой, n8n и внутренними сервисами",
+          "отчеты для руководителя по источникам, потерям и повторным касаниям",
+        ],
+      },
+      {
+        title: "Когда нужна своя CRM",
+        items: [
+          "типовая CRM не повторяет реальный процесс продаж",
+          "заявки теряются между каналами, чатами и менеджерами",
+          "нужен личный кабинет, статусы заказов или внутренняя операционная система",
+        ],
+      },
+    ],
+    related: [
+      { label: "AI-агенты для заявок", href: "/services/ai-agents" },
+      { label: "n8n-автоматизация", href: "/services/n8n-automation" },
+      { label: "Сайт как источник заявок", href: "/services/website-development" },
+    ],
+  },
+  "/services/ai-agents": {
+    lead: "Внедряем AI-агентов для обработки обращений, первичной квалификации, ответов клиентам и передачи подготовленных заявок в CRM.",
+    sections: [
+      {
+        title: "Что делает AI-агент",
+        items: [
+          "отвечает на типовые вопросы по базе знаний и услугам",
+          "собирает вводные, уточняет потребность и контактные данные",
+          "классифицирует обращение и передает его менеджеру или в CRM",
+          "помогает не терять заявки вечером, в выходные и при высокой нагрузке",
+        ],
+      },
+      {
+        title: "Безопасный запуск",
+        items: [
+          "начинаем с узкого сценария и понятных правил эскалации человеку",
+          "используем вашу фактуру: услуги, FAQ, регламенты, шаблоны ответов",
+          "подключаем аналитику, чтобы видеть качество диалогов и заявок",
+        ],
+      },
+    ],
+    related: [
+      { label: "CRM для заявок", href: "/services/custom-crm" },
+      { label: "Telegram AI-агент", href: "/services/telegram-lead-agent" },
+      { label: "AI-системы", href: "/services/ai-systems" },
+    ],
+  },
+  "/services/compliance-2026": {
+    lead: "Проверяем сайт, формы, cookie, Метрику и документы под требования 152-ФЗ, Роскомнадзора и безопасной обработки заявок.",
+    sections: [
+      {
+        title: "Что входит в проверку",
+        items: [
+          "формы заявок, чекбоксы согласия и тексты под кнопками",
+          "политика конфиденциальности, согласие на обработку и cookie-уведомления",
+          "Яндекс.Метрика, пиксели, цели и сторонние сервисы на сайте",
+          "маршрут заявки: куда попадают персональные данные и кто их обрабатывает",
+        ],
+      },
+      {
+        title: "Когда нужна проверка",
+        items: [
+          "перед запуском рекламы и ростом трафика на сайт",
+          "если формы уже собирают имя, телефон, email или комментарии",
+          "если сайт использует Метрику, пиксели, CRM, чаты и внешние виджеты",
+        ],
+      },
+    ],
+    related: [
+      { label: "Стоимость проверки 152-ФЗ", href: "/blog/skolko-stoit-proverka-saita-152fz-rkn-2026" },
+      { label: "Политика конфиденциальности", href: "/privacy" },
+      { label: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
+    ],
+  },
+};
+
+function routeStaticHtml(title, description, routePath) {
+  const commercial = commercialStaticSections[routePath];
+  if (!commercial) {
+    return `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></main>`;
+  }
+
+  const sections = commercial.sections
+    .map((section) => `<section>
+  <h2>${escapeHtml(section.title)}</h2>
+  <ul>
+    ${section.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n    ")}
+  </ul>
+</section>`)
+    .join("\n");
+
+  const related = commercial.related
+    .map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`)
+    .join(" · ");
+
+  return `<main class="seo-static-content" data-prerender="true" style="max-width: 920px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;">
+  <h1>${escapeHtml(title)}</h1>
+  <p>${escapeHtml(description)}</p>
+  <p>${escapeHtml(commercial.lead)}</p>
+  ${sections}
+  <section style="margin-top: 32px; padding: 22px; border: 1px solid #bae6fd; border-radius: 16px; background: #f0f9ff;">
+    <h2 style="margin-top: 0;">Следующий шаг</h2>
+    <p>Оставьте заявку, и мы разберем сайт, рекламу, CRM или маршрут обращения под вашу задачу.</p>
+    <p><a href="/contacts#contact-form">Оставить заявку</a> · ${related}</p>
+  </section>
+</main>`;
+}
+
 function getOgImage(pathname) {
   if (ogImageMap[pathname]) return ogImageMap[pathname];
   // For blog posts and services, we generate per-item OG images.
@@ -394,7 +608,7 @@ function collectStaticRouteMeta() {
 
       if (!title || !description) return null;
 
-      const staticHtmlSource = `${title}\n${description}`;
+      const staticHtmlSource = `${title}\n${description}\n${commercialStaticSections[route.path]?.lead || ""}`;
 
       return {
         path: route.path,
@@ -402,7 +616,7 @@ function collectStaticRouteMeta() {
         description,
         staticHtml: hasUnsafePublicMarker(staticHtmlSource)
           ? ""
-          : `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></main>`,
+          : routeStaticHtml(title, description, route.path),
       };
     })
     .filter(Boolean);
