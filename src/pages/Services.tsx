@@ -524,8 +524,8 @@ const Services = () => {
 
   return (
     <Layout
-      title="Услуги CentrLP — Mini App, AI, CRM, сайты и запуск | Тюмень"
-      description="Услуги CentrLP: Telegram Mini App, AI-агенты, OpenClaw, n8n, CRM, сайты, Яндекс.Директ, аналитика и упаковка цифровых продуктов для бизнеса."
+      title="Услуги CentrLP в Тюмени — сайты, CRM, AI-агенты и заявки"
+      description="Услуги CentrLP в Тюмени: сайты под заявки, CRM для бизнеса, AI-агенты, OpenClaw, n8n, Яндекс.Директ, аналитика и упаковка цифровых продуктов."
     >
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.06] to-white pb-20 pt-32">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
