@@ -181,6 +181,10 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
       "provider": {
         "@type": "LocalBusiness",
         "name": "CentrLP",
+        "alternateName": [
+          "CentrLP, агентство развития бизнеса",
+          "Центр цифрового консалтинга CentrLP"
+        ],
         "url": "https://centrlp.ru",
         "telephone": "+7-905-824-85-64",
         "sameAs": [

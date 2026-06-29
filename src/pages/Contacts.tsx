@@ -42,8 +42,8 @@ const Contacts = () => {
 
   return (
     <Layout
-      title="Контакты CentrLP — Тюмень, телефон, Telegram, WhatsApp"
-      description="Свяжитесь с CentrLP: 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: Тюмень, проезд Солнечный, 22. Консультация бесплатна."
+      title="Контакты CentrLP — агентство развития бизнеса в Тюмени"
+      description="Свяжитесь с CentrLP: агентство развития бизнеса в Тюмени, 8-905-824-85-64, Telegram, WhatsApp, ВКонтакте. Адрес: проезд Солнечный, 22."
     >
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
@@ -92,8 +92,8 @@ const Contacts = () => {
               </span>
             </h1>
             <p className="text-xl text-slate-600 max-w-xl">
-              Мы в Тюмени, но работаем со всем миром.
-              Открыты к диалогу, встречам и новым вызовам.
+              CentrLP — агентство развития бизнеса в Тюмени. Разберем сайт,
+              рекламу, CRM или цифровой продукт и предложим ближайший шаг к заявкам.
             </p>
           </motion.div>
         </div>
