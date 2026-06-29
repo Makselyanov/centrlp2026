@@ -31,6 +31,19 @@ const ogImageMap = {
   "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
 };
 
+const staticRouteMetaOverrides = {
+  "/services/android-app-development": {
+    title: "Разработка Android-приложений под ключ для бизнеса | CentrLP",
+    description:
+      "Создаем Android-приложения для заявок, записи, доставки, личного кабинета и внутренних процессов: UX, API, CRM, push, аналитика и подготовка к релизу.",
+  },
+  "/services/ios-app-development": {
+    title: "Разработка iOS-приложений для iPhone и iPad | CentrLP",
+    description:
+      "Проектируем и запускаем iOS-приложения для клиентов и команды: UX, дизайн экранов, личный кабинет, API/CRM, push, аналитика, TestFlight и подготовка к App Store.",
+  },
+};
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -215,6 +228,76 @@ function landingStaticHtml(title, description) {
 }
 
 const commercialStaticSections = {
+  "/services/android-app-development": {
+    lead: "Разрабатываем Android-приложения для бизнеса как рабочий мобильный контур: клиент оставляет заявку, видит статус, получает уведомления, а команда обрабатывает данные в CRM или админке.",
+    sections: [
+      {
+        title: "Что входит в Android-разработку",
+        items: [
+          "карта сценариев, UX-прототип и дизайн ключевых экранов",
+          "backend, API, админка, CRM-интеграции и роли пользователей",
+          "push-уведомления, статусы, события аналитики и тестовые сборки",
+          "подготовка материалов для Google Play, RuStore или корпоративного релиза",
+        ],
+      },
+      {
+        title: "Форматы старта",
+        items: [
+          "прототип Android-приложения - от 35 000 ₽",
+          "Android MVP под главный сценарий - от 160 000 ₽",
+          "Android-приложение с CRM, уведомлениями и аналитикой - от 280 000 ₽",
+        ],
+      },
+      {
+        title: "Когда Android подходит лучше",
+        items: [
+          "нужно приложение для массовой аудитории или сотрудников",
+          "важны push, статусы, задачи, фотоотчеты или работа на разных устройствах",
+          "приложение должно быть связано с CRM, сервисом и повторными обращениями",
+        ],
+      },
+    ],
+    related: [
+      { label: "MVP-разработка", href: "/services/mvp-development" },
+      { label: "Telegram Mini App", href: "/services/telegram-mini-app" },
+      { label: "Персональная CRM", href: "/services/custom-crm" },
+    ],
+  },
+  "/services/ios-app-development": {
+    lead: "Создаем iOS-приложения для iPhone и iPad с фокусом на аккуратный UX, личный кабинет, сервисные сценарии, интеграции с CRM и подготовку к App Store.",
+    sections: [
+      {
+        title: "Что входит в iOS-разработку",
+        items: [
+          "UX под iPhone и iPad, дизайн-система и ключевые состояния интерфейса",
+          "backend, API, CRM-связки, push-уведомления и продуктовая аналитика",
+          "TestFlight-сборка, демо-доступы, материалы, privacy и метаданные",
+          "проверка критичных сценариев перед отправкой на App Store Review",
+        ],
+      },
+      {
+        title: "Форматы старта",
+        items: [
+          "iOS-прототип с оценкой релизных рисков - от 45 000 ₽",
+          "iOS MVP под один-два ключевых сценария - от 190 000 ₽",
+          "iOS-приложение с backend, CRM и аналитикой - от 320 000 ₽",
+        ],
+      },
+      {
+        title: "Когда iOS дает больше",
+        items: [
+          "основная аудитория пользуется iPhone и ожидает высокого качества сервиса",
+          "нужен личный кабинет, документы, статусы, записи, платежи или подписочная логика",
+          "важны доверие, повторные продажи и аккуратный путь клиента после первой покупки",
+        ],
+      },
+    ],
+    related: [
+      { label: "Дизайн и прототипирование", href: "/services/design-prototyping" },
+      { label: "MVP-разработка", href: "/services/mvp-development" },
+      { label: "Персональная CRM", href: "/services/custom-crm" },
+    ],
+  },
   "/services/website-development": {
     lead: "Создаем сайт под ключ в Тюмени: от лендинга под одну услугу до сайта услуг с CRM, аналитикой, SEO-основой и подготовкой к рекламе.",
     sections: [
@@ -596,6 +679,20 @@ function collectStaticRouteMeta() {
 
   return routes
     .map((route) => {
+      const override = staticRouteMetaOverrides[route.path];
+      if (override) {
+        const staticHtmlSource = `${override.title}\n${override.description}\n${commercialStaticSections[route.path]?.lead || ""}`;
+
+        return {
+          path: route.path,
+          title: override.title,
+          description: override.description,
+          staticHtml: hasUnsafePublicMarker(staticHtmlSource)
+            ? ""
+            : routeStaticHtml(override.title, override.description, route.path),
+        };
+      }
+
       const importPathValue = imports.get(route.componentName);
       if (!importPathValue) return null;
 
