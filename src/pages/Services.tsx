@@ -6,6 +6,7 @@ import { servicePriceByHref } from "@/data/pricing";
 import { motion } from "framer-motion";
 import {
   Bot,
+  BadgeCheck,
   Brain,
   BriefcaseBusiness,
   Chrome,
@@ -21,6 +22,7 @@ import {
   Rocket,
   ScanSearch,
   ShieldCheck,
+  Smartphone,
   Sparkles,
   Target,
   Workflow,
@@ -57,6 +59,24 @@ const PriceBadge = ({ href }: { href: string }) => {
 };
 
 const productServices: ServiceCard[] = [
+  {
+    title: "Android-приложения",
+    description: "Нативные Android-приложения для заявок, записи, личного кабинета, сервиса и внутренних процессов.",
+    href: "/services/android-app-development",
+    bullets: ["MVP и кабинет", "Backend/API и CRM", "Push и аналитика"],
+    icon: Smartphone,
+    featured: true,
+    badge: "Mobile",
+  },
+  {
+    title: "iOS-приложения",
+    description: "iOS-приложения для iPhone и iPad: аккуратный UX, личный кабинет, App Store readiness и CRM-связки.",
+    href: "/services/ios-app-development",
+    bullets: ["iPhone и iPad", "TestFlight", "App Store readiness"],
+    icon: BadgeCheck,
+    featured: true,
+    badge: "Mobile",
+  },
   {
     title: "Telegram Mini App",
     description: "Интерфейс продаж, заявок, записи, бронирования и личного кабинета прямо внутри Telegram.",

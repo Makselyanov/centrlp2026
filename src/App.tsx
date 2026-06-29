@@ -58,6 +58,8 @@ const ContentPlan = lazy(() => import("./pages/services/ContentPlan"));
 const CopywritingTexts = lazy(() => import("./pages/services/CopywritingTexts"));
 const OfferPackaging = lazy(() => import("./pages/services/OfferPackaging"));
 const TelegramMiniApp = lazy(() => import("./pages/services/TelegramMiniApp"));
+const AndroidAppDevelopment = lazy(() => import("./pages/services/MobileAppDevelopment").then(m => ({ default: m.AndroidAppDevelopment })));
+const IosAppDevelopment = lazy(() => import("./pages/services/MobileAppDevelopment").then(m => ({ default: m.IosAppDevelopment })));
 const MaxMessenger = lazy(() => import("./pages/services/MaxMessenger"));
 const BrowserExtensions = lazy(() => import("./pages/services/BrowserExtensions"));
 const AIAgents = lazy(() => import("./pages/services/AIAgents"));
@@ -113,6 +115,8 @@ const AppRoutes = () => (
             <Route path="/services/copywriting-texts" element={<CopywritingTexts />} />
             <Route path="/services/offer-packaging" element={<OfferPackaging />} />
             <Route path="/services/telegram-mini-app" element={<TelegramMiniApp />} />
+            <Route path="/services/android-app-development" element={<AndroidAppDevelopment />} />
+            <Route path="/services/ios-app-development" element={<IosAppDevelopment />} />
             <Route path="/services/max-messenger" element={<MaxMessenger />} />
             <Route path="/services/browser-extensions" element={<BrowserExtensions />} />
             <Route path="/services/ai-agents" element={<AIAgents />} />

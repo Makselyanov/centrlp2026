@@ -109,7 +109,9 @@ function renderServiceSvg(item) {
 
   let scene = "";
 
-  if (slug.includes("yandex")) {
+  if (slug.includes("android-app") || slug.includes("ios-app")) {
+    scene = mobileAppScene(slug.includes("ios") ? "ios" : "android");
+  } else if (slug.includes("yandex")) {
     scene = `
       ${logoDisc("yandexDirect", 118, 112, 92)}
       ${browserPanel(150, 286, 286, 190, "blue")}
@@ -315,6 +317,83 @@ function phonePanel(x, y, w = 138, h = 238) {
       <rect x="${x + 28}" y="${y + 88}" width="${w - 56}" height="48" rx="18" fill="#dbeafe" />
       <rect x="${x + 28}" y="${y + 152}" width="${w - 56}" height="48" rx="18" fill="#dcfce7" />
     </g>`;
+}
+
+function mobilePhonePanel(x, y, w, h, tone, title, subtitle, action) {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="38" fill="#0f172a" filter="url(#shadow)" />
+      <rect x="${x + 12}" y="${y + 18}" width="${w - 24}" height="${h - 36}" rx="28" fill="#f8fafc" />
+      <rect x="${x + w / 2 - 32}" y="${y + 30}" width="64" height="7" rx="4" fill="#cbd5e1" />
+      <text x="${x + 30}" y="${y + 78}" fill="#0f172a" font-size="22" font-weight="700">${escapeXml(title)}</text>
+      <text x="${x + 30}" y="${y + 106}" fill="#64748b" font-size="14">${escapeXml(subtitle)}</text>
+      <rect x="${x + 28}" y="${y + 132}" width="${w - 56}" height="72" rx="22" fill="#ffffff" stroke="#dbeafe" />
+      <rect x="${x + 46}" y="${y + 154}" width="${w - 92}" height="13" rx="7" fill="${accent}" opacity="0.74" />
+      <rect x="${x + 46}" y="${y + 180}" width="${w - 128}" height="12" rx="6" fill="#cbd5e1" />
+      <rect x="${x + 28}" y="${y + 224}" width="${w - 56}" height="42" rx="17" fill="${accent}" opacity="0.88" />
+      <text x="${x + w / 2}" y="${y + 251}" fill="#ffffff" font-size="14" font-weight="700" text-anchor="middle">${escapeXml(action)}</text>
+      <rect x="${x + 28}" y="${y + 286}" width="${w - 56}" height="42" rx="17" fill="#ffffff" stroke="#dbeafe" />
+      <circle cx="${x + 54}" cy="${y + 307}" r="8" fill="${accent}" opacity="0.82" />
+      <rect x="${x + 72}" y="${y + 300}" width="${w - 126}" height="13" rx="7" fill="#cbd5e1" />
+    </g>`;
+}
+
+function mobileSystemBoard(x, y, tone, title, rows) {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="284" height="242" rx="32" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      <text x="${x + 28}" y="${y + 46}" fill="#0f172a" font-size="22" font-weight="700">${escapeXml(title)}</text>
+      ${rows.map((row, index) => `
+        <g>
+          <circle cx="${x + 42}" cy="${y + 82 + index * 40}" r="12" fill="${accent}" opacity="${index === 0 ? "0.9" : "0.58"}" />
+          <rect x="${x + 66}" y="${y + 70 + index * 40}" width="${190 - index * 18}" height="24" rx="12" fill="${index % 2 ? "#ecfdf5" : "#eff6ff"}" />
+          <text x="${x + 82}" y="${y + 87 + index * 40}" fill="#334155" font-size="14" font-weight="700">${escapeXml(row)}</text>
+        </g>
+      `).join("")}
+    </g>`;
+}
+
+function mobileReleaseBoard(x, y, tone, label, rows) {
+  const accent = tone === "green" ? colors.green : colors.blue;
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="292" height="272" rx="34" fill="#ffffff" stroke="#dbeafe" filter="url(#shadow)" />
+      <rect x="${x + 24}" y="${y + 24}" width="132" height="32" rx="16" fill="${accent}" opacity="0.14" />
+      <text x="${x + 42}" y="${y + 46}" fill="${accent}" font-size="15" font-weight="800">${escapeXml(label)}</text>
+      ${rows.map((row, index) => `
+        <g>
+          <rect x="${x + 28}" y="${y + 82 + index * 42}" width="236" height="29" rx="14" fill="#f8fafc" stroke="#e2e8f0" />
+          <path d="M${x + 42} ${y + 98 + index * 42} L${x + 50} ${y + 106 + index * 42} L${x + 64} ${y + 90 + index * 42}" fill="none" stroke="${accent}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          <text x="${x + 82}" y="${y + 102 + index * 42}" fill="#334155" font-size="14" font-weight="700">${escapeXml(row)}</text>
+        </g>
+      `).join("")}
+    </g>`;
+}
+
+function mobileAppScene(platform) {
+  const isIos = platform === "ios";
+  const tone = isIos ? "blue" : "green";
+  const accent = isIos ? colors.blue : colors.green;
+  const phoneTitle = isIos ? "Кабинет" : "Заявка";
+  const phoneSubtitle = isIos ? "статус и заказ" : "запись и сервис";
+  const secondaryTitle = isIos ? "Профиль" : "Маршрут";
+  const secondarySubtitle = isIos ? "документы" : "задачи";
+  const storeLabel = isIos ? "App Store" : "Google Play / RuStore";
+  const releaseRows = isIos
+    ? ["TestFlight", "privacy", "demo access", "metadata"]
+    : ["testing", "permissions", "privacy", "store assets"];
+
+  return `
+      ${mobilePhonePanel(106, 148, 178, 342, tone, phoneTitle, phoneSubtitle, isIos ? "Открыть" : "Отправить")}
+      ${mobilePhonePanel(278, 214, 146, 282, tone, secondaryTitle, secondarySubtitle, isIos ? "Статус" : "Задача")}
+      ${arrowLine(452, 356, 540, 356, tone)}
+      ${mobileSystemBoard(558, 214, tone, "API + CRM", ["пользователь", "заявка", "статус", "аналитика"])}
+      ${arrowLine(842, 356, 922, 356, tone)}
+      ${mobileReleaseBoard(862, 156, tone, storeLabel, releaseRows)}
+      <path d="M128 534 C252 492 378 552 512 512 C650 470 754 534 924 494" fill="none" stroke="${accent}" stroke-width="10" stroke-linecap="round" opacity="0.22" />
+    `;
 }
 
 function aiOrb(x, y, r = 86) {
@@ -808,6 +887,32 @@ const serviceVisuals = [
     result: "лиды",
     geo: "Тюмень",
     visualPrompt: "Локальная схема Avito Ads: профиль, объявления, продвижение, сообщения и CRM без выдуманных маркетплейс-иконок.",
+  },
+  {
+    slug: "android-app-development",
+    kicker: "Android-приложение под бизнес",
+    title: "Android-приложение: заявка, кабинет, CRM и релиз",
+    subtitle: "Визуал показывает рабочий mobile-контур: экраны приложения, API, CRM, push, аналитика и подготовка к публикации.",
+    brands: [{ label: "Android", width: 136 }, { label: "CRM", width: 118 }],
+    diagramTitle: "приложение → CRM",
+    flow: [["Экран", "заявка или запись"], ["API", "данные и статусы"], ["CRM", "ответственный"], ["Релиз", "store и аналитика"]],
+    metricValue: "MVP",
+    result: "приложение",
+    geo: "Тюмень / РФ",
+    visualPrompt: "Android-приложение как доказательная UI-сцена: телефон с заявкой, API/CRM, push, аналитика и checklist релиза без AI-персонажей.",
+  },
+  {
+    slug: "ios-app-development",
+    kicker: "iOS-приложение для сервиса",
+    title: "iOS-приложение: кабинет, TestFlight, CRM и App Store",
+    subtitle: "Визуал показывает не красивый телефон без смысла, а продуктовый путь: кабинет клиента, API, CRM, TestFlight и релизный пакет.",
+    brands: [{ label: "iOS", width: 104 }, { label: "App Store", width: 152 }, { label: "CRM", width: 118 }],
+    diagramTitle: "кабинет → сервис",
+    flow: [["Кабинет", "статус и заказ"], ["API", "данные"], ["CRM", "команда"], ["Review", "metadata и privacy"]],
+    metricValue: "iOS",
+    result: "сервис",
+    geo: "Тюмень / РФ",
+    visualPrompt: "iOS-приложение как редакционная UI-сцена: iPhone-кабинет, API/CRM, TestFlight, App Store readiness, privacy и аналитика.",
   },
   {
     slug: "branding",

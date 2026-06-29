@@ -361,6 +361,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://centrlp.ru/services/android-app-development</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://centrlp.ru/services/auto-responses</loc>
     <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -422,6 +428,12 @@
   </url>
   <url>
     <loc>https://centrlp.ru/services/help-bot</loc>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://centrlp.ru/services/ios-app-development</loc>
     <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

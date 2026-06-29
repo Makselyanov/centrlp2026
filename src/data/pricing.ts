@@ -246,6 +246,24 @@ export const servicePrices: ServicePrice[] = [
     seoPriority: "high",
   },
   {
+    title: "Android-приложения",
+    href: "/services/android-app-development",
+    price: "от 160 000 ₽",
+    description: "Android MVP, личный кабинет, заявки, статусы, push, backend/API, CRM и релизная подготовка.",
+    category: "product",
+    note: "Прототип Android-приложения - от 35 000 ₽.",
+    seoPriority: "high",
+  },
+  {
+    title: "iOS-приложения",
+    href: "/services/ios-app-development",
+    price: "от 190 000 ₽",
+    description: "iOS-приложение для iPhone и iPad: UX, backend/API, CRM, push, TestFlight и App Store readiness.",
+    category: "product",
+    note: "iOS-прототип - от 45 000 ₽.",
+    seoPriority: "high",
+  },
+  {
     title: "Решения для Max",
     href: "/services/max-messenger",
     price: "от 120 000 ₽",
@@ -410,6 +428,16 @@ export const pricingGroups: Array<{
 ];
 
 export const seoFocusPages = [
+  {
+    title: "Android-приложения для бизнеса",
+    href: "/services/android-app-development",
+    reason: "Коммерческий mobile-кластер с понятными сценариями: заявки, запись, кабинет, CRM, push и релиз.",
+  },
+  {
+    title: "iOS-приложения для iPhone и iPad",
+    href: "/services/ios-app-development",
+    reason: "Отдельный платежеспособный кластер вокруг iOS, App Store, сервиса, кабинета и повторных продаж.",
+  },
   {
     title: "Проверка сайта по персональным данным",
     href: "/services/compliance-2026",
