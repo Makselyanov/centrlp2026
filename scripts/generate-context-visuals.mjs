@@ -1159,6 +1159,7 @@ const serviceVisuals = [
   },
   {
     slug: "android-app-development",
+    manualAsset: "docs/mobile-app-photorealistic-prompts-2026-06-30.md#android",
     kicker: "Android-приложение под бизнес",
     title: "Android-приложение: заявка, кабинет, CRM и релиз",
     subtitle: "Визуал показывает рабочий mobile-контур: экраны приложения, API, CRM, push, аналитика и подготовка к публикации.",
@@ -1172,6 +1173,7 @@ const serviceVisuals = [
   },
   {
     slug: "ios-app-development",
+    manualAsset: "docs/mobile-app-photorealistic-prompts-2026-06-30.md#ios",
     kicker: "iOS-приложение для сервиса",
     title: "iOS-приложение: кабинет, TestFlight, CRM и App Store",
     subtitle: "Визуал показывает не красивый телефон без смысла, а продуктовый путь: кабинет клиента, API, CRM, TestFlight и релизный пакет.",
@@ -1690,6 +1692,10 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   try {
     for (const item of serviceVisuals) {
+      if (item.manualAsset) {
+        console.log(`[context-visuals] service ${item.slug} kept manual asset from ${item.manualAsset}`);
+        continue;
+      }
       const out = path.join(ROOT, "public", "og", "services", `${item.slug}.png`);
       fs.mkdirSync(path.dirname(out), { recursive: true });
       await renderHtml(browser, renderServiceSvg(item), out, WIDTH, HEIGHT);
