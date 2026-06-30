@@ -119,6 +119,9 @@ export const Footer = () => {
               <Link to="/sozdanie-lendinga-tyumen" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Создание лендинга
               </Link>
+              <Link to="/crm-dlya-biznesa" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                Внедрение CRM
+              </Link>
               <Link to="/nastroyka-yandex-direct-tyumen" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                 Настройка Яндекс Директа
               </Link>
