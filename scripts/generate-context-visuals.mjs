@@ -1121,6 +1121,7 @@ const serviceVisuals = [
   },
   {
     slug: "ai-systems",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#ai-systems",
     kicker: "AI-система для бизнеса",
     title: "AI-системы: база знаний, контент и внутренние ассистенты",
     subtitle: "Визуал собирает систему из базы знаний, CRM, контента и управленческого контроля вместо абстрактного мозга.",
@@ -1147,6 +1148,7 @@ const serviceVisuals = [
   },
   {
     slug: "avito-ads",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#avito-ads",
     kicker: "Авито как канал заявок",
     title: "Реклама на Авито для услуг и локального бизнеса",
     subtitle: "Показываем профиль, объявления, ответы, продвижение и связку с сайтом/CRM для локального спроса.",
@@ -1320,6 +1322,7 @@ const serviceVisuals = [
   },
   {
     slug: "max-messenger",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#max-messenger",
     kicker: "MAX как ранний рынок",
     title: "Решения для Max: продажи, сервис и CRM",
     subtitle: "Платформа должна быть показана через реальный MAX-ассет, ранний канал, диалог, CRM и сервисные сценарии.",
@@ -1347,6 +1350,7 @@ const serviceVisuals = [
   },
   {
     slug: "n8n-automation",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#n8n-automation",
     kicker: "workflow между системами",
     title: "n8n-автоматизация заявок, CRM и AI-сценариев",
     subtitle: "Показываем связку событий: заявка, n8n-маршрут, Telegram-уведомление, CRM-задача и AI-проверка.",
@@ -1386,6 +1390,7 @@ const serviceVisuals = [
   },
   {
     slug: "openclaw-ai",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#openclaw-ai",
     kicker: "self-hosted AI-контур",
     title: "OpenClaw для бизнеса: AI в Telegram и CRM",
     subtitle: "Показываем серверный контур, Telegram-диалог, n8n-маршрут, CRM и контроль доступа.",
@@ -1412,6 +1417,7 @@ const serviceVisuals = [
   },
   {
     slug: "telegram-lead-agent",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#telegram-lead-agent",
     kicker: "Telegram + AI + CRM",
     title: "Telegram AI-агент для заявок",
     subtitle: "Нужен настоящий Telegram-контекст: логотип, диалог, квалификация лида, n8n и CRM.",
@@ -1439,6 +1445,7 @@ const serviceVisuals = [
   },
   {
     slug: "telegram-service-agent",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#telegram-service-agent",
     kicker: "Telegram-сервис 24/7",
     title: "Telegram AI-консультант для записи и сервиса",
     subtitle: "Схема: FAQ, запись, напоминания, статусы и передача живому менеджеру.",
@@ -1478,6 +1485,7 @@ const serviceVisuals = [
   },
   {
     slug: "web-analytics",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#web-analytics",
     kicker: "Метрика и цели",
     title: "Настройка веб-аналитики: цели, события, отчеты",
     subtitle: "Картинка должна объяснять: сайт, цели Метрики, события, UTM, источники и отчет для руководителя.",
@@ -1491,6 +1499,7 @@ const serviceVisuals = [
   },
   {
     slug: "website-development",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#website-development",
     kicker: "сайт как основа заявок",
     title: "Создание сайта, MVP и интерфейса продаж",
     subtitle: "Показываем структуру посадочной: оффер, блоки доверия, форма, аналитика, CRM и SEO-гео.",
@@ -1504,6 +1513,7 @@ const serviceVisuals = [
   },
   {
     slug: "yandex-direct",
+    manualAsset: "docs/photorealistic-service-prompts-rest-2026-06-30.md#yandex-direct",
     kicker: "Директ без слива бюджета",
     title: "Яндекс.Директ: заявки в сайт, Mini App и CRM",
     subtitle: "Используем реальный знак Яндекс.Директа и показываем путь: семантика, объявление, посадочная, цель и CRM.",
