@@ -1107,6 +1107,7 @@ const serviceVisuals = [
   },
   {
     slug: "ai-agents",
+    manualAsset: "docs/photorealistic-service-prompts-2026-06-30.md#ai-agents",
     kicker: "AI-агент под процесс",
     title: "AI-агенты для заявок, ответов и действий",
     subtitle: "Смысл картинки: агент не просто светится, а принимает входящий запрос, уточняет контекст и передает действие в CRM.",
@@ -1200,6 +1201,7 @@ const serviceVisuals = [
   },
   {
     slug: "browser-extensions",
+    manualAsset: "docs/photorealistic-service-prompts-2026-06-30.md#browser-extensions",
     kicker: "инструменты команды",
     title: "Расширения для Chrome и Яндекс Браузера",
     subtitle: "Схема показывает рабочий инструмент: вкладка, действие сотрудника, сбор данных, контроль и выгрузку в CRM.",
@@ -1265,6 +1267,7 @@ const serviceVisuals = [
   },
   {
     slug: "custom-crm",
+    manualAsset: "docs/photorealistic-service-prompts-2026-06-30.md#custom-crm",
     kicker: "CRM под модель бизнеса",
     title: "Персональная CRM-система для бизнеса",
     subtitle: "Визуал показывает не “дашборд вообще”, а карточку клиента, этапы, задачи, роли и источники заявок.",
@@ -1330,6 +1333,7 @@ const serviceVisuals = [
   },
   {
     slug: "mvp-development",
+    manualAsset: "docs/photorealistic-service-prompts-2026-06-30.md#mvp-development",
     kicker: "MVP без лишнего масштаба",
     title: "Разработка MVP для проверки рынка",
     subtitle: "Визуал показывает гипотезу, быстрый интерфейс, первые заявки, обратную связь и решение о развитии.",
@@ -1421,6 +1425,7 @@ const serviceVisuals = [
   },
   {
     slug: "telegram-mini-app",
+    manualAsset: "docs/photorealistic-service-prompts-2026-06-30.md#telegram-mini-app",
     kicker: "Mini App как интерфейс продаж",
     title: "Telegram Mini App для бизнеса",
     subtitle: "Показываем интерфейс внутри Telegram: каталог/запись/кабинет, оплата или заявка и CRM.",
