@@ -110,7 +110,7 @@ function renderServiceSvg(item) {
   let scene = "";
 
   if (slug.includes("android-app") || slug.includes("ios-app")) {
-    scene = mobileAppScene(slug.includes("ios") ? "ios" : "android");
+    scene = mobileAppShowcaseScene(slug.includes("ios") ? "ios" : "android");
   } else if (slug.includes("yandex")) {
     scene = `
       ${logoDisc("yandexDirect", 118, 112, 92)}
@@ -173,6 +173,10 @@ function renderServiceSvg(item) {
     `;
   }
 
+  const bottomRibbon = slug.includes("android-app") || slug.includes("ios-app")
+    ? ""
+    : `<path d="M102 532 C254 474 382 560 528 514 C684 466 774 510 944 532" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" opacity="0.25" />`;
+
   return `<!doctype html>
   <html><head><meta charset="utf-8"><style>body{margin:0}</style></head>
   <body>
@@ -181,7 +185,7 @@ function renderServiceSvg(item) {
     <rect x="54" y="54" width="1092" height="522" rx="42" fill="#ffffff" opacity="0.86" filter="url(#shadow)" />
     <rect x="54" y="54" width="1092" height="522" rx="42" fill="none" stroke="#dbeafe" />
     ${scene}
-    <path d="M102 532 C254 474 382 560 528 514 C684 466 774 510 944 532" fill="none" stroke="url(#brand)" stroke-width="10" stroke-linecap="round" opacity="0.25" />
+    ${bottomRibbon}
   </svg>
   </body></html>`;
 }
@@ -369,6 +373,271 @@ function mobileReleaseBoard(x, y, tone, label, rows) {
           <text x="${x + 82}" y="${y + 102 + index * 42}" fill="#334155" font-size="14" font-weight="700">${escapeXml(row)}</text>
         </g>
       `).join("")}
+    </g>`;
+}
+
+function appTone(tone) {
+  const palette = {
+    green: "#22c55e",
+    lime: "#84cc16",
+    teal: "#14b8a6",
+    amber: "#f59e0b",
+    coral: "#f97316",
+    blue: "#0ea5e9",
+    indigo: "#6366f1",
+    violet: "#8b5cf6",
+    magenta: "#d946ef",
+    rose: "#fb7185",
+    slate: "#0f172a",
+  };
+  return palette[tone] || colors.blue;
+}
+
+function labelPill(x, y, label, tone = "blue", width = 138) {
+  const accent = appTone(tone);
+  return `
+    <g>
+      <rect x="${x}" y="${y}" width="${width}" height="38" rx="19" fill="#ffffff" stroke="${accent}" stroke-opacity="0.28" filter="url(#shadow)" />
+      <circle cx="${x + 22}" cy="${y + 19}" r="7" fill="${accent}" />
+      <text x="${x + 40}" y="${y + 25}" fill="#0f172a" font-size="15" font-weight="800">${escapeXml(label)}</text>
+    </g>`;
+}
+
+function phoneShowcase(x, y, w, h, tone, screenRenderer, options = {}) {
+  const rotate = options.rotate || 0;
+  const platform = options.platform || "android";
+  const bezel = platform === "ios" ? "#111827" : "#101828";
+  const inset = Math.max(12, Math.round(w * 0.07));
+  const topInset = platform === "ios" ? 28 : 25;
+  const bottomInset = 20;
+  const screenW = w - inset * 2;
+  const screenH = h - topInset - bottomInset;
+  const notch = platform === "ios"
+    ? `<rect x="${w / 2 - 38}" y="14" width="76" height="22" rx="11" fill="#050816" opacity="0.92" />`
+    : `<circle cx="${w / 2}" cy="17" r="5" fill="#475569" opacity="0.55" />`;
+
+  return `
+    <g transform="translate(${x} ${y}) rotate(${rotate} ${w / 2} ${h / 2})">
+      <rect x="0" y="0" width="${w}" height="${h}" rx="${platform === "ios" ? 44 : 36}" fill="${bezel}" filter="url(#shadow)" />
+      <rect x="${inset}" y="${topInset}" width="${screenW}" height="${screenH}" rx="${platform === "ios" ? 31 : 25}" fill="#f8fafc" />
+      ${notch}
+      <g transform="translate(${inset} ${topInset})">
+        ${screenRenderer(screenW, screenH, appTone(tone))}
+      </g>
+    </g>`;
+}
+
+function tabletShowcase(x, y, w, h, tone, title, screenRenderer, options = {}) {
+  const rotate = options.rotate || 0;
+  const accent = appTone(tone);
+  return `
+    <g transform="translate(${x} ${y}) rotate(${rotate} ${w / 2} ${h / 2})">
+      <rect x="0" y="0" width="${w}" height="${h}" rx="36" fill="#0f172a" filter="url(#shadow)" />
+      <rect x="16" y="18" width="${w - 32}" height="${h - 36}" rx="26" fill="#ffffff" />
+      <rect x="40" y="38" width="62" height="12" rx="6" fill="${accent}" opacity="0.7" />
+      <text x="40" y="72" fill="#0f172a" font-size="24" font-weight="900">${escapeXml(title)}</text>
+      <g transform="translate(40 94)">
+        ${screenRenderer(w - 80, h - 136, accent)}
+      </g>
+    </g>`;
+}
+
+function serviceScreen(w, h, accent) {
+  const routeY = Math.max(126, h - 154);
+  const routeEndX = Math.max(126, w - 42);
+  return `
+    <rect width="${w}" height="${h}" rx="25" fill="#f8fafc" />
+    <rect x="18" y="24" width="${w - 36}" height="84" rx="24" fill="${accent}" opacity="0.14" />
+    <text x="34" y="58" fill="#0f172a" font-size="22" font-weight="900">Сервис</text>
+    <text x="34" y="86" fill="#334155" font-size="15" font-weight="700">мастер назначен</text>
+    <path d="M38 ${routeY + 34} C70 ${routeY - 6} ${w * 0.48} ${routeY + 46} ${w * 0.67} ${routeY + 12} C${w * 0.78} ${routeY - 8} ${w * 0.9} ${routeY - 2} ${routeEndX} ${routeY - 24}" fill="none" stroke="${accent}" stroke-width="10" stroke-linecap="round" opacity="0.82" />
+    <circle cx="${Math.min(72, w - 96)}" cy="${routeY + 4}" r="15" fill="#ffffff" stroke="${accent}" stroke-width="7" />
+    <circle cx="${Math.max(w - 70, 116)}" cy="${routeY - 18}" r="15" fill="#ffffff" stroke="${accent}" stroke-width="7" />
+    <rect x="24" y="${h - 126}" width="${w - 48}" height="78" rx="24" fill="#ffffff" stroke="#dbeafe" />
+    <text x="44" y="${h - 92}" fill="#0f172a" font-size="18" font-weight="900">Заявка #1042</text>
+    <rect x="44" y="${h - 72}" width="104" height="18" rx="9" fill="${accent}" opacity="0.8" />
+    <rect x="${w - 106}" y="${h - 77}" width="62" height="28" rx="14" fill="#0f172a" opacity="0.9" />
+  `;
+}
+
+function routeScreen(w, h, accent) {
+  const routeEndX = Math.max(106, w - 36);
+  return `
+    <rect width="${w}" height="${h}" rx="25" fill="#fff7ed" />
+    <text x="24" y="48" fill="#0f172a" font-size="21" font-weight="900">Маршрут</text>
+    <rect x="24" y="66" width="${w - 48}" height="36" rx="18" fill="#ffffff" stroke="#fed7aa" />
+    <text x="42" y="90" fill="#9a3412" font-size="15" font-weight="900">4 заявки</text>
+    <path d="M42 146 C72 116 92 188 ${w * 0.58} 154 C${w * 0.74} 126 ${w * 0.82} 196 ${routeEndX} 166" fill="none" stroke="${accent}" stroke-width="9" stroke-linecap="round" />
+    ${[0, 1, 2, 3].map((index) => `
+      <g>
+        <circle cx="${48 + index * ((w - 68) / 3)}" cy="${154 + (index % 2) * 22}" r="14" fill="#ffffff" stroke="${accent}" stroke-width="6" />
+        <text x="${48 + index * ((w - 68) / 3)}" y="${159 + (index % 2) * 22}" fill="#0f172a" font-size="12" font-weight="900" text-anchor="middle">${index + 1}</text>
+      </g>
+    `).join("")}
+    <rect x="24" y="${h - 104}" width="${w - 48}" height="58" rx="20" fill="#ffffff" stroke="#fed7aa" />
+    <text x="44" y="${h - 70}" fill="#0f172a" font-size="16" font-weight="900">Фото</text>
+    <rect x="${w - 98}" y="${h - 82}" width="58" height="24" rx="12" fill="${accent}" opacity="0.86" />
+  `;
+}
+
+function catalogScreen(w, h, accent) {
+  return `
+    <rect width="${w}" height="${h}" rx="25" fill="#fefce8" />
+    <text x="24" y="50" fill="#0f172a" font-size="22" font-weight="900">Каталог</text>
+    <circle cx="${w - 32}" cy="40" r="18" fill="${accent}" opacity="0.78" />
+    ${[0, 1, 2, 3].map((index) => {
+      const col = index % 2;
+      const row = Math.floor(index / 2);
+      const px = 24 + col * ((w - 62) / 2);
+      const py = 82 + row * 120;
+      return `
+        <g>
+          <rect x="${px}" y="${py}" width="${(w - 78) / 2}" height="98" rx="24" fill="#ffffff" stroke="#fde68a" />
+          <rect x="${px + 16}" y="${py + 16}" width="${(w - 110) / 2}" height="36" rx="16" fill="${index % 2 ? "#f97316" : accent}" opacity="0.72" />
+          <rect x="${px + 16}" y="${py + 66}" width="${(w - 128) / 2}" height="12" rx="6" fill="#cbd5e1" />
+        </g>`;
+    }).join("")}
+    <rect x="24" y="${h - 70}" width="${w - 48}" height="42" rx="21" fill="#0f172a" opacity="0.9" />
+    <text x="${w / 2}" y="${h - 43}" fill="#ffffff" font-size="15" font-weight="900" text-anchor="middle">Корзина</text>
+  `;
+}
+
+function crmScreen(w, h, accent) {
+  if (w < 220) {
+    return `
+      <rect width="${w}" height="${h}" rx="22" fill="#f8fafc" />
+      <rect x="0" y="0" width="${w}" height="52" rx="22" fill="#0f172a" />
+      <text x="26" y="34" fill="#ffffff" font-size="22" font-weight="900">CRM</text>
+      ${[0, 1, 2].map((index) => `
+        <g>
+          <rect x="24" y="${68 + index * 36}" width="${w - 48}" height="26" rx="13" fill="${index === 1 ? "#ecfdf5" : "#eff6ff"}" />
+          <circle cx="48" cy="${81 + index * 36}" r="7" fill="${accent}" opacity="${0.9 - index * 0.16}" />
+          <rect x="66" y="${75 + index * 36}" width="${Math.max(42, w - 126)}" height="12" rx="6" fill="#cbd5e1" />
+        </g>
+      `).join("")}
+    `;
+  }
+
+  const rowGap = Math.max(34, (h - 68) / 3);
+  const rowHeight = Math.max(26, Math.min(42, rowGap - 8));
+  const title = w < 220 ? "CRM" : "CRM и заявки";
+  return `
+    <rect width="${w}" height="${h}" rx="22" fill="#f8fafc" />
+    <rect x="0" y="0" width="${w}" height="52" rx="22" fill="#0f172a" />
+    <text x="26" y="34" fill="#ffffff" font-size="22" font-weight="900">${title}</text>
+    ${["новая", "в работе", "повтор"].map((label, index) => `
+      <g>
+        <rect x="24" y="${68 + index * rowGap}" width="${w - 48}" height="${rowHeight}" rx="16" fill="${index === 1 ? "#ecfdf5" : "#eff6ff"}" />
+        <circle cx="48" cy="${68 + index * rowGap + rowHeight / 2}" r="7" fill="${accent}" opacity="${0.9 - index * 0.16}" />
+        <text x="66" y="${73 + index * rowGap + rowHeight / 2}" fill="#0f172a" font-size="15" font-weight="900">${escapeXml(label)}</text>
+        <rect x="${w - 86}" y="${76 + index * rowGap}" width="48" height="${Math.max(14, rowHeight - 16)}" rx="8" fill="#ffffff" stroke="#dbeafe" />
+      </g>
+    `).join("")}
+  `;
+}
+
+function bookingScreen(w, h, accent) {
+  return `
+    <rect width="${w}" height="${h}" rx="31" fill="#f8fafc" />
+    <text x="28" y="60" fill="#0f172a" font-size="24" font-weight="900">Кабинет</text>
+    <rect x="28" y="86" width="${w - 56}" height="92" rx="28" fill="${accent}" opacity="0.14" />
+    <text x="50" y="124" fill="#0f172a" font-size="20" font-weight="900">Заказ #4821</text>
+    <text x="50" y="152" fill="#334155" font-size="15" font-weight="800">готовится к выдаче</text>
+    <rect x="28" y="204" width="${w - 56}" height="84" rx="26" fill="#ffffff" stroke="#dbeafe" />
+    <text x="50" y="238" fill="#0f172a" font-size="18" font-weight="900">Запись</text>
+    <rect x="50" y="256" width="70" height="20" rx="10" fill="${accent}" opacity="0.72" />
+    <rect x="134" y="256" width="96" height="20" rx="10" fill="#cbd5e1" />
+    <rect x="28" y="${h - 92}" width="${w - 56}" height="52" rx="26" fill="#0f172a" />
+    <text x="${w / 2}" y="${h - 59}" fill="#ffffff" font-size="17" font-weight="900" text-anchor="middle">Повторить заказ</text>
+  `;
+}
+
+function loyaltyScreen(w, h, accent) {
+  return `
+    <rect width="${w}" height="${h}" rx="31" fill="#fff1f2" />
+    <text x="26" y="54" fill="#0f172a" font-size="22" font-weight="900">Бонусы</text>
+    <rect x="26" y="78" width="${w - 52}" height="102" rx="28" fill="#111827" />
+    <path d="M48 148 C86 96 128 178 174 112 C204 70 230 100 252 78" fill="none" stroke="${accent}" stroke-width="10" stroke-linecap="round" opacity="0.86" />
+    <text x="48" y="122" fill="#ffffff" font-size="26" font-weight="900">12 480</text>
+    <text x="48" y="154" fill="#cbd5e1" font-size="14" font-weight="800">баллов</text>
+    ${["Оплата", "Документы"].map((label, index) => `
+      <g>
+        <rect x="26" y="${208 + index * 54}" width="${w - 52}" height="38" rx="19" fill="#ffffff" stroke="#fecdd3" />
+        <circle cx="50" cy="${227 + index * 54}" r="8" fill="${accent}" />
+        <text x="68" y="${233 + index * 54}" fill="#0f172a" font-size="15" font-weight="900">${escapeXml(label)}</text>
+      </g>
+    `).join("")}
+  `;
+}
+
+function realtyScreen(w, h, accent) {
+  return `
+    <rect width="${w}" height="${h}" rx="31" fill="#eff6ff" />
+    <rect x="24" y="24" width="${w - 48}" height="112" rx="28" fill="${accent}" opacity="0.78" />
+    <circle cx="${w - 74}" cy="70" r="24" fill="#ffffff" opacity="0.44" />
+    <path d="M46 118 L96 76 L134 108 L172 58 L${w - 42} 118" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.84" />
+    <text x="26" y="178" fill="#0f172a" font-size="22" font-weight="900">Объект</text>
+    <rect x="26" y="204" width="${w - 52}" height="44" rx="22" fill="#ffffff" stroke="#bfdbfe" />
+    <text x="48" y="232" fill="#0f172a" font-size="15" font-weight="900">показ в 16:30</text>
+    <rect x="26" y="${h - 92}" width="${w - 52}" height="52" rx="26" fill="#ffffff" stroke="#bfdbfe" />
+    <text x="48" y="${h - 59}" fill="#0f172a" font-size="16" font-weight="900">Напомнить клиенту</text>
+  `;
+}
+
+function docsScreen(w, h, accent) {
+  return `
+    <rect width="${w}" height="${h}" rx="31" fill="#f5f3ff" />
+    <text x="24" y="54" fill="#0f172a" font-size="22" font-weight="900">Документы</text>
+    ${["договор", "акт", "счет"].map((label, index) => `
+      <g>
+        <rect x="24" y="${86 + index * 66}" width="${w - 48}" height="48" rx="18" fill="#ffffff" stroke="#ddd6fe" />
+        <rect x="44" y="${104 + index * 66}" width="34" height="12" rx="6" fill="${accent}" opacity="${0.9 - index * 0.18}" />
+        <text x="94" y="${116 + index * 66}" fill="#0f172a" font-size="15" font-weight="900">${escapeXml(label)}</text>
+      </g>
+    `).join("")}
+    <rect x="24" y="${h - 76}" width="${w - 48}" height="38" rx="19" fill="${accent}" opacity="0.84" />
+  `;
+}
+
+function mobileAppShowcaseScene(platform) {
+  const isIos = platform === "ios";
+
+  if (isIos) {
+    return `
+      <g font-family="Inter, Arial, sans-serif">
+        <rect x="96" y="118" width="958" height="384" rx="44" fill="#f8fafc" stroke="#dbeafe" />
+        <rect x="132" y="96" width="250" height="96" rx="30" fill="#ffffff" opacity="0.94" filter="url(#shadow)" />
+        <text x="160" y="136" fill="#0f172a" font-size="22" font-weight="900">TestFlight</text>
+        <text x="160" y="164" fill="#475569" font-size="15" font-weight="800">демо и privacy</text>
+        <rect x="790" y="96" width="250" height="96" rx="32" fill="#ffffff" opacity="0.94" filter="url(#shadow)" />
+        <text x="818" y="136" fill="#0ea5e9" font-size="22" font-weight="900">App Store</text>
+        <text x="818" y="164" fill="#475569" font-size="15" font-weight="800">карточка релиза</text>
+        ${phoneShowcase(168, 190, 184, 306, "violet", docsScreen, { platform: "ios", rotate: -4 })}
+        ${phoneShowcase(420, 98, 254, 422, "blue", bookingScreen, { platform: "ios" })}
+        ${phoneShowcase(738, 192, 198, 316, "magenta", loyaltyScreen, { platform: "ios", rotate: 4 })}
+        ${labelPill(160, 520, "документы", "violet", 142)}
+        ${labelPill(438, 528, "клиентский кабинет", "blue", 210)}
+        ${labelPill(724, 520, "оплата и бонусы", "magenta", 190)}
+      </g>`;
+  }
+
+  return `
+    <g font-family="Inter, Arial, sans-serif">
+      <rect x="92" y="112" width="970" height="388" rx="44" fill="#fffdf7" stroke="#dbeafe" />
+      <rect x="128" y="92" width="246" height="92" rx="30" fill="#ffffff" opacity="0.94" filter="url(#shadow)" />
+      <text x="156" y="130" fill="#16a34a" font-size="22" font-weight="900">Google Play</text>
+      <text x="156" y="158" fill="#475569" font-size="15" font-weight="800">RuStore и тесты</text>
+      <rect x="812" y="94" width="226" height="94" rx="30" fill="#ffffff" opacity="0.94" filter="url(#shadow)" />
+      <text x="840" y="132" fill="#f97316" font-size="22" font-weight="900">Push + CRM</text>
+      <text x="840" y="160" fill="#475569" font-size="15" font-weight="800">статусы заявок</text>
+      ${phoneShowcase(128, 176, 208, 342, "green", serviceScreen, { rotate: -2 })}
+      ${phoneShowcase(370, 190, 172, 300, "coral", routeScreen, { rotate: 2 })}
+      ${phoneShowcase(590, 160, 188, 330, "amber", catalogScreen, { rotate: -1 })}
+      ${tabletShowcase(820, 216, 248, 230, "teal", "Команда", crmScreen)}
+      ${labelPill(124, 520, "сервисные заявки", "green", 188)}
+      ${labelPill(366, 514, "маршруты", "coral", 142)}
+      ${labelPill(598, 512, "каталог", "amber", 126)}
+      ${labelPill(872, 468, "CRM", "teal", 102)}
     </g>`;
 }
 
