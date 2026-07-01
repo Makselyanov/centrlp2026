@@ -12,7 +12,8 @@
     "audit:public-pages": "node scripts/audit-public-pages.mjs",
     "seo:yandex": "node scripts/yandex-webmaster-report.mjs",
     "seo:gsc": "node scripts/gsc-report.mjs",
-    "seo:report": "node scripts/yandex-webmaster-report.mjs"
+    "seo:report": "node scripts/yandex-webmaster-report.mjs",
+    "content:brief": "node scripts/seo-topic-brief.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
