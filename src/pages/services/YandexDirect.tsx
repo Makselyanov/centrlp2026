@@ -17,6 +17,7 @@ const YandexDirect = () => {
     { question: "Сколько стоит настройка Яндекс.Директ в Тюмени?", answer: "Настройка поисковой рекламы — от 20 000 ₽. РСЯ (рекламная сеть Яндекса) — от 25 000 ₽. Ведение и ежедневная оптимизация — от 30 000 ₽/мес. Комплекс AI (поиск + РСЯ + чат-боты + доработка сайта) — от 50 000 ₽/мес. Рекламный бюджет оплачивается отдельно." },
     { question: "Какие сроки запуска рекламы в Яндекс.Директ?", answer: "Сбор семантики, написание объявлений и настройка аналитики — 5–7 рабочих дней. Первые клики и заявки — в день запуска. Оптимизация и выход на целевую стоимость лида — 2–4 недели." },
     { question: "Что входит в ведение Яндекс.Директ?", answer: "Ежедневная чистка мусорных площадок, корректировка ставок, A/B-тесты объявлений, защита от ботов и скликивания, AI-оптимизация кампаний, ретаргетинг, регулярные отчёты с аналитикой по лидам и продажам." },
+    { question: "Можно ли заказать только аудит Директа без ведения?", answer: "Да. Если кампании уже работают, начинаем с проверки поисковых фраз, РСЯ-площадок, целей Метрики, посадочной страницы и обработки заявок. После аудита понятно, что исправить в рекламе, а что мешает продажам уже после клика." },
   ];
   useFaqSchema(faqItems);
   useAutoBreadcrumb("Яндекс.Директ");
@@ -26,17 +27,17 @@ const YandexDirect = () => {
   };
 
   const painPoints = [
-    { icon: XCircle, title: "Мусор из Мастера Кампаний", text: "Яндекс подмешивает до 40% нецелевых площадок в автоматических стратегиях, сливая бюджет на мобильные игры." },
-    { icon: Bot, title: "Боты и скликивание", text: "Конкуренты и бот-фермы скликивают до 60% бюджета. Обычная защита Яндекса пропускает их." },
-    { icon: TrendingUp, title: "Роботы съедают бюджет", text: "Автостратегии разгоняются, видят «конверсии» (которые на самом деле боты) и начинают лить туда все деньги." },
-    { icon: MousePointer2, title: "Менеджер «ведёт» для галочки", text: "Агентства просто шлют отчёты. Никто не слушает звонки и не меняет офферы под рынок." },
+    { icon: XCircle, title: "Смешаны горячие и холодные фразы", text: "В одной кампании оказываются срочные заявки, информационные запросы и случайные показы. Бюджет тратится, а бизнес не понимает, какие фразы реально приводят клиентов." },
+    { icon: Bot, title: "РСЯ работает без чистки площадок", text: "В рекламной сети быстро накапливаются слабые площадки, широкие аудитории и показы без намерения купить. Их нужно регулярно смотреть, отключать и отделять от поиска." },
+    { icon: TrendingUp, title: "Метрика считает не те цели", text: "Кампания оптимизируется по кликам на кнопку, открытию формы или техническим событиям, а не по настоящим обращениям. Из-за этого стратегия учится на шуме." },
+    { icon: MousePointer2, title: "После клика заявка теряется", text: "Даже хорошая реклама не окупается, если посадочная страница слабая, форма неудобная, телефон не отслеживается, а менеджер получает обращение без контекста." },
   ];
 
   const aiFeatures = [
-    { icon: ShieldCheck, title: "Авто-чистка мусора", text: "Блокирует 120+ видов ботов и скликивателей в реальном времени." },
-    { icon: Sparkles, title: "Генерация креативов", text: "Создаёт 100+ вариантов объявлений и тестирует их за 24 часа." },
-    { icon: Target, title: "Прогноз CPA 92%", text: "Точно предсказывает стоимость заявки до запуска кампании." },
-    { icon: Search, title: "Поиск связок", text: "Каждую неделю находит новые ключевые слова, которые упустили конкуренты." },
+    { icon: ShieldCheck, title: "Чистка спроса", text: "Разделяем горячие, коммерческие и информационные фразы, чтобы бюджет не смешивал заявки с любопытством." },
+    { icon: Sparkles, title: "Тесты объявлений", text: "Собираем несколько офферов под разные сегменты и смотрим, какие формулировки дают обращения, а не только клики." },
+    { icon: Target, title: "Прогноз экономики", text: "До запуска считаем бюджет, допустимую цену заявки, конверсию страницы и точку, где рекламу нужно остановить или усилить." },
+    { icon: Search, title: "Связка с SEO", text: "Фразы из Директа помогают понять, какие посадочные и статьи стоит усиливать для органического поиска в Тюмени." },
   ];
 
   const destinations = [
@@ -62,8 +63,8 @@ const YandexDirect = () => {
 
   return (
     <Layout
-      title="Яндекс.Директ 2026: заявки в сайт, Mini App и CRM | CentrLP"
-      description="Настройка и ведение Яндекс.Директ с AI-оптимизацией. Ведем трафик не в пустые страницы, а в продающие сайты, мини-приложения и CRM-воронки."
+      title="Настройка Яндекс Директ в Тюмени — поиск, РСЯ и заявки | CentrLP"
+      description="Настройка и ведение Яндекс Директ в Тюмени: семантика, объявления, РСЯ, цели Метрики, посадочная страница, CRM и контроль стоимости заявки."
     >
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
@@ -74,23 +75,23 @@ const YandexDirect = () => {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#0096D6] text-xs font-semibold uppercase tracking-wider shadow-sm mb-8">
             <Rocket className="w-3.5 h-3.5" />
-            <span>Технологии маркетинга 2026</span>
+            <span>Контекстная реклама для бизнеса в Тюмени</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
-            Яндекс.Директ <br />
+            Настройка Яндекс Директ <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-              как система заявок
+              под заявки, а не клики
             </span>
           </h1>
           <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Проектируем трафик под продающие страницы, Telegram Mini App, ботов и CRM-сценарии. AI помогает быстрее найти рабочие связки, а мы собираем всю воронку до продажи.
+            Собираем поисковые кампании, РСЯ, объявления, цели Метрики и посадочную страницу в одну систему. Бизнес видит, какие фразы приводят обращения, сколько стоит заявка и где теряются деньги после клика.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button size="lg" onClick={scrollToContact}>
-              Получить стратегию <ArrowRight className="ml-2 w-4 h-4" />
+              Рассчитать запуск <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <a href="#comparison">Смотреть сравнение</a>
+              <Link to="/nastroyka-yandex-direct-tyumen">Страница для Тюмени</Link>
             </Button>
           </div>
         </div>
@@ -103,8 +104,8 @@ const YandexDirect = () => {
         id="comparison"
         tone="white"
         eyebrow="Ожидание vs реальность"
-        title="Обычный Директ против CentrLP"
-        description="Две картины по одной и той же нише — с типичной настройкой и с AI-оптимизацией."
+        title="Обычный запуск против управляемой системы"
+        description="Директ окупается не за счёт красивого кабинета, а за счёт связки из спроса, объявления, посадочной, Метрики, CRM и быстрой обработки обращения."
       >
         <div className="grid md:grid-cols-2 gap-5">
           <div className="rounded-2xl border border-red-200/60 bg-gradient-to-br from-white to-red-50/40 p-7 shadow-sm">
@@ -114,22 +115,22 @@ const YandexDirect = () => {
             </div>
             <div className="grid grid-cols-2 gap-5 mb-5">
               <div>
-                <div className="text-xs text-slate-500 mb-1">Стоимость лида (CPA)</div>
-                <div className="text-3xl font-bold text-slate-900">2 500 ₽</div>
+                <div className="text-xs text-slate-500 mb-1">Контроль цели</div>
+                <div className="text-3xl font-bold text-slate-900">Слабый</div>
                 <div className="mt-2 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div className="h-full w-[90%] bg-red-400 rounded-full" />
                 </div>
               </div>
               <div>
-                <div className="text-xs text-slate-500 mb-1">Конверсия (CR)</div>
-                <div className="text-3xl font-bold text-slate-900">0.8%</div>
+                <div className="text-xs text-slate-500 mb-1">Путь заявки</div>
+                <div className="text-3xl font-bold text-slate-900">Рваный</div>
                 <div className="mt-2 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div className="h-full w-[10%] bg-red-400 rounded-full" />
                 </div>
               </div>
             </div>
             <ul className="space-y-2">
-              {["Мусорные площадки и боты", "Автостратегии тратят деньги впустую", "Креативы «из коробки»"].map((x) => (
+              {["Ключи собраны без сегментов", "РСЯ чистится нерегулярно", "Форма и CRM живут отдельно"].map((x) => (
                 <li key={x} className="flex items-start gap-2 text-sm text-slate-600">
                   <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400" />
                   {x}
@@ -145,22 +146,22 @@ const YandexDirect = () => {
             </div>
             <div className="grid grid-cols-2 gap-5 mb-5">
               <div>
-                <div className="text-xs text-slate-500 mb-1">Стоимость лида (CPA)</div>
-                <div className="text-3xl font-bold text-slate-900">350 ₽</div>
+                <div className="text-xs text-slate-500 mb-1">Контроль цели</div>
+                <div className="text-3xl font-bold text-slate-900">Полный</div>
                 <div className="mt-2 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div className="h-full w-[20%] bg-[#44B78B] rounded-full" />
                 </div>
               </div>
               <div>
-                <div className="text-xs text-slate-500 mb-1">Конверсия (CR)</div>
-                <div className="text-3xl font-bold text-slate-900">12.5%</div>
+                <div className="text-xs text-slate-500 mb-1">Путь заявки</div>
+                <div className="text-3xl font-bold text-slate-900">Единый</div>
                 <div className="mt-2 h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                   <div className="h-full w-[85%] bg-[#44B78B] rounded-full" />
                 </div>
               </div>
             </div>
             <ul className="space-y-2">
-              {["AI-чистка ботов и мусора в реальном времени", "100+ креативов за 24 часа", "Трафик ведём в продающий сайт/бот"].map((x) => (
+              {["Семантика разделена по намерению", "Метрика и CRM связаны с заявкой", "Посадочная усиливается по данным"].map((x) => (
                 <li key={x} className="flex items-start gap-2 text-sm text-slate-600">
                   <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#44B78B]" />
                   {x}
@@ -175,8 +176,8 @@ const YandexDirect = () => {
       <BentoSection
         tone="slate"
         eyebrow="Проблема"
-        title="Почему 87% кампаний умирают"
-        description="Четыре системные причины, из-за которых бюджет уходит без заявок."
+        title="Почему Директ не даёт заявок"
+        description="Четыре системные причины, из-за которых бюджет уходит в клики, но не превращается в обращения."
       >
         <div className="grid md:grid-cols-2 gap-5">
           {painPoints.map((pain) => (
@@ -198,13 +199,41 @@ const YandexDirect = () => {
       <BentoSection
         tone="tint"
         eyebrow="AI-технологии 2026"
-        title="Что делает AI, чего не может обычный директолог"
-        description="Четыре функции, которые мы считаем обязательными для Директа в 2026 году."
+        title="Что усиливает запуск в 2026 году"
+        description="Используем аналитику и AI-инструменты там, где они помогают быстрее проверить спрос, оффер и экономику заявки."
       >
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {aiFeatures.map((item) => (
             <BentoCard key={item.title} icon={item.icon} title={item.title} text={item.text} />
           ))}
+        </div>
+      </BentoSection>
+
+      <BentoSection
+        tone="white"
+        eyebrow="Локальный запуск"
+        title="Что проверяем для бизнеса в Тюмени"
+        description="Перед стартом рекламы смотрим не только кабинет Директа, но и то, куда попадёт человек после клика."
+      >
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            { title: "Спрос и конкуренты", text: "Разделяем запросы на срочные услуги, выбор подрядчика, цену, сравнение и информационные фразы. Это помогает не платить одинаково за разное намерение." },
+            { title: "Посадочная и доверие", text: "Проверяем первый экран, оффер, телефон, форму, юридические реквизиты, скорость ответа и локальные сигналы Тюмени." },
+            { title: "Метрика и CRM", text: "Настраиваем цели так, чтобы реклама оптимизировалась по обращениям, а менеджер видел источник, фразу, страницу и следующий шаг." },
+          ].map((item) => (
+            <div key={item.title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="mb-3 text-lg font-bold text-slate-900 tracking-tight">{item.title}</h3>
+              <p className="text-[15px] leading-7 text-slate-600">{item.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <Button asChild>
+            <Link to="/nastroyka-yandex-direct-tyumen">Открыть локальную посадочную</Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link to="/blog/skolko-stoit-yandeks-direkt-v-tyumeni">Разобрать стоимость Директа</Link>
+          </Button>
         </div>
       </BentoSection>
 
@@ -242,8 +271,8 @@ const YandexDirect = () => {
       <BentoSection
         tone="slate"
         eyebrow="Стоимость"
-        title="Инвестиции в результат"
-        description="Честные цены без скрытых комиссий. Рекламный бюджет оплачивается отдельно."
+        title="Стоимость настройки и ведения"
+        description="Фиксируем работу отдельно от рекламного бюджета, чтобы было понятно, за что платит бизнес и где начинается тест спроса."
       >
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {pricingTiers.map((tier) => (
@@ -356,13 +385,13 @@ const YandexDirect = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-10">
             <h2 className="text-[28px] md:text-[34px] font-bold tracking-tight text-slate-900 mb-4">
-              Хватит кормить Яндекс. <br />
+              Запустите Директ с понятной экономикой. <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-                Пора забирать свои заявки.
+                Видно, откуда пришла каждая заявка.
               </span>
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed">
-              Запустим рекламу за 7 дней с гарантией по договору. Оставьте заявку — вернёмся с расчётом стоимости и стратегией.
+              Оставьте заявку — вернёмся с расчётом запуска, списком обязательных настроек и предложением по посадочной странице, Метрике и CRM.
             </p>
           </div>
           <ContactForm />
