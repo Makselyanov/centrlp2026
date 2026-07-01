@@ -273,6 +273,94 @@ async function safeApiRequest(token, pathname) {
   }
 }
 
+function addDays(dateString, days) {
+  const date = new Date(`${dateString}T00:00:00Z`);
+  if (Number.isNaN(date.getTime())) return "";
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
+function buildPopularQueriesPath(userId, hostId, range = {}) {
+  const params = new URLSearchParams({
+    order_by: "TOTAL_SHOWS",
+    query_indicator: "TOTAL_SHOWS",
+    limit: "20",
+  });
+
+  params.append("query_indicator", "TOTAL_CLICKS");
+  params.append("query_indicator", "AVG_SHOW_POSITION");
+
+  if (range.dateFrom) params.set("date_from", range.dateFrom);
+  if (range.dateTo) params.set("date_to", range.dateTo);
+
+  return `/user/${userId}/hosts/${encodeURIComponent(hostId)}/search-queries/popular/?${params.toString()}`;
+}
+
+async function getPopularQueries(token, userId, hostId) {
+  const latest = await safeApiRequest(token, buildPopularQueriesPath(userId, hostId));
+  let previous = {
+    ok: false,
+    error: {
+      status: 0,
+      message: "skipped until latest popular query range is known",
+      payload: null,
+    },
+  };
+
+  if (latest.ok && latest.data?.date_from && latest.data?.date_to) {
+    previous = await safeApiRequest(
+      token,
+      buildPopularQueriesPath(userId, hostId, {
+        dateFrom: addDays(latest.data.date_from, -7),
+        dateTo: addDays(latest.data.date_to, -7),
+      }),
+    );
+  }
+
+  return { latest, previous };
+}
+
+function getIndicator(query, name) {
+  const value = Number(query?.indicators?.[name]);
+  return Number.isFinite(value) ? value : null;
+}
+
+function formatIndicator(value, digits = 0) {
+  return Number.isFinite(value) ? value.toFixed(digits) : "n/a";
+}
+
+function comparePopularQueries(popularQueries) {
+  const latestRows = popularQueries?.latest?.ok ? popularQueries.latest.data.queries || [] : [];
+  const previousRows = popularQueries?.previous?.ok ? popularQueries.previous.data.queries || [] : [];
+  const previousByText = new Map(
+    previousRows.map((query) => [String(query.query_text || "").toLocaleLowerCase("ru-RU"), query]),
+  );
+
+  return latestRows.map((query) => {
+    const key = String(query.query_text || "").toLocaleLowerCase("ru-RU");
+    const previous = previousByText.get(key) || null;
+    const shows = getIndicator(query, "TOTAL_SHOWS");
+    const previousShows = getIndicator(previous, "TOTAL_SHOWS");
+    const position = getIndicator(query, "AVG_SHOW_POSITION");
+    const previousPosition = getIndicator(previous, "AVG_SHOW_POSITION");
+
+    return {
+      queryText: query.query_text || "",
+      shows,
+      clicks: getIndicator(query, "TOTAL_CLICKS"),
+      avgShowPosition: position,
+      previousShows,
+      previousAvgShowPosition: previousPosition,
+      showsDelta:
+        Number.isFinite(shows) && Number.isFinite(previousShows) ? shows - previousShows : null,
+      positionDelta:
+        Number.isFinite(position) && Number.isFinite(previousPosition)
+          ? position - previousPosition
+          : null,
+    };
+  });
+}
+
 function sortProblems(problems) {
   const severityOrder = {
     FATAL: 0,
@@ -417,6 +505,7 @@ function createMarkdownReport(report) {
     : [];
   const indexingHistory = report.indexingHistory.ok ? report.indexingHistory.data : null;
   const inSearchHistory = report.inSearchHistory.ok ? report.inSearchHistory.data : null;
+  const popularQueryRows = comparePopularQueries(report.popularQueries);
 
   lines.push(`# SEO report for ${report.host.hostUrl}`);
   lines.push("");
@@ -442,6 +531,40 @@ function createMarkdownReport(report) {
     }
   } else {
     lines.push(`- failed: ${report.summary.error.message}`);
+  }
+  lines.push("");
+
+  lines.push("## Popular Search Queries");
+  if (report.popularQueries?.latest?.ok) {
+    const latest = report.popularQueries.latest.data;
+    lines.push(`- Latest range: ${latest.date_from}..${latest.date_to}`);
+    if (report.popularQueries.previous?.ok) {
+      const previous = report.popularQueries.previous.data;
+      lines.push(`- Previous range: ${previous.date_from}..${previous.date_to}`);
+    }
+
+    if (popularQueryRows.length === 0) {
+      lines.push("- no popular query rows returned");
+    } else {
+      for (const query of popularQueryRows) {
+        const showsDelta =
+          query.showsDelta === null ? "n/a" : query.showsDelta > 0 ? `+${query.showsDelta}` : `${query.showsDelta}`;
+        const positionDelta =
+          query.positionDelta === null
+            ? "n/a"
+            : query.positionDelta < 0
+              ? `${query.positionDelta.toFixed(2)} better`
+              : query.positionDelta > 0
+                ? `+${query.positionDelta.toFixed(2)} worse`
+                : "0.00";
+
+        lines.push(
+          `- ${query.queryText}: shows=${formatIndicator(query.shows)}, clicks=${formatIndicator(query.clicks)}, avg_position=${formatIndicator(query.avgShowPosition, 2)}, shows_delta=${showsDelta}, position_delta=${positionDelta}`,
+        );
+      }
+    }
+  } else {
+    lines.push(`- failed: ${report.popularQueries?.latest?.error?.message || "not requested"}`);
   }
   lines.push("");
 
@@ -577,13 +700,14 @@ async function main() {
       `/user/${userId}/hosts/${encodeURIComponent(hostId)}/user-added-sitemaps`,
     ),
   ]);
-  const [indexingHistory, inSearchHistory, headChecks] = await Promise.all([
+  const [indexingHistory, inSearchHistory, headChecks, popularQueries] = await Promise.all([
     safeApiRequest(config.token, `/user/${userId}/hosts/${encodeURIComponent(hostId)}/indexing/history`),
     safeApiRequest(
       config.token,
       `/user/${userId}/hosts/${encodeURIComponent(hostId)}/search-urls/in-search/history`,
     ),
     getHeadChecks(reportHostUrl(config.hostUrl)),
+    getPopularQueries(config.token, userId, hostId),
   ]);
 
   const report = {
@@ -604,6 +728,7 @@ async function main() {
     userAddedSitemaps,
     indexingHistory,
     inSearchHistory,
+    popularQueries,
     headChecks,
   };
 
@@ -635,6 +760,14 @@ async function main() {
     console.log(`Active diagnostics: ${activeDiagnostics.length}`);
   } else {
     console.log(`Diagnostics request failed: ${report.diagnostics.error.message}`);
+  }
+
+  if (report.popularQueries.latest.ok) {
+    console.log(
+      `Popular queries: ${report.popularQueries.latest.data.count || 0} (${report.popularQueries.latest.data.date_from}..${report.popularQueries.latest.data.date_to})`,
+    );
+  } else {
+    console.log(`Popular queries request failed: ${report.popularQueries.latest.error.message}`);
   }
 
   if (args.save) {

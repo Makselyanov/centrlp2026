@@ -248,6 +248,8 @@ function summarizeYandex(report) {
 
   const activeDiagnostics = extractActiveDiagnostics(report);
   const summary = report.summary?.ok ? report.summary.data : null;
+  const popularLatest = report.popularQueries?.latest?.ok ? report.popularQueries.latest.data : null;
+  const popularPrevious = report.popularQueries?.previous?.ok ? report.popularQueries.previous.data : null;
 
   return {
     available: true,
@@ -260,6 +262,36 @@ function summarizeYandex(report) {
     activeDiagnostics,
     tokenHealth: report.tokenHealth?.note || "",
     headChecks: Array.isArray(report.headChecks) ? report.headChecks : [],
+    popularQueries: {
+      latest: popularLatest
+        ? {
+            dateFrom: popularLatest.date_from || "",
+            dateTo: popularLatest.date_to || "",
+            rows: Array.isArray(popularLatest.queries)
+              ? popularLatest.queries.map((query) => ({
+                  query: query.query_text || "",
+                  shows: query.indicators?.TOTAL_SHOWS ?? 0,
+                  clicks: query.indicators?.TOTAL_CLICKS ?? 0,
+                  position: query.indicators?.AVG_SHOW_POSITION ?? 0,
+                }))
+              : [],
+          }
+        : null,
+      previous: popularPrevious
+        ? {
+            dateFrom: popularPrevious.date_from || "",
+            dateTo: popularPrevious.date_to || "",
+            rows: Array.isArray(popularPrevious.queries)
+              ? popularPrevious.queries.map((query) => ({
+                  query: query.query_text || "",
+                  shows: query.indicators?.TOTAL_SHOWS ?? 0,
+                  clicks: query.indicators?.TOTAL_CLICKS ?? 0,
+                  position: query.indicators?.AVG_SHOW_POSITION ?? 0,
+                }))
+              : [],
+          }
+        : null,
+    },
   };
 }
 
@@ -346,17 +378,19 @@ function findCoverage(topic, posts) {
     .filter(Boolean);
 }
 
-function getObservedQueryText(gscSummary) {
+function getObservedQueryText(gscSummary, yandexSummary) {
   return normalizeText(
-    (gscSummary.topQueries || [])
-      .map((row) => row.query)
+    [
+      ...(gscSummary.topQueries || []).map((row) => row.query),
+      ...(yandexSummary.popularQueries?.latest?.rows || []).map((row) => row.query),
+    ]
       .join(" "),
   );
 }
 
-function scoreTopic(topic, posts, gscSummary) {
+function scoreTopic(topic, posts, gscSummary, yandexSummary) {
   const coverage = findCoverage(topic, posts);
-  const observedQueries = getObservedQueryText(gscSummary);
+  const observedQueries = getObservedQueryText(gscSummary, yandexSummary);
   const triggerHits = topic.trendTriggers.filter((trigger) =>
     observedQueries.includes(normalizeText(trigger)),
   );
@@ -408,6 +442,16 @@ function createMarkdown(brief) {
     lines.push(`- Searchable pages: ${yandex.searchablePages ?? "n/a"}`);
     lines.push(`- Excluded pages: ${yandex.excludedPages ?? "n/a"}`);
     lines.push(`- Active diagnostics: ${yandex.activeDiagnostics.length}`);
+    if (yandex.popularQueries?.latest) {
+      lines.push(
+        `- Popular Yandex queries: ${yandex.popularQueries.latest.rows.length} rows, range ${yandex.popularQueries.latest.dateFrom}..${yandex.popularQueries.latest.dateTo}`,
+      );
+      for (const row of yandex.popularQueries.latest.rows.slice(0, 5)) {
+        lines.push(
+          `  - ${row.query}: shows ${row.shows}, clicks ${row.clicks}, avg position ${Number(row.position).toFixed(2)}`,
+        );
+      }
+    }
   } else {
     lines.push(`- Yandex.Webmaster: unavailable (${yandex.note})`);
   }
@@ -481,7 +525,7 @@ function main() {
 
   const yandex = summarizeYandex(yandexReport);
   const gsc = summarizeGsc(gscReport);
-  const scoredTopics = COMMERCIAL_TOPICS.map((topic) => scoreTopic(topic, posts, gsc));
+  const scoredTopics = COMMERCIAL_TOPICS.map((topic) => scoreTopic(topic, posts, gsc, yandex));
   const selectedTopic = pickTopic(scoredTopics);
 
   const brief = {
