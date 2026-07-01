@@ -1704,8 +1704,22 @@ async function renderHtml(browser, html, out, width, height) {
 }
 
 async function main() {
+  const postArgIndex = process.argv.indexOf("--post");
+  const onlyPostSlug = postArgIndex >= 0 ? process.argv[postArgIndex + 1] : "";
   const browser = await chromium.launch({ headless: true });
   try {
+    if (onlyPostSlug) {
+      const post = readBlogPosts().find((item) => item.slug === onlyPostSlug);
+      if (!post) {
+        throw new Error(`Post not found for slug: ${onlyPostSlug}`);
+      }
+      const out = path.join(ROOT, "public", "og", "posts", `${post.slug}.png`);
+      fs.mkdirSync(path.dirname(out), { recursive: true });
+      await renderHtml(browser, renderBlogSvg(post), out, WIDTH, HEIGHT);
+      console.log(`[context-visuals] post ${post.slug}`);
+      return;
+    }
+
     for (const item of serviceVisuals) {
       if (item.manualAsset) {
         console.log(`[context-visuals] service ${item.slug} kept manual asset from ${item.manualAsset}`);
