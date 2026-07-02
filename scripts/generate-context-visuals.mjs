@@ -1709,15 +1709,9 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   try {
     if (onlyPostSlug) {
-      const post = readBlogPosts().find((item) => item.slug === onlyPostSlug);
-      if (!post) {
-        throw new Error(`Post not found for slug: ${onlyPostSlug}`);
-      }
-      const out = path.join(ROOT, "public", "og", "posts", `${post.slug}.png`);
-      fs.mkdirSync(path.dirname(out), { recursive: true });
-      await renderHtml(browser, renderBlogSvg(post), out, WIDTH, HEIGHT);
-      console.log(`[context-visuals] post ${post.slug}`);
-      return;
+      throw new Error(
+        `Generic blog OG generation is disabled for ${onlyPostSlug}. Use a photorealistic, page-context image instead of the old abstract UI/AI template.`,
+      );
     }
 
     for (const item of serviceVisuals) {
@@ -1731,12 +1725,7 @@ async function main() {
       console.log(`[context-visuals] service ${item.slug}`);
     }
 
-    for (const post of readBlogPosts()) {
-      const out = path.join(ROOT, "public", "og", "posts", `${post.slug}.png`);
-      fs.mkdirSync(path.dirname(out), { recursive: true });
-      await renderHtml(browser, renderBlogSvg(post), out, WIDTH, HEIGHT);
-      console.log(`[context-visuals] post ${post.slug}`);
-    }
+    console.log("[context-visuals] blog post OG generation skipped; use photorealistic page-context images.");
 
     for (const item of homeVisuals) {
       const out = path.join(ROOT, item.out);
