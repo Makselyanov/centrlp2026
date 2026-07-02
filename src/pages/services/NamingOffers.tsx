@@ -48,11 +48,11 @@ export default function NamingOffers() {
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#form">
-                <Button size="lg" className="text-lg px-8 animate-pulse-gentle">
+              <Button asChild size="lg" className="text-lg px-8 animate-pulse-gentle">
+                <a href="#form">
                   Заказать разработку <ArrowRight className="ml-2" />
-                </Button>
-              </a>
+                </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -302,11 +302,11 @@ export default function NamingOffers() {
                     </li>
                   ))}
                 </ul>
-                <a href="#form">
-                  <Button variant={plan.popular ? "secondary" : "default"} className="w-full">
+                <Button asChild variant={plan.popular ? "secondary" : "default"} className="w-full">
+                  <a href="#form">
                     Выбрать
-                  </Button>
-                </a>
+                  </a>
+                </Button>
               </div>
             ))}
           </div>

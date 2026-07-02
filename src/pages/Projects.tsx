@@ -797,12 +797,12 @@ const Projects = () => {
                             Открыть проект
                           </a>
                         )}
-                        <Link to="/contacts" className="inline-flex">
-                          <Button variant="outline" className="gap-2 rounded-lg" data-metric="projects_discuss_similar_click">
+                        <Button asChild variant="outline" className="gap-2 rounded-lg" data-metric="projects_discuss_similar_click">
+                          <Link to="/contacts" className="inline-flex">
                             Обсудить похожую задачу
                             <ArrowRight className="h-4 w-4" />
-                          </Button>
-                        </Link>
+                          </Link>
+                        </Button>
                       </div>
                     </div>
 
@@ -840,17 +840,17 @@ const Projects = () => {
               Покажите продукт, услугу и текущий путь обращения. Разберем, какие страницы нужны, что должно попадать в учет и где можно убрать ручную работу.
             </p>
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Link to="/contacts">
-                <Button size="lg" className="gap-2 rounded-lg" data-metric="projects_final_contact_click">
+              <Button asChild size="lg" className="gap-2 rounded-lg" data-metric="projects_final_contact_click">
+                <Link to="/contacts">
                   Обсудить задачу
                   <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/prices">
-                <Button size="lg" variant="outline" className="rounded-lg" data-metric="projects_prices_click">
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="rounded-lg" data-metric="projects_prices_click">
+                <Link to="/prices">
                   Посмотреть стоимость
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </motion.div>
         </div>

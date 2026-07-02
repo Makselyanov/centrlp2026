@@ -166,12 +166,12 @@ const BlogPost = () => {
                             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
                                 К сожалению, статья с таким адресом не существует.
                             </p>
-                            <Link to="/blog">
-                                <Button size="lg" className="gap-2">
+                            <Button asChild size="lg" className="gap-2">
+                                <Link to="/blog">
                                     <ArrowLeft className="w-4 h-4" />
                                     Вернуться в блог
-                                </Button>
-                            </Link>
+                                </Link>
+                            </Button>
                         </div>
                     </div>
                 </section>
@@ -194,12 +194,12 @@ const BlogPost = () => {
                             <p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto">
                                 К сожалению, статья с адресом "{slug}" не существует или была удалена.
                             </p>
-                            <Link to="/blog">
-                                <Button size="lg" className="gap-2">
+                            <Button asChild size="lg" className="gap-2">
+                                <Link to="/blog">
                                     <ArrowLeft className="w-4 h-4" />
                                     Вернуться в блог
-                                </Button>
-                            </Link>
+                                </Link>
+                            </Button>
                         </div>
                     </div>
                 </section>
@@ -247,12 +247,12 @@ const BlogPost = () => {
     const HeroSection = () => (
         <section className="relative pt-12 pb-12 mb-12 bg-gradient-to-r from-slate-50 via-blue-50/20 to-slate-50 border-b border-slate-200/50">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                <Link to="/blog" className="inline-block mb-6">
-                    <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
+                <Button asChild variant="ghost" size="sm" className="mb-6 gap-2 text-muted-foreground hover:text-foreground">
+                    <Link to="/blog">
                         <ArrowLeft className="w-4 h-4" />
                         Назад к списку
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
 
                 <header className="mb-6">
                     <div className="flex gap-2 mb-4 flex-wrap">

@@ -88,16 +88,16 @@ export default function VKDesign() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#form">
-                <Button size="lg" className="text-lg px-8 animate-pulse-gentle">
+              <Button asChild size="lg" className="text-lg px-8 animate-pulse-gentle">
+                <a href="#form">
                   Усилить сообщество <ArrowRight className="ml-2" />
-                </Button>
-              </a>
-              <Link to="/services/chatbot-vk">
-                <Button size="lg" variant="outline" className="text-lg px-8">
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="text-lg px-8">
+                <Link to="/services/chatbot-vk">
                   Сразу добавить чат-бота
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -350,11 +350,11 @@ export default function VKDesign() {
                     </li>
                   ))}
                 </ul>
-                <a href="#form">
-                  <Button variant={plan.popular ? "secondary" : "default"} className="w-full">
+                <Button asChild variant={plan.popular ? "secondary" : "default"} className="w-full">
+                  <a href="#form">
                     Обсудить проект
-                  </Button>
-                </a>
+                  </a>
+                </Button>
               </div>
             ))}
           </div>

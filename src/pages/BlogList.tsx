@@ -5,7 +5,6 @@ import { Calendar, Tag, ArrowRight, Search, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 
@@ -281,14 +280,10 @@ const BlogList = () => {
                                                 <div className="text-xs text-slate-500">
                                                     {post.readTime && `${post.readTime} мин.`}
                                                 </div>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    className="p-0 h-auto font-medium text-[#0096D6] hover:text-[#007bb0] hover:bg-transparent group/btn"
-                                                >
+                                                <span className="inline-flex items-center p-0 h-auto font-medium text-[#0096D6] group-hover:text-[#007bb0] group/btn">
                                                     Читать
                                                     <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
-                                                </Button>
+                                                </span>
                                             </CardFooter>
                                         </Card>
                                     </Link>

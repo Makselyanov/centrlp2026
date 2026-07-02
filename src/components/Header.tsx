@@ -243,9 +243,9 @@ export const Header = () => {
               <Phone className="w-4 h-4" />
               8&#8209;905&#8209;824&#8209;85&#8209;64
             </a>
-            <Link to="/contacts#contact-form">
-              <Button className="animate-gentle-pulse px-4 text-xs xl:text-sm shadow-button">Оставить заявку</Button>
-            </Link>
+            <Button asChild className="animate-gentle-pulse px-4 text-xs xl:text-sm shadow-button">
+              <Link to="/contacts#contact-form">Оставить заявку</Link>
+            </Button>
           </div>
 
           <div className="hidden items-center gap-2 lg:flex xl:hidden">

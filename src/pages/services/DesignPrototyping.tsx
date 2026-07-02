@@ -390,14 +390,15 @@ const DesignPrototypingPage = () => {
                     </li>
                   ))}
                 </ul>
-                <a href="#form">
-                  <Button
-                    variant={plan.popular ? "secondary" : "default"}
-                    className="w-full"
-                  >
+                <Button
+                  asChild
+                  variant={plan.popular ? "secondary" : "default"}
+                  className="w-full"
+                >
+                  <a href="#form">
                     Выбрать
-                  </Button>
-                </a>
+                  </a>
+                </Button>
               </div>
             ))}
           </div>

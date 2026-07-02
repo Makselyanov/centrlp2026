@@ -251,10 +251,11 @@ const BarterSTO = () => {
               </div>
 
               <div className="mt-10 flex flex-wrap gap-4">
-                <Button size="lg" className="shadow-elegant hover-scale">
+                <Button asChild size="lg" className="shadow-elegant hover-scale">
                   <a href="#form">Предложить автоработы</a>
                 </Button>
                 <Button
+                  asChild
                   variant="outline"
                   size="lg"
                   className="border-white/20 bg-white/5 text-white hover:bg-white/10"
@@ -669,10 +670,10 @@ const BarterSTO = () => {
               часть CentrLP, затем сервис закрывает согласованные автоработы по зафиксированным этапам.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Button size="lg" className="shadow-elegant hover-scale">
+              <Button asChild size="lg" className="shadow-elegant hover-scale">
                 <a href="#form">Обсудить бартер для автоуслуг</a>
               </Button>
-              <Button variant="outline" size="lg" className="hover-scale">
+              <Button asChild variant="outline" size="lg" className="hover-scale">
                 <a href="https://centrlp.ru/services" target="_blank" rel="noreferrer">
                   Посмотреть услуги CentrLP
                 </a>

@@ -94,17 +94,17 @@ const ChatbotVK = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="#contact">
-                <Button size="lg" className="text-lg px-8">
+              <Button asChild size="lg" className="text-lg px-8">
+                <a href="#contact">
                   Разработать чат-бота
                   <ArrowRight className="ml-2" />
-                </Button>
-              </a>
-              <Link to="/services/ai-agents">
-                <Button size="lg" variant="outline" className="text-lg px-8">
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="text-lg px-8">
+                <Link to="/services/ai-agents">
                   Нужен уже AI-агент
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -358,11 +358,11 @@ const ChatbotVK = () => {
                     </li>
                   ))}
                 </ul>
-                <a href="#contact">
-                  <Button variant={plan.popular ? "secondary" : "default"} className="w-full">
+                <Button asChild variant={plan.popular ? "secondary" : "default"} className="w-full">
+                  <a href="#contact">
                     Обсудить внедрение
-                  </Button>
-                </a>
+                  </a>
+                </Button>
               </div>
             ))}
           </div>

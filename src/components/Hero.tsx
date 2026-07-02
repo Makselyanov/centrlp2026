@@ -157,16 +157,15 @@ export const Hero = () => {
                                 <ArrowRight className="h-5 w-5" />
                             </motion.button>
 
-                            <a href="/proverka-saita-i-zayavok-za-48-chasov" className="pointer-events-auto">
-                                <motion.button
-                                    whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-transparent px-8 py-4 text-lg font-semibold text-slate-300 shadow-sm transition-all backdrop-blur-sm"
-                                >
-                                    <Play className="h-5 w-5 fill-current" />
-                                    Цена от 15 000 ₽
-                                </motion.button>
-                            </a>
+                            <motion.a
+                                href="/proverka-saita-i-zayavok-za-48-chasov"
+                                whileHover={{ scale: 1.03, backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                                whileTap={{ scale: 0.98 }}
+                                className="pointer-events-auto flex items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-transparent px-8 py-4 text-lg font-semibold text-slate-300 shadow-sm transition-all backdrop-blur-sm"
+                            >
+                                <Play className="h-5 w-5 fill-current" />
+                                Цена от 15 000 ₽
+                            </motion.a>
                         </div>
                     </motion.div>
 

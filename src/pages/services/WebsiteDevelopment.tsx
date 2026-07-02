@@ -519,11 +519,11 @@ export default function WebsiteDevelopment() {
           <ContactForm />
           <div className="text-center mt-10">
             <p className="text-slate-500 text-sm mb-3">Или напишите напрямую</p>
-            <Link to="/contacts">
-              <Button variant="outline">
+            <Button asChild variant="outline">
+              <Link to="/contacts">
                 Контакты и мессенджеры <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

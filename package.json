@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/audit-public-pages.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-dzen-rss.mjs && vite build && node scripts/prerender-route-heads.mjs && node scripts/audit-built-routes.mjs",
+    "build": "node scripts/audit-public-pages.mjs && node scripts/audit-interactive-nesting.mjs && node scripts/generate-sitemap.mjs && node scripts/generate-dzen-rss.mjs && vite build && node scripts/prerender-route-heads.mjs && node scripts/audit-built-routes.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
     "audit:public-pages": "node scripts/audit-public-pages.mjs",
+    "audit:interactive-nesting": "node scripts/audit-interactive-nesting.mjs",
     "seo:yandex": "node scripts/yandex-webmaster-report.mjs",
     "seo:gsc": "node scripts/gsc-report.mjs",
     "seo:gsc:reauth": "node scripts/gsc-oauth-refresh.mjs",
