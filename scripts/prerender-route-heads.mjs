@@ -536,6 +536,146 @@ function ensureTag(html, regex, value, fallback) {
   return html.replace("</head>", `${fallback}\n</head>`);
 }
 
+function routeUrl(routePath) {
+  return `${baseUrl}${routePath === "/" ? "/" : routePath}`;
+}
+
+function cleanSchemaName(title) {
+  return String(title)
+    .replace(/\s*\|\s*CentrLP\s*$/i, "")
+    .replace(/\s+-\s*CentrLP\s*$/i, "")
+    .trim();
+}
+
+function jsonForHtml(value) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+function renderJsonLdScripts(schemas) {
+  return schemas
+    .filter(Boolean)
+    .map(
+      (schema, index) =>
+        `<script type="application/ld+json" data-prerender-schema="${index}">${jsonForHtml(schema)}</script>`,
+    )
+    .join("\n");
+}
+
+function buildBreadcrumbSchema(meta) {
+  const itemListElement = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Главная",
+      item: `${baseUrl}/`,
+    },
+  ];
+
+  if (meta.path.startsWith("/blog/")) {
+    itemListElement.push({
+      "@type": "ListItem",
+      position: 2,
+      name: "Блог",
+      item: `${baseUrl}/blog`,
+    });
+  } else if (meta.path.startsWith("/services/")) {
+    itemListElement.push({
+      "@type": "ListItem",
+      position: 2,
+      name: "Услуги",
+      item: `${baseUrl}/services`,
+    });
+  }
+
+  itemListElement.push({
+    "@type": "ListItem",
+    position: itemListElement.length + 1,
+    name: cleanSchemaName(meta.title),
+    item: routeUrl(meta.path),
+  });
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement,
+  };
+}
+
+function buildOrganizationSchema() {
+  return {
+    "@type": "LocalBusiness",
+    name: "CentrLP",
+    url: baseUrl,
+    telephone: "+7-905-824-85-64",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "проезд Солнечный, 22",
+      addressLocality: "Тюмень",
+      postalCode: "625022",
+      addressCountry: "RU",
+    },
+  };
+}
+
+function buildArticleSchema(meta) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: cleanSchemaName(meta.title),
+    description: meta.description,
+    datePublished: meta.date,
+    dateModified: meta.date,
+    author: {
+      "@type": "Organization",
+      name: "CentrLP",
+      url: baseUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "CentrLP",
+      url: baseUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/favicon.jpg`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": routeUrl(meta.path),
+    },
+    inLanguage: "ru",
+  };
+}
+
+function buildServiceSchema(meta) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: cleanSchemaName(meta.title),
+    description: meta.description,
+    provider: buildOrganizationSchema(),
+    areaServed: [
+      { "@type": "City", name: "Тюмень" },
+      { "@type": "AdministrativeArea", name: "Тюменская область" },
+      { "@type": "Country", name: "Россия" },
+    ],
+    url: routeUrl(meta.path),
+    serviceType: cleanSchemaName(meta.title),
+  };
+}
+
+function buildJsonLdSchemas(meta) {
+  if (meta.path.startsWith("/blog/")) {
+    return [buildArticleSchema(meta), buildBreadcrumbSchema(meta)];
+  }
+
+  if (meta.path.startsWith("/services/")) {
+    return [buildServiceSchema(meta), buildBreadcrumbSchema(meta)];
+  }
+
+  return [];
+}
+
 function applyMeta(template, meta) {
   const canonical = `${baseUrl}${meta.path === "/" ? "/" : meta.path}`;
   const ogImageUrl = `${baseUrl}/og/${getOgImage(meta.path)}`;
@@ -609,6 +749,11 @@ function applyMeta(template, meta) {
     `<meta name="twitter:url" content="${canonical}" />`,
     `<meta name="twitter:url" content="${canonical}" />`,
   );
+
+  const jsonLd = renderJsonLdScripts(buildJsonLdSchemas(meta));
+  if (jsonLd) {
+    html = html.replace("</head>", `${jsonLd}\n</head>`);
+  }
 
   if (meta.staticHtml) {
     html = html.replace(
@@ -752,6 +897,7 @@ function collectBlogPostMeta() {
         path: `/blog/${slug}`,
         title,
         description,
+        date: data.date || file.slice(0, 10),
         staticHtml: hasUnsafePublicMarker(staticSource)
           ? ""
           : markdownToStaticHtml(parsed.content, title, description, cta),

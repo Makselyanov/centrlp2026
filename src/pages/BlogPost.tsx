@@ -373,16 +373,16 @@ const BlogPost = () => {
                         </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <Link to="/proverka-saita-i-zayavok-za-48-chasov" className="flex-1">
-                            <Button className={`w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
+                        <Button asChild className={`flex-1 w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
+                            <Link to="/proverka-saita-i-zayavok-za-48-chasov">
                                 Получить разбор за 48 часов
-                            </Button>
-                        </Link>
-                        <Link to="/contacts" className="flex-1">
-                            <Button variant="outline" className="w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
+                            </Link>
+                        </Button>
+                        <Button asChild variant="outline" className="flex-1 w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
+                            <Link to="/contacts">
                                 Получить консультацию
-                            </Button>
-                        </Link>
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -402,16 +402,16 @@ const BlogPost = () => {
                         </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <Link to={primaryCtaHref} className="flex-1">
-                            <Button className={`w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
+                        <Button asChild className={`flex-1 w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
+                            <Link to={primaryCtaHref}>
                                 {primaryCtaLabel}
-                            </Button>
-                        </Link>
-                        <Link to={secondaryCtaHref} className="flex-1">
-                            <Button variant="outline" className="w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
+                            </Link>
+                        </Button>
+                        <Button asChild variant="outline" className="flex-1 w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
+                            <Link to={secondaryCtaHref}>
                                 {secondaryCtaLabel}
-                            </Button>
-                        </Link>
+                            </Link>
+                        </Button>
                     </div>
                 </div>
             </div>

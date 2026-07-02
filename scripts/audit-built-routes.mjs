@@ -97,6 +97,41 @@ function extractAssetRefs(html) {
   return [...refs];
 }
 
+function collectJsonLdTypes(html) {
+  const types = new Set();
+  const scripts = html.matchAll(
+    /<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+  );
+
+  const collect = (value) => {
+    if (!value || typeof value !== "object") return;
+
+    const type = value["@type"];
+    if (Array.isArray(type)) {
+      type.forEach((item) => types.add(String(item)));
+    } else if (type) {
+      types.add(String(type));
+    }
+
+    if (Array.isArray(value["@graph"])) {
+      value["@graph"].forEach(collect);
+    }
+  };
+
+  for (const match of scripts) {
+    const rawJson = match[1].trim();
+    if (!rawJson) continue;
+
+    try {
+      collect(JSON.parse(rawJson));
+    } catch (error) {
+      types.add(`INVALID_JSON_LD:${error.message}`);
+    }
+  }
+
+  return types;
+}
+
 function hasRenderableShell(html) {
   const rootMatch = html.match(/<div\s+id=["']root["'][^>]*>([\s\S]*?)<\/div>/i);
   const rootContent = rootMatch?.[1]?.trim() || "";
@@ -130,6 +165,28 @@ function main() {
 
     if (!hasRenderableShell(html)) {
       violations.push(`${routePath}: empty #root without module script`);
+    }
+
+    const jsonLdTypes = collectJsonLdTypes(html);
+    const invalidJsonLd = [...jsonLdTypes].filter((type) => type.startsWith("INVALID_JSON_LD:"));
+    for (const error of invalidJsonLd) {
+      violations.push(`${routePath}: ${error}`);
+    }
+
+    if (routePath.startsWith("/blog/")) {
+      for (const requiredType of ["Article", "BreadcrumbList"]) {
+        if (!jsonLdTypes.has(requiredType)) {
+          violations.push(`${routePath}: missing static JSON-LD ${requiredType}`);
+        }
+      }
+    }
+
+    if (routePath.startsWith("/services/")) {
+      for (const requiredType of ["Service", "BreadcrumbList"]) {
+        if (!jsonLdTypes.has(requiredType)) {
+          violations.push(`${routePath}: missing static JSON-LD ${requiredType}`);
+        }
+      }
     }
 
     for (const assetRef of extractAssetRefs(html)) {

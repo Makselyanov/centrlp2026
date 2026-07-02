@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import remarkGfm from 'remark-gfm';
 
 interface MarkdownRendererProps {
@@ -20,13 +21,38 @@ type CodeRendererProps = React.HTMLAttributes<HTMLElement> & {
   children?: React.ReactNode;
 };
 
-/**
- * Editorial markdown renderer for blog posts.
- * Single coherent design language across every element — no clashing styles.
- * All visuals follow CentrLP brand: #0096D6 (blue) + #44B78B (mint).
- */
+const ctaWords = [
+  'заказать',
+  'получить',
+  'записаться',
+  'записать',
+  'оставить заявку',
+  'консультац',
+  'связаться',
+  'обратиться',
+];
+
+const ctaClassName =
+  'inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 no-underline cursor-pointer group';
+
+const linkClassName =
+  'text-[#0096D6] hover:text-[#0077AA] underline decoration-2 underline-offset-4 decoration-[#0096D6]/30 hover:decoration-[#0096D6] transition-colors font-medium';
+
+const ArrowIcon = () => (
+  <svg
+    className="w-4 h-4 transition-transform group-hover:translate-x-1"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+);
+
 export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererProps) => {
-  // Helper: Get text from node recursively
   const getText = (node: React.ReactNode): string => {
     if (typeof node === 'string') return node;
     if (Array.isArray(node)) return node.map(getText).join('');
@@ -41,7 +67,6 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          // ── Headings ────────────────────────────────────────────────
           h1: ({ node, ...props }) => (
             <h1 className="text-4xl font-bold mt-10 mb-5 text-slate-900 tracking-tight" {...props} />
           ),
@@ -54,40 +79,33 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
           h4: ({ node, ...props }) => (
             <h4 className="text-xl font-semibold mt-6 mb-2 text-slate-900" {...props} />
           ),
-
-          // ── Paragraph ───────────────────────────────────────────────
           p: ({ node, children, ...props }) => (
             <p className="text-[17px] leading-[1.8] text-slate-700 my-5" {...props}>
               {children}
             </p>
           ),
+          a: ({ node, children, href = '', ...props }) => {
+            const linkText = getText(children).toLowerCase();
+            const isCTA = ctaWords.some((word) => linkText.includes(word));
+            const isInternal = href.startsWith('/');
+            const classNameForLink = isCTA ? ctaClassName : linkClassName;
 
-          // ── Links ───────────────────────────────────────────────────
-          a: ({ node, children, href, ...props }) => {
-            const linkText = getText(children);
-            const ctaRegex = /(заказать|получить|запис(аться|ать)|оставить заявку|консультац|связаться|обратиться)/i;
-            const isCTA = ctaRegex.test(linkText);
-
-            if (isCTA) {
+            if (isInternal) {
               return (
-                <a
-                  href={href}
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 no-underline cursor-pointer group"
-                  {...props}
-                >
+                <Link to={href} className={classNameForLink} {...props}>
                   {children}
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-                </a>
+                  {isCTA && <ArrowIcon />}
+                </Link>
               );
             }
+
             return (
-              <a href={href} className="text-[#0096D6] hover:text-[#0077AA] underline decoration-2 underline-offset-4 decoration-[#0096D6]/30 hover:decoration-[#0096D6] transition-colors font-medium" {...props}>
+              <a href={href} className={classNameForLink} {...props}>
                 {children}
+                {isCTA && <ArrowIcon />}
               </a>
             );
           },
-
-          // ── Bullet lists: brand chevron rows ─────────────────────────
           ul: ({ node, children, ...props }) => (
             <ul className="my-6 space-y-2.5" {...props}>
               {React.Children.map(children, (child) =>
@@ -97,10 +115,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
               )}
             </ul>
           ),
-
-          // ── Ordered lists: brand-numbered rows ───────────────────────
           ol: ({ node, children, ...props }) => {
-            // Filter to React elements only and assign sequential indexes
             const items = React.Children.toArray(children).filter(React.isValidElement);
             return (
               <ol className="my-6 space-y-3" {...props}>
@@ -113,11 +128,9 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
               </ol>
             );
           },
-
           li: ({ node, children, ...props }: ListItemProps) => {
             const listType = props['data-list'];
             const index = props['data-index'];
-            // Strip our custom props from rendered element
             const { ['data-list']: _dl, ['data-index']: _di, ...rest } = props;
 
             if (listType === 'numbered') {
@@ -131,7 +144,6 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
               );
             }
 
-            // Default: bulleted (chevron)
             return (
               <li className="flex items-start gap-3 text-[17px] leading-[1.75] text-slate-700" {...rest}>
                 <svg className="mt-[10px] h-3 w-3 flex-shrink-0 text-[#0096D6]" viewBox="0 0 12 12" fill="none" aria-hidden="true">
@@ -141,16 +153,12 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
               </li>
             );
           },
-
-          // ── Blockquote ──────────────────────────────────────────────
           blockquote: ({ node, ...props }) => (
             <blockquote
               className="my-7 rounded-2xl border border-slate-200 bg-gradient-to-br from-[#0096D6]/5 to-[#44B78B]/5 px-6 py-5 text-[17px] leading-[1.75] text-slate-700 italic"
               {...props}
             />
           ),
-
-          // ── Inline code ─────────────────────────────────────────────
           code: ({ node, className, ...props }: CodeRendererProps) => {
             const isInline = !className?.includes('language-');
             return isInline ? (
@@ -159,8 +167,6 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
               <code className="bg-transparent p-0 rounded text-sm font-mono" {...props} />
             );
           },
-
-          // ── Code blocks: ALWAYS editorial light (no dark terminal) ──
           pre: ({ node, children, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
             <div className="my-7 rounded-2xl border border-slate-200 bg-slate-50/70 shadow-sm">
               <pre className="overflow-x-auto bg-transparent p-5 text-[15px] leading-[1.75] text-slate-800 whitespace-pre-wrap break-words font-mono" {...props}>
@@ -168,13 +174,9 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
               </pre>
             </div>
           ),
-
-          // ── Images ──────────────────────────────────────────────────
           img: ({ node, ...props }) => (
             <img className="my-8 rounded-2xl shadow-lg max-w-full h-auto border border-slate-200" {...props} />
           ),
-
-          // ── Tables ──────────────────────────────────────────────────
           table: ({ node, ...props }) => (
             <div className="my-7 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
               <table className="w-full border-collapse" {...props} />
@@ -186,13 +188,9 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
           td: ({ node, ...props }) => (
             <td className="border-b border-slate-100 px-4 py-3 text-[15px] text-slate-700" {...props} />
           ),
-
-          // ── Horizontal rule ─────────────────────────────────────────
           hr: ({ node, ...props }) => (
             <hr className="my-10 border-0 h-[1px] bg-gradient-to-r from-transparent via-slate-300 to-transparent" {...props} />
           ),
-
-          // ── Strong / em ─────────────────────────────────────────────
           strong: ({ node, ...props }) => (
             <strong className="font-semibold text-slate-900" {...props} />
           ),

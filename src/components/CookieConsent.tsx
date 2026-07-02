@@ -73,8 +73,8 @@ export const CookieConsent = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-fade-in">
-      <div className="max-w-4xl mx-auto bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col sm:flex-row items-center gap-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-fade-in pointer-events-none">
+      <div className="pointer-events-auto max-w-4xl mx-auto bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col sm:flex-row items-center gap-4">
         <p className="text-sm text-muted-foreground flex-1">
           Мы используем технические cookie для работы сайта. Аналитические cookie
           Яндекс.Метрики включаются только после согласия и помогают понять, какие
