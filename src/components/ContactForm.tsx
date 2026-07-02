@@ -14,16 +14,20 @@ const goalOptions = [
   "Экспресс-разбор заявок",
   "Проверка сайта по персональным данным",
   "Маркетинговая стратегия и медиаплан",
-  "Сайт или посадочная страница",
-  "Бот, CRM или автоматизация",
+  "Сайт или лендинг под заявки",
+  "Яндекс Директ и заявки",
+  "CRM и учет заявок",
+  "Бот или автоматизация",
 ] as const;
 
 const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Экспресс-разбор заявок": "Получить экспресс-разбор",
   "Проверка сайта по персональным данным": "Получить проверку сайта",
   "Маркетинговая стратегия и медиаплан": "Получить расчет стратегии",
-  "Сайт или посадочная страница": "Обсудить сайт и посадочную",
-  "Бот, CRM или автоматизация": "Обсудить CRM и автоматизацию",
+  "Сайт или лендинг под заявки": "Обсудить сайт под заявки",
+  "Яндекс Директ и заявки": "Обсудить Директ под заявки",
+  "CRM и учет заявок": "Обсудить CRM для заявок",
+  "Бот или автоматизация": "Обсудить автоматизацию",
 };
 
 const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
@@ -35,6 +39,27 @@ const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
     return "Маркетинговая стратегия и медиаплан";
   }
 
+  if (pathname === "/services/website-development" || pathname === "/razrabotka-sajtov-tyumen") {
+    return "Сайт или лендинг под заявки";
+  }
+
+  if (pathname === "/services/yandex-direct" || pathname === "/nastroyka-yandex-direct-tyumen") {
+    return "Яндекс Директ и заявки";
+  }
+
+  if (pathname === "/services/custom-crm" || pathname === "/crm-dlya-biznesa") {
+    return "CRM и учет заявок";
+  }
+
+  if (
+    pathname === "/services/telegram-lead-agent" ||
+    pathname === "/services/n8n-automation" ||
+    pathname === "/services/ai-agents" ||
+    pathname === "/ai-avtomatizaciya-biznesa"
+  ) {
+    return "Бот или автоматизация";
+  }
+
   return "Экспресс-разбор заявок";
 };
 
@@ -43,14 +68,22 @@ export const ContactForm = () => {
   const location = useLocation();
   const defaultGoal = getDefaultGoal(location.pathname);
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
+  const isWebsiteDevelopmentPage =
+    location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
   const introTitle = isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
+    : isWebsiteDevelopmentPage
+      ? "Можно начать с короткого запроса на сайт или лендинг под заявки."
     : "Можно начать с короткого разбора сайта, формы и маршрута заявки.";
   const introDescription = isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
+    : isWebsiteDevelopmentPage
+      ? "Для первого контакта достаточно имени, телефона и пары слов о задаче: новая страница, сайт услуг, доработка старого сайта или связка с CRM. Детали можно уточнить после первого ответа."
     : "Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнем с проверки формы, первого экрана, Метрики и скорости ответа.";
   const commentPlaceholder = isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
+    : isWebsiteDevelopmentPage
+      ? "Например: нужен лендинг под услугу; сайт услуг в Тюмени; переделать старый сайт, чтобы заявки не терялись; связать форму с CRM"
     : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
 
   const [formData, setFormData] = useState({
