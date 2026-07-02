@@ -153,7 +153,8 @@ GSC_SITE_URL=sc-domain:aamx.ru
 
 ### Почему OAuth, а не сервис-аккаунт
 
-- `webmasters.readonly` scope — **non-sensitive**, refresh-токен не истекает даже в Testing mode
+- `webmasters.readonly` scope минимален для отчетов, но для External OAuth-приложения в статусе **Testing** Google выдает refresh-токены на 7 дней
+- Чтобы `invalid_grant: Token has been expired or revoked` не повторялся каждую неделю, OAuth-приложение должно быть переведено в **Production / In production**
 - Один OAuth-клиент + один refresh-токен работают на **все** твои домены, подтверждённые под `icq416597405@gmail.com`
 - Не надо вручную добавлять сервис-аккаунт в каждый ресурс GSC (как пришлось бы с SA)
 - Паттерн идентичен Яндексу — один `.env.seo.local` содержит обе OAuth пары
@@ -170,7 +171,7 @@ GSC_SITE_URL=sc-domain:aamx.ru
    - Developer contact: твой
    - **Scopes:** не добавляй ничего на этом экране (добавим вручную в URL позже; consent screen scopes для non-sensitive не нужны)
    - **Test users:** добавь `icq416597405@gmail.com`
-   - Сохранить. Publishing status можно оставить **Testing** — для `webmasters.readonly` refresh токены не истекают.
+   - Сохранить и нажать **Publish app**. Для стабильного refresh-токена нужен статус **In production**.
 5. **APIs & Services → Credentials → Create credentials → OAuth client ID:**
    - Application type: **Desktop app**
    - Name: `claude-seo-cli`

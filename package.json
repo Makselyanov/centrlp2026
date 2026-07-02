@@ -12,6 +12,7 @@
     "audit:public-pages": "node scripts/audit-public-pages.mjs",
     "seo:yandex": "node scripts/yandex-webmaster-report.mjs",
     "seo:gsc": "node scripts/gsc-report.mjs",
+    "seo:gsc:reauth": "node scripts/gsc-oauth-refresh.mjs",
     "seo:report": "node scripts/yandex-webmaster-report.mjs",
     "content:brief": "node scripts/seo-topic-brief.mjs"
   },
