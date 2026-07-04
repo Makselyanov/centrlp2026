@@ -215,6 +215,46 @@ const ProcessStep = ({
   </div>
 );
 
+const MobileStickyLeadBar = ({ page }: { page: LandingPage }) => (
+  <div
+    className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 px-3 pt-2 shadow-[0_-18px_42px_-28px_rgba(15,23,42,0.55)] backdrop-blur md:hidden"
+    style={{ paddingBottom: "calc(0.5rem + env(safe-area-inset-bottom))" }}
+  >
+    <div className="mx-auto grid max-w-md grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
+      <button
+        type="button"
+        className="inline-flex h-12 min-w-0 items-center justify-center gap-2 rounded-full bg-[#0096D6] px-4 text-sm font-bold text-white shadow-button transition active:scale-[0.98]"
+        onClick={() => {
+          trackMetric("landing_mobile_sticky_form_click", { path: page.path });
+          scrollToForm();
+        }}
+      >
+        <ArrowRight className="h-4 w-4 shrink-0" />
+        <span className="truncate">Заявка</span>
+      </button>
+      <a
+        href="tel:+79058248564"
+        className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-800 shadow-sm transition active:scale-[0.98]"
+        data-metric="phone-click"
+        onClick={() => trackMetric("landing_mobile_sticky_phone_click", { path: page.path })}
+      >
+        <Phone className="h-5 w-5" />
+        <span className="sr-only">Позвонить</span>
+      </a>
+      <a
+        href={TELEGRAM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#0096D6]/25 bg-[#0096D6]/10 text-[#0096D6] shadow-sm transition active:scale-[0.98]"
+        onClick={() => trackMetric("landing_mobile_sticky_telegram_click", { path: page.path })}
+      >
+        <MessageCircle className="h-5 w-5" />
+        <span className="sr-only">Telegram</span>
+      </a>
+    </div>
+  </div>
+);
+
 const LandingHeroImage = ({ visual }: { visual: LandingVisual }) => (
   <img
     src={visual.imageSrc}
@@ -539,6 +579,9 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
           </div>
         </div>
       </section>
+
+      <div className="h-20 md:hidden" aria-hidden="true" />
+      <MobileStickyLeadBar page={page} />
     </Layout>
   );
 };
