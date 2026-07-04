@@ -64,6 +64,13 @@ location = /api/lead {
 - Лог-файл `logs/leads.jsonl` — audit trail с автоматической очисткой старых
   записей по `LEAD_LOG_RETENTION_DAYS` (по умолчанию 183 дня).
 
+## Read-only metrics
+
+`GET /api/lead/metrics` returns only safe aggregates for route diagnostics:
+totals for today, 7/30 days, last lead timestamp, and normalized counters by
+page path and lead source. It never returns raw lead rows, names, phones,
+comments, IP addresses, user agents, full URLs, or form text fields.
+
 ## Наблюдение
 
 ```bash

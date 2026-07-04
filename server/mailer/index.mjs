@@ -169,8 +169,140 @@ function renderEmail(lead) {
   return html;
 }
 
+const METRICS_MAX_BYTES = 2 * 1024 * 1024;
+
+function normalizeMetricValue(value, fallback = "unknown") {
+  const normalized = String(value || "")
+    .trim()
+    .slice(0, 160)
+    .replace(/[^a-zA-Z0-9а-яА-ЯёЁ/_:.-]/g, "")
+    .replace(/\/{2,}/g, "/");
+  return normalized || fallback;
+}
+
+function normalizePathMetric(value) {
+  const raw = String(value || "").trim();
+  try {
+    const parsed = raw.startsWith("http") ? new URL(raw) : new URL(raw || "/", "https://centrlp.ru");
+    return normalizeMetricValue(parsed.pathname || "/", "/");
+  } catch {
+    return normalizeMetricValue(raw.split("?")[0] || "/", "/");
+  }
+}
+
+function summarizeCounts(map, limit = 10) {
+  const visible = [];
+  let other = 0;
+
+  for (const [key, count] of map.entries()) {
+    if (count < 3) {
+      other += count;
+    } else {
+      visible.push({ value: key, count });
+    }
+  }
+
+  visible.sort((a, b) => b.count - a.count || a.value.localeCompare(b.value));
+  const result = visible.slice(0, limit);
+  if (other > 0) result.push({ value: "other", count: other });
+  return result;
+}
+
+function readLeadMetrics() {
+  const now = Date.now();
+  const dayMs = 24 * 60 * 60 * 1000;
+  const totals = {
+    ok: true,
+    service: "centrlp-mailer",
+    retention_days: Math.max(Number(LEAD_LOG_RETENTION_DAYS) || 183, 1),
+    log_exists: fs.existsSync(LOG_FILE),
+    total: 0,
+    today: 0,
+    last_7_days: 0,
+    last_30_days: 0,
+    last_received_at: null,
+    last_received_age_minutes: null,
+    by_page_path_30d: [],
+    by_lead_source_30d: [],
+    parse_errors: 0,
+    truncated: false,
+  };
+
+  if (!totals.log_exists) return totals;
+
+  const stat = fs.statSync(LOG_FILE);
+  let content;
+  if (stat.size > METRICS_MAX_BYTES) {
+    const fd = fs.openSync(LOG_FILE, "r");
+    const buffer = Buffer.alloc(METRICS_MAX_BYTES);
+    fs.readSync(fd, buffer, 0, METRICS_MAX_BYTES, stat.size - METRICS_MAX_BYTES);
+    fs.closeSync(fd);
+    content = buffer.toString("utf8");
+    content = content.slice(content.indexOf("\n") + 1);
+    totals.truncated = true;
+  } else {
+    content = fs.readFileSync(LOG_FILE, "utf8");
+  }
+
+  const pageCounts = new Map();
+  const sourceCounts = new Map();
+  const today = new Date().toISOString().slice(0, 10);
+  let lastTime = 0;
+
+  for (const line of content.split("\n")) {
+    if (!line.trim()) continue;
+
+    let entry;
+    try {
+      entry = JSON.parse(line);
+    } catch {
+      totals.parse_errors += 1;
+      continue;
+    }
+
+    const receivedAt = new Date(entry.received_at || 0).getTime();
+    if (!Number.isFinite(receivedAt)) continue;
+
+    totals.total += 1;
+    if (receivedAt > lastTime) {
+      lastTime = receivedAt;
+      totals.last_received_at = new Date(receivedAt).toISOString();
+    }
+
+    if (String(entry.received_at || "").slice(0, 10) === today) totals.today += 1;
+    if (now - receivedAt <= 7 * dayMs) totals.last_7_days += 1;
+    if (now - receivedAt <= 30 * dayMs) {
+      totals.last_30_days += 1;
+
+      const pagePath = normalizePathMetric(entry.page_path || entry.lead_source || "/");
+      pageCounts.set(pagePath, (pageCounts.get(pagePath) || 0) + 1);
+
+      const source = normalizeMetricValue(entry.lead_source || "centrlp.ru", "centrlp.ru");
+      sourceCounts.set(source, (sourceCounts.get(source) || 0) + 1);
+    }
+  }
+
+  if (lastTime > 0) {
+    totals.last_received_age_minutes = Math.max(0, Math.round((now - lastTime) / 60000));
+  }
+
+  totals.by_page_path_30d = summarizeCounts(pageCounts);
+  totals.by_lead_source_30d = summarizeCounts(sourceCounts);
+  return totals;
+}
+
 app.get(["/health", "/api/lead/health"], (_req, res) => {
   res.json({ ok: true, service: "centrlp-mailer", port: PORT });
+});
+
+app.get("/api/lead/metrics", (_req, res) => {
+  res.set("Cache-Control", "no-store");
+  try {
+    res.json(readLeadMetrics());
+  } catch (err) {
+    console.error("[mailer] metrics failed:", err.message);
+    res.status(500).json({ ok: false, error: "metrics_failed" });
+  }
 });
 
 app.post("/api/lead", async (req, res) => {
