@@ -44,6 +44,150 @@ const staticRouteMetaOverrides = {
   },
 };
 
+const faqSchemaByRoute = {
+  "/proverka-saita-i-zayavok-za-48-chasov": [
+    {
+      question: "Почему аудит нужен перед рекламой?",
+      answer:
+        "Реклама приводит трафик, но заявки появляются только если посадочная страница быстро объясняет предложение, вызывает доверие и удобно доводит до контакта. Аудит снижает риск тратить бюджет на страницу, которая теряет людей.",
+    },
+    {
+      question: "Можно ли сделать только одну правку, если причина очевидна?",
+      answer:
+        "Да. Если проблема простая и безопасная, ее можно вынести в отдельную короткую доработку. Но сначала важно убедиться, что это действительно узкое место, а не симптом другой ошибки.",
+    },
+    {
+      question: "Что прислать для старта?",
+      answer:
+        "Ссылку на сайт или карточку, город, нишу, текущие источники трафика и коротко: где вы видите потерю заявок.",
+    },
+  ],
+  "/razrabotka-sajtov-tyumen": [
+    {
+      question: "Можно ли начать с лендинга?",
+      answer:
+        "Да, если нужно быстро проверить одну услугу, акцию или рекламную гипотезу. Для нескольких направлений лучше проектировать сайт с разделами.",
+    },
+    {
+      question: "Почему цена начинается от 45 000 ₽?",
+      answer:
+        "В стоимость входит не только верстка, но и структура, тексты первого уровня, форма, адаптив, базовая аналитика и подготовка к заявкам.",
+    },
+    {
+      question: "Что делать после запуска?",
+      answer:
+        "Смотреть фактическое поведение посетителей, рекламу и заявки. Обычно сайт дорабатывается после первых данных, чтобы повышать конверсию.",
+    },
+  ],
+  "/sozdanie-lendinga-tyumen": [
+    {
+      question: "Можно ли сделать лендинг быстро?",
+      answer:
+        "Да, если услуга и материалы уже понятны. Но даже быстрый лендинг должен пройти проверку формы, мобильной версии и аналитики.",
+    },
+    {
+      question: "Почему лендинг нужно дорабатывать после рекламы?",
+      answer:
+        "До запуска есть только гипотеза. После рекламы видно, какие запросы приходят, где люди уходят и какие блоки мешают заявке.",
+    },
+    {
+      question: "Что лучше: лендинг или многостраничный сайт?",
+      answer:
+        "Для одной услуги и быстрых тестов - лендинг. Для нескольких направлений, SEO и доверия на длинной дистанции - сайт.",
+    },
+  ],
+  "/nastroyka-yandex-direct-tyumen": [
+    {
+      question: "Сколько стоит настройка Яндекс Директ в Тюмени?",
+      answer:
+        "Базовая настройка начинается от 20 000 ₽. Ведение и регулярная оптимизация начинаются от 30 000 ₽ в месяц. Рекламный бюджет оплачивается отдельно и считается после проверки посадочной, ниши и допустимой стоимости заявки.",
+    },
+    {
+      question: "Можно ли запустить Директ без сайта?",
+      answer:
+        "Иногда можно вести на квиз, карточку или мессенджер, но чаще нужна посадочная страница, которая объясняет услугу, показывает цену входа и фиксирует заявки.",
+    },
+    {
+      question: "Когда перед Директом нужен отдельный аудит сайта?",
+      answer:
+        "Если сайт уже получает трафик, но заявок мало, лучше сначала проверить первый экран, форму, Метрику, мобильную версию и маршрут обращения. Так рекламный бюджет не уходит на страницу, которая пока не готова к платному трафику.",
+    },
+  ],
+  "/crm-dlya-biznesa": [
+    {
+      question: "Нужна ли CRM, если заявок пока мало?",
+      answer:
+        "Если заявок мало, сначала полезно проверить сайт и рекламу. CRM нужна, когда обращения уже есть или нужно подготовить обработку к росту трафика.",
+    },
+    {
+      question: "Сколько стоит внедрение CRM?",
+      answer:
+        "Стоимость зависит от количества каналов, ролей, воронок и интеграций. Для простой настройки готовой системы бюджет ниже, а персональная CRM с формами, уведомлениями и отчетами начинается от 180 000 ₽.",
+    },
+    {
+      question: "Можно ли начать с таблицы?",
+      answer:
+        "Да, если процесс простой. Но когда каналов несколько и важны сроки ответа, таблица быстро перестает быть управляемой.",
+    },
+  ],
+  "/ai-avtomatizaciya-biznesa": [
+    {
+      question: "Можно ли внедрить AI без CRM?",
+      answer:
+        "Можно, если сценарий простой. Но для заявок и продаж CRM или хотя бы понятный журнал действий сильно повышают пользу и контроль.",
+    },
+    {
+      question: "AI будет отвечать клиентам сам?",
+      answer:
+        "Только там, где ответы безопасны и понятны. В продажах и нестандартных ситуациях лучше использовать AI как помощника для команды.",
+    },
+    {
+      question: "С чего начать?",
+      answer:
+        "С одного сценария: типовые вопросы, первичная квалификация, резюме заявки или помощник менеджера. После пилота видно, стоит ли расширяться.",
+    },
+  ],
+};
+
+const projectsSchemaItems = [
+  {
+    name: "Росомаха",
+    description: "Каталог техники, который ведет к заявке.",
+    url: "https://xn--80aa8ahaki9a.site",
+    image: `${baseUrl}/projects/gallery/rosomaha-hero.jpg`,
+  },
+  {
+    name: "МеталлТех",
+    description: "Производственный сайт с нуля.",
+    url: "https://xn----7sboc2ad7bd2a.xn--p1ai/",
+    image: `${baseUrl}/projects/gallery/metallteh-hero.jpg`,
+  },
+  {
+    name: "CRM CentrLP",
+    description: "Заявки и задачи без потерь.",
+    url: "https://crm.centrlp.ru/",
+    image: `${baseUrl}/projects/gallery/crm-hero.jpg`,
+  },
+  {
+    name: "SVRQ.ru",
+    description: "Расчет сварочных работ по фото, голосу и тексту.",
+    url: "https://svrq.ru",
+    image: `${baseUrl}/projects/gallery/svrq-hero.jpg`,
+  },
+  {
+    name: "КЛНГ.РФ",
+    description: "Уборка: заявка, расчет, предложение.",
+    url: "https://xn--c1andi.xn--p1ai",
+    image: `${baseUrl}/projects/gallery/klng-hero.jpg`,
+  },
+  {
+    name: "КлинингСервисХМ",
+    description: "Два года единой подачи услуг.",
+    url: "https://cs-hm.ru/",
+    image: `${baseUrl}/projects/gallery/cshm-hero.jpg`,
+  },
+];
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -664,13 +808,64 @@ function buildServiceSchema(meta) {
   };
 }
 
+function buildFaqSchema(meta) {
+  const faqItems = faqSchemaByRoute[meta.path];
+  if (!faqItems) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+function buildProjectsCollectionSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Проекты CentrLP",
+    url: `${baseUrl}/projects`,
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: projectsSchemaItems.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: item.name,
+          description: item.description,
+          url: item.url,
+          image: item.image,
+        },
+      })),
+    },
+  };
+}
+
 function buildJsonLdSchemas(meta) {
   if (meta.path.startsWith("/blog/")) {
     return [buildArticleSchema(meta), buildBreadcrumbSchema(meta)];
   }
 
+  if (meta.path === "/projects") {
+    return [buildProjectsCollectionSchema(), buildBreadcrumbSchema(meta)];
+  }
+
+  const faqSchema = buildFaqSchema(meta);
+
   if (meta.path.startsWith("/services/")) {
-    return [buildServiceSchema(meta), buildBreadcrumbSchema(meta)];
+    return [buildServiceSchema(meta), buildBreadcrumbSchema(meta), faqSchema].filter(Boolean);
+  }
+
+  if (faqSchema) {
+    return [buildServiceSchema(meta), buildBreadcrumbSchema(meta), faqSchema];
   }
 
   return [];

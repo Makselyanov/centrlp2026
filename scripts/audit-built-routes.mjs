@@ -116,6 +116,14 @@ function collectJsonLdTypes(html) {
     if (Array.isArray(value["@graph"])) {
       value["@graph"].forEach(collect);
     }
+
+    for (const nestedValue of Object.values(value)) {
+      if (Array.isArray(nestedValue)) {
+        nestedValue.forEach(collect);
+      } else if (nestedValue && typeof nestedValue === "object") {
+        collect(nestedValue);
+      }
+    }
   };
 
   for (const match of scripts) {
@@ -130,6 +138,45 @@ function collectJsonLdTypes(html) {
   }
 
   return types;
+}
+
+function countJsonLdType(html, expectedType) {
+  let count = 0;
+  const scripts = html.matchAll(
+    /<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
+  );
+
+  const collect = (value) => {
+    if (!value || typeof value !== "object") return;
+
+    const type = value["@type"];
+    if (Array.isArray(type) && type.map(String).includes(expectedType)) {
+      count += 1;
+    } else if (String(type) === expectedType) {
+      count += 1;
+    }
+
+    for (const nestedValue of Object.values(value)) {
+      if (Array.isArray(nestedValue)) {
+        nestedValue.forEach(collect);
+      } else if (nestedValue && typeof nestedValue === "object") {
+        collect(nestedValue);
+      }
+    }
+  };
+
+  for (const match of scripts) {
+    const rawJson = match[1].trim();
+    if (!rawJson) continue;
+
+    try {
+      collect(JSON.parse(rawJson));
+    } catch {
+      // Invalid JSON-LD is reported by collectJsonLdTypes.
+    }
+  }
+
+  return count;
 }
 
 function hasRenderableShell(html) {
@@ -152,6 +199,14 @@ function main() {
 
   const uniqueRoutes = [...new Set(routes)].sort();
   const violations = [];
+  const routesRequiringFaq = new Set([
+    "/proverka-saita-i-zayavok-za-48-chasov",
+    "/razrabotka-sajtov-tyumen",
+    "/sozdanie-lendinga-tyumen",
+    "/nastroyka-yandex-direct-tyumen",
+    "/crm-dlya-biznesa",
+    "/ai-avtomatizaciya-biznesa",
+  ]);
 
   for (const routePath of uniqueRoutes) {
     const htmlPath = routeToHtmlPath(routePath);
@@ -186,6 +241,30 @@ function main() {
         if (!jsonLdTypes.has(requiredType)) {
           violations.push(`${routePath}: missing static JSON-LD ${requiredType}`);
         }
+      }
+    }
+
+    if (routesRequiringFaq.has(routePath)) {
+      for (const requiredType of ["Service", "BreadcrumbList", "FAQPage"]) {
+        if (!jsonLdTypes.has(requiredType)) {
+          violations.push(`${routePath}: missing static JSON-LD ${requiredType}`);
+        }
+      }
+
+      if (countJsonLdType(html, "Question") < 2) {
+        violations.push(`${routePath}: static FAQPage must include at least 2 Question items`);
+      }
+    }
+
+    if (routePath === "/projects") {
+      for (const requiredType of ["CollectionPage", "ItemList", "BreadcrumbList"]) {
+        if (!jsonLdTypes.has(requiredType)) {
+          violations.push(`${routePath}: missing static JSON-LD ${requiredType}`);
+        }
+      }
+
+      if (countJsonLdType(html, "ListItem") < 2) {
+        violations.push(`${routePath}: static ItemList must include at least 2 ListItem entries`);
       }
     }
 
