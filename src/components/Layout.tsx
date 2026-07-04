@@ -29,6 +29,10 @@ const ogImageMap: Record<string, string> = {
   "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
 };
 
+const canonicalUrlMap: Record<string, string> = {
+  "/services/yandex-direct": "https://centrlp.ru/nastroyka-yandex-direct-tyumen",
+};
+
 function getOgImage(pathname: string): string {
   if (ogImageMap[pathname]) return ogImageMap[pathname];
   if (pathname.startsWith("/blog/")) {
@@ -55,7 +59,8 @@ export const Layout = ({ children, title, description }: LayoutProps) => {
   const location = useLocation();
 
   useEffect(() => {
-    const canonicalUrl = `https://centrlp.ru${location.pathname === '/' ? '/' : location.pathname}`;
+    const canonicalUrl =
+      canonicalUrlMap[location.pathname] || `https://centrlp.ru${location.pathname === '/' ? '/' : location.pathname}`;
     const ogImageFile = getOgImage(location.pathname);
     const ogImageUrl = `https://centrlp.ru/og/${ogImageFile}`;
     const metaDescriptionContent = description || "CentrLP — сайты, ВК-упаковка, чат-боты и ИИ-маркетинг под ключ в Тюмени.";

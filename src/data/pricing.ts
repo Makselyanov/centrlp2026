@@ -188,7 +188,7 @@ export const servicePrices: ServicePrice[] = [
   },
   {
     title: "Яндекс.Директ",
-    href: "/services/yandex-direct",
+    href: "/nastroyka-yandex-direct-tyumen",
     price: "от 20 000 ₽",
     description: "Настройка поиска, РСЯ, аналитики, целей, объявлений и первых тестов спроса.",
     category: "growth",

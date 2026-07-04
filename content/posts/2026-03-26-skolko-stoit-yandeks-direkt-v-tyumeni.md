@@ -145,4 +145,4 @@ source: ""
 - [Яндекс Директ для малого бизнеса: пошаговая инструкция 2026](/blog/nastroika-yandex-direct-malyj-biznes)
 - [Почему сайт не приносит заявки](/blog/pochemu-sait-ne-prinosit-zayavki-v-tyumeni)
 
-А если нужен уже не обзор, а запуск под ключ, начните со страницы [Яндекс Директ](/services/yandex-direct) и [веб-аналитики](/services/web-analytics).
+А если нужен уже не обзор, а запуск под ключ, начните со страницы [Яндекс Директ](/nastroyka-yandex-direct-tyumen) и [веб-аналитики](/services/web-analytics).

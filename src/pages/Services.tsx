@@ -209,7 +209,7 @@ const growthServices: ServiceCard[] = [
   {
     title: "Яндекс.Директ",
     description: "Быстрый запуск трафика, тесты спроса и усиление новых продуктовых сценариев за счёт платного канала.",
-    href: "/services/yandex-direct",
+    href: "/nastroyka-yandex-direct-tyumen",
     bullets: ["Поиск и РСЯ", "Тесты спроса", "Оптимизация CPL"],
     icon: LineChart,
   },

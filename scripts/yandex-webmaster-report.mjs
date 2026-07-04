@@ -206,7 +206,7 @@ async function getHeadChecks(baseUrl) {
     `${baseUrl}/`,
     `${baseUrl}/services`,
     `${baseUrl}/blog`,
-    `${baseUrl}/services/yandex-direct`,
+    `${baseUrl}/nastroyka-yandex-direct-tyumen`,
   ];
 
   if (latestArticleSlug) {

@@ -14,6 +14,9 @@ const OUTPUT_FILE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const LANDING_ROUTE_PATHS = new Set(landingRouteMeta.map(({ path: routePath }) => routePath));
+const SITEMAP_EXCLUDED_ROUTES = new Set([
+    '/services/yandex-direct',
+]);
 const LANDING_ROUTE_LASTMOD_FILES = [
     'src/data/landingPageMeta.mjs',
     'src/data/landingPages.ts',
@@ -161,6 +164,7 @@ function getPublicIndexRoutes() {
 function getPriority(route) {
     if (route === '/') return '1.0';
     if (route === '/services' || route === '/prices' || route === '/projects') return '0.9';
+    if (route === '/nastroyka-yandex-direct-tyumen') return '0.9';
     if (route.startsWith('/services/') || route === '/contacts' || route === '/about') return '0.8';
     if (route.startsWith('/blog/')) return '0.7';
     if (route === '/privacy' || route === '/cookies' || route === '/consent') return '0.3';
@@ -186,6 +190,7 @@ function normalizeRoutes(staticRoutes, blogRoutes) {
             route: entry.route.startsWith('/') ? entry.route : `/${entry.route}`,
             lastmod: entry.lastmod || staticLastmod,
         }))
+        .filter((entry) => !SITEMAP_EXCLUDED_ROUTES.has(entry.route))
         .filter((entry, index, arr) => arr.findIndex(item => item.route === entry.route) === index)
         .sort((a, b) => a.route.localeCompare(b.route));
 }

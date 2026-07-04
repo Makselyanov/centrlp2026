@@ -54,7 +54,7 @@ source: ""
 Например, если вы продаёте маркетинг, у вас должны быть не абстрактные разделы, а конкретные страницы вроде:
 
 - [Разработка сайтов](/services/website-development)
-- [Яндекс Директ](/services/yandex-direct)
+- [Яндекс Директ](/nastroyka-yandex-direct-tyumen)
 - [Оформление ВКонтакте](/services/vk-design)
 - [Чат-боты ВКонтакте](/services/chatbot-vk)
 

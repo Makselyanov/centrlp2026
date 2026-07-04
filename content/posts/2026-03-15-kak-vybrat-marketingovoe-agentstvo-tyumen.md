@@ -77,7 +77,7 @@ source: ""
 - где нужен отдельный лендинг;
 - какие цели должны быть в Метрике.
 
-У нас это обычно связано с услугами [Разработка сайтов](/services/website-development), [Яндекс Директ](/services/yandex-direct) и [Веб-аналитика](/services/web-analytics).
+У нас это обычно связано с услугами [Разработка сайтов](/services/website-development), [Яндекс Директ](/nastroyka-yandex-direct-tyumen) и [Веб-аналитика](/services/web-analytics).
 
 ## 4. Дадите ли вы доступ ко всем кабинетам и данным?
 

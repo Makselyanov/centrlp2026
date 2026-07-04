@@ -188,7 +188,7 @@ const growthServices = [
   {
     title: "Яндекс.Директ",
     text: "Подключаем платный трафик, чтобы быстрее тестировать спрос и запускать новые digital-сценарии.",
-    href: "/services/yandex-direct",
+    href: "/nastroyka-yandex-direct-tyumen",
     icon: LineChart,
   },
   {

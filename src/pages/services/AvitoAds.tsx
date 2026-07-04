@@ -148,7 +148,7 @@ export default function AvitoAds() {
         {
           title: "Яндекс.Директ",
           text: "Горячий поисковый спрос и РСЯ для сравнения стоимости заявки с Авито.",
-          href: "/services/yandex-direct",
+          href: "/nastroyka-yandex-direct-tyumen",
         },
         {
           title: "Веб-аналитика",

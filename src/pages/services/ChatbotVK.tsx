@@ -261,7 +261,7 @@ const ChatbotVK = () => {
                 icon: Zap,
                 title: "Яндекс.Директ",
                 text: "Когда после клика важно быстро подхватить поток заявок, чтобы трафик не остывал.",
-                href: "/services/yandex-direct",
+                href: "/nastroyka-yandex-direct-tyumen",
                 cta: "Подключить Директ"
               },
               {

@@ -146,7 +146,7 @@ const MarketingStrategy = () => {
     {
       title: "4. Запускаем короткий цикл тестов",
       text: "Первые 2–4 недели нужны для проверки гипотез: какие запросы, объявления, страницы и сообщения дают живые обращения.",
-      href: "/services/yandex-direct",
+      href: "/nastroyka-yandex-direct-tyumen",
     },
   ];
 

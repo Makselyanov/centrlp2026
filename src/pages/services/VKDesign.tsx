@@ -250,7 +250,7 @@ export default function VKDesign() {
                 icon: Rocket,
                 title: "Реклама ВКонтакте и Яндекс",
                 text: "Когда сообщество уже оформлено, на него можно уверенно вести платный трафик.",
-                href: "/services/yandex-direct",
+                href: "/nastroyka-yandex-direct-tyumen",
                 cta: "Подключить трафик"
               },
               {

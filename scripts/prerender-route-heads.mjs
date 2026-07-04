@@ -31,6 +31,10 @@ const ogImageMap = {
   "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
 };
 
+const canonicalUrlByRoute = {
+  "/services/yandex-direct": "/nastroyka-yandex-direct-tyumen",
+};
+
 const staticRouteMetaOverrides = {
   "/services/android-app-development": {
     title: "Разработка Android-приложений под ключ для бизнеса | CentrLP",
@@ -474,7 +478,7 @@ const commercialStaticSections = {
     ],
     related: [
       { label: "Проверка сайта и заявок за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
-      { label: "Настройка Яндекс Директ", href: "/services/yandex-direct" },
+      { label: "Настройка Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },
       { label: "Персональная CRM", href: "/services/custom-crm" },
     ],
   },
@@ -537,7 +541,7 @@ const commercialStaticSections = {
     related: [
       { label: "Цены на услуги", href: "/prices" },
       { label: "Веб-аналитика", href: "/services/web-analytics" },
-      { label: "Яндекс Директ", href: "/services/yandex-direct" },
+      { label: "Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },
     ],
   },
   "/services/custom-crm": {
@@ -681,7 +685,8 @@ function ensureTag(html, regex, value, fallback) {
 }
 
 function routeUrl(routePath) {
-  return `${baseUrl}${routePath === "/" ? "/" : routePath}`;
+  const canonicalPath = canonicalUrlByRoute[routePath] || routePath;
+  return `${baseUrl}${canonicalPath === "/" ? "/" : canonicalPath}`;
 }
 
 function cleanSchemaName(title) {
@@ -884,7 +889,8 @@ function buildJsonLdSchemas(meta) {
 }
 
 function applyMeta(template, meta) {
-  const canonical = `${baseUrl}${meta.path === "/" ? "/" : meta.path}`;
+  const canonicalPath = canonicalUrlByRoute[meta.path] || meta.path;
+  const canonical = `${baseUrl}${canonicalPath === "/" ? "/" : canonicalPath}`;
   const ogImageUrl = `${baseUrl}/og/${getOgImage(meta.path)}`;
   const ogType = meta.path.startsWith("/blog/") ? "article" : "website";
   let html = template;
