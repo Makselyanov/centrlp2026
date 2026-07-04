@@ -10,11 +10,14 @@ import {
   ArrowRight,
   BarChart3,
   Bot,
+  Building2,
   CheckCircle2,
   Clock3,
   DatabaseZap,
+  ExternalLink,
   FileSearch,
   Gauge,
+  MapPin,
   Megaphone,
   MessageCircle,
   MessagesSquare,
@@ -25,6 +28,7 @@ import {
   SearchCheck,
   ShieldCheck,
   Sparkles,
+  Star,
   Target,
   TrendingUp,
   type LucideIcon,
@@ -33,6 +37,18 @@ import { Link } from "react-router-dom";
 
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
+
+const localTrustLinks = [
+  { label: "2ГИС", href: "https://go.2gis.com/hUyea", detail: "карточка и отзывы" },
+  { label: "Яндекс Карты", href: "https://yandex.ru/maps/-/CLSbvKjF", detail: "локальная карточка" },
+  { label: "ВКонтакте", href: "https://vk.com/reviews-9137191", detail: "отзывы клиентов" },
+] as const;
+
+const localTrustFacts = [
+  { icon: Building2, label: "ООО «ААМХ»", detail: "ИНН 7203606424, официальный договор и закрывающие документы" },
+  { icon: MapPin, label: "Тюмень", detail: "офис и встречи: 625022, г. Тюмень, проезд Солнечный, 22" },
+  { icon: Star, label: "5.0 и 52 отзыва", detail: "сводно по 2ГИС, Flamp и Яндекс Картам" },
+] as const;
 
 type LandingVisual = {
   imageSrc: string;
@@ -341,6 +357,59 @@ const LandingFlowSection = ({ visual }: { visual: LandingVisual }) => (
   </section>
 );
 
+const LocalTrustSection = () => (
+  <section className="bg-white py-16 md:py-20">
+    <div className="container mx-auto px-4">
+      <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <div>
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#0096D6]">
+            <span className="h-px w-8 bg-[#0096D6]" />
+            Локальное доверие
+          </div>
+          <h2 className="max-w-2xl text-3xl font-bold leading-tight text-slate-950 md:text-4xl">
+            Проверяемые контакты и отзывы рядом с заявкой
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
+            Для локального SEO и конверсии важно, чтобы сайт, карточки, телефон, адрес и отзывы говорили одно и то же. Поэтому рядом с коммерческими страницами оставляем не общие обещания, а проверяемые сигналы доверия.
+          </p>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {localTrustFacts.map((fact) => {
+            const Icon = fact.icon;
+
+            return (
+              <div key={fact.label} className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#0096D6]/10 text-[#0096D6]">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div className="text-base font-bold text-slate-900">{fact.label}</div>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{fact.detail}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        {localTrustLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-12 items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[#0096D6]/35 hover:text-[#0096D6]"
+          >
+            <span>{link.label}</span>
+            <span className="hidden text-slate-500 sm:inline">{link.detail}</span>
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
   const page = landingPages[pageKey];
   const visual = landingVisuals[pageKey];
@@ -531,6 +600,8 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
           </div>
         </div>
       </section>
+
+      <LocalTrustSection />
 
       <section className="bg-slate-50 py-20 md:py-24">
         <div className="container mx-auto px-4">

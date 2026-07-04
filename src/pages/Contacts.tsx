@@ -1,6 +1,6 @@
 import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
-import { Phone, MapPin, FileText, MessageCircle, Mail, ArrowRight, Copy, CheckCircle2, XCircle, ScanSearch } from "lucide-react";
+import { Phone, MapPin, FileText, MessageCircle, Mail, ArrowRight, Copy, CheckCircle2, XCircle, ScanSearch, ExternalLink, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -289,6 +289,40 @@ const Contacts = () => {
                         <Button size="icon" variant="ghost" className="h-8 w-8" onClick={copyInn}>
                           {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                         </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card className="p-6 border-l-4 border-l-[#44B78B] hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-[#44B78B]/10 p-3 rounded-full text-[#44B78B]">
+                      <Star className="w-6 h-6" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-bold text-lg mb-1">Карточки и отзывы</h3>
+                      <p className="text-muted-foreground mb-4 text-sm leading-6">
+                        Название, телефон, город и сайт совпадают в основных локальных профилях. Это помогает клиенту проверить компанию до заявки.
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          { label: "2ГИС", href: "https://go.2gis.com/hUyea" },
+                          { label: "Яндекс Карты", href: "https://yandex.ru/maps/-/CLSbvKjF" },
+                          { label: "Отзывы VK", href: "https://vk.com/reviews-9137191" },
+                        ].map((link) => (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                          >
+                            {link.label}
+                            <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        ))}
                       </div>
                     </div>
                   </div>

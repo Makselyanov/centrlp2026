@@ -190,7 +190,10 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
         "sameAs": [
           "https://vk.com/centrlp",
           "https://t.me/centrlp_ideas",
-          "https://2gis.ru/tyumen/firm/70000001033718655"
+          "https://2gis.ru/tyumen/firm/70000001033718655",
+          "https://go.2gis.com/hUyea",
+          "https://yandex.ru/maps/-/CLSbvKjF",
+          "https://tyumen.flamp.ru/firm/centrlp_agentstvo_razvitiya_biznesa-70000001033718655"
         ],
         "address": {
           "@type": "PostalAddress",
