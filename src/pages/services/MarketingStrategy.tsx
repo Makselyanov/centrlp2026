@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useAutoBreadcrumb, useFaqSchema } from "@/components/SeoSchemas";
+import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
 
 const MarketingStrategy = () => {
   const faqItems = [
@@ -20,9 +20,16 @@ const MarketingStrategy = () => {
     { question: "Что входит в маркетинговую стратегию?", answer: "Аудит текущего маркетинга, анализ ЦА и конкурентов с помощью AI, позиционирование и УТП, медиаплан с бюджетами по каналам (VK, Telegram, Яндекс.Директ), юнит-экономика, карта гипотез по креативам и офферам, дорожная карта внедрения." },
     { question: "Можно ли заказать маркетинговый план без рекламного бюджета?", answer: "Да. Часто начинаем именно со стратегии, медиаплана и прогноза по каналам без немедленного запуска рекламы. Это помогает понять, какие шаги реально дадут заявки, прежде чем вкладывать деньги в трафик." },
     { question: "Что входит в маркетинговый план за 35 000 ₽?", answer: "В экспресс-формат входит разбор текущей ситуации, выбор 2–3 приоритетных каналов, оффер, медиаплан на 3 месяца, ориентиры по бюджету и список первых действий для сайта, рекламы и обработки заявок." },
+    { question: "Чем маркетинговый план отличается от обычного контент-плана?", answer: "Контент-план отвечает за темы публикаций, а маркетинговый план связывает оффер, посадочную страницу, рекламу, аналитику, CRM и обработку заявок. Поэтому в работе фиксируем не только что публиковать, но и куда вести клиента, какие цели считать и кто отвечает за лид." },
+    { question: "Можно ли начать с одной услуги или одного направления?", answer: "Да. Для быстрого роста заявок часто выбираем 1–2 приоритетные услуги, усиливаем страницы, настраиваем аналитику и тестируем каналы на коротком цикле. Это дешевле и практичнее, чем сразу расписывать широкий документ без внедрения." },
   ];
   useFaqSchema(faqItems);
   useAutoBreadcrumb("Маркетинговая стратегия");
+  useServiceSchema({
+    name: "План маркетинга и маркетинговая стратегия в Тюмени",
+    description: "Разработка маркетингового плана для бизнеса: каналы, бюджет, оффер, медиаплан, аналитика, CRM и первые действия для роста заявок.",
+    price: "35000",
+  });
 
   const scrollToForm = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -96,6 +103,50 @@ const MarketingStrategy = () => {
     {
       title: "Первые действия",
       text: "Формируем последовательность на 2–4 недели: что исправить на сайте, какие кампании собрать, какие события в аналитике проверить.",
+    },
+  ];
+
+  const formatComparison = [
+    {
+      name: "Экспресс-план",
+      price: "от 35 000 ₽",
+      goodFor: "когда нужно быстро выбрать каналы и первые действия",
+      result: "медиаплан на 30–90 дней, оффер, бюджет, список правок сайта и аналитики",
+    },
+    {
+      name: "Полная стратегия",
+      price: "от 55 000 ₽",
+      goodFor: "когда важно перестроить маркетинг, сегменты и воронку",
+      result: "позиционирование, конкуренты, юнит-экономика, каналы, KPI и дорожная карта",
+    },
+    {
+      name: "Стратегия с внедрением",
+      price: "от 80 000 ₽",
+      goodFor: "когда нужен не только документ, но и запуск первых гипотез",
+      result: "приоритетные кампании, аналитика, посадочные правки и контроль первых заявок",
+    },
+  ];
+
+  const leadRoute = [
+    {
+      title: "1. Выбираем денежную услугу",
+      text: "Фиксируем, какие услуги сейчас должны приносить заявки: сайт, Яндекс Директ, CRM, аудит, аналитика или другой приоритет.",
+      href: "/services",
+    },
+    {
+      title: "2. Усиливаем посадочную",
+      text: "Проверяем цену входа, оффер, FAQ, доказательства, CTA, форму и внутренние ссылки до запуска трафика.",
+      href: "/proverka-saita-i-zayavok-za-48-chasov",
+    },
+    {
+      title: "3. Считаем заявки и источники",
+      text: "Настраиваем цели, события, UTM, отчеты и связь с CRM, чтобы видеть не визиты, а путь от клика до обращения.",
+      href: "/services/web-analytics",
+    },
+    {
+      title: "4. Запускаем короткий цикл тестов",
+      text: "Первые 2–4 недели нужны для проверки гипотез: какие запросы, объявления, страницы и сообщения дают живые обращения.",
+      href: "/services/yandex-direct",
     },
   ];
 
@@ -274,6 +325,46 @@ const MarketingStrategy = () => {
         </div>
       </BentoSection>
 
+      <BentoSection
+        tone="slate"
+        eyebrow="Какой формат выбрать"
+        title="Цена зависит от глубины и внедрения"
+        description="Чтобы заявка была проще, показываем не абстрактную стратегию, а понятный объем работ и ближайший результат."
+      >
+        <div className="grid gap-5 lg:grid-cols-3">
+          {formatComparison.map((item) => (
+            <div key={item.name} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#0096D6]">{item.price}</div>
+              <h3 className="mb-3 text-xl font-bold tracking-tight text-slate-900">{item.name}</h3>
+              <p className="mb-4 text-sm leading-relaxed text-slate-600">{item.goodFor}</p>
+              <div className="rounded-xl bg-slate-50 p-4 text-sm font-medium leading-relaxed text-slate-700">
+                {item.result}
+              </div>
+            </div>
+          ))}
+        </div>
+      </BentoSection>
+
+      <BentoSection
+        tone="white"
+        eyebrow="Маршрут к заявке"
+        title="План должен доводить клиента до обращения"
+        description="Связываем стратегию с конкретными страницами, аналитикой и обработкой лидов, чтобы работа не осталась презентацией."
+      >
+        <div className="grid gap-5 md:grid-cols-2">
+          {leadRoute.map((item) => (
+            <a
+              key={item.title}
+              href={item.href}
+              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0096D6]/40 hover:shadow-md"
+            >
+              <h3 className="mb-3 text-lg font-bold tracking-tight text-slate-900 group-hover:text-[#0096D6]">{item.title}</h3>
+              <p className="text-[15px] leading-relaxed text-slate-600">{item.text}</p>
+            </a>
+          ))}
+        </div>
+      </BentoSection>
+
       {/* ── Trends ───────────────────────────────────────────────────── */}
       <BentoSection
         tone="white"
@@ -437,6 +528,9 @@ const MarketingStrategy = () => {
             </p>
             <p>
               Если вам нужно понять, <strong>сколько стоит маркетинговый план</strong>, можно начать с экспресс-формата от 35 000 ₽. Он подходит, когда нужен короткий и прикладной документ: какие каналы тестировать, какой оффер усиливать, какой бюджет закладывать и как считать результат по лидам, а не по ощущениям.
+            </p>
+            <p>
+              Если вы сравниваете варианты и хотите сначала разобраться в составе работ, прочитайте материал <a className="text-[#0096D6] underline underline-offset-4" href="/blog/plan-marketinga-cena-zakazat-tyumen">про цену и состав маркетингового плана</a>. Если сайт уже получает трафик, но не дает обращений, начните с <a className="text-[#0096D6] underline underline-offset-4" href="/proverka-saita-i-zayavok-za-48-chasov">проверки сайта и пути заявки</a> и настройки <a className="text-[#0096D6] underline underline-offset-4" href="/services/web-analytics">веб-аналитики</a>.
             </p>
             <p className="text-xs opacity-70">*Instagram — проект Meta Platforms Inc., деятельность которой в России запрещена.</p>
           </div>
