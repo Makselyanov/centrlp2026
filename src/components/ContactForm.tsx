@@ -256,42 +256,50 @@ export const ContactForm = () => {
           Для первого ответа достаточно имени и телефона. Остальные детали можно добавить ниже, если удобно.
         </p>
 
-        <div>
-          <Label>Что важнее сейчас</Label>
-          <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            {goalOptions.map((goal) => {
-              const active = formData.goal === goal;
+        <details className="rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-4">
+          <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700">
+            Добавить задачу и комментарий
+            <span className="ml-2 text-xs font-normal text-slate-500">(необязательно)</span>
+          </summary>
+          <div className="mt-4 space-y-6">
+            <div>
+              <Label>Что важнее сейчас</Label>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {goalOptions.map((goal) => {
+                  const active = formData.goal === goal;
 
-              return (
-                <button
-                  key={goal}
-                  type="button"
-                  onClick={() => setFormData({ ...formData, goal })}
-                  className={`rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${
-                    active
-                      ? "border-[#0096D6] bg-[#0096D6]/10 text-slate-950"
-                      : "border-slate-200 bg-white text-slate-600 hover:border-[#44B78B]/40 hover:text-slate-900"
-                  }`}
-                >
-                  {goal}
-                </button>
-              );
-            })}
+                  return (
+                    <button
+                      key={goal}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, goal })}
+                      className={`rounded-xl border bg-white px-4 py-3 text-left text-sm font-medium transition-colors ${
+                        active
+                          ? "border-[#0096D6] bg-[#0096D6]/10 text-slate-950"
+                          : "border-slate-200 text-slate-600 hover:border-[#44B78B]/40 hover:text-slate-900"
+                      }`}
+                    >
+                      {goal}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="comment">Что хотите получить</Label>
+              <Textarea
+                id="comment"
+                name="comment"
+                value={formData.comment}
+                onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+                className="mt-2 bg-white"
+                rows={4}
+                placeholder={commentPlaceholder}
+              />
+            </div>
           </div>
-        </div>
-
-        <div>
-          <Label htmlFor="comment">Что хотите получить</Label>
-          <Textarea
-            id="comment"
-            name="comment"
-            value={formData.comment}
-            onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-            className="mt-2"
-            rows={4}
-            placeholder={commentPlaceholder}
-          />
-        </div>
+        </details>
 
         <details className="rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-4">
           <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700">
