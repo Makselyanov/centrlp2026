@@ -15,6 +15,7 @@ const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const LANDING_ROUTE_PATHS = new Set(landingRouteMeta.map(({ path: routePath }) => routePath));
 const SITEMAP_EXCLUDED_ROUTES = new Set([
+    '/services/website-development',
     '/services/yandex-direct',
 ]);
 const LANDING_ROUTE_LASTMOD_FILES = [
@@ -164,6 +165,7 @@ function getPublicIndexRoutes() {
 function getPriority(route) {
     if (route === '/') return '1.0';
     if (route === '/services' || route === '/prices' || route === '/projects') return '0.9';
+    if (route === '/razrabotka-sajtov-tyumen') return '0.9';
     if (route === '/nastroyka-yandex-direct-tyumen') return '0.9';
     if (route.startsWith('/services/') || route === '/contacts' || route === '/about') return '0.8';
     if (route.startsWith('/blog/')) return '0.7';

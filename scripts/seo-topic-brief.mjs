@@ -86,7 +86,7 @@ const COMMERCIAL_TOPICS = [
     title: "Сайт, CRM и автоматизация заявок: что нужно бизнесу в Тюмени в 2026 году",
     slug: "sajt-crm-avtomatizaciya-zayavok-tyumen-2026",
     moneyPage: "/razrabotka-sajtov-tyumen",
-    secondaryPages: ["/crm-dlya-biznesa", "/services/website-development", "/services/ai-systems"],
+    secondaryPages: ["/crm-dlya-biznesa", "/razrabotka-sajtov-tyumen", "/services/ai-systems"],
     targetQueries: [
       "сайт с crm тюмень",
       "сайт для заявок тюмень",

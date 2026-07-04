@@ -32,6 +32,7 @@ const ogImageMap = {
 };
 
 const canonicalUrlByRoute = {
+  "/services/website-development": "/razrabotka-sajtov-tyumen",
   "/services/yandex-direct": "/nastroyka-yandex-direct-tyumen",
 };
 
@@ -568,7 +569,7 @@ const commercialStaticSections = {
     related: [
       { label: "AI-агенты для заявок", href: "/services/ai-agents" },
       { label: "n8n-автоматизация", href: "/services/n8n-automation" },
-      { label: "Сайт как источник заявок", href: "/services/website-development" },
+      { label: "Сайт как источник заявок", href: "/razrabotka-sajtov-tyumen" },
     ],
   },
   "/services/ai-agents": {

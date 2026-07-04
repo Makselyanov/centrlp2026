@@ -30,6 +30,7 @@ const ogImageMap: Record<string, string> = {
 };
 
 const canonicalUrlMap: Record<string, string> = {
+  "/services/website-development": "https://centrlp.ru/razrabotka-sajtov-tyumen",
   "/services/yandex-direct": "https://centrlp.ru/nastroyka-yandex-direct-tyumen",
 };
 
