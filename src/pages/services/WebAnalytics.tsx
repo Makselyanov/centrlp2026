@@ -9,53 +9,106 @@ import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/
 
 const WebAnalytics = () => {
   const faqItems = [
-    { question: "Чем отличается Метрика от Google Analytics?", answer: "Метрика лучше работает с российским трафиком и рекламой (Директ, ВК). GA4 удобнее для международных проектов и интеграции с Google Ads. Мы рекомендуем ставить обе системы для полноты данных." },
-    { question: "Зачем нужны цели, если счетчик уже стоит?", answer: "Без целей вы видите только посещаемость. Цели показывают, сколько пользователей совершили важные действия (заявка, покупка, звонок) — то есть стали клиентами. Это основа для оценки эффективности." },
+    { question: "Чем отличается Метрика от Google Analytics?", answer: "Метрика лучше работает с российским трафиком и рекламой в РФ: Яндекс Директ, карты, ВК и локальные источники. GA4 удобнее для международных проектов. Для бизнеса в Тюмени обычно начинаем с Метрики, целей и UTM, а GA4 подключаем как дополнительный слой данных." },
+    { question: "Зачем нужны цели, если счетчик уже стоит?", answer: "Без целей вы видите только посещаемость. Цели показывают, сколько пользователей совершили важные действия: отправили заявку, кликнули по телефону, открыли мессенджер, дошли до формы или получили ошибку. Это основа для оценки эффективности рекламы." },
     { question: "Как быстро будет готова аналитика?", answer: "Базовую настройку делаем за 3-5 дней. Расширенная с электронной торговлей и интеграциями — 1-2 недели в зависимости от сложности сайта и количества целей." },
-    { question: "Нужно ли что-то делать после настройки?", answer: "Нет, аналитика работает автоматически. Вы просто заходите в отчеты и смотрите актуальные данные. Мы научим, какие метрики отслеживать и как принимать решения на их основе." },
-    { question: "Можно ли связать аналитику с CRM?", answer: "Да, можно интегрировать с AmoCRM, Битрикс24 и другими системами. Тогда вы будете видеть полный путь клиента: от первого клика до закрытой сделки и выручки." },
+    { question: "Нужно ли что-то делать после настройки?", answer: "Да, после запуска важно смотреть не только визиты, а путь заявки: источник, страница, CTA, форма, звонок, мессенджер, отправка и обработка. Мы показываем, какие отчеты открывать и какие решения принимать по данным." },
+    { question: "Можно ли связать аналитику с CRM?", answer: "Да, можно связать форму, UTM, страницу входа и источник обращения с CRM или таблицей лидов. Тогда видно не только клики, но и реальные заявки, скорость ответа и результат обработки." },
+    { question: "Что делать, если сайт получает трафик, но заявок нет?", answer: "Начинаем с проверки целей и событий: видит ли Метрика открытие формы, отправку, ошибки, клики по телефону и мессенджерам. После этого становится понятно, проблема в трафике, посадочной странице, форме или обработке заявки." },
   ];
   useFaqSchema(faqItems);
   useAutoBreadcrumb("Веб-аналитика");
+  useServiceSchema({
+    name: "Настройка веб-аналитики, Метрики и целей в Тюмени",
+    description: "Настройка Яндекс Метрики, целей, событий, UTM, отчетов и связи заявки с CRM для бизнеса в Тюмени.",
+    price: "15000",
+  });
 
   return (
     <Layout
-      title="Настройка веб-аналитики: Метрика, цели, отчёты | CentrLP"
-      description="Профессиональная настройка Яндекс Метрики и Google Analytics. Цели, события, отчеты для понимания эффективности рекламы и поведения пользователей."
+      title="Настройка веб-аналитики и Метрики в Тюмени от 15 000 ₽ | CentrLP"
+      description="Настроим Яндекс Метрику, цели, события, UTM и отчеты для сайта, рекламы и CRM: видно, откуда приходят заявки и где теряется клиент."
     >
       {/* Hero Block */}
       <section className="py-20 bg-gradient-to-br from-background via-background to-primary/5">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
-              Веб-аналитика: понимайте, откуда приходят деньги
+              Настройка веб-аналитики, Метрики и целей в Тюмени
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
-              Настроим Яндекс Метрику и Google Analytics так, чтобы вы точно знали: какая реклама работает, 
-              где пользователи уходят и как увеличить конверсию сайта.
+              Свяжем сайт, Яндекс Директ, UTM, формы, звонки, мессенджеры и CRM, чтобы было видно не только посещения,
+              а реальный путь заявки: от источника трафика до обработки менеджером.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <CheckCircle className="w-5 h-5 text-primary" />
-                <span>Прозрачная аналитика</span>
+                <span>Метрика и цели</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <CheckCircle className="w-5 h-5 text-primary" />
-                <span>Цели и события</span>
+                <span>UTM и источники</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <CheckCircle className="w-5 h-5 text-primary" />
-                <span>Визуальные отчеты</span>
+                <span>Заявки и CRM</span>
               </div>
             </div>
             <Button size="lg" className="text-lg px-8" asChild>
-              <a href="#contact">Настроить аналитику</a>
+              <a href="#contact">Разобрать путь заявки</a>
             </Button>
           </div>
         </div>
       </section>
 
       <ServiceImageBand slug="web-analytics" alt="web-analytics — иллюстрация услуги CentrLP" />
+
+      <section className="py-16 bg-card">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Что настраиваем, чтобы видеть заявки</h2>
+              <p className="text-lg text-muted-foreground">
+                Счетчик сам по себе не отвечает на главный вопрос бизнеса: какой канал дает обращения. Поэтому собираем не набор графиков, а понятную связку рекламы, сайта и обработки лида.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Цели Метрики",
+                  text: "Отправка формы, клик по телефону, переход в Telegram, открытие мессенджера, ошибка формы и ключевые CTA на посадочных страницах.",
+                },
+                {
+                  title: "UTM и рекламные источники",
+                  text: "Структура меток для Яндекс Директа, VK, Telegram, Дзен и ручных публикаций, чтобы не смешивать каналы в отчетах.",
+                },
+                {
+                  title: "Маршрут заявки",
+                  text: "Связка формы, уведомлений, CRM или таблицы лидов: видно, куда попадает обращение и как быстро оно обрабатывается.",
+                },
+              ].map((item) => (
+                <Card key={item.title} className="h-full">
+                  <CardContent className="pt-6">
+                    <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button asChild variant="outline">
+                <a href="/proverka-saita-i-zayavok-za-48-chasov">Проверить путь заявки</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/nastroyka-yandex-direct-tyumen">Связать с Яндекс Директом</a>
+              </Button>
+              <Button asChild variant="outline">
+                <a href="/crm-dlya-biznesa">Передавать заявки в CRM</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Target Audience */}
       <section className="py-16 bg-card">
@@ -67,7 +120,7 @@ const WebAnalytics = () => {
                 <Target className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Рекламодатели</h3>
                 <p className="text-muted-foreground">
-                  Понимать, какие каналы и кампании приносят продажи, а какие сливают бюджет. Оценка ROI по каждому источнику.
+                  Понимать, какие каналы и кампании приносят заявки, а какие сливают бюджет. Оценка источников по обращениям, а не только по кликам.
                 </p>
               </CardContent>
             </Card>
@@ -76,7 +129,7 @@ const WebAnalytics = () => {
                 <TrendingUp className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-semibold mb-2">Владельцы бизнеса</h3>
                 <p className="text-muted-foreground">
-                  Принимать решения на основе данных: что улучшить на сайте, куда инвестировать, какие страницы дорабатывать.
+                  Принимать решения на основе данных: что улучшить на сайте, куда инвестировать, какие страницы и формы дорабатывать.
                 </p>
               </CardContent>
             </Card>
