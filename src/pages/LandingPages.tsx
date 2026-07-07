@@ -271,6 +271,66 @@ const MobileStickyLeadBar = ({ page }: { page: LandingPage }) => (
   </div>
 );
 
+const websiteMobileStartOptions = [
+  {
+    title: "Лендинг под одну услугу",
+    text: "Быстрый запуск от 45 000 ₽: оффер, форма, телефон, мессенджеры, Метрика и готовность к рекламе.",
+  },
+  {
+    title: "Сайт услуг для Тюмени",
+    text: "Несколько направлений, локальные запросы, доверие, контакты, FAQ и внутренняя перелинковка.",
+  },
+  {
+    title: "Сайт + CRM для заявок",
+    text: "Когда нужно не только получить обращение, но и передать его менеджеру без потери источника и контекста.",
+  },
+];
+
+const WebsiteMobileStartSection = () => (
+  <section className="bg-white py-14 md:py-18">
+    <div className="container mx-auto px-4">
+      <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+        <div>
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#0096D6]">
+            <span className="h-px w-8 bg-[#0096D6]" />
+            Мобильный путь заявки
+          </div>
+          <h2 className="max-w-2xl text-3xl font-bold leading-tight text-slate-950 md:text-4xl">
+            С телефона должно быть понятно, какой сайт заказать и куда нажать
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
+            Для заявок с мобильного первый экран, цена входа, кнопка, телефон и мессенджер должны работать без поиска по странице. Поэтому проектируем не только дизайн, а короткий маршрут: выбор формата, действие, фиксация источника и передача обращения.
+          </p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button type="button" className="rounded-full" onClick={scrollToForm}>
+              Обсудить сайт
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <Button asChild variant="outline" className="rounded-full">
+              <a href="tel:+79058248564">
+                <Phone className="h-4 w-4" />
+                Позвонить
+              </a>
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {websiteMobileStartOptions.map((option, index) => (
+            <div key={option.title} className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5 shadow-sm">
+              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#0096D6] to-[#44B78B] text-sm font-bold text-white">
+                {index + 1}
+              </div>
+              <h3 className="text-lg font-bold leading-tight text-slate-900">{option.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{option.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const LandingHeroImage = ({ visual }: { visual: LandingVisual }) => (
   <img
     src={visual.imageSrc}
@@ -513,6 +573,8 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
           </div>
         </div>
       </section>
+
+      {pageKey === "websiteDevelopmentTyumen" && <WebsiteMobileStartSection />}
 
       <LandingFlowSection visual={visual} />
 

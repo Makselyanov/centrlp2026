@@ -360,9 +360,35 @@ function markdownToStaticHtml(markdown, title, description, cta = {}) {
 </main>`;
 }
 
-function landingStaticHtml(title, description) {
+const landingStaticSections = {
+  "/razrabotka-sajtov-tyumen": `
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 20px 70px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; align-items: stretch;">
+      <article style="border: 1px solid rgba(0,150,214,.16); border-radius: 20px; background: #fff; padding: 22px; box-shadow: 0 16px 42px rgba(15,23,42,.06);">
+        <p style="margin: 0 0 8px; color: #008dd2; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em;">Мобильный путь заявки</p>
+        <h2 style="margin: 0 0 12px; font-size: 26px; line-height: 1.2;">С телефона должно быть понятно, какой сайт заказать и куда нажать</h2>
+        <p style="margin: 0; color: #475569;">Проектируем короткий маршрут: выбор формата, действие, фиксация источника и передача обращения.</p>
+      </article>
+      <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
+        <h3 style="margin: 0 0 10px;">Лендинг под одну услугу</h3>
+        <p style="margin: 0; color: #475569;">Быстрый запуск от 45 000 ₽: оффер, форма, телефон, мессенджеры, Метрика и готовность к рекламе.</p>
+      </article>
+      <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
+        <h3 style="margin: 0 0 10px;">Сайт услуг для Тюмени</h3>
+        <p style="margin: 0; color: #475569;">Несколько направлений, локальные запросы, доверие, контакты, FAQ и внутренняя перелинковка.</p>
+      </article>
+      <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
+        <h3 style="margin: 0 0 10px;">Сайт + CRM для заявок</h3>
+        <p style="margin: 0; color: #475569;">Чтобы обращение сразу попадало менеджеру без потери источника и контекста.</p>
+      </article>
+    </div>
+  </section>`,
+};
+
+function landingStaticHtml(title, description, routePath = "") {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(description);
+  const extraSection = landingStaticSections[routePath] || "";
 
   return `<main class="seo-static-content" data-prerender="true" style="min-height: 100vh; margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; background: linear-gradient(135deg, #f8fcff 0%, #ffffff 46%, #e7f7ff 100%);">
   <header style="border-bottom: 1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.88);">
@@ -399,6 +425,7 @@ function landingStaticHtml(title, description) {
       </ul>
     </aside>
   </section>
+  ${extraSection}
   <footer style="border-top: 1px solid rgba(15,23,42,.08); background: #0f172a; color: #e2e8f0;">
     <div style="max-width: 1180px; margin: 0 auto; padding: 26px 20px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 14px;">
       <span>CentrLP: сайты, реклама, CRM и автоматизация под рост заявок.</span>
@@ -1198,7 +1225,7 @@ function main() {
     ...collectStaticRouteMeta(),
     ...landingRouteMeta.map((route) => ({
       ...route,
-      staticHtml: landingStaticHtml(route.title, route.description),
+      staticHtml: landingStaticHtml(route.title, route.description, route.path),
     })),
     ...collectBlogPostMeta(),
   ];
