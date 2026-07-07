@@ -150,12 +150,35 @@ const MarketingStrategy = () => {
     },
   ];
 
+  const decisionSignals = [
+    {
+      title: "Реклама идет, заявок мало",
+      text: "Проверяем оффер, посадочную, цену входа, формы, Метрику и CRM. В плане фиксируем, что исправить до увеличения бюджета.",
+      href: "/proverka-saita-i-zayavok-za-48-chasov",
+    },
+    {
+      title: "Нужно выбрать первый канал",
+      text: "Сравниваем Яндекс Директ, SEO, карты, VK, Telegram и повторные касания. Канал выбирается по спросу, экономике и скорости проверки.",
+      href: "/nastroyka-yandex-direct-tyumen",
+    },
+    {
+      title: "Есть заявки, но нет управляемости",
+      text: "Связываем сайт, рекламу, UTM, цели и CRM, чтобы собственник видел источник обращения, ответственного и следующий шаг.",
+      href: "/services/web-analytics",
+    },
+  ];
+
   const pricingTiers = [
     {
       name: "Экспресс",
       price: "от 35 000 ₽",
       description: "Для небольшого бизнеса и точечного запуска",
-      features: ["Аудит текущей ситуации", "Подбор 2–3 каналов", "Краткий медиаплан на 3 мес."],
+      features: [
+        "Аудит сайта, формы и текущих каналов",
+        "Подбор 2–3 каналов под заявки",
+        "Краткий медиаплан на 30–90 дней",
+        "Список правок посадочной и аналитики",
+      ],
       cta: "Заказать",
       highlighted: false,
     },
@@ -169,6 +192,7 @@ const MarketingStrategy = () => {
         "Позиционирование и УТП",
         "Медиаплан на 6–12 мес.",
         "Юнит-экономика",
+        "Маршрут заявки: сайт, реклама, CRM",
       ],
       cta: "Выбрать",
       highlighted: true,
@@ -181,6 +205,7 @@ const MarketingStrategy = () => {
         "Всё из «Полной стратегии»",
         "Запуск первых кампаний",
         "Настройка аналитики",
+        "Проверка заявок и источников",
         "Сопровождение 2–3 месяца",
       ],
       cta: "Обсудить",
@@ -191,7 +216,7 @@ const MarketingStrategy = () => {
   return (
     <Layout
       title="План маркетинга в Тюмени на заказ: цена от 35 000 ₽ | CentrLP"
-      description="Заказать план маркетинга в Тюмени от 35 000 ₽: медиаплан, каналы, бюджет, оффер, юнит-экономика и первые действия для роста заявок."
+      description="Заказать план маркетинга в Тюмени от 35 000 ₽: каналы, бюджет, оффер, посадочные, аналитика, CRM и первые 30–90 дней действий для роста заявок."
     >
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
@@ -230,8 +255,8 @@ const MarketingStrategy = () => {
 
           <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed">
             Собираем план маркетинга для бизнеса в Тюмени: каналы, медиаплан, бюджет,
-            KPI и гипотезы по лидам. Опираемся на аналитику и AI, чтобы вы понимали не только что делать,
-            но и сколько это будет стоить по этапам.
+            KPI, посадочные страницы и гипотезы по лидам. Опираемся на аналитику и AI, чтобы вы понимали не только что делать,
+            но и сколько это будет стоить по этапам и где должен появиться первый измеримый результат.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
@@ -341,6 +366,29 @@ const MarketingStrategy = () => {
                 {item.result}
               </div>
             </div>
+          ))}
+        </div>
+      </BentoSection>
+
+      <BentoSection
+        tone="white"
+        eyebrow="Когда заказывать"
+        title="План нужен, когда следующий шаг влияет на деньги"
+        description="Не растягиваем работу в общий документ. Сначала выбираем ситуацию, где план быстрее всего превращается в заявку, тест или экономию бюджета."
+      >
+        <div className="grid gap-5 lg:grid-cols-3">
+          {decisionSignals.map((item) => (
+            <a
+              key={item.title}
+              href={item.href}
+              className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-[#0096D6]/40 hover:shadow-md"
+            >
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#0096D6]/10 to-[#44B78B]/10 text-[#0096D6]">
+                <Target className="h-5 w-5" />
+              </div>
+              <h3 className="mb-3 text-lg font-bold tracking-tight text-slate-900 group-hover:text-[#0096D6]">{item.title}</h3>
+              <p className="text-[15px] leading-relaxed text-slate-600">{item.text}</p>
+            </a>
           ))}
         </div>
       </BentoSection>
