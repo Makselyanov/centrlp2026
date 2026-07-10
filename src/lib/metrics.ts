@@ -17,6 +17,7 @@ const SERVER_EVENT_GOALS = new Set([
   "landing_mobile_sticky_telegram_click",
   "landing_primary_cta_click",
   "landing_secondary_cta_click",
+  "form_goal_select",
 ]);
 
 const getUtmParams = () => {

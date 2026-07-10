@@ -30,6 +30,19 @@ const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Бот или автоматизация": "Обсудить автоматизацию",
 };
 
+const goalMetricPlacements = [
+  "goal_express_audit",
+  "goal_compliance",
+  "goal_marketing_strategy",
+  "goal_website_landing",
+  "goal_yandex_direct",
+  "goal_crm",
+  "goal_bot_automation",
+] as const;
+
+const getGoalMetricPlacement = (goal: (typeof goalOptions)[number]) =>
+  goalMetricPlacements[goalOptions.indexOf(goal)] || "goal_unknown";
+
 const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
   if (pathname === "/services/compliance-2026") {
     return "Проверка сайта по персональным данным";
@@ -272,7 +285,13 @@ export const ContactForm = () => {
                     <button
                       key={goal}
                       type="button"
-                      onClick={() => setFormData({ ...formData, goal })}
+                      onClick={() => {
+                        setFormData({ ...formData, goal });
+                        trackMetric("form_goal_select", {
+                          path: location.pathname,
+                          placement: getGoalMetricPlacement(goal),
+                        });
+                      }}
                       className={`rounded-xl border bg-white px-4 py-3 text-left text-sm font-medium transition-colors ${
                         active
                           ? "border-[#0096D6] bg-[#0096D6]/10 text-slate-950"
