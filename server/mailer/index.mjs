@@ -201,12 +201,12 @@ function normalizePathMetric(value) {
   }
 }
 
-function summarizeCounts(map, limit = 10) {
+function summarizeCounts(map, limit = 10, minVisibleCount = 3) {
   const visible = [];
   let other = 0;
 
   for (const [key, count] of map.entries()) {
-    if (count < 3) {
+    if (count < minVisibleCount) {
       other += count;
     } else {
       visible.push({ value: key, count });
@@ -337,9 +337,9 @@ function readLeadMetrics() {
     utmSourceCounts.set(utmSource, (utmSourceCounts.get(utmSource) || 0) + 1);
   }
 
-  totals.by_event_30d = summarizeCounts(eventCounts);
-  totals.by_event_page_30d = summarizeCounts(eventPageCounts);
-  totals.by_utm_source_30d = summarizeCounts(utmSourceCounts);
+  totals.by_event_30d = summarizeCounts(eventCounts, 10, 1);
+  totals.by_event_page_30d = summarizeCounts(eventPageCounts, 10, 1);
+  totals.by_utm_source_30d = summarizeCounts(utmSourceCounts, 10, 1);
   return totals;
 }
 
