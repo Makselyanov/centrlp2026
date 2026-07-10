@@ -84,6 +84,7 @@ function rateLimit(ip) {
 const LOG_DIR = path.join(__dirname, "logs");
 fs.mkdirSync(LOG_DIR, { recursive: true });
 const LOG_FILE = path.join(LOG_DIR, "leads.jsonl");
+const EVENT_LOG_FILE = path.join(LOG_DIR, "lead-events.jsonl");
 const LEAD_LOG_RETENTION_MS =
   Math.max(Number(LEAD_LOG_RETENTION_DAYS) || 183, 1) * 24 * 60 * 60 * 1000;
 
@@ -95,24 +96,34 @@ function logLead(entry) {
   }
 }
 
+function logLeadEvent(entry) {
+  try {
+    fs.appendFileSync(EVENT_LOG_FILE, JSON.stringify(entry) + "\n", "utf8");
+  } catch (e) {
+    console.error("[mailer] event log write failed:", e.message);
+  }
+}
+
 function pruneLeadLog() {
   try {
-    if (!fs.existsSync(LOG_FILE)) return;
-
     const cutoff = Date.now() - LEAD_LOG_RETENTION_MS;
-    const lines = fs.readFileSync(LOG_FILE, "utf8").split("\n");
-    const kept = lines.filter((line) => {
-      if (!line.trim()) return false;
-      try {
-        const entry = JSON.parse(line);
-        const receivedAt = new Date(entry.received_at || 0).getTime();
-        return Number.isFinite(receivedAt) && receivedAt >= cutoff;
-      } catch {
-        return true;
-      }
-    });
+    for (const file of [LOG_FILE, EVENT_LOG_FILE]) {
+      if (!fs.existsSync(file)) continue;
 
-    fs.writeFileSync(LOG_FILE, kept.length ? kept.join("\n") + "\n" : "", "utf8");
+      const lines = fs.readFileSync(file, "utf8").split("\n");
+      const kept = lines.filter((line) => {
+        if (!line.trim()) return false;
+        try {
+          const entry = JSON.parse(line);
+          const receivedAt = new Date(entry.received_at || 0).getTime();
+          return Number.isFinite(receivedAt) && receivedAt >= cutoff;
+        } catch {
+          return true;
+        }
+      });
+
+      fs.writeFileSync(file, kept.length ? kept.join("\n") + "\n" : "", "utf8");
+    }
   } catch (e) {
     console.error("[mailer] log prune failed:", e.message);
   }
@@ -224,26 +235,33 @@ function readLeadMetrics() {
     last_received_age_minutes: null,
     by_page_path_30d: [],
     by_lead_source_30d: [],
+    events_30d: 0,
+    by_event_30d: [],
+    by_event_page_30d: [],
+    by_utm_source_30d: [],
     parse_errors: 0,
+    event_parse_errors: 0,
     truncated: false,
+    events_truncated: false,
   };
 
-  if (!totals.log_exists) return totals;
+  if (!totals.log_exists && !fs.existsSync(EVENT_LOG_FILE)) return totals;
 
-  const stat = fs.statSync(LOG_FILE);
-  let content;
-  if (stat.size > METRICS_MAX_BYTES) {
-    const fd = fs.openSync(LOG_FILE, "r");
+  function readTail(file, truncatedKey) {
+    if (!fs.existsSync(file)) return "";
+    const stat = fs.statSync(file);
+    if (stat.size <= METRICS_MAX_BYTES) return fs.readFileSync(file, "utf8");
+
+    const fd = fs.openSync(file, "r");
     const buffer = Buffer.alloc(METRICS_MAX_BYTES);
     fs.readSync(fd, buffer, 0, METRICS_MAX_BYTES, stat.size - METRICS_MAX_BYTES);
     fs.closeSync(fd);
-    content = buffer.toString("utf8");
-    content = content.slice(content.indexOf("\n") + 1);
-    totals.truncated = true;
-  } else {
-    content = fs.readFileSync(LOG_FILE, "utf8");
+    totals[truncatedKey] = true;
+    const content = buffer.toString("utf8");
+    return content.slice(content.indexOf("\n") + 1);
   }
 
+  const content = readTail(LOG_FILE, "truncated");
   const pageCounts = new Map();
   const sourceCounts = new Map();
   const today = new Date().toISOString().slice(0, 10);
@@ -288,6 +306,40 @@ function readLeadMetrics() {
 
   totals.by_page_path_30d = summarizeCounts(pageCounts);
   totals.by_lead_source_30d = summarizeCounts(sourceCounts);
+
+  const eventCounts = new Map();
+  const eventPageCounts = new Map();
+  const utmSourceCounts = new Map();
+  const eventContent = readTail(EVENT_LOG_FILE, "events_truncated");
+
+  for (const line of eventContent.split("\n")) {
+    if (!line.trim()) continue;
+
+    let entry;
+    try {
+      entry = JSON.parse(line);
+    } catch {
+      totals.event_parse_errors += 1;
+      continue;
+    }
+
+    const receivedAt = new Date(entry.received_at || 0).getTime();
+    if (!Number.isFinite(receivedAt) || now - receivedAt > 30 * dayMs) continue;
+
+    totals.events_30d += 1;
+
+    const event = normalizeMetricValue(entry.event || "unknown", "unknown");
+    const pagePath = normalizePathMetric(entry.path || entry.page_url || "/");
+    const utmSource = normalizeMetricValue(entry.utm_source || "direct", "direct");
+
+    eventCounts.set(event, (eventCounts.get(event) || 0) + 1);
+    eventPageCounts.set(`${event}:${pagePath}`, (eventPageCounts.get(`${event}:${pagePath}`) || 0) + 1);
+    utmSourceCounts.set(utmSource, (utmSourceCounts.get(utmSource) || 0) + 1);
+  }
+
+  totals.by_event_30d = summarizeCounts(eventCounts);
+  totals.by_event_page_30d = summarizeCounts(eventPageCounts);
+  totals.by_utm_source_30d = summarizeCounts(utmSourceCounts);
   return totals;
 }
 
@@ -303,6 +355,48 @@ app.get("/api/lead/metrics", (_req, res) => {
     console.error("[mailer] metrics failed:", err.message);
     res.status(500).json({ ok: false, error: "metrics_failed" });
   }
+});
+
+app.post("/api/lead/event", (req, res) => {
+  const ip =
+    req.headers["x-forwarded-for"]?.toString().split(",")[0].trim() ||
+    req.ip ||
+    req.socket.remoteAddress ||
+    "unknown";
+
+  if (!rateLimit(`event:${ip}`)) {
+    return res.status(429).json({ ok: false, error: "too_many_requests" });
+  }
+
+  const body = req.body || {};
+  const event = normalizeMetricValue(body.event || "", "");
+
+  if (!event) {
+    return res.status(400).json({ ok: false, error: "missing_event" });
+  }
+
+  const entry = {
+    received_at: new Date().toISOString(),
+    event,
+    path: normalizePathMetric(body.path || body.page_url || "/"),
+    utm_source: normalizeMetricValue(body.utm_source || "direct", "direct"),
+    utm_medium: normalizeMetricValue(body.utm_medium || "", ""),
+    utm_campaign: normalizeMetricValue(body.utm_campaign || "", ""),
+    utm_content: normalizeMetricValue(body.utm_content || "", ""),
+    utm_term: normalizeMetricValue(body.utm_term || "", ""),
+    placement: normalizeMetricValue(body.placement || "", ""),
+    messenger: normalizeMetricValue(body.messenger || "", ""),
+    referrer_host: (() => {
+      try {
+        return normalizeMetricValue(new URL(String(body.referrer || "")).hostname, "");
+      } catch {
+        return "";
+      }
+    })(),
+  };
+
+  logLeadEvent(entry);
+  return res.json({ ok: true });
 });
 
 app.post("/api/lead", async (req, res) => {

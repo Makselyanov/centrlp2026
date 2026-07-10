@@ -66,10 +66,16 @@ location = /api/lead {
 
 ## Read-only metrics
 
+`POST /api/lead/event` accepts non-PII funnel events from the browser:
+form submit attempts, successful submits, errors, messenger clicks, phone clicks,
+and landing CTA clicks. It stores only normalized event names, page paths,
+UTM fields, placement/messenger labels, and referrer host.
+
 `GET /api/lead/metrics` returns only safe aggregates for route diagnostics:
-totals for today, 7/30 days, last lead timestamp, and normalized counters by
-page path and lead source. It never returns raw lead rows, names, phones,
-comments, IP addresses, user agents, full URLs, or form text fields.
+totals for today, 7/30 days, last lead timestamp, normalized counters by page
+path and lead source, plus 30-day event/UTM counters. It never returns raw lead
+rows, names, phones, comments, IP addresses, user agents, full URLs, or form
+text fields.
 
 ## Наблюдение
 
