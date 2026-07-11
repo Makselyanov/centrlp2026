@@ -67,6 +67,9 @@ location = /api/lead {
 ## Read-only metrics
 
 `POST /api/lead/event` accepts non-PII funnel events from the browser:
+
+Events with `utm_source=codex_smoke` are retained as synthetic checks but excluded
+from real funnel totals. Their count is exposed as `synthetic_events_30d`.
 form submit attempts, successful submits, errors, messenger clicks, phone clicks,
 and landing CTA clicks. It stores only normalized event names, page paths,
 UTM fields, placement/messenger labels, and referrer host.

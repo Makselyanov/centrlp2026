@@ -236,6 +236,7 @@ function readLeadMetrics() {
     by_page_path_30d: [],
     by_lead_source_30d: [],
     events_30d: 0,
+    synthetic_events_30d: 0,
     by_event_30d: [],
     by_event_page_30d: [],
     by_utm_source_30d: [],
@@ -326,11 +327,16 @@ function readLeadMetrics() {
     const receivedAt = new Date(entry.received_at || 0).getTime();
     if (!Number.isFinite(receivedAt) || now - receivedAt > 30 * dayMs) continue;
 
+    const utmSource = normalizeMetricValue(entry.utm_source || "direct", "direct");
+    if (utmSource === "codex_smoke") {
+      totals.synthetic_events_30d += 1;
+      continue;
+    }
+
     totals.events_30d += 1;
 
     const event = normalizeMetricValue(entry.event || "unknown", "unknown");
     const pagePath = normalizePathMetric(entry.path || entry.page_url || "/");
-    const utmSource = normalizeMetricValue(entry.utm_source || "direct", "direct");
 
     eventCounts.set(event, (eventCounts.get(event) || 0) + 1);
     eventPageCounts.set(`${event}:${pagePath}`, (eventPageCounts.get(`${event}:${pagePath}`) || 0) + 1);
