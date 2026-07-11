@@ -83,20 +83,28 @@ export const ContactForm = () => {
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
+  const isYandexDirectPage =
+    location.pathname === "/services/yandex-direct" || location.pathname === "/nastroyka-yandex-direct-tyumen";
   const introTitle = isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
       ? "Можно начать с короткого запроса на сайт или лендинг под заявки."
+      : isYandexDirectPage
+        ? "Можно начать с короткого расчета запуска или проверки действующей рекламы."
     : "Можно начать с короткого разбора сайта, формы и маршрута заявки.";
   const introDescription = isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
       ? "Для первого контакта достаточно имени, телефона и пары слов о задаче: новая страница, сайт услуг, доработка старого сайта или связка с CRM. Детали можно уточнить после первого ответа."
+      : isYandexDirectPage
+        ? "Для первого ответа достаточно контакта и пары слов о нише. Если реклама уже идет, добавьте ссылку на сайт и укажите, что важнее сейчас: снизить стоимость заявки, проверить Поиск или РСЯ, настроить цели либо пересобрать кампании."
     : "Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнем с проверки формы, первого экрана, Метрики и скорости ответа.";
   const commentPlaceholder = isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
       ? "Например: нужен лендинг под услугу; сайт услуг в Тюмени; переделать старый сайт, чтобы заявки не терялись; связать форму с CRM"
+      : isYandexDirectPage
+        ? "Например: запустить Поиск и РСЯ с нуля; проверить действующие кампании; настроить цели Метрики; снизить стоимость заявки; подготовить посадочную под рекламу"
     : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
 
   const [formData, setFormData] = useState({
