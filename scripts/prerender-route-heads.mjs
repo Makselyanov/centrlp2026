@@ -578,7 +578,7 @@ const commercialStaticSections = {
     ],
   },
   "/services/marketing-strategy": {
-    lead: "Готовим маркетинговую стратегию и план действий для бизнеса в Тюмени: оффер, каналы, гипотезы, бюджет, приоритеты и контроль заявок.",
+    lead: "Готовим план маркетинга для бизнеса в Тюмени от 35 000 ₽: оффер, каналы, гипотезы, бюджет, приоритеты и контроль заявок.",
     sections: [
       {
         title: "Что входит в маркетинговый план",
@@ -599,6 +599,7 @@ const commercialStaticSections = {
       },
     ],
     related: [
+      { label: "Цена и состав плана маркетинга", href: "/blog/plan-marketinga-cena-zakazat-tyumen" },
       { label: "Цены на услуги", href: "/prices" },
       { label: "Веб-аналитика", href: "/services/web-analytics" },
       { label: "Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },
