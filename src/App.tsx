@@ -1,14 +1,9 @@
 import { lazy, Suspense, useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import { AppFallback } from "./components/AppFallback";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { CookieConsent } from "./components/CookieConsent";
-import Index from "./pages/Index";
 import {
   AiAutomationPage,
   CrmBusinessPage,
@@ -21,6 +16,8 @@ import {
 import { trackMetric } from "./lib/metrics";
 
 // Lazy-loaded pages
+const Index = lazy(() => import("./pages/Index"));
+const GlobalToasters = lazy(() => import("./components/GlobalToasters"));
 const Services = lazy(() => import("./pages/Services"));
 const AI = lazy(() => import("./pages/AI"));
 const Barter = lazy(() => import("./pages/Barter"));
@@ -74,8 +71,6 @@ const N8nAutomation = lazy(() => import("./pages/services/N8nAutomation"));
 const TelegramLeadAgent = lazy(() => import("./pages/services/TelegramLeadAgent"));
 const TelegramServiceAgent = lazy(() => import("./pages/services/TelegramServiceAgent"));
 const Compliance2026 = lazy(() => import("./pages/services/Compliance2026"));
-
-const queryClient = new QueryClient();
 
 const FirstPartyAnalytics = () => {
   const location = useLocation();
@@ -174,18 +169,17 @@ const AppRoutes = () => (
 );
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <FirstPartyAnalytics />
-        <ScrollToTop />
-        <AppRoutes />
-        <CookieConsent />
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <>
+    <Suspense fallback={null}>
+      <GlobalToasters />
+    </Suspense>
+    <BrowserRouter>
+      <FirstPartyAnalytics />
+      <ScrollToTop />
+      <AppRoutes />
+      <CookieConsent />
+    </BrowserRouter>
+  </>
 );
 
 export default App;

@@ -1,4 +1,3 @@
-import { ContactForm } from "@/components/ContactForm";
 import { Layout } from "@/components/Layout";
 import { MessengerLinks, TELEGRAM_URL } from "@/components/MessengerLinks";
 import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
@@ -33,11 +32,14 @@ import {
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
+const ContactForm = lazy(() =>
+  import("@/components/ContactForm").then((module) => ({ default: module.ContactForm })),
+);
 
 const YandexDirectIntentSection = () => {
   const options = [
@@ -826,7 +828,9 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
             </p>
           </div>
           <div className="scroll-mt-28">
-            <ContactForm />
+            <Suspense fallback={<div className="min-h-[620px] rounded-3xl border border-slate-200 bg-slate-50" aria-hidden="true" />}>
+              <ContactForm />
+            </Suspense>
           </div>
         </div>
       </section>
