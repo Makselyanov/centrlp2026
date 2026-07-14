@@ -224,6 +224,7 @@ function main() {
     "/crm-dlya-biznesa",
     "/ai-avtomatizaciya-biznesa",
     "/lokalnoe-seo-tyumen",
+    "/services/web-analytics",
   ]);
 
   for (const routePath of uniqueRoutes) {
