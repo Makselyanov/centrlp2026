@@ -140,6 +140,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     ],
     related: [
       { title: "Что проверять, если сайт не даёт заявок", href: "/blog/ekspress-audit-saita-net-zayavok-48-chasov" },
+      { title: "Почему мобильный сайт теряет заявки", href: "/blog/mobilnyj-sajt-net-zayavok-tyumen" },
       { title: "Разработка сайтов в Тюмени", href: "/razrabotka-sajtov-tyumen" },
       { title: "Создание лендинга под рекламу", href: "/sozdanie-lendinga-tyumen" },
       { title: "Настройка Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },

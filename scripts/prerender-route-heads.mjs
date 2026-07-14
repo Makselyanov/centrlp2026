@@ -416,6 +416,7 @@ const landingStaticSections = {
         <li><strong>С телефона обращаются заметно реже:</strong> проверяем мобильный оффер, CTA, поля формы, клавиатуру, ошибки и подтверждение отправки.</li>
       </ul>
       <p style="margin: 16px 0 0;"><a href="/proverka-saita-i-zayavok-za-48-chasov?intent=site-audit#contact-form">Передать фокус в аудит</a></p>
+      <p style="margin: 10px 0 0;"><a href="/blog/mobilnyj-sajt-net-zayavok-tyumen">Почему мобильный сайт теряет заявки: подробная проверка</a></p>
     </article>
   </section>`,
   "/razrabotka-sajtov-tyumen": `
