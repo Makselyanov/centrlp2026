@@ -114,6 +114,11 @@ export default function CustomCRM() {
       ]}
       relatedServices={[
         {
+          title: "Бриф на персональную CRM",
+          text: "18 вопросов про заявки, роли, статусы, документы, интеграции, миграцию и критерии приёмки до расчёта разработки.",
+          href: "/blog/brif-na-personalnuyu-crm-tyumen",
+        },
+        {
           title: "Готовая или персональная CRM",
           text: "Сравнение двух форматов по процессам, ролям, интеграциям, стоимости и критериям приёмки.",
           href: "/blog/gotovaya-ili-personalnaya-crm-tyumen",
