@@ -727,6 +727,7 @@ const commercialStaticSections = {
     ],
     related: [
       { label: "Что входит в настройку аналитики", href: "/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen" },
+      { label: "Когда нужна сквозная аналитика", href: "/blog/skvoznaya-analitika-malyj-biznes-tyumen" },
       { label: "Проверка сайта и заявок", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { label: "Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },
       { label: "CRM для бизнеса", href: "/crm-dlya-biznesa" },

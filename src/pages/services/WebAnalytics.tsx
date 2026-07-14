@@ -100,6 +100,9 @@ const WebAnalytics = () => {
                 <a href="/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen">Что входит и как принять работу</a>
               </Button>
               <Button asChild variant="outline">
+                <a href="/blog/skvoznaya-analitika-malyj-biznes-tyumen">Когда нужна сквозная аналитика</a>
+              </Button>
+              <Button asChild variant="outline">
                 <a href="/proverka-saita-i-zayavok-za-48-chasov">Проверить путь заявки</a>
               </Button>
               <Button asChild variant="outline">
