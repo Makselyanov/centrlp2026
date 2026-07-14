@@ -68,7 +68,7 @@ export const MarkdownRenderer = ({ content, className = '' }: MarkdownRendererPr
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ node, ...props }) => (
-            <h1 className="text-4xl font-bold mt-10 mb-5 text-slate-900 tracking-tight" {...props} />
+            <h2 className="relative text-[28px] md:text-[32px] font-bold mt-12 mb-5 text-slate-900 tracking-tight pl-4 border-l-[3px] border-[#0096D6]" {...props} />
           ),
           h2: ({ node, ...props }) => (
             <h2 className="relative text-[28px] md:text-[32px] font-bold mt-12 mb-5 text-slate-900 tracking-tight pl-4 border-l-[3px] border-[#0096D6]" {...props} />

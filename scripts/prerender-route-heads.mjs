@@ -325,6 +325,7 @@ function markdownToStaticHtml(markdown, title, description, cta = {}) {
   const lines = String(markdown).split(/\r?\n/);
   let paragraph = [];
   let inFence = false;
+  let skippedPrimaryHeading = false;
 
   const flushParagraph = () => {
     const text = renderInlineMarkdown(paragraph.join(" "));
@@ -353,7 +354,11 @@ function markdownToStaticHtml(markdown, title, description, cta = {}) {
     const heading = line.match(/^(#{1,3})\s+(.+)$/);
     if (heading) {
       flushParagraph();
-      const level = Math.min(heading[1].length, 3);
+      if (heading[1].length === 1 && !skippedPrimaryHeading) {
+        skippedPrimaryHeading = true;
+        continue;
+      }
+      const level = Math.max(2, Math.min(heading[1].length, 3));
       html.push(`<h${level}>${escapeHtml(stripInlineMarkdown(heading[2]))}</h${level}>`);
       continue;
     }

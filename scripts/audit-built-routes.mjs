@@ -185,6 +185,11 @@ function hasRenderableShell(html) {
   return rootContent.length > 0 || /<script[^>]+type=["']module["'][^>]+\/assets\//i.test(html);
 }
 
+function countPrerenderHeadings(html, level) {
+  const root = html.match(/<div\s+id=["']root["'][^>]*>([\s\S]*?)<\/div>\s*<noscript/i)?.[1] || "";
+  return (root.match(new RegExp(`<h${level}(?:\\s|>)`, "gi")) || []).length;
+}
+
 function main() {
   if (!fs.existsSync(distDir)) {
     throw new Error(`dist directory not found: ${distDir}`);
@@ -230,6 +235,10 @@ function main() {
     }
 
     if (routePath.startsWith("/blog/")) {
+      if (countPrerenderHeadings(html, 1) !== 1) {
+        violations.push(`${routePath}: prerendered article must keep one primary heading outside noscript`);
+      }
+
       for (const requiredType of ["Article", "BreadcrumbList"]) {
         if (!jsonLdTypes.has(requiredType)) {
           violations.push(`${routePath}: missing static JSON-LD ${requiredType}`);

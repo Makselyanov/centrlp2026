@@ -15,7 +15,11 @@ interface EnhancedMarkdownProps {
 }
 
 export const EnhancedMarkdown = ({ content }: EnhancedMarkdownProps) => {
-    const chunks = useMemo(() => buildContentChunks(content), [content]);
+    const articleBody = useMemo(
+        () => content.replace(/^\s*#\s+[^\r\n]+(?:\r?\n)+/, ""),
+        [content],
+    );
+    const chunks = useMemo(() => buildContentChunks(articleBody), [articleBody]);
 
     return (
         <>
