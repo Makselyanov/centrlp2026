@@ -288,6 +288,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
       },
     ],
     related: [
+      { title: "Лендинг под Яндекс Директ", href: "/blog/sozdanie-landinga-rukovodstvo" },
       { title: "Аудит перед рекламой", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Настройка Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },
       { title: "Разработка сайтов", href: "/razrabotka-sajtov-tyumen" },

@@ -444,7 +444,7 @@ const landingStaticSections = {
     <article style="border: 1px solid rgba(0,150,214,.16); border-radius: 20px; background: #fff; padding: 22px; box-shadow: 0 16px 42px rgba(15,23,42,.06);">
       <p style="margin: 0 0 8px; color: #008dd2; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em;">Выбор формата</p>
       <h2 style="margin: 0 0 12px; font-size: 26px; line-height: 1.2;">Одна услуга — лендинг, несколько направлений — сайт</h2>
-      <p style="margin: 0; color: #475569;">Сравните задачи, рекламу, SEO, аналитику и развитие после запуска: <a href="/blog/lending-ili-mnogostranichnyj-sajt-tyumen">лендинг или многостраничный сайт</a>.</p>
+      <p style="margin: 0; color: #475569;">Сравните задачи, рекламу, SEO, аналитику и развитие после запуска: <a href="/blog/lending-ili-mnogostranichnyj-sajt-tyumen">лендинг или многостраничный сайт</a>. Перед покупкой трафика проверьте, <a href="/blog/sozdanie-landinga-rukovodstvo">как подготовить лендинг под Яндекс Директ</a>.</p>
     </article>
   </section>`,
   "/crm-dlya-biznesa": `
