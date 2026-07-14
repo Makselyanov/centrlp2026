@@ -36,8 +36,8 @@ const About = () => {
 
   return (
     <Layout
-      title="О компании CentrLP — агентство интернет-маркетинга в Тюмени"
-      description="CentrLP — агентство развития бизнеса в Тюмени. Создаём сайты, настраиваем рекламу, внедряем ИИ. ООО «ААМХ», ИНН 7203606424."
+      title="CentrLP — центр цифрового консалтинга в Тюмени | ООО «ААМХ»"
+      description="О CentrLP: центр цифрового консалтинга в Тюмени, бренд ООО «ААМХ». Сайты, реклама, CRM, аналитика и автоматизация заявок. ИНН 7203606424."
     >
       {/* About Me Section */}
       <section className="relative pt-32 pb-20 overflow-hidden bg-slate-50">
@@ -57,17 +57,17 @@ const About = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/50 backdrop-blur-md border border-[#0096D6]/20 text-[#0096D6] font-semibold text-sm tracking-wide shadow-sm">
-                Обо мне | CentrLP
+                О компании и основателе
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-slate-900 leading-tight">
-                Создаю системы, которые <br />
+                CentrLP — центр цифрового консалтинга <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-                  приносят деньги
+                  в Тюмени
                 </span>
               </h1>
               <div className="prose prose-lg text-slate-600 leading-relaxed bg-white/60 backdrop-blur-sm p-8 rounded-3xl border border-white/50 shadow-sm">
                 <p className="mb-0">
-                  Я работаю в digital-сфере больше 12 лет и собираю под одну крышу всё, что действительно приносит результат бизнесу: разработку сайтов, маркетинг, аналитику и автоматизацию. Основатель студии CentrLP в Тюмени. Начинал как разработчик, позже углубился в маркетинг и построил собственную систему, где сайт, реклама и аналитика работают как единое целое. Я люблю понятные решения, которые приносят заявки и деньги. Сейчас я помогаю бизнесам внедрять воронки, квизы, чат-ботов, подключаю аналитику, настраиваю рекламу, делаю сайты под ключ и оптимизирую процессы. Моя цель — чтобы у предпринимателя перестало болеть всё, что связано с интернет-продвижением. Люблю технологии, видеографию, путешествия и проекты, в которых можно что-то улучшить.
+                  CentrLP помогает бизнесу связать сайт, рекламу, формы, аналитику и CRM в понятный маршрут заявки. Основатель — Максим Владимирович Кузнецов. Проекты выполняются официально от ООО «ААМХ»: с договором, согласованным составом работ и закрывающими документами. Основной регион работы — Тюмень и Тюменская область; цифровые проекты можно вести дистанционно по России.
                 </p>
               </div>
             </motion.div>
@@ -98,6 +98,40 @@ const About = () => {
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
               </motion.div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-y border-slate-200 bg-white py-12">
+        <div className="container mx-auto grid gap-6 px-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+            <Briefcase className="mb-4 h-7 w-7 text-[#0096D6]" />
+            <h2 className="mb-2 text-xl font-bold">Бренд и юридическое лицо</h2>
+            <p className="text-sm leading-6 text-slate-600">
+              Бренд — CentrLP, юридическое лицо — ООО «ААМХ». ИНН 7203606424, ОГРН 1267200004818.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+            <MapPin className="mb-4 h-7 w-7 text-[#44B78B]" />
+            <h2 className="mb-2 text-xl font-bold">Офис в Тюмени</h2>
+            <p className="text-sm leading-6 text-slate-600">
+              625022, Тюмень, проезд Солнечный, 22. Встречи проходят по предварительной договорённости.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+            <CheckCircle className="mb-4 h-7 w-7 text-[#0096D6]" />
+            <h2 className="mb-2 text-xl font-bold">Первый шаг к заявкам</h2>
+            <p className="mb-4 text-sm leading-6 text-slate-600">
+              Можно начать с проверки сайта и маршрута обращения либо сразу выбрать нужную услугу.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="/proverka-saita-i-zayavok-za-48-chasov" className="font-semibold text-[#0096D6] hover:underline">
+                Проверить путь заявки
+              </a>
+              <a href="/services" className="font-semibold text-[#0096D6] hover:underline">
+                Все услуги
+              </a>
+            </div>
           </div>
         </div>
       </section>
