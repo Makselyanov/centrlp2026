@@ -364,7 +364,7 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="?intent=web-analytics#contact">Заказать базовую настройку</a>
+                  <a href="?intent=web-analytics-basic#contact">Заказать базовую настройку</a>
                 </Button>
               </CardContent>
             </Card>
@@ -394,7 +394,7 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <a href="?intent=web-analytics#contact">Заказать расширенную настройку</a>
+                  <a href="?intent=web-analytics-advanced#contact">Заказать расширенную настройку</a>
                 </Button>
               </CardContent>
             </Card>
@@ -421,7 +421,7 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="?intent=web-analytics#contact">Обсудить связку под ключ</a>
+                  <a href="?intent=web-analytics-full#contact">Обсудить связку под ключ</a>
                 </Button>
               </CardContent>
             </Card>

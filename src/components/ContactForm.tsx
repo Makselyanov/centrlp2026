@@ -108,6 +108,9 @@ export const ContactForm = () => {
   const isSiteBriefIntent = formIntent === "site-brief";
   const isAuditIntent = formIntent === "site-audit";
   const isWebAnalyticsIntent = formIntent === "web-analytics";
+  const isWebAnalyticsBasicIntent = formIntent === "web-analytics-basic";
+  const isWebAnalyticsAdvancedIntent = formIntent === "web-analytics-advanced";
+  const isWebAnalyticsFullIntent = formIntent === "web-analytics-full";
   const isDirectLaunchIntent = formIntent === "direct-launch";
   const isDirectManagementIntent = formIntent === "direct-management";
   const isDirectAuditIntent = formIntent === "direct-audit";
@@ -136,6 +139,12 @@ export const ContactForm = () => {
           ? "Обсудить стратегию с внедрением от 80 000 ₽."
     : isCustomCrmIntent
       ? "Опишите процесс — подготовим первый контур персональной CRM."
+    : isWebAnalyticsBasicIntent
+      ? "Настроим базовую Метрику и цели от 15 000 ₽."
+    : isWebAnalyticsAdvancedIntent
+      ? "Соберём расширенную аналитику от 30 000 ₽."
+    : isWebAnalyticsFullIntent
+      ? "Свяжем сайт, рекламу и CRM от 50 000 ₽."
     : isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
@@ -169,6 +178,12 @@ export const ContactForm = () => {
           ? "Кроме стратегии оценим запуск первых кампаний, аналитику, посадочные правки и контроль обращений. Итоговый объём зависит от каналов и текущей инфраструктуры."
     : isCustomCrmIntent
       ? "Для первого расчёта достаточно описать, откуда приходят заявки, кто с ними работает, какие этапы, документы и отчёты нужны. Разработка персональной CRM начинается от 180 000 ₽; состав и этапы фиксируем после разбора процесса."
+    : isWebAnalyticsBasicIntent
+      ? "Укажите сайт, основные формы и действия, которые нужно считать обращениями. В базовый формат входят Метрика, до пяти целей, проверка событий и инструкция по отчётам."
+    : isWebAnalyticsAdvancedIntent
+      ? "Укажите сайт, рекламные каналы, формы и нужные отчёты. Состав дополнительных событий, электронной торговли и источников фиксируем до начала работ."
+    : isWebAnalyticsFullIntent
+      ? "Укажите сайт, рекламные системы, CRM или журнал заявок и ответственных сотрудников. Сначала составим карту интеграций и границы сквозной связки."
     : isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
@@ -202,6 +217,12 @@ export const ContactForm = () => {
           ? "Например: нужна стратегия и запуск; какие каналы уже есть; что требуется внедрить на сайте, в аналитике, рекламе и CRM"
     : isCustomCrmIntent
       ? "Например: заявки приходят с сайта и из мессенджеров; три роли; семь этапов сделки; нужны документы, напоминания и отчёт руководителя"
+    : isWebAnalyticsBasicIntent
+      ? "Например: одна форма, клики по телефону и Telegram, до пяти целей, отчёт по источникам"
+    : isWebAnalyticsAdvancedIntent
+      ? "Например: несколько форм и рекламных каналов, UTM, дополнительные события, электронная торговля и отчёты"
+    : isWebAnalyticsFullIntent
+      ? "Например: связать сайт, Директ, VK, формы и CRM; сохранить источник заявки и статус обработки"
     : isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
@@ -228,6 +249,9 @@ export const ContactForm = () => {
     isSiteBriefIntent ||
       isAuditIntent ||
       isWebAnalyticsIntent ||
+      isWebAnalyticsBasicIntent ||
+      isWebAnalyticsAdvancedIntent ||
+      isWebAnalyticsFullIntent ||
       isDirectLaunchIntent ||
       isDirectManagementIntent ||
       isDirectAuditIntent ||
