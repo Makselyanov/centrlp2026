@@ -367,6 +367,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
       },
     ],
     related: [
+      { title: "Цены на настройку и ведение", href: "/blog/skolko-stoit-yandeks-direkt-v-tyumeni" },
       { title: "Яндекс Директ для психолога", href: "/blog/yandex-direct-dlya-psihologa-tyumen" },
       { title: "Проверить сайт перед рекламой", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Создать лендинг", href: "/sozdanie-lendinga-tyumen" },

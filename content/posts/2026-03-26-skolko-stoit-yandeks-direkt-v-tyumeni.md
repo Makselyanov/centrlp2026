@@ -5,10 +5,10 @@ date: "2026-03-26"
 description: "Настройка Яндекс Директ в Тюмени — от 20 000 ₽, ведение — от 30 000 ₽ в месяц. Что входит в работу, как рассчитать рекламный бюджет и принять результат."
 ctaTitle: "Нужно рассчитать запуск или ведение Директа?"
 ctaText: "Выберите конкретный сценарий: настройка от 20 000 ₽, ведение от 30 000 ₽ в месяц или аудит действующих кампаний после оценки кабинета."
-primaryCtaLabel: "Рассчитать запуск Директа"
-primaryCtaHref: "/nastroyka-yandex-direct-tyumen?intent=direct-launch#contact-form"
-secondaryCtaLabel: "Отправить кампании на аудит"
-secondaryCtaHref: "/nastroyka-yandex-direct-tyumen?intent=direct-audit#contact-form"
+primaryCtaLabel: "Рассчитать ведение Директа"
+primaryCtaHref: "/nastroyka-yandex-direct-tyumen?intent=direct-management#contact-form"
+secondaryCtaLabel: "Рассчитать настройку с нуля"
+secondaryCtaHref: "/nastroyka-yandex-direct-tyumen?intent=direct-launch#contact-form"
 tags: ["Яндекс Директ", "Тюмень", "Контекстная реклама", "Стоимость", "Заявки"]
 source: "https://yandex.ru/support/direct/ru/impressions/budget-estimation"
 ---
@@ -55,6 +55,10 @@ source: "https://yandex.ru/support/direct/ru/impressions/budget-estimation"
 - данные CRM или журнала заявок, чтобы отделить лиды от тестов и спама.
 
 Увеличивать бюджет имеет смысл после проверки, что форма работает, источник заявки сохраняется, а менеджер получает обращение и может отметить его качество.
+
+[Рассчитать ежемесячное ведение Директа от 30 000 ₽](/nastroyka-yandex-direct-tyumen?intent=direct-management#contact-form)
+
+В заявке можно указать ссылку на сайт, текущий рекламный бюджет и главную проблему: дорогие обращения, мало целевых запросов, слабая посадочная или отсутствие связи с CRM. Этого достаточно для первичной оценки объёма работ.
 
 ## Как рассчитать рекламный бюджет без выдуманных средних
 
@@ -123,6 +127,6 @@ source: "https://yandex.ru/support/direct/ru/impressions/budget-estimation"
 4. средний чек или допустимая стоимость продажи;
 5. текущая ситуация: реклама ещё не запускалась или уже работает.
 
-[Получить расчёт настройки Яндекс Директ](/nastroyka-yandex-direct-tyumen?intent=direct-launch#contact-form)
+[Получить расчёт настройки или ведения Яндекс Директ](/nastroyka-yandex-direct-tyumen?intent=direct-management#contact-form)
 
 Рекламный бюджет оплачивается отдельно в Яндексе. После первичной проверки мы скажем, можно ли запускаться на текущую страницу, какие цели нужны и какой объём работ входит в смету.
