@@ -8,12 +8,12 @@
 
 Основная услуга: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic#contact
 
-## Ссылки
+## UTM-ссылки
 
-- Telegram: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
-- VK: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=vk&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
-- Дзен: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
-- MAX: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=max&utm_medium=messenger&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
+- Telegram — базовая настройка: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=basic_goals#contact
+- VK — расширенная аналитика: https://centrlp.ru/services/web-analytics?intent=web-analytics-advanced&utm_source=vk&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=advanced_reports#contact
+- Дзен — ценовой материал: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=dzen&utm_medium=article&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
+- MAX — базовая настройка: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=max&utm_medium=messenger&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=basic_goals#contact
 
 ## Telegram / MAX
 
@@ -23,7 +23,7 @@
 
 Собрали практический разбор: что входит в настройку, какие цели нужны сайту услуг и как принимать работу подрядчика. Базовая настройка CentrLP — от 15 000 ₽.
 
-Ссылка: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
+Проверить сайт и заказать базовую настройку: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=basic_goals#contact
 
 ## VK
 
@@ -41,7 +41,7 @@
 
 Базовый формат — от 15 000 ₽.
 
-Материал: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=vk&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
+Рассчитать расширенную аналитику: https://centrlp.ru/services/web-analytics?intent=web-analytics-advanced&utm_source=vk&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=advanced_reports#contact
 
 ## Дзен
 
@@ -51,4 +51,4 @@
 
 Разбираем обязательные цели, UTM-метки, связь с Яндекс Директом, контрольные сценарии и критерии приёмки аналитики. Отдельно показываем, почему достижение цели на сайте ещё не доказывает продажу и когда нужна CRM.
 
-Читать: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
+Читать: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen?utm_source=dzen&utm_medium=article&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=buyer_guide
