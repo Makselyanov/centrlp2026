@@ -7,10 +7,10 @@
 Поддерживающая статья: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen
 
 UTM-ссылки:
-- Telegram: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
-- VK: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
-- Дзен: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=marketing_plan_tyumen_2026_07_07
-- MAX: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
+- Telegram: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
+- VK: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
+- Дзен: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
+- MAX: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
 
 ## Telegram
 
@@ -23,7 +23,7 @@ UTM-ссылки:
 - каналы на 30-90 дней;
 - UTM, цели и маршрут заявки до CRM или таблицы.
 
-Страница услуги: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
+Разбор цены и приёмки: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
 
 ## VK
 
@@ -38,7 +38,7 @@ UTM-ссылки:
 
 Экспресс-план для бизнеса в Тюмени - от 35 000 ₽.
 
-Подробнее: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
+Подробнее: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
 
 ## Дзен
 
@@ -46,7 +46,7 @@ UTM-ссылки:
 
 Мы собрали материал о цене, составе работ и признаках сильного маркетингового плана для бизнеса в Тюмени. Он ведет к услуге CentrLP с понятной ценой входа от 35 000 ₽.
 
-Материал: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=marketing_plan_tyumen_2026_07_07
+Материал: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
 
 ## MAX
 
@@ -54,4 +54,4 @@ UTM-ссылки:
 
 CentrLP делает такой план от 35 000 ₽: выбираем приоритетную услугу, посадочную, каналы, бюджет, UTM и маршрут заявки.
 
-Ссылка: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
+Ссылка: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
