@@ -39,6 +39,56 @@ import { Link, useLocation } from "react-router-dom";
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
 
+const YandexDirectIntentSection = () => {
+  const options = [
+    {
+      title: "Запуск рекламы",
+      price: "от 20 000 ₽",
+      text: "Поиск или РСЯ, объявления, UTM, цели Метрики и контрольная заявка перед включением трафика.",
+      href: "?intent=direct-launch#contact-form",
+      cta: "Рассчитать запуск",
+    },
+    {
+      title: "Ведение кампаний",
+      price: "от 30 000 ₽/мес",
+      text: "Поисковые фразы, площадки РСЯ, ставки, объявления и отчёт по расходам и качеству обращений.",
+      href: "?intent=direct-management#contact-form",
+      cta: "Обсудить ведение",
+    },
+    {
+      title: "Аудит Директа",
+      price: "после оценки кабинета",
+      text: "Проверка запросов, площадок, целей, посадочной и маршрута заявки без обязательного перехода на ведение.",
+      href: "?intent=direct-audit#contact-form",
+      cta: "Отправить на аудит",
+    },
+  ];
+
+  return (
+    <section className="bg-white py-20 md:py-24">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <div className="mb-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#0096D6]">Выберите задачу</div>
+          <h2 className="text-3xl font-bold leading-tight text-slate-950 md:text-4xl">Запуск, ведение или аудит действующей рекламы</h2>
+          <p className="mt-4 text-base leading-7 text-slate-600">Форма сохранит выбранный сценарий, чтобы первый ответ был по нужному составу работ.</p>
+        </div>
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
+          {options.map((option) => (
+            <Card key={option.title} className="flex h-full flex-col border-slate-200 p-6 shadow-sm">
+              <h3 className="text-xl font-bold text-slate-950">{option.title}</h3>
+              <div className="mt-3 text-lg font-semibold text-[#0096D6]">{option.price}</div>
+              <p className="mt-4 flex-1 text-sm leading-7 text-slate-600">{option.text}</p>
+              <Button asChild className="mt-6 w-full">
+                <Link to={option.href}>{option.cta}</Link>
+              </Button>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const localTrustLinks = [
   { label: "2ГИС", href: "https://go.2gis.com/hUyea", detail: "карточка и отзывы" },
   { label: "Яндекс Карты", href: "https://yandex.ru/maps/-/CLSbvKjF", detail: "локальная карточка" },
@@ -607,6 +657,8 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
       {pageKey === "websiteDevelopmentTyumen" && <WebsiteMobileStartSection />}
 
       <LandingFlowSection visual={visual} />
+
+      {pageKey === "yandexDirectTyumen" && <YandexDirectIntentSection />}
 
       <section className="bg-white py-20 md:py-24">
         <div className="container mx-auto px-4">

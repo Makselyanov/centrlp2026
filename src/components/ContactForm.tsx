@@ -91,6 +91,9 @@ export const ContactForm = () => {
   const isSiteBriefIntent = formIntent === "site-brief";
   const isAuditIntent = formIntent === "site-audit";
   const isWebAnalyticsIntent = formIntent === "web-analytics";
+  const isDirectLaunchIntent = formIntent === "direct-launch";
+  const isDirectManagementIntent = formIntent === "direct-management";
+  const isDirectAuditIntent = formIntent === "direct-audit";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
@@ -105,6 +108,12 @@ export const ContactForm = () => {
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
       ? "Можно начать с короткого запроса на сайт или лендинг под заявки."
+      : isDirectLaunchIntent
+        ? "Рассчитаем запуск Яндекс Директа под одну приоритетную услугу."
+        : isDirectManagementIntent
+          ? "Разберём ведение и оптимизацию действующих кампаний."
+          : isDirectAuditIntent
+            ? "Проверим, где действующая реклама теряет бюджет и заявки."
       : isYandexDirectPage
         ? "Можно начать с короткого расчета запуска или проверки действующей рекламы."
         : isWebAnalyticsPage
@@ -118,6 +127,12 @@ export const ContactForm = () => {
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
       ? "Для первого контакта достаточно имени, телефона и пары слов о задаче: новая страница, сайт услуг, доработка старого сайта или связка с CRM. Детали можно уточнить после первого ответа."
+      : isDirectLaunchIntent
+        ? "Укажите нишу, город, приоритетную услугу и ссылку на посадочную. Для запуска отдельно считаются настройка от 20 000 ₽ и рекламный бюджет в Яндексе."
+        : isDirectManagementIntent
+          ? "Добавьте ссылку на сайт и кратко укажите, какие кампании уже работают, какой расход и какие обращения бизнес считает целевыми. Ведение начинается от 30 000 ₽ в месяц."
+          : isDirectAuditIntent
+            ? "Добавьте ссылку на сайт и опишите текущую рекламу: Поиск или РСЯ, период работы, расход, цели Метрики и полученные обращения. Стоимость аудита определим после состава кабинета и задачи."
       : isYandexDirectPage
         ? "Для первого ответа достаточно контакта и пары слов о нише. Если реклама уже идет, добавьте ссылку на сайт и укажите, что важнее сейчас: снизить стоимость заявки, проверить Поиск или РСЯ, настроить цели либо пересобрать кампании."
         : isWebAnalyticsPage
@@ -131,13 +146,26 @@ export const ContactForm = () => {
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
       ? "Например: нужен лендинг под услугу; сайт услуг в Тюмени; переделать старый сайт, чтобы заявки не терялись; связать форму с CRM"
+      : isDirectLaunchIntent
+        ? "Например: запустить Поиск для одной услуги в Тюмени; подготовить РСЯ; проверить посадочную и цели перед стартом"
+        : isDirectManagementIntent
+          ? "Например: снизить долю нецелевых запросов; очистить площадки РСЯ; связать расходы с полученными заявками; настроить регулярный отчёт"
+          : isDirectAuditIntent
+            ? "Например: проверить поисковые фразы, площадки РСЯ, цели Метрики, UTM, посадочную и доставку заявки менеджеру"
       : isYandexDirectPage
         ? "Например: запустить Поиск и РСЯ с нуля; проверить действующие кампании; настроить цели Метрики; снизить стоимость заявки; подготовить посадочную под рекламу"
         : isWebAnalyticsPage
           ? "Например: настроить Метрику и цели; проверить отправку формы и ошибки; сохранить UTM; связать обращения с CRM; подготовить отчёт по источникам заявок"
     : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
 
-  const [taskDetailsOpen, setTaskDetailsOpen] = useState(isSiteBriefIntent || isAuditIntent || isWebAnalyticsIntent);
+  const [taskDetailsOpen, setTaskDetailsOpen] = useState(
+    isSiteBriefIntent ||
+      isAuditIntent ||
+      isWebAnalyticsIntent ||
+      isDirectLaunchIntent ||
+      isDirectManagementIntent ||
+      isDirectAuditIntent,
+  );
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -149,6 +177,10 @@ export const ContactForm = () => {
     privacyAccepted: false,
     cookiesAccepted: false,
   });
+
+  useEffect(() => {
+    if (formIntent) setTaskDetailsOpen(true);
+  }, [formIntent]);
 
   useEffect(() => {
     if (!formIntent) return;

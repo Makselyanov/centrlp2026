@@ -165,6 +165,6 @@ source: "https://yandex.ru/support/direct/ru/unified-performance-campaign/create
 - рекламный бюджет оплачивается отдельно;
 - до старта проверяем посадочную, цели и путь заявки.
 
-[Получить расчёт настройки Яндекс Директ](/nastroyka-yandex-direct-tyumen)
+[Получить расчёт настройки Яндекс Директ](/nastroyka-yandex-direct-tyumen?intent=direct-launch#contact-form)
 
 Если сначала нужно найти разрыв в форме и аналитике, начните с [проверки сайта и заявок за 48 часов](/proverka-saita-i-zayavok-za-48-chasov). Подробный разбор цен находится в статье [«Сколько стоит Яндекс Директ в Тюмени»](/blog/skolko-stoit-yandeks-direkt-v-tyumeni).

@@ -6,10 +6,10 @@ status: "ready_to_publish_manually"
 publishMode: "manual_review_required"
 campaign: "direct_tyumen_lead_path_20260704"
 utm:
-  telegram: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704"
-  vk: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=vk&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704"
-  dzen: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=dzen&utm_medium=article&utm_campaign=direct_tyumen_lead_path_20260704"
-  max: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=max&utm_medium=messenger&utm_campaign=direct_tyumen_lead_path_20260704"
+  telegram: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=telegram&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704#contact-form"
+  vk: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=vk&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704#contact-form"
+  dzen: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=dzen&utm_medium=article&utm_campaign=direct_tyumen_lead_path_20260704#contact-form"
+  max: "https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=max&utm_medium=messenger&utm_campaign=direct_tyumen_lead_path_20260704#contact-form"
 auditUrl: "https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov"
 auditUtm:
   telegram: "https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704&utm_content=audit_cta"
@@ -42,7 +42,7 @@ auditUtm:
 В CentrLP настройка Директа начинается от 20 000 ₽, ведение - от 30 000 ₽ в месяц. Рекламный бюджет считаем отдельно после проверки посадочной и допустимой стоимости заявки.
 
 Страница услуги:
-https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704
+https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=telegram&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704#contact-form
 
 Если сайт уже есть, но заявки теряются, сначала можно пройти экспресс-проверку пути заявки:
 https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704&utm_content=audit_cta
@@ -67,7 +67,7 @@ https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=telegram&utm
 Мы настраиваем Директ в Тюмени вместе с посадочной, аналитикой и маршрутом заявки. Стоимость настройки - от 20 000 ₽, ведение - от 30 000 ₽ в месяц.
 
 Подробнее:
-https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=vk&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704
+https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=vk&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704#contact-form
 
 Быстрый вход, если нужно сначала найти слабое место в сайте и формах:
 https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=direct_tyumen_lead_path_20260704&utm_content=audit_cta
@@ -85,7 +85,7 @@ https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=vk&utm_mediu
 В CentrLP настройка Яндекс Директ в Тюмени начинается от 20 000 ₽. Ведение и регулярная оптимизация - от 30 000 ₽ в месяц. Рекламный бюджет рассчитывается отдельно после проверки посадочной и допустимой стоимости заявки.
 
 Страница услуги:
-https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=dzen&utm_medium=article&utm_campaign=direct_tyumen_lead_path_20260704
+https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=dzen&utm_medium=article&utm_campaign=direct_tyumen_lead_path_20260704#contact-form
 
 Если перед запуском нужно проверить сайт, формы и аналитику, подойдет экспресс-разбор пути заявки:
 https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=dzen&utm_medium=article&utm_campaign=direct_tyumen_lead_path_20260704&utm_content=audit_cta
@@ -107,7 +107,7 @@ https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=dzen&utm_med
 CentrLP настраивает Яндекс Директ в Тюмени вместе с посадочной и аналитикой. Настройка - от 20 000 ₽, ведение - от 30 000 ₽ в месяц.
 
 Страница услуги:
-https://centrlp.ru/nastroyka-yandex-direct-tyumen?utm_source=max&utm_medium=messenger&utm_campaign=direct_tyumen_lead_path_20260704
+https://centrlp.ru/nastroyka-yandex-direct-tyumen?intent=direct-launch&utm_source=max&utm_medium=messenger&utm_campaign=direct_tyumen_lead_path_20260704#contact-form
 
 Быстрая проверка сайта и заявок за 48 часов:
 https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=max&utm_medium=messenger&utm_campaign=direct_tyumen_lead_path_20260704&utm_content=audit_cta
