@@ -24,8 +24,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 205 60% 10%;
 
-    /* Primary: #008dd2 */
-    --primary: 199 100% 41%;
+    /* Accessible primary blue for white text */
+    --primary: 199 100% 31%;
     --primary-foreground: 0 0% 100%;
 
     /* Accent 1: #009ada */

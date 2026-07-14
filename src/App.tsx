@@ -9,6 +9,15 @@ import { AppFallback } from "./components/AppFallback";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { CookieConsent } from "./components/CookieConsent";
 import Index from "./pages/Index";
+import {
+  AiAutomationPage,
+  CrmBusinessPage,
+  ExpressAuditPage,
+  LandingTyumenPage,
+  LocalSeoTyumenPage,
+  WebsiteDevelopmentTyumenPage,
+  YandexDirectTyumenPage,
+} from "./pages/LandingPages";
 import { trackMetric } from "./lib/metrics";
 
 // Lazy-loaded pages
@@ -32,13 +41,6 @@ const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default:
 const AiTuragent = lazy(() => import("./pages/AiTuragent"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
-const ExpressAuditPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.ExpressAuditPage })));
-const WebsiteDevelopmentTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.WebsiteDevelopmentTyumenPage })));
-const LandingTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.LandingTyumenPage })));
-const YandexDirectTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.YandexDirectTyumenPage })));
-const CrmBusinessPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.CrmBusinessPage })));
-const AiAutomationPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.AiAutomationPage })));
-const LocalSeoTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.LocalSeoTyumenPage })));
 
 // Lazy-loaded service pages
 const WebsiteDevelopment = lazy(() => import("./pages/services/WebsiteDevelopment"));

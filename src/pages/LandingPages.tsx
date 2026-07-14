@@ -392,7 +392,7 @@ const MobileStickyLeadBar = ({ page }: { page: LandingPage }) => (
     <div className="mx-auto grid max-w-md grid-cols-[minmax(0,1fr)_auto_auto] gap-2">
       <button
         type="button"
-        className="inline-flex h-12 min-w-0 items-center justify-center gap-2 rounded-full bg-[#0096D6] px-4 text-sm font-bold text-white shadow-button transition active:scale-[0.98]"
+        className="inline-flex h-12 min-w-0 items-center justify-center gap-2 rounded-full bg-[#006C9F] px-4 text-sm font-bold text-white shadow-button transition active:scale-[0.98]"
         onClick={() => {
           trackMetric("landing_mobile_sticky_form_click", { path: page.path });
           scrollToForm();
@@ -444,7 +444,7 @@ const WebsiteMobileStartSection = () => (
     <div className="container mx-auto px-4">
       <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
         <div>
-          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#0096D6]">
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#006C9F]">
             <span className="h-px w-8 bg-[#0096D6]" />
             Мобильный путь заявки
           </div>
@@ -526,7 +526,7 @@ const LandingFlowSection = ({ visual }: { visual: LandingVisual }) => (
                       <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#0096D6] to-[#44B78B] text-white shadow-sm transition-transform duration-300 group-hover:scale-110">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <div className="text-sm font-bold text-[#0096D6]/55">{String(index + 1).padStart(2, "0")}</div>
+                      <div className="text-sm font-bold text-[#006C9F]">{String(index + 1).padStart(2, "0")}</div>
                     </div>
                     <div className="text-base font-bold text-slate-900">{step.label}</div>
                     <div className="mt-1 text-sm leading-6 text-slate-600">{step.detail}</div>
@@ -542,7 +542,7 @@ const LandingFlowSection = ({ visual }: { visual: LandingVisual }) => (
         </div>
 
         <div>
-          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#0096D6]">
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#006C9F]">
             <span className="h-px w-8 bg-[#0096D6]" />
             {visual.eyebrow}
           </div>
@@ -575,7 +575,7 @@ const LocalTrustSection = () => (
     <div className="container mx-auto px-4">
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
-          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#0096D6]">
+          <div className="mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#006C9F]">
             <span className="h-px w-8 bg-[#0096D6]" />
             Локальное доверие
           </div>
@@ -749,7 +749,7 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
       <section className="bg-white py-20 md:py-24">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#44B78B]/10 px-4 py-2 text-sm font-semibold text-[#348d68]">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#44B78B]/10 px-4 py-2 text-sm font-semibold text-[#276749]">
               <TrendingUp className="h-4 w-4" />
               Рост заявок начинается с связки
             </div>
