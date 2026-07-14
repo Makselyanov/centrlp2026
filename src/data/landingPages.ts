@@ -548,6 +548,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
       { question: "Когда можно оценивать результат?", answer: "Исправность ссылок, формы и событий проверяется сразу после внедрения. Изменения в карточках проходят модерацию, а поисковую динамику оценивают после переобхода и накопления данных, не в день публикации." },
     ],
     related: [
+      { title: "Цена и состав локального SEO", href: "/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni" },
       { title: "Маршрут локальной заявки", href: "/blog/yandex-biznes-2gis-sait-metrika-zayavki-tyumen" },
       { title: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Веб-аналитика", href: "/services/web-analytics" },
