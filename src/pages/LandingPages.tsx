@@ -108,6 +108,12 @@ const auditFocusOptions = [
     text: "Проследим событие от формы и мессенджера до менеджера, аналитики и CRM.",
     result: "Фокус проверки: цели, UTM, доставка уведомления, фиксация источника и скорость ответа.",
   },
+  {
+    id: "mobile",
+    title: "С телефона обращаются заметно реже",
+    text: "Пройдём мобильный путь от первого экрана до звонка, мессенджера и успешной отправки формы.",
+    result: "Фокус проверки: мобильный оффер, CTA, читаемость, поля формы, клавиатура, ошибки и подтверждение отправки.",
+  },
 ] as const;
 
 const AuditSelfCheckSection = () => {
@@ -127,7 +133,7 @@ const AuditSelfCheckSection = () => {
             <p className="mt-4 text-base leading-7 text-slate-600">Выберите ситуацию, которая ближе всего. Ответ не заменяет проверку по данным, но сразу задаёт правильный фокус аудита.</p>
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {auditFocusOptions.map((option) => {
               const active = option.id === focus;
               return (
