@@ -82,7 +82,7 @@ source: ""
 
 - [Сколько стоит создание сайта в Тюмени в 2026 году](/blog/skolko-stoit-sozdanie-saita-tyumen-2026)
 - [Как выбрать маркетинговое агентство в Тюмени](/blog/kak-vybrat-marketingovoe-agentstvo-tyumen)
-- [Почему сайт не приносит заявки](/blog/pochemu-sait-ne-prinosit-zayavki-v-tyumeni)
+- [Нет заявок с сайта: экспресс-аудит за 48 часов](/blog/ekspress-audit-saita-net-zayavok-48-chasov)
 
 работают не только на охват, но и на подогрев перед заявкой.
 
@@ -205,7 +205,7 @@ source: ""
 
 Если хотите усилить сайт не на словах, а по шагам, начните с этих материалов:
 
-- [Почему сайт не приносит заявки: 12 причин](/blog/pochemu-sait-ne-prinosit-zayavki-v-tyumeni)
+- [Нет заявок с сайта: что проверяет экспресс-аудит](/blog/ekspress-audit-saita-net-zayavok-48-chasov)
 - [Сколько стоит создание сайта в Тюмени в 2026 году](/blog/skolko-stoit-sozdanie-saita-tyumen-2026)
 
 А если сайт уже есть, но локальный поиск не даёт обращений, начните с [проверки сайта и пути заявки за 48 часов](/proverka-saita-i-zayavok-za-48-chasov). Если нужна новая основа под SEO и заявки, смотрите [разработку сайтов](/services/website-development), [веб-аналитику](/services/web-analytics) и [контакты](/contacts).
