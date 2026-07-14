@@ -7,7 +7,7 @@ seoDescription: "Заполните бриф на создание сайта в
 ctaTitle: "Подготовили ответы? Рассчитаем первый запуск"
 ctaText: "Пришлите ответы в свободной форме. Отделим обязательный объём от последующих этапов, предложим формат и обозначим, что входит в расчёт от 45 000 ₽."
 primaryCtaLabel: "Отправить бриф на расчёт"
-primaryCtaHref: "/razrabotka-sajtov-tyumen"
+primaryCtaHref: "/razrabotka-sajtov-tyumen?intent=site-brief#contact-form"
 secondaryCtaLabel: "Сравнить стоимость форматов"
 secondaryCtaHref: "/blog/skolko-stoit-sozdanie-saita-tyumen-2026"
 tags: ["Создание сайтов", "Бриф", "Тюмень", "Сайт под ключ", "Заявки"]
@@ -172,7 +172,7 @@ source: "https://yandex.ru/support/webmaster/ru/recommendations/site-structure"
 
 ## Как получить расчёт сайта в Тюмени
 
-Отправьте заполненный шаблон через форму на странице [разработки сайтов в Тюмени](/razrabotka-sajtov-tyumen). Для предварительной оценки достаточно текста в свободной форме и ссылок на имеющиеся материалы.
+Отправьте заполненный шаблон через [форму расчёта сайта](/razrabotka-sajtov-tyumen?intent=site-brief#contact-form). Для предварительной оценки достаточно текста в свободной форме и ссылок на имеющиеся материалы.
 
 В ответе полезно получить не одну итоговую цифру, а четыре части:
 
@@ -189,4 +189,4 @@ source: "https://yandex.ru/support/webmaster/ru/recommendations/site-structure"
 - [Яндекс Вебмастер: сайты для мобильных устройств](https://yandex.ru/support/webmaster/ru/recommendations/mobile-site) — доступность и корректное отображение на телефонах.
 - [Яндекс Вебмастер: представление информации](https://yandex.ru/support/webmaster/ru/recommendations/presentation) — полнота, актуальность и понятная структура материалов.
 
-> [Отправить бриф и получить расчёт сайта от 45 000 ₽](/razrabotka-sajtov-tyumen).
+> [Отправить бриф и получить расчёт сайта от 45 000 ₽](/razrabotka-sajtov-tyumen?intent=site-brief#contact-form).

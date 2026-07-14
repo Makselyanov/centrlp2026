@@ -80,26 +80,33 @@ export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
   const defaultGoal = getDefaultGoal(location.pathname);
+  const isSiteBriefIntent = new URLSearchParams(location.search).get("intent") === "site-brief";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
   const isYandexDirectPage =
     location.pathname === "/services/yandex-direct" || location.pathname === "/nastroyka-yandex-direct-tyumen";
-  const introTitle = isMarketingStrategyPage
+  const introTitle = isSiteBriefIntent
+    ? "Готовый бриф можно сразу отправить на расчёт сайта."
+    : isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
       ? "Можно начать с короткого запроса на сайт или лендинг под заявки."
       : isYandexDirectPage
         ? "Можно начать с короткого расчета запуска или проверки действующей рекламы."
     : "Можно начать с короткого разбора сайта, формы и маршрута заявки.";
-  const introDescription = isMarketingStrategyPage
+  const introDescription = isSiteBriefIntent
+    ? "Укажите имя и телефон, затем вставьте ответы на 12 вопросов в поле комментария. Этого достаточно, чтобы оценить формат, сроки и бюджет первого запуска."
+    : isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
       ? "Для первого контакта достаточно имени, телефона и пары слов о задаче: новая страница, сайт услуг, доработка старого сайта или связка с CRM. Детали можно уточнить после первого ответа."
       : isYandexDirectPage
         ? "Для первого ответа достаточно контакта и пары слов о нише. Если реклама уже идет, добавьте ссылку на сайт и укажите, что важнее сейчас: снизить стоимость заявки, проверить Поиск или РСЯ, настроить цели либо пересобрать кампании."
     : "Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнем с проверки формы, первого экрана, Метрики и скорости ответа.";
-  const commentPlaceholder = isMarketingStrategyPage
+  const commentPlaceholder = isSiteBriefIntent
+    ? "Вставьте сюда ответы на 12 вопросов из брифа. Можно отвечать коротко и пропускать то, что пока неизвестно."
+    : isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
       ? "Например: нужен лендинг под услугу; сайт услуг в Тюмени; переделать старый сайт, чтобы заявки не терялись; связать форму с CRM"
@@ -107,6 +114,7 @@ export const ContactForm = () => {
         ? "Например: запустить Поиск и РСЯ с нуля; проверить действующие кампании; настроить цели Метрики; снизить стоимость заявки; подготовить посадочную под рекламу"
     : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
 
+  const [taskDetailsOpen, setTaskDetailsOpen] = useState(isSiteBriefIntent);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -277,9 +285,13 @@ export const ContactForm = () => {
           Для первого ответа достаточно имени и телефона. Остальные детали можно добавить ниже, если удобно.
         </p>
 
-        <details className="rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-4">
+        <details
+          className="rounded-2xl border border-slate-200 bg-slate-50/70 px-5 py-4"
+          open={taskDetailsOpen}
+          onToggle={(event) => setTaskDetailsOpen(event.currentTarget.open)}
+        >
           <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700">
-            Добавить задачу и комментарий
+            {isSiteBriefIntent ? "Вставить ответы из брифа" : "Добавить задачу и комментарий"}
             <span className="ml-2 text-xs font-normal text-slate-500">(необязательно)</span>
           </summary>
           <div className="mt-4 space-y-6">

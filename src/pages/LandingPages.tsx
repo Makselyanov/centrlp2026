@@ -33,7 +33,8 @@ import {
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
 const checklistIcons = [SearchCheck, MousePointerClick, BarChart3, MessageCircle];
@@ -491,6 +492,7 @@ const LocalTrustSection = () => (
 const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
   const page = landingPages[pageKey];
   const visual = landingVisuals[pageKey];
+  const location = useLocation();
   useAutoBreadcrumb(page.schemaName);
   useFaqSchema(page.faq);
   useServiceSchema({
@@ -498,6 +500,16 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
     description: page.description,
     price: page.schemaPrice,
   });
+
+  useEffect(() => {
+    if (location.hash !== "#contact-form") return;
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById("contact-form")?.scrollIntoView({ block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.hash]);
 
   return (
     <Layout title={page.title} description={page.description}>
