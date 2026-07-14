@@ -185,10 +185,22 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
           "CentrLP, агентство развития бизнеса",
           "Центр цифрового консалтинга CentrLP"
         ],
+        "legalName": "ООО «ААМХ»",
+        "taxID": "7203606424",
+        "vatID": "7203606424",
+        "identifier": {
+          "@type": "PropertyValue",
+          "propertyID": "ОГРН",
+          "value": "1267200004818"
+        },
         "url": "https://centrlp.ru",
         "telephone": "+7-905-824-85-64",
+        "email": "1@centrlp.ru",
+        "openingHours": "Mo-Fr 09:00-18:00",
+        "priceRange": "от 15 000 ₽",
         "sameAs": [
           "https://vk.com/centrlp",
+          "https://t.me/centrlp",
           "https://t.me/centrlp_ideas",
           "https://2gis.ru/tyumen/firm/70000001033718655",
           "https://go.2gis.com/hUyea",
@@ -201,6 +213,10 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
           "addressLocality": "Тюмень",
           "postalCode": "625022",
           "addressCountry": "RU"
+        },
+        "founder": {
+          "@type": "Person",
+          "name": "Кузнецов Максим Владимирович"
         }
       },
       "areaServed": [
