@@ -18,6 +18,7 @@ const SERVER_EVENT_GOALS = new Set([
   "landing_primary_cta_click",
   "landing_secondary_cta_click",
   "form_goal_select",
+  "contextual_form_view",
 ]);
 
 const getUtmParams = () => {

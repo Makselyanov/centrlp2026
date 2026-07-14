@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { PhoneCall } from "lucide-react";
 import { Button } from "./ui/button";
@@ -80,7 +80,9 @@ export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
   const defaultGoal = getDefaultGoal(location.pathname);
-  const isSiteBriefIntent = new URLSearchParams(location.search).get("intent") === "site-brief";
+  const formIntent = new URLSearchParams(location.search).get("intent") || "";
+  const isSiteBriefIntent = formIntent === "site-brief";
+  const isAuditIntent = formIntent === "site-audit";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
@@ -88,6 +90,8 @@ export const ContactForm = () => {
     location.pathname === "/services/yandex-direct" || location.pathname === "/nastroyka-yandex-direct-tyumen";
   const introTitle = isSiteBriefIntent
     ? "Готовый бриф можно сразу отправить на расчёт сайта."
+    : isAuditIntent
+      ? "Отправьте сайт на экспресс-аудит за 48 часов."
     : isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
@@ -97,6 +101,8 @@ export const ContactForm = () => {
     : "Можно начать с короткого разбора сайта, формы и маршрута заявки.";
   const introDescription = isSiteBriefIntent
     ? "Укажите имя и телефон, затем вставьте ответы на 12 вопросов в поле комментария. Этого достаточно, чтобы оценить формат, сроки и бюджет первого запуска."
+    : isAuditIntent
+      ? "Для первого ответа достаточно имени, телефона и ссылки на сайт. Уточним, есть ли трафик, как работает мобильная форма, Метрика и передача обращения менеджеру."
     : isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
@@ -106,6 +112,8 @@ export const ContactForm = () => {
     : "Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнем с проверки формы, первого экрана, Метрики и скорости ответа.";
   const commentPlaceholder = isSiteBriefIntent
     ? "Вставьте сюда ответы на 12 вопросов из брифа. Можно отвечать коротко и пропускать то, что пока неизвестно."
+    : isAuditIntent
+      ? "Добавьте ссылку на сайт и коротко опишите: откуда приходит трафик, сколько обращений сейчас и что уже пробовали менять."
     : isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
@@ -114,7 +122,7 @@ export const ContactForm = () => {
         ? "Например: запустить Поиск и РСЯ с нуля; проверить действующие кампании; настроить цели Метрики; снизить стоимость заявки; подготовить посадочную под рекламу"
     : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
 
-  const [taskDetailsOpen, setTaskDetailsOpen] = useState(isSiteBriefIntent);
+  const [taskDetailsOpen, setTaskDetailsOpen] = useState(isSiteBriefIntent || isAuditIntent);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -126,6 +134,15 @@ export const ContactForm = () => {
     privacyAccepted: false,
     cookiesAccepted: false,
   });
+
+  useEffect(() => {
+    if (!formIntent) return;
+
+    trackMetric("contextual_form_view", {
+      path: location.pathname,
+      placement: formIntent,
+    });
+  }, [formIntent, location.pathname]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -291,7 +308,11 @@ export const ContactForm = () => {
           onToggle={(event) => setTaskDetailsOpen(event.currentTarget.open)}
         >
           <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700">
-            {isSiteBriefIntent ? "Вставить ответы из брифа" : "Добавить задачу и комментарий"}
+            {isSiteBriefIntent
+              ? "Вставить ответы из брифа"
+              : isAuditIntent
+                ? "Добавить ссылку и контекст аудита"
+                : "Добавить задачу и комментарий"}
             <span className="ml-2 text-xs font-normal text-slate-500">(необязательно)</span>
           </summary>
           <div className="mt-4 space-y-6">
