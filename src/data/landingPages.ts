@@ -224,6 +224,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     ],
     related: [
       { title: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
+      { title: "Редизайн, доработка или новый сайт", href: "/blog/redizajn-ili-novyj-sajt-tyumen" },
       { title: "Создание лендинга в Тюмени", href: "/sozdanie-lendinga-tyumen" },
       { title: "Бриф на создание сайта", href: "/blog/brif-na-sozdanie-saita-tyumen" },
       { title: "Срок разработки и календарь запуска", href: "/blog/srok-razrabotki-saita-tyumen" },
