@@ -444,6 +444,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     related: [
       { title: "Путь заявки за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Сайт с передачей заявок в CRM", href: "/blog/sajt-s-crm-zayavki-tyumen" },
+      { title: "CRM или таблица для учёта заявок", href: "/blog/crm-ili-tablica-uchet-zayavok-tyumen" },
       { title: "Сколько стоит внедрение CRM", href: "/blog/stoimost-vnedreniya-crm-tyumen" },
       { title: "Готовая или персональная CRM", href: "/blog/gotovaya-ili-personalnaya-crm-tyumen" },
       { title: "Персональная CRM", href: "/services/custom-crm" },

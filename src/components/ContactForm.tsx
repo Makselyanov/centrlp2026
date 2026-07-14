@@ -121,6 +121,7 @@ export const ContactForm = () => {
   const isMarketingFullIntent = formIntent === "marketing-full";
   const isMarketingImplementationIntent = formIntent === "marketing-implementation";
   const isCustomCrmIntent = formIntent === "custom-crm";
+  const isCrmStartIntent = formIntent === "crm-start";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
@@ -139,6 +140,8 @@ export const ContactForm = () => {
           ? "Обсудить стратегию с внедрением от 80 000 ₽."
     : isCustomCrmIntent
       ? "Опишите процесс — подготовим первый контур персональной CRM."
+    : isCrmStartIntent
+      ? "Соберём стартовый CRM-контур от 45 000 ₽."
     : isWebAnalyticsBasicIntent
       ? "Настроим базовую Метрику и цели от 15 000 ₽."
     : isWebAnalyticsAdvancedIntent
@@ -178,6 +181,8 @@ export const ContactForm = () => {
           ? "Кроме стратегии оценим запуск первых кампаний, аналитику, посадочные правки и контроль обращений. Итоговый объём зависит от каналов и текущей инфраструктуры."
     : isCustomCrmIntent
       ? "Для первого расчёта достаточно описать, откуда приходят заявки, кто с ними работает, какие этапы, документы и отчёты нужны. Разработка персональной CRM начинается от 180 000 ₽; состав и этапы фиксируем после разбора процесса."
+    : isCrmStartIntent
+      ? "Укажите источники заявок, число пользователей, основные этапы и текущий способ учёта. Проверим, достаточно ли настройки готовой CRM или нужен другой формат. Лицензии и внешние сервисы считаются отдельно."
     : isWebAnalyticsBasicIntent
       ? "Укажите сайт, основные формы и действия, которые нужно считать обращениями. В базовый формат входят Метрика, до пяти целей, проверка событий и инструкция по отчётам."
     : isWebAnalyticsAdvancedIntent
@@ -217,6 +222,8 @@ export const ContactForm = () => {
           ? "Например: нужна стратегия и запуск; какие каналы уже есть; что требуется внедрить на сайте, в аналитике, рекламе и CRM"
     : isCustomCrmIntent
       ? "Например: заявки приходят с сайта и из мессенджеров; три роли; семь этапов сделки; нужны документы, напоминания и отчёт руководителя"
+    : isCrmStartIntent
+      ? "Например: сайт, телефон и Telegram; два менеджера; сейчас ведём таблицу; нужны ответственные, задачи, UTM и отчёт по статусам"
     : isWebAnalyticsBasicIntent
       ? "Например: одна форма, клики по телефону и Telegram, до пяти целей, отчёт по источникам"
     : isWebAnalyticsAdvancedIntent
@@ -261,7 +268,8 @@ export const ContactForm = () => {
       isMarketingExpressIntent ||
       isMarketingFullIntent ||
       isMarketingImplementationIntent ||
-      isCustomCrmIntent,
+      isCustomCrmIntent ||
+      isCrmStartIntent,
   );
   const [formData, setFormData] = useState({
     name: "",
