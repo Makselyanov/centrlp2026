@@ -554,6 +554,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     related: [
       { title: "Цена и состав локального SEO", href: "/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni" },
       { title: "Маршрут локальной заявки", href: "/blog/yandex-biznes-2gis-sait-metrika-zayavki-tyumen" },
+      { title: "Отзывы в Яндекс Картах и 2ГИС", href: "/blog/otzyvy-yandex-karty-2gis-biznes-tyumen" },
       { title: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Веб-аналитика", href: "/services/web-analytics" },
       { title: "Разработка сайтов в Тюмени", href: "/razrabotka-sajtov-tyumen" },

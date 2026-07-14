@@ -864,6 +864,7 @@ const commercialStaticSections = {
     related: [
       { label: "Цена и состав локального SEO", href: "/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni" },
       { label: "Яндекс Бизнес, 2ГИС и сайт", href: "/blog/yandex-biznes-2gis-sait-metrika-zayavki-tyumen" },
+      { label: "Отзывы в Яндекс Картах и 2ГИС", href: "/blog/otzyvy-yandex-karty-2gis-biznes-tyumen" },
       { label: "GEO-продвижение в Тюмени", href: "/blog/geo-prodvizhenie-tyumen-nejroseti-poisk" },
       { label: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
     ],
