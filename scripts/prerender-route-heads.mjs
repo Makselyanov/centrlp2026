@@ -431,7 +431,7 @@ const landingStaticSections = {
     <article style="border: 1px solid rgba(0,150,214,.16); border-radius: 20px; background: #fff; padding: 22px; box-shadow: 0 16px 42px rgba(15,23,42,.06);">
       <p style="margin: 0 0 8px; color: #008dd2; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em;">Связка с сайтом</p>
       <h2 style="margin: 0 0 12px; font-size: 26px; line-height: 1.2;">Передавайте в CRM не только контакт, но и контекст заявки</h2>
-      <p style="margin: 0; color: #475569;">Страница, услуга, UTM-источник, ответственный и следующий шаг помогают не терять обращения после формы. <a href="/blog/sajt-s-crm-zayavki-tyumen">Как спроектировать сайт с передачей заявок в CRM</a>.</p>
+      <p style="margin: 0; color: #475569;">Страница, услуга, UTM-источник, ответственный и следующий шаг помогают не терять обращения после формы. <a href="/blog/sajt-s-crm-zayavki-tyumen">Как спроектировать сайт с передачей заявок в CRM</a>. Перед внедрением сравните <a href="/blog/gotovaya-ili-personalnaya-crm-tyumen">готовую и персональную CRM</a>.</p>
     </article>
   </section>`,
 };
@@ -797,6 +797,7 @@ const commercialStaticSections = {
     ],
     related: [
       { label: "CRM для малого бизнеса", href: "/crm-dlya-biznesa" },
+      { label: "Готовая или персональная CRM", href: "/blog/gotovaya-ili-personalnaya-crm-tyumen" },
       { label: "Сайт с передачей заявок в CRM", href: "/razrabotka-sajtov-tyumen" },
       { label: "Веб-аналитика и цели", href: "/services/web-analytics" },
       { label: "AI-агенты для заявок", href: "/services/ai-agents" },

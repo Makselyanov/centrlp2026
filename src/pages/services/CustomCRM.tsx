@@ -112,6 +112,11 @@ export default function CustomCRM() {
       ]}
       relatedServices={[
         {
+          title: "Готовая или персональная CRM",
+          text: "Сравнение двух форматов по процессам, ролям, интеграциям, стоимости и критериям приёмки.",
+          href: "/blog/gotovaya-ili-personalnaya-crm-tyumen",
+        },
+        {
           title: "AI-агенты",
           text: "Чтобы CRM не только хранила данные, но и помогала обрабатывать заявки и действия автоматически.",
           href: "/services/ai-agents",
