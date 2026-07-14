@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { MessengerLinks } from "./MessengerLinks";
-import logoImage from "@/assets/centrlp-logo.jpg";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -71,8 +70,10 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex min-w-0 items-center">
             <img
-              src={logoImage}
+              src="/favicon-192.png"
               alt="CentrLP"
+              width={48}
+              height={48}
               className="h-12 w-12 shrink-0 rounded-full object-contain"
             />
           </Link>

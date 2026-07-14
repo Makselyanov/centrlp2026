@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap } from "lucide-react";
 import { useEffect, useRef } from "react";
-import WebGLFluidEnhanced from "webgl-fluid-enhanced";
+import type FluidSimulation from "webgl-fluid-enhanced";
 
 export const Hero = () => {
     const cardRef = useRef<HTMLDivElement>(null);
@@ -18,18 +18,24 @@ export const Hero = () => {
         const prefersReduced = window.matchMedia(
             "(prefers-reduced-motion: reduce)",
         ).matches;
-        if (prefersReduced) return;
+        const isMobile = window.matchMedia("(max-width: 767px)").matches;
+        if (prefersReduced || isMobile) return;
 
-        let sim: WebGLFluidEnhanced | null = null;
+        let sim: FluidSimulation | null = null;
+        let cancelled = false;
+        let idleId: number | null = null;
+        let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
         // Wait for layout so container has non-zero dimensions before
         // the library runs its first resizeCanvas() — otherwise the canvas
         // initializes at 0×0 / 300×150 and the effect appears mispositioned.
-        const start = () => {
+        const start = async () => {
             if (container.clientWidth === 0 || container.clientHeight === 0) {
-                requestAnimationFrame(start);
+                requestAnimationFrame(() => void start());
                 return;
             }
+            const { default: WebGLFluidEnhanced } = await import("webgl-fluid-enhanced");
+            if (cancelled) return;
             sim = new WebGLFluidEnhanced(container);
             sim.setConfig({
                 simResolution: 128,
@@ -54,9 +60,16 @@ export const Hero = () => {
             });
             sim.start();
         };
-        requestAnimationFrame(start);
+        if ("requestIdleCallback" in window) {
+            idleId = window.requestIdleCallback(() => void start(), { timeout: 2500 });
+        } else {
+            timeoutId = setTimeout(() => void start(), 1500);
+        }
 
         return () => {
+            cancelled = true;
+            if (idleId !== null) window.cancelIdleCallback(idleId);
+            if (timeoutId !== null) clearTimeout(timeoutId);
             try {
                 sim?.stop();
             } catch {
@@ -107,12 +120,7 @@ export const Hero = () => {
 
             <div className="container mx-auto relative z-10 pointer-events-none">
                 <div className="flex flex-col items-center gap-12 lg:flex-row">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="w-full max-w-3xl text-left lg:basis-[58%] xl:max-w-4xl"
-                    >
+                    <div className="w-full max-w-3xl text-left lg:basis-[58%] xl:max-w-4xl">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -167,7 +175,7 @@ export const Hero = () => {
                                 Цена от 15 000 ₽
                             </motion.a>
                         </div>
-                    </motion.div>
+                    </div>
 
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
