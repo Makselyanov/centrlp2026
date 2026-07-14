@@ -407,9 +407,17 @@ const landingStaticSections = {
       </article>
       <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
         <h3 style="margin: 0 0 10px;">Сайт + CRM для заявок</h3>
-        <p style="margin: 0; color: #475569;">Чтобы обращение сразу попадало менеджеру без потери источника и контекста.</p>
+        <p style="margin: 0; color: #475569;">Чтобы обращение сразу попадало менеджеру без потери источника и контекста. <a href="/blog/sajt-s-crm-zayavki-tyumen">Что передавать с сайта в CRM</a>.</p>
       </article>
     </div>
+  </section>`,
+  "/crm-dlya-biznesa": `
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 20px 70px;">
+    <article style="border: 1px solid rgba(0,150,214,.16); border-radius: 20px; background: #fff; padding: 22px; box-shadow: 0 16px 42px rgba(15,23,42,.06);">
+      <p style="margin: 0 0 8px; color: #008dd2; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em;">Связка с сайтом</p>
+      <h2 style="margin: 0 0 12px; font-size: 26px; line-height: 1.2;">Передавайте в CRM не только контакт, но и контекст заявки</h2>
+      <p style="margin: 0; color: #475569;">Страница, услуга, UTM-источник, ответственный и следующий шаг помогают не терять обращения после формы. <a href="/blog/sajt-s-crm-zayavki-tyumen">Как спроектировать сайт с передачей заявок в CRM</a>.</p>
+    </article>
   </section>`,
 };
 

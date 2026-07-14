@@ -223,6 +223,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     related: [
       { title: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Создание лендинга в Тюмени", href: "/sozdanie-lendinga-tyumen" },
+      { title: "Как связать сайт с CRM", href: "/blog/sajt-s-crm-zayavki-tyumen" },
       { title: "AI-агенты для бизнеса", href: "/services/ai-agents" },
     ],
   },
@@ -432,6 +433,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     ],
     related: [
       { title: "Путь заявки за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
+      { title: "Сайт с передачей заявок в CRM", href: "/blog/sajt-s-crm-zayavki-tyumen" },
       { title: "Персональная CRM", href: "/services/custom-crm" },
       { title: "AI-агенты для заявок", href: "/services/telegram-lead-agent" },
     ],
