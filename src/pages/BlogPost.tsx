@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useState, useEffect, useRef } from "react";
+import { trackMetric } from "@/lib/metrics";
 
 // Brand gradient constant (from /prices page)
 const BRAND_GRADIENT = "from-[#0096D6] via-[#44B78B] to-[#0096D6]";
@@ -236,6 +237,10 @@ const BlogPost = () => {
     const primaryCtaHref = typeof post.primaryCtaHref === "string" && post.primaryCtaHref.trim()
         ? post.primaryCtaHref.trim()
         : "/proverka-saita-i-zayavok-za-48-chasov";
+    const hasExplicitPrimaryCta = typeof post.primaryCtaHref === "string"
+        && post.primaryCtaHref.trim().length > 0
+        && typeof post.primaryCtaLabel === "string"
+        && post.primaryCtaLabel.trim().length > 0;
     const secondaryCtaLabel = typeof post.secondaryCtaLabel === "string" && post.secondaryCtaLabel.trim()
         ? post.secondaryCtaLabel.trim()
         : "РџРѕР»СѓС‡РёС‚СЊ РєРѕРЅСЃСѓР»СЊС‚Р°С†РёСЋ";
@@ -287,6 +292,25 @@ const BlogPost = () => {
                     <p className="text-lg text-slate-700 mb-6">
                         {post.description}
                     </p>
+
+                    {hasExplicitPrimaryCta && (
+                        <Button
+                            asChild
+                            size="lg"
+                            className={`mb-6 h-auto min-h-12 w-full whitespace-normal bg-gradient-to-r ${BRAND_GRADIENT} px-5 py-3 text-center text-base font-semibold text-white shadow-button transition-opacity hover:opacity-90 sm:w-auto`}
+                        >
+                            <Link
+                                to={primaryCtaHref}
+                                onClick={() => trackMetric("blog_hero_primary_cta_click", {
+                                    slug: post.slug,
+                                    target: primaryCtaHref,
+                                })}
+                            >
+                                {primaryCtaLabel}
+                                <ArrowRight className="ml-2 h-4 w-4 shrink-0" />
+                            </Link>
+                        </Button>
+                    )}
 
                     <div className="flex gap-3 flex-wrap">
                         <Button
