@@ -70,7 +70,7 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex min-w-0 items-center">
             <img
-              src="/favicon-192.png"
+              src="/images/brand/centrlp-logo-48.webp"
               alt="CentrLP"
               width={48}
               height={48}

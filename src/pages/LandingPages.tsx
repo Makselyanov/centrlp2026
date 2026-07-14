@@ -222,7 +222,7 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   websiteDevelopmentTyumen: {
-    imageSrc: "/og/services/website-development.png",
+    imageSrc: "/images/services/website-development.webp",
     imageAlt: "Фирменная иллюстрация разработки сайта как интерфейса продаж",
     eyebrow: "Сайт как система",
     title: "Собираем не страницу, а маршрут к обращению",
@@ -240,7 +240,7 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
     ],
   },
   landingTyumen: {
-    imageSrc: "/og/services/website-development.png",
+    imageSrc: "/images/services/website-development.webp",
     imageAlt: "Иллюстрация посадочной страницы с оффером, формой и CTA",
     eyebrow: "Лендинг под гипотезу",
     title: "Один оффер, один сценарий, один главный шаг",
