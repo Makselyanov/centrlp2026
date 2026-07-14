@@ -190,6 +190,15 @@ function countPrerenderHeadings(html, level) {
   return (root.match(new RegExp(`<h${level}(?:\\s|>)`, "gi")) || []).length;
 }
 
+function countDocumentHeadings(html, level) {
+  return (html.match(new RegExp(`<h${level}(?:\\s|>)`, "gi")) || []).length;
+}
+
+function extractPrerenderH1(html) {
+  const root = html.match(/<div\s+id=["']root["'][^>]*>([\s\S]*?)<\/div>\s*<noscript/i)?.[1] || "";
+  return root.match(/<h1(?:\s[^>]*)?>([^<]+)<\/h1>/i)?.[1]?.trim() || "";
+}
+
 function main() {
   if (!fs.existsSync(distDir)) {
     throw new Error(`dist directory not found: ${distDir}`);
@@ -230,9 +239,18 @@ function main() {
     }
 
     const html = readText(htmlPath);
+    const prerenderH1 = extractPrerenderH1(html);
 
     if (!hasRenderableShell(html)) {
       violations.push(`${routePath}: empty #root without module script`);
+    }
+
+    if (/\|\s*CentrLP(?:\s+Тюмень)?$/i.test(prerenderH1)) {
+      violations.push(`${routePath}: prerendered H1 must not include the title brand suffix`);
+    }
+
+    if (countDocumentHeadings(html, 1) !== 1) {
+      violations.push(`${routePath}: built document must contain exactly one H1`);
     }
 
     const jsonLdTypes = collectJsonLdTypes(html);

@@ -477,7 +477,7 @@ const landingStaticSections = {
 };
 
 function landingStaticHtml(title, description, routePath = "") {
-  const safeTitle = escapeHtml(title);
+  const safeTitle = escapeHtml(cleanSchemaName(title));
   const safeDescription = escapeHtml(description);
   const extraSection = landingStaticSections[routePath] || "";
   const commercial = commercialStaticSections[routePath];
@@ -940,8 +940,9 @@ const commercialStaticSections = {
 
 function routeStaticHtml(title, description, routePath) {
   const commercial = commercialStaticSections[routePath];
+  const heading = cleanSchemaName(title);
   if (!commercial) {
-    return `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;"><h1>${escapeHtml(title)}</h1><p>${escapeHtml(description)}</p></main>`;
+    return `<main class="seo-static-content" data-prerender="true" style="max-width: 860px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;"><h1>${escapeHtml(heading)}</h1><p>${escapeHtml(description)}</p></main>`;
   }
 
   const sections = commercial.sections
@@ -958,7 +959,7 @@ function routeStaticHtml(title, description, routePath) {
     .join(" · ");
 
   return `<main class="seo-static-content" data-prerender="true" style="max-width: 920px; margin: 0 auto; padding: 48px 20px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; line-height: 1.65;">
-  <h1>${escapeHtml(title)}</h1>
+  <h1>${escapeHtml(heading)}</h1>
   <p>${escapeHtml(description)}</p>
   <p>${escapeHtml(commercial.lead)}</p>
   ${sections}
@@ -1002,7 +1003,7 @@ function routeUrl(routePath) {
 
 function cleanSchemaName(title) {
   return String(title)
-    .replace(/\s*\|\s*CentrLP\s*$/i, "")
+    .replace(/\s*\|\s*CentrLP(?:\s+Тюмень)?\s*$/i, "")
     .replace(/\s+-\s*CentrLP\s*$/i, "")
     .trim();
 }
