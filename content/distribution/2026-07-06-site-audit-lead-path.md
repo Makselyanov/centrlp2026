@@ -1,18 +1,19 @@
 # Нет заявок с сайта: готовый пакет для ручной публикации
 
 Статус: ready_manual
+Обновлено: 2026-07-14 — акцент на самопроверке и аудите по данным
 Целевая статья: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov
 
 UTM-ссылки:
 
-- Telegram: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
-- VK: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
+- Telegram: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14&utm_content=self_check_vs_audit
+- VK: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14&utm_content=self_check_vs_audit
 - Дзен: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=dzen&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
 - MAX: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=max&utm_medium=messenger&utm_campaign=site_audit_lead_path_2026_07_14
 
 ## Telegram / MAX
 
-Сайт есть, реклама или показы есть, а заявок мало?
+Сайт есть, реклама или показы есть, а заявок мало? Сначала пройдите путь сами: телефон, основной CTA, мобильная форма, подтверждение и поступление обращения ответственному.
 
 Часто проблема не в одном заголовке. Человек может уйти на первом экране, не заметить кнопку, не довериться странице, запутаться в форме или отправить заявку, которая потом теряется в почте и чатах.
 
@@ -26,7 +27,9 @@ UTM-ссылки:
 
 Старт от 15 000 ₽. Подходит перед запуском Директа, перед переделкой сайта или когда нужно быстро понять, где теряются обращения.
 
-Проверить сайт и путь заявки: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
+Если этот тест пройден, но причина потерь неясна, нужен разбор по данным.
+
+Проверить сайт и путь заявки: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14&utm_content=self_check_vs_audit
 
 ## VK
 
@@ -43,7 +46,9 @@ UTM-ссылки:
 
 За 48 часов даем список конкретных правок: что исправить сразу, что тестировать в рекламе и где нужен более крупный проект. Стоимость старта - от 15 000 ₽.
 
-Разбор и критерии приёмки: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
+В статье есть граница между бесплатной самопроверкой и аудитом по данным: когда достаточно тестовой заявки, а когда нужно связывать источник, поведение, события и обработку обращения.
+
+Разбор и критерии приёмки: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14&utm_content=self_check_vs_audit
 
 ## Короткий пост: мобильные заявки
 
