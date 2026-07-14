@@ -178,5 +178,5 @@ description: "Бартер маркетинговых услуг — реаль�
 ## Читайте также
 
 - [Как выбрать маркетинговое агентство в 2026: 10 критериев для малого бизнеса](/blog/kak-vybrat-marketingovoe-agentstvo)
-- [Создание сайта для бизнеса в Тюмени в 2026 году: что нужно знать](/blog/sozdanie-saita-dlya-biznesa-tyumen)
+- [Разработка сайта для бизнеса в Тюмени](/razrabotka-sajtov-tyumen)
 - [План маркетинга в Тюмени: цена и состав работ](/blog/plan-marketinga-cena-zakazat-tyumen)

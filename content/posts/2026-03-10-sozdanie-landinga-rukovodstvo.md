@@ -329,6 +329,6 @@ description: "Пошаговое руководство по созданию л
 
 ## Читайте также
 
-- [Создание сайта для бизнеса в Тюмени в 2026 году: что нужно знать](/blog/sozdanie-saita-dlya-biznesa-tyumen)
+- [Разработка сайта для бизнеса в Тюмени](/razrabotka-sajtov-tyumen)
 - [Настройка Яндекс Директ для малого бизнеса: пошаговая инструкция 2026](/blog/nastroika-yandex-direct-malyj-biznes)
 - [Продвижение бизнеса ВКонтакте в 2026: полное руководство](/blog/prodvizhenie-biznesa-vkontakte)

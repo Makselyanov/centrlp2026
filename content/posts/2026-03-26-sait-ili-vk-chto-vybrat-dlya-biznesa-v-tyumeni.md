@@ -114,6 +114,6 @@ source: ""
 Если хотите продолжить разбор:
 
 - [Оформление группы ВКонтакте для бизнеса](/blog/oformlenie-gruppy-vk-dlya-biznesa-checklist)
-- [Создание сайта для бизнеса в Тюмени](/blog/sozdanie-saita-dlya-biznesa-tyumen)
+- [Разработка сайта для бизнеса в Тюмени](/razrabotka-sajtov-tyumen)
 
-А если хотите собрать обе площадки как единую систему, посмотрите [разработку сайтов](/services/website-development), [оформление ВКонтакте](/services/vk-design) и [чат-боты ВКонтакте](/services/chatbot-vk).
+А если хотите собрать обе площадки как единую систему, посмотрите [разработку сайтов](/razrabotka-sajtov-tyumen), [оформление ВКонтакте](/services/vk-design) и [чат-боты ВКонтакте](/services/chatbot-vk).
