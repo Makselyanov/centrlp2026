@@ -26,8 +26,8 @@ const MarketingStrategy = () => {
   useFaqSchema(faqItems);
   useAutoBreadcrumb("Маркетинговая стратегия");
   useServiceSchema({
-    name: "Разработка маркетинговой стратегии в Тюмени",
-    description: "Маркетинговая стратегия для бизнеса: анализ рынка и аудитории, позиционирование, экономика, медиаплан, воронка, аналитика и дорожная карта внедрения.",
+    name: "Маркетинговый план на заказ в Тюмени",
+    description: "Маркетинговый план на заказ в Тюмени: анализ рынка и аудитории, позиционирование, экономика, медиаплан, воронка, аналитика и дорожная карта внедрения.",
     price: "35000",
   });
 
@@ -215,8 +215,8 @@ const MarketingStrategy = () => {
 
   return (
     <Layout
-      title="Разработка маркетинговой стратегии в Тюмени | CentrLP"
-      description="Разработка маркетинговой стратегии в Тюмени: анализ аудитории и конкурентов, позиционирование, экономика, медиаплан, воронка и дорожная карта внедрения."
+      title="Заказать план маркетинга в Тюмени от 35 000 ₽ | CentrLP"
+      description="Закажите план маркетинга в Тюмени от 35 000 ₽: аудит, оффер, каналы, медиаплан, бюджет, аналитика и маршрут заявки. Срок экспресс-формата — 7–10 рабочих дней."
     >
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
@@ -247,7 +247,7 @@ const MarketingStrategy = () => {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
-            Маркетинговая стратегия <br />
+            План маркетинга на заказ <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
               от анализа до внедрения
             </span>
@@ -261,7 +261,7 @@ const MarketingStrategy = () => {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
             <Button size="lg" onClick={scrollToForm}>
-              Получить расчет стратегии
+              Заказать план от 35 000 ₽
             </Button>
             <Button size="lg" variant="outline" onClick={scrollToPricing}>
               Смотреть состав и цены
