@@ -55,7 +55,7 @@ const WebAnalytics = () => {
               </div>
             </div>
             <Button size="lg" className="text-lg px-8" asChild>
-              <a href="#contact">Разобрать путь заявки</a>
+              <a href="?intent=web-analytics#contact">Получить расчёт от 15 000 ₽</a>
             </Button>
           </div>
         </div>
@@ -364,7 +364,7 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="#contact">Обсудить проект</a>
+                  <a href="?intent=web-analytics#contact">Заказать базовую настройку</a>
                 </Button>
               </CardContent>
             </Card>
@@ -394,7 +394,7 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <a href="#contact">Начать работу</a>
+                  <a href="?intent=web-analytics#contact">Заказать расширенную настройку</a>
                 </Button>
               </CardContent>
             </Card>
@@ -421,7 +421,7 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="#contact">Обсудить проект</a>
+                  <a href="?intent=web-analytics#contact">Обсудить связку под ключ</a>
                 </Button>
               </CardContent>
             </Card>

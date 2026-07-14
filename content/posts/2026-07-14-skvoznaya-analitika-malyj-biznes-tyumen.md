@@ -7,7 +7,7 @@ seoDescription: "Сквозная аналитика для малого биз�
 ctaTitle: "Нужно связать расходы, заявки и сделки?"
 ctaText: "Сначала определим, какие источники и этапы действительно нужны бизнесу. Базовая веб-аналитика начинается от 15 000 ₽, расширенная — от 30 000 ₽, связка сайта, рекламы и CRM — от 50 000 ₽."
 primaryCtaLabel: "Обсудить сквозную аналитику"
-primaryCtaHref: "/services/web-analytics"
+primaryCtaHref: "/services/web-analytics?intent=web-analytics#contact"
 secondaryCtaLabel: "Настроить CRM для заявок"
 secondaryCtaHref: "/crm-dlya-biznesa"
 tags: ["Сквозная аналитика", "Веб-аналитика", "Яндекс Метрика", "CRM", "Тюмень", "Заявки"]

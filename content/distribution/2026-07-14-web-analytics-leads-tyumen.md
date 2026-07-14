@@ -6,7 +6,7 @@
 
 Канонический материал: https://centrlp.ru/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen
 
-Основная услуга: https://centrlp.ru/services/web-analytics
+Основная услуга: https://centrlp.ru/services/web-analytics?intent=web-analytics#contact
 
 ## Ссылки
 

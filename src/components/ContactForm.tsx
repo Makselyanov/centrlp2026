@@ -16,6 +16,7 @@ const goalOptions = [
   "Маркетинговая стратегия и медиаплан",
   "Сайт или лендинг под заявки",
   "Яндекс Директ и заявки",
+  "Веб-аналитика и цели",
   "CRM и учет заявок",
   "Бот или автоматизация",
 ] as const;
@@ -26,6 +27,7 @@ const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Маркетинговая стратегия и медиаплан": "Получить расчет стратегии",
   "Сайт или лендинг под заявки": "Обсудить сайт под заявки",
   "Яндекс Директ и заявки": "Обсудить Директ под заявки",
+  "Веб-аналитика и цели": "Получить расчёт аналитики",
   "CRM и учет заявок": "Обсудить CRM для заявок",
   "Бот или автоматизация": "Обсудить автоматизацию",
 };
@@ -36,6 +38,7 @@ const goalMetricPlacements = [
   "goal_marketing_strategy",
   "goal_website_landing",
   "goal_yandex_direct",
+  "goal_web_analytics",
   "goal_crm",
   "goal_bot_automation",
 ] as const;
@@ -58,6 +61,10 @@ const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
 
   if (pathname === "/services/yandex-direct" || pathname === "/nastroyka-yandex-direct-tyumen") {
     return "Яндекс Директ и заявки";
+  }
+
+  if (pathname === "/services/web-analytics") {
+    return "Веб-аналитика и цели";
   }
 
   if (pathname === "/services/custom-crm" || pathname === "/crm-dlya-biznesa") {
@@ -83,11 +90,13 @@ export const ContactForm = () => {
   const formIntent = new URLSearchParams(location.search).get("intent") || "";
   const isSiteBriefIntent = formIntent === "site-brief";
   const isAuditIntent = formIntent === "site-audit";
+  const isWebAnalyticsIntent = formIntent === "web-analytics";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
   const isYandexDirectPage =
     location.pathname === "/services/yandex-direct" || location.pathname === "/nastroyka-yandex-direct-tyumen";
+  const isWebAnalyticsPage = location.pathname === "/services/web-analytics";
   const introTitle = isSiteBriefIntent
     ? "Готовый бриф можно сразу отправить на расчёт сайта."
     : isAuditIntent
@@ -98,6 +107,8 @@ export const ContactForm = () => {
       ? "Можно начать с короткого запроса на сайт или лендинг под заявки."
       : isYandexDirectPage
         ? "Можно начать с короткого расчета запуска или проверки действующей рекламы."
+        : isWebAnalyticsPage
+          ? "Можно начать с проверки Метрики, целей и маршрута заявки."
     : "Можно начать с короткого разбора сайта, формы и маршрута заявки.";
   const introDescription = isSiteBriefIntent
     ? "Укажите имя и телефон, затем вставьте ответы на 12 вопросов в поле комментария. Этого достаточно, чтобы оценить формат, сроки и бюджет первого запуска."
@@ -109,6 +120,8 @@ export const ContactForm = () => {
       ? "Для первого контакта достаточно имени, телефона и пары слов о задаче: новая страница, сайт услуг, доработка старого сайта или связка с CRM. Детали можно уточнить после первого ответа."
       : isYandexDirectPage
         ? "Для первого ответа достаточно контакта и пары слов о нише. Если реклама уже идет, добавьте ссылку на сайт и укажите, что важнее сейчас: снизить стоимость заявки, проверить Поиск или РСЯ, настроить цели либо пересобрать кампании."
+        : isWebAnalyticsPage
+          ? "Для первого ответа достаточно имени, телефона и ссылки на сайт. Уточните, какие формы и рекламные каналы нужно связать с заявками; доступы можно безопасно предоставить после согласования работ."
     : "Оставьте контакт и выберите ближайшую задачу. Если заявок мало, начнем с проверки формы, первого экрана, Метрики и скорости ответа.";
   const commentPlaceholder = isSiteBriefIntent
     ? "Вставьте сюда ответы на 12 вопросов из брифа. Можно отвечать коротко и пропускать то, что пока неизвестно."
@@ -120,9 +133,11 @@ export const ContactForm = () => {
       ? "Например: нужен лендинг под услугу; сайт услуг в Тюмени; переделать старый сайт, чтобы заявки не терялись; связать форму с CRM"
       : isYandexDirectPage
         ? "Например: запустить Поиск и РСЯ с нуля; проверить действующие кампании; настроить цели Метрики; снизить стоимость заявки; подготовить посадочную под рекламу"
+        : isWebAnalyticsPage
+          ? "Например: настроить Метрику и цели; проверить отправку формы и ошибки; сохранить UTM; связать обращения с CRM; подготовить отчёт по источникам заявок"
     : "Например: понять, почему сайт не дает заявок; проверить форму и Метрику; связать обращения с CRM";
 
-  const [taskDetailsOpen, setTaskDetailsOpen] = useState(isSiteBriefIntent || isAuditIntent);
+  const [taskDetailsOpen, setTaskDetailsOpen] = useState(isSiteBriefIntent || isAuditIntent || isWebAnalyticsIntent);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
