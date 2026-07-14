@@ -1,53 +1,53 @@
-# Локальное SEO в Тюмени: ценовой UTM-пакет
+# Локальное SEO в Тюмени: пакет для каналов
 
 Статус: ready_manual
+Целевая страница: https://centrlp.ru/lokalnoe-seo-tyumen
+Материал с ценой и составом: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni
 
-Кластер: локальное SEO / цена / Яндекс Бизнес / 2ГИС / заявки
+## UTM-ссылки
 
-Канонический материал: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni
-
-Коммерческая страница: https://centrlp.ru/lokalnoe-seo-tyumen
-
-## Ссылки
-
-- Telegram: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=telegram&utm_medium=social&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
-- VK: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=vk&utm_medium=social&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
-- Дзен: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=dzen&utm_medium=rss_social&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
-- MAX: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=max&utm_medium=messenger&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
+- Telegram: https://centrlp.ru/lokalnoe-seo-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=local_seo_price_2026_07_14&utm_content=cards_to_lead
+- VK: https://centrlp.ru/lokalnoe-seo-tyumen?utm_source=vk&utm_medium=social&utm_campaign=local_seo_price_2026_07_14&utm_content=cards_to_lead
+- Дзен: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=dzen&utm_medium=article&utm_campaign=local_seo_price_2026_07_14&utm_content=price_and_scope
+- MAX: https://centrlp.ru/lokalnoe-seo-tyumen?utm_source=max&utm_medium=messenger&utm_campaign=local_seo_price_2026_07_14&utm_content=cards_to_lead
 
 ## Telegram / MAX
 
-Сколько стоит локальное SEO и что должно входить в работу?
+Карточка компании есть в Яндекс Картах и 2ГИС, но обращений мало. Где искать проблему?
 
-В CentrLP стартовая проверка стоит от 15 000 ₽. В неё входят карточки Яндекс Бизнеса и 2ГИС, страницы услуг, контакты, UTM, события Метрики, форма и контроль маршрута до менеджера.
+Проверьте всю цепочку:
 
-Отдельно разобрали, что оплачивается после аудита и как принять работу без обещаний гарантированного топа.
+- совпадают ли телефон, адрес, режим и услуги;
+- ведёт ли карточка на подходящую страницу;
+- понятны ли цена входа и следующий шаг;
+- размечены ли переходы UTM-метками;
+- фиксирует ли Метрика звонок, мессенджер и отправку формы;
+- получает ли менеджер обращение вместе с источником.
 
-https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=telegram&utm_medium=social&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
+Стартовая проверка локального маршрута в CentrLP — от 15 000 ₽. Без обещаний позиций: на выходе карта расхождений, контрольная отправка и приоритет исправлений.
+
+Подробнее: https://centrlp.ru/lokalnoe-seo-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=local_seo_price_2026_07_14&utm_content=cards_to_lead
 
 ## VK
 
-Локальное SEO — это не только карточка компании и упоминание города на сайте.
+Локальное SEO не заканчивается на заполнении карточки компании.
 
-Рабочая связка выглядит так: карточки → страница услуги → телефон или форма → Метрика → ответственный за заявку.
+Клиент находит бизнес в Яндекс Картах или 2ГИС, проверяет услуги и отзывы, переходит на сайт, сравнивает условия и только затем звонит или отправляет форму. Если один этап не работает, наличие карточки ещё не означает заявки.
 
-В новом ценовом разборе:
+В стартовую проверку от 15 000 ₽ входят сверка карточек и сайта, страницы услуг, UTM, события Метрики и контроль получения обращения менеджером. Отдельно фиксируем, что можно исправить точечно, а что требует доработки сайта или аналитики.
 
-- что входит в аудит от 15 000 ₽;
-- какие внедрения считаются отдельно;
-- когда достаточно одной проверки;
-- когда нужна регулярная работа;
-- как проверить UTM, форму и получение заявки;
-- почему нельзя гарантировать позиции.
-
-Материал: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=vk&utm_medium=social&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
+Состав проверки и следующий шаг:
+https://centrlp.ru/lokalnoe-seo-tyumen?utm_source=vk&utm_medium=social&utm_campaign=local_seo_price_2026_07_14&utm_content=cards_to_lead
 
 ## Дзен
 
-### Локальное SEO в Тюмени от 15 000 ₽: что входит в цену
+### Сколько стоит локальное SEO в Тюмени и что проверять до продвижения
 
-Стартовая проверка должна показать не абстрактные ошибки, а конкретный путь клиента: карточка компании, подходящая страница, быстрый контакт, измеримое событие и получение обращения менеджером.
+Когда у компании уже есть сайт, Яндекс Бизнес и 2ГИС, начинать полезно не с обещаний роста позиций, а с проверки маршрута обращения.
 
-Разбираем состав аудита, отдельные расходы, критерии приёмки и связь локального поиска с GEO. Без обещаний позиций и выдуманных сроков роста.
+Название, телефон, адрес, режим и перечень услуг должны совпадать во всех точках. Ссылка из карточки должна вести на подходящую страницу, переход — сохранять источник, а звонок или форма — фиксироваться в аналитике и доходить ответственному сотруднику.
 
-Читать: https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=dzen&utm_medium=rss_social&utm_campaign=local_seo_price_tyumen_2026_07_14&utm_content=buyer_guide
+Стартовый аудит такого маршрута в CentrLP стоит от 15 000 ₽. В него входят сверка карточек, сайта и контактов, проверка страниц услуг, UTM, событий Метрики и контрольная отправка. Работы по наполнению карточек, разработке страниц и CRM оцениваются отдельно после проверки.
+
+Подробный состав и критерии приёмки:
+https://centrlp.ru/blog/lokalnoe-seo-dlya-biznesa-v-tyumeni?utm_source=dzen&utm_medium=article&utm_campaign=local_seo_price_2026_07_14&utm_content=price_and_scope
