@@ -35,6 +35,12 @@ export const landingPageMeta = {
     description:
       "ИИ-автоматизация для малого бизнеса: автоответы, обработка заявок, база знаний, CRM-помощник и сценарии, которые можно проверить на практике.",
   },
+  localSeoTyumen: {
+    path: "/lokalnoe-seo-tyumen",
+    title: "Локальное SEO и карточки в Тюмени от 15 000 ₽ | CentrLP",
+    description:
+      "Локальное SEO в Тюмени: аудит сайта, Яндекс Бизнеса и 2ГИС, единые контакты, страницы услуг, UTM, Метрика и маршрут заявки.",
+  },
 };
 
 export const landingRouteMeta = Object.values(landingPageMeta);

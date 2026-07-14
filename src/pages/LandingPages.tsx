@@ -176,6 +176,24 @@ const landingVisuals: Record<LandingPageKey, LandingVisual> = {
       { value: "CRM", label: "без потери контекста" },
     ],
   },
+  localSeoTyumen: {
+    imageSrc: "/og/services/web-analytics.png",
+    imageAlt: "Схема локального маршрута из карт на сайт, в аналитику и заявку",
+    eyebrow: "Локальный маршрут",
+    title: "Связываем карты, сайт и измерение обращения",
+    text: "Карточка дает точку входа, посадочная объясняет услугу, аналитика фиксирует действие, а менеджер получает обращение вместе с источником.",
+    flow: [
+      { icon: MapPin, label: "Карточка", detail: "Яндекс Бизнес или 2ГИС" },
+      { icon: MonitorSmartphone, label: "Страница", detail: "услуга и быстрый CTA" },
+      { icon: BarChart3, label: "Событие", detail: "UTM, звонок или форма" },
+      { icon: Route, label: "Заявка", detail: "ответственный и результат" },
+    ],
+    stats: [
+      { value: "2", label: "ключевые локальные карточки" },
+      { value: "4", label: "слоя проверки" },
+      { value: "48 ч", label: "на первичный вывод" },
+    ],
+  },
 };
 
 const scrollToForm = () => {
@@ -725,3 +743,4 @@ export const LandingTyumenPage = () => <LandingPageView pageKey="landingTyumen" 
 export const YandexDirectTyumenPage = () => <LandingPageView pageKey="yandexDirectTyumen" />;
 export const CrmBusinessPage = () => <LandingPageView pageKey="crmBusiness" />;
 export const AiAutomationPage = () => <LandingPageView pageKey="aiAutomation" />;
+export const LocalSeoTyumenPage = () => <LandingPageView pageKey="localSeoTyumen" />;

@@ -206,6 +206,7 @@ function main() {
     "/nastroyka-yandex-direct-tyumen",
     "/crm-dlya-biznesa",
     "/ai-avtomatizaciya-biznesa",
+    "/lokalnoe-seo-tyumen",
   ]);
 
   for (const routePath of uniqueRoutes) {

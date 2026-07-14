@@ -37,6 +37,7 @@ const LandingTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({
 const YandexDirectTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.YandexDirectTyumenPage })));
 const CrmBusinessPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.CrmBusinessPage })));
 const AiAutomationPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.AiAutomationPage })));
+const LocalSeoTyumenPage = lazy(() => import("./pages/LandingPages").then(m => ({ default: m.LocalSeoTyumenPage })));
 
 // Lazy-loaded service pages
 const WebsiteDevelopment = lazy(() => import("./pages/services/WebsiteDevelopment"));
@@ -138,6 +139,7 @@ const AppRoutes = () => (
             <Route path="/nastroyka-yandex-direct-tyumen" element={<YandexDirectTyumenPage />} />
             <Route path="/crm-dlya-biznesa" element={<CrmBusinessPage />} />
             <Route path="/ai-avtomatizaciya-biznesa" element={<AiAutomationPage />} />
+            <Route path="/lokalnoe-seo-tyumen" element={<LocalSeoTyumenPage />} />
 
             <Route path="/ai-plan" element={<AiPlanPage />} />
             <Route path="/ai-turagent" element={<AiTuragent />} />

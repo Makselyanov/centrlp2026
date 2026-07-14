@@ -27,6 +27,7 @@ const ogImageMap: Record<string, string> = {
   "/nastroyka-yandex-direct-tyumen": "yandex-direct.png",
   "/crm-dlya-biznesa": "services/custom-crm.png",
   "/ai-avtomatizaciya-biznesa": "services/ai-systems.png",
+  "/lokalnoe-seo-tyumen": "services/web-analytics.png",
 };
 
 const canonicalUrlMap: Record<string, string> = {
