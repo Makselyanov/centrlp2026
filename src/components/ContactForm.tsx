@@ -102,6 +102,9 @@ export const ContactForm = () => {
   const isDirectLaunchIntent = formIntent === "direct-launch";
   const isDirectManagementIntent = formIntent === "direct-management";
   const isDirectAuditIntent = formIntent === "direct-audit";
+  const isMarketingExpressIntent = formIntent === "marketing-express";
+  const isMarketingFullIntent = formIntent === "marketing-full";
+  const isMarketingImplementationIntent = formIntent === "marketing-implementation";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
@@ -112,6 +115,12 @@ export const ContactForm = () => {
     ? "Готовый бриф можно сразу отправить на расчёт сайта."
     : isAuditIntent
       ? "Отправьте сайт на экспресс-аудит за 48 часов."
+    : isMarketingExpressIntent
+      ? "Заказать экспресс-план маркетинга от 35 000 ₽."
+      : isMarketingFullIntent
+        ? "Обсудить полную маркетинговую стратегию от 55 000 ₽."
+        : isMarketingImplementationIntent
+          ? "Обсудить стратегию с внедрением от 80 000 ₽."
     : isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
@@ -131,6 +140,12 @@ export const ContactForm = () => {
     ? "Укажите имя и телефон, затем вставьте ответы на 12 вопросов в поле комментария. Этого достаточно, чтобы оценить формат, сроки и бюджет первого запуска."
     : isAuditIntent
       ? "Для первого ответа достаточно имени, телефона и ссылки на сайт. Уточним, есть ли трафик, как работает мобильная форма, Метрика и передача обращения менеджеру."
+    : isMarketingExpressIntent
+      ? "За 7–10 рабочих дней подготовим приоритетные каналы, оффер, медиаплан на 30–90 дней, ориентиры по бюджету и список первых правок."
+      : isMarketingFullIntent
+        ? "Разберём сегменты, конкурентов, позиционирование, экономику, каналы, KPI и дорожную карту. Срок и точный состав уточним по нише и доступным данным."
+        : isMarketingImplementationIntent
+          ? "Кроме стратегии оценим запуск первых кампаний, аналитику, посадочные правки и контроль обращений. Итоговый объём зависит от каналов и текущей инфраструктуры."
     : isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
@@ -150,6 +165,12 @@ export const ContactForm = () => {
     ? "Вставьте сюда ответы на 12 вопросов из брифа. Можно отвечать коротко и пропускать то, что пока неизвестно."
     : isAuditIntent
       ? "Добавьте ссылку на сайт и коротко опишите: откуда приходит трафик, сколько обращений сейчас и что уже пробовали менять."
+    : isMarketingExpressIntent
+      ? "Например: нужен экспресс-план для одной услуги в Тюмени; текущие каналы; ориентир рекламного бюджета; что должно измениться за 30–90 дней"
+      : isMarketingFullIntent
+        ? "Например: нужна полная стратегия; основные услуги и сегменты; текущие каналы и продажи; какие решения должен дать документ"
+        : isMarketingImplementationIntent
+          ? "Например: нужна стратегия и запуск; какие каналы уже есть; что требуется внедрить на сайте, в аналитике, рекламе и CRM"
     : isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
@@ -172,7 +193,10 @@ export const ContactForm = () => {
       isWebAnalyticsIntent ||
       isDirectLaunchIntent ||
       isDirectManagementIntent ||
-      isDirectAuditIntent,
+      isDirectAuditIntent ||
+      isMarketingExpressIntent ||
+      isMarketingFullIntent ||
+      isMarketingImplementationIntent,
   );
   const [formData, setFormData] = useState({
     name: "",

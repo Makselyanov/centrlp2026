@@ -12,6 +12,7 @@ import {
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
+import { Link } from "react-router-dom";
 
 const MarketingStrategy = () => {
   const faqItems = [
@@ -180,6 +181,7 @@ const MarketingStrategy = () => {
         "Список правок посадочной и аналитики",
       ],
       cta: "Заказать",
+      intent: "marketing-express",
       highlighted: false,
     },
     {
@@ -195,6 +197,7 @@ const MarketingStrategy = () => {
         "Маршрут заявки: сайт, реклама, CRM",
       ],
       cta: "Выбрать",
+      intent: "marketing-full",
       highlighted: true,
     },
     {
@@ -209,6 +212,7 @@ const MarketingStrategy = () => {
         "Сопровождение 2–3 месяца",
       ],
       cta: "Обсудить",
+      intent: "marketing-implementation",
       highlighted: false,
     },
   ];
@@ -527,11 +531,11 @@ const MarketingStrategy = () => {
                 ))}
               </ul>
               <Button
+                asChild
                 variant={tier.highlighted ? "default" : "outline"}
                 className="w-full"
-                onClick={scrollToForm}
               >
-                {tier.cta}
+                <Link to={`?intent=${tier.intent}#contact`}>{tier.cta}</Link>
               </Button>
             </div>
           ))}

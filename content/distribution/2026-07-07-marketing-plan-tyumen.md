@@ -3,14 +3,14 @@
 Дата: 2026-07-07
 Статус: ready_manual
 Кластер: маркетинговая стратегия / план маркетинга / заявки
-Основная страница: https://centrlp.ru/services/marketing-strategy
+Основная страница: https://centrlp.ru/services/marketing-strategy?intent=marketing-express#contact
 Поддерживающая статья: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen
 
 UTM-ссылки:
-- Telegram: https://centrlp.ru/services/marketing-strategy?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07
-- VK: https://centrlp.ru/services/marketing-strategy?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07
+- Telegram: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
+- VK: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
 - Дзен: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=dzen&utm_medium=rss_social&utm_campaign=marketing_plan_tyumen_2026_07_07
-- MAX: https://centrlp.ru/services/marketing-strategy?utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_07
+- MAX: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
 
 ## Telegram
 
@@ -23,7 +23,7 @@ UTM-ссылки:
 - каналы на 30-90 дней;
 - UTM, цели и маршрут заявки до CRM или таблицы.
 
-Страница услуги: https://centrlp.ru/services/marketing-strategy?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07
+Страница услуги: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
 
 ## VK
 
@@ -38,7 +38,7 @@ UTM-ссылки:
 
 Экспресс-план для бизнеса в Тюмени - от 35 000 ₽.
 
-Подробнее: https://centrlp.ru/services/marketing-strategy?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07
+Подробнее: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
 
 ## Дзен
 
@@ -54,4 +54,4 @@ UTM-ссылки:
 
 CentrLP делает такой план от 35 000 ₽: выбираем приоритетную услугу, посадочную, каналы, бюджет, UTM и маршрут заявки.
 
-Ссылка: https://centrlp.ru/services/marketing-strategy?utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_07
+Ссылка: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=max&utm_medium=messenger&utm_campaign=marketing_plan_tyumen_2026_07_07#contact
