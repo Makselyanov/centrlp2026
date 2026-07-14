@@ -1,13 +1,14 @@
 # Нет заявок с сайта: готовый пакет для ручной публикации
 
-Целевая страница: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov
+Статус: ready_manual
+Целевая статья: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov
 
 UTM-ссылки:
 
-- Telegram: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_06
-- VK: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_06
-- Дзен: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=dzen&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_06
-- MAX: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=max&utm_medium=messenger&utm_campaign=site_audit_lead_path_2026_07_06
+- Telegram: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
+- VK: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
+- Дзен: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=dzen&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
+- MAX: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=max&utm_medium=messenger&utm_campaign=site_audit_lead_path_2026_07_14
 
 ## Telegram / MAX
 
@@ -25,7 +26,7 @@ UTM-ссылки:
 
 Старт от 15 000 ₽. Подходит перед запуском Директа, перед переделкой сайта или когда нужно быстро понять, где теряются обращения.
 
-Проверить сайт и путь заявки: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_06
+Проверить сайт и путь заявки: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
 
 ## VK
 
@@ -42,7 +43,7 @@ UTM-ссылки:
 
 За 48 часов даем список конкретных правок: что исправить сразу, что тестировать в рекламе и где нужен более крупный проект. Стоимость старта - от 15 000 ₽.
 
-Страница услуги: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_06
+Разбор и критерии приёмки: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
 
 ## Дзен
 
@@ -54,11 +55,11 @@ UTM-ссылки:
 
 В CentrLP проверка сайта и пути заявки занимает до 48 часов. На выходе бизнес получает не большой отчет ради отчета, а список правок по приоритету: что мешает заявке сейчас, что исправить перед рекламой и где нужна доработка сайта, аналитики или CRM.
 
-Разобрать сайт перед рекламой или переделкой: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?utm_source=dzen&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_06
+Разобрать сайт перед рекламой или переделкой: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=dzen&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
 
 ## Ручной чеклист публикации
 
 - Проверить, что целевая ссылка открывает HTTP 200.
 - Использовать UTM под конкретный канал, не общий URL.
 - После публикации сохранить внешний URL публикации в этом файле или в HUB.
-- Через Метрику проверить визиты по `utm_campaign=site_audit_lead_path_2026_07_06`.
+- Через Метрику проверить визиты по `utm_campaign=site_audit_lead_path_2026_07_14`.
