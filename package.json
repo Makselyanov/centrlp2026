@@ -13,6 +13,7 @@
     "audit:interactive-nesting": "node scripts/audit-interactive-nesting.mjs",
     "seo:yandex": "node scripts/yandex-webmaster-report.mjs",
     "seo:gsc": "node scripts/gsc-report.mjs",
+    "seo:metrika": "node scripts/yandex-metrika-report.mjs",
     "seo:gsc:reauth": "node scripts/gsc-oauth-refresh.mjs",
     "seo:report": "node scripts/yandex-webmaster-report.mjs",
     "content:brief": "node scripts/seo-topic-brief.mjs"
