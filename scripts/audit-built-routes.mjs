@@ -204,6 +204,9 @@ function main() {
 
   const uniqueRoutes = [...new Set(routes)].sort();
   const violations = [];
+  const redirectRoutes = new Set([
+    "/services/yandex-direct",
+  ]);
   const routesRequiringFaq = new Set([
     "/proverka-saita-i-zayavok-za-48-chasov",
     "/razrabotka-sajtov-tyumen",
@@ -215,6 +218,10 @@ function main() {
   ]);
 
   for (const routePath of uniqueRoutes) {
+    if (redirectRoutes.has(routePath)) {
+      continue;
+    }
+
     const htmlPath = routeToHtmlPath(routePath);
 
     if (!fs.existsSync(htmlPath)) {

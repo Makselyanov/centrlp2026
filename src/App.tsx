@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import { AppFallback } from "./components/AppFallback";
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -49,7 +49,6 @@ const ChatbotVK = lazy(() => import("./pages/services/ChatbotVK"));
 const AutoResponses = lazy(() => import("./pages/services/AutoResponses"));
 const OperatorScripts = lazy(() => import("./pages/services/OperatorScripts"));
 const HelpBot = lazy(() => import("./pages/services/HelpBot"));
-const YandexDirect = lazy(() => import("./pages/services/YandexDirect"));
 const VKAds = lazy(() => import("./pages/services/VKAds"));
 const AvitoAds = lazy(() => import("./pages/services/AvitoAds"));
 const WebAnalytics = lazy(() => import("./pages/services/WebAnalytics"));
@@ -106,7 +105,7 @@ const AppRoutes = () => (
             <Route path="/services/auto-responses" element={<AutoResponses />} />
             <Route path="/services/operator-scripts" element={<OperatorScripts />} />
             <Route path="/services/help-bot" element={<HelpBot />} />
-            <Route path="/services/yandex-direct" element={<YandexDirect />} />
+            <Route path="/services/yandex-direct" element={<Navigate to="/nastroyka-yandex-direct-tyumen" replace />} />
             <Route path="/services/vk-ads" element={<VKAds />} />
             <Route path="/services/avito-ads" element={<AvitoAds />} />
             <Route path="/services/web-analytics" element={<WebAnalytics />} />
