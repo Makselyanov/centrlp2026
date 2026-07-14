@@ -22,6 +22,7 @@ const SERVER_EVENT_GOALS = new Set([
   "contextual_form_view",
   "utm_landing_view",
   "blog_hero_primary_cta_click",
+  "audit_self_check_select",
 ]);
 
 const getUtmParams = () => {

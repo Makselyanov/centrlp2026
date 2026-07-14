@@ -404,6 +404,19 @@ function markdownToStaticHtml(markdown, title, description, cta = {}) {
 }
 
 const landingStaticSections = {
+  "/proverka-saita-i-zayavok-za-48-chasov": `
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 20px 70px;">
+    <article style="border: 1px solid rgba(0,150,214,.16); border-radius: 20px; background: #fff; padding: 22px; box-shadow: 0 16px 42px rgba(15,23,42,.06);">
+      <p style="margin: 0 0 8px; color: #008dd2; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em;">Самодиагностика за минуту</p>
+      <h2 style="margin: 0 0 12px; font-size: 26px; line-height: 1.2;">Где, вероятнее всего, теряется заявка?</h2>
+      <ul style="margin: 0; color: #475569;">
+        <li><strong>На сайт почти не заходят:</strong> проверяем источники трафика, поисковую видимость, карточки и готовность страницы к рекламе.</li>
+        <li><strong>Посетители есть, но не обращаются:</strong> проверяем первый экран, CTA, быстрые контакты, форму и мобильный путь.</li>
+        <li><strong>Обращения теряются после отправки:</strong> проверяем цели, UTM, уведомления, CRM и скорость ответа.</li>
+      </ul>
+      <p style="margin: 16px 0 0;"><a href="/proverka-saita-i-zayavok-za-48-chasov?intent=site-audit#contact-form">Передать фокус в аудит</a></p>
+    </article>
+  </section>`,
   "/razrabotka-sajtov-tyumen": `
   <section style="max-width: 1180px; margin: 0 auto; padding: 0 20px 70px;">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; align-items: stretch;">

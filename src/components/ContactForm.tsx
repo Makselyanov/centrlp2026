@@ -88,6 +88,14 @@ export const ContactForm = () => {
   const location = useLocation();
   const defaultGoal = getDefaultGoal(location.pathname);
   const formIntent = new URLSearchParams(location.search).get("intent") || "";
+  const auditFocus = new URLSearchParams(location.search).get("audit_focus") || "";
+  const auditFocusComment = auditFocus === "traffic"
+    ? "Фокус аудита: на сайт почти не заходят; нужно отделить проблему трафика от проблемы страницы."
+    : auditFocus === "conversion"
+      ? "Фокус аудита: посетители есть, но не обращаются; проверить оффер, CTA, мобильные контакты и форму."
+      : auditFocus === "delivery"
+        ? "Фокус аудита: обращения могут теряться после отправки; проверить цели, уведомления, CRM и скорость ответа."
+        : "";
   const isSiteBriefIntent = formIntent === "site-brief";
   const isAuditIntent = formIntent === "site-audit";
   const isWebAnalyticsIntent = formIntent === "web-analytics";
@@ -173,7 +181,7 @@ export const ContactForm = () => {
     city: "",
     link: "",
     goal: defaultGoal as (typeof goalOptions)[number],
-    comment: "",
+    comment: auditFocusComment,
     privacyAccepted: false,
     cookiesAccepted: false,
   });
@@ -183,13 +191,18 @@ export const ContactForm = () => {
   }, [formIntent]);
 
   useEffect(() => {
+    if (!auditFocusComment) return;
+    setFormData((current) => current.comment ? current : { ...current, comment: auditFocusComment });
+  }, [auditFocusComment]);
+
+  useEffect(() => {
     if (!formIntent) return;
 
     trackMetric("contextual_form_view", {
       path: location.pathname,
-      placement: formIntent,
+      placement: auditFocus ? `${formIntent}:${auditFocus}` : formIntent,
     });
-  }, [formIntent, location.pathname]);
+  }, [auditFocus, formIntent, location.pathname]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

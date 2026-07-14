@@ -33,7 +33,7 @@ import {
   TrendingUp,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const heroIcons = [Clock3, Target, BarChart3, ShieldCheck];
@@ -83,6 +83,84 @@ const YandexDirectIntentSection = () => {
               </Button>
             </Card>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const auditFocusOptions = [
+  {
+    id: "traffic",
+    title: "На сайт почти не заходят",
+    text: "Сначала отделим проблему спроса и каналов от качества самой страницы.",
+    result: "Фокус проверки: источники трафика, поисковая видимость, карточки и готовность страницы к рекламе.",
+  },
+  {
+    id: "conversion",
+    title: "Посетители есть, но не обращаются",
+    text: "Проверим оффер, цену входа, доверие, мобильные действия и длину формы.",
+    result: "Фокус проверки: первый экран, CTA, быстрые контакты, форма и мобильный путь до обращения.",
+  },
+  {
+    id: "delivery",
+    title: "Заявки могут теряться после отправки",
+    text: "Проследим событие от формы и мессенджера до менеджера, аналитики и CRM.",
+    result: "Фокус проверки: цели, UTM, доставка уведомления, фиксация источника и скорость ответа.",
+  },
+] as const;
+
+const AuditSelfCheckSection = () => {
+  const [focus, setFocus] = useState<(typeof auditFocusOptions)[number]["id"] | "">("");
+  const selected = auditFocusOptions.find((option) => option.id === focus);
+  const href = selected
+    ? `?intent=site-audit&audit_focus=${selected.id}#contact-form`
+    : "#audit-self-check";
+
+  return (
+    <section id="audit-self-check" className="scroll-mt-28 bg-slate-50 py-16 md:py-20">
+      <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-5xl rounded-3xl border border-slate-200 bg-white p-6 shadow-sm md:p-10">
+          <div className="max-w-3xl">
+            <div className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#0096D6]">Самодиагностика за минуту</div>
+            <h2 className="text-3xl font-bold leading-tight text-slate-950 md:text-4xl">Где, вероятнее всего, теряется заявка?</h2>
+            <p className="mt-4 text-base leading-7 text-slate-600">Выберите ситуацию, которая ближе всего. Ответ не заменяет проверку по данным, но сразу задаёт правильный фокус аудита.</p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {auditFocusOptions.map((option) => {
+              const active = option.id === focus;
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => {
+                    setFocus(option.id);
+                    trackMetric("audit_self_check_select", { path: "/proverka-saita-i-zayavok-za-48-chasov", placement: option.id });
+                  }}
+                  className={`rounded-2xl border p-5 text-left transition-all ${active ? "border-[#0096D6] bg-[#0096D6]/[0.06] shadow-md" : "border-slate-200 bg-white hover:border-[#0096D6]/40"}`}
+                >
+                  <div className="flex items-start gap-3">
+                    <span className={`mt-1 h-4 w-4 shrink-0 rounded-full border-2 ${active ? "border-[#0096D6] bg-[#0096D6] shadow-[inset_0_0_0_3px_white]" : "border-slate-300"}`} />
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-950">{option.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">{option.text}</p>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-[#44B78B]/20 bg-[#44B78B]/[0.07] p-5" aria-live="polite">
+            <p className="text-sm font-semibold leading-6 text-slate-800">
+              {selected ? selected.result : "Выберите один вариант — форма сохранит этот контекст, и не придётся объяснять проблему с нуля."}
+            </p>
+            <Button asChild={Boolean(selected)} disabled={!selected} className="mt-4 w-full sm:w-auto">
+              {selected ? <Link to={href}>Передать фокус в аудит</Link> : <span>Сначала выбрать ситуацию</span>}
+            </Button>
+          </div>
         </div>
       </div>
     </section>
@@ -657,6 +735,8 @@ const LandingPageView = ({ pageKey }: { pageKey: LandingPageKey }) => {
       {pageKey === "websiteDevelopmentTyumen" && <WebsiteMobileStartSection />}
 
       <LandingFlowSection visual={visual} />
+
+      {pageKey === "expressAudit" && <AuditSelfCheckSection />}
 
       {pageKey === "yandexDirectTyumen" && <YandexDirectIntentSection />}
 
