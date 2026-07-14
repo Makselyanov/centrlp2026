@@ -97,6 +97,9 @@ const WebAnalytics = () => {
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild variant="outline">
+                <a href="/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen">Что входит и как принять работу</a>
+              </Button>
+              <Button asChild variant="outline">
                 <a href="/proverka-saita-i-zayavok-za-48-chasov">Проверить путь заявки</a>
               </Button>
               <Button asChild variant="outline">
@@ -297,47 +300,35 @@ const WebAnalytics = () => {
         </div>
       </section>
 
-      {/* Cases */}
+      {/* Acceptance checks */}
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-12 text-center">Примеры внедрения</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">Как проверяем настройку перед сдачей</h2>
+          <p className="mx-auto mb-12 max-w-3xl text-center text-lg text-muted-foreground">
+            Не выдаём наличие счётчика за готовую аналитику. Выполняем контрольные сценарии и отделяем события сайта от подтверждённых обращений.
+          </p>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <Card>
               <CardContent className="pt-6">
-                <h3 className="text-xl font-semibold mb-3">Сервис онлайн-бронирования</h3>
-                <p className="text-muted-foreground mb-4">
-                  Настроили цели для каждого шага воронки: просмотр услуги → выбор времени → заполнение формы → оплата. Выявили, что 60% уходят на этапе оплаты. Доработали страницу — конверсия выросла на 40%.
+                <h3 className="text-xl font-semibold mb-3">Форма и быстрые контакты</h3>
+                <p className="text-muted-foreground">
+                  Проверяем успешную отправку, ошибку валидации, клики по телефону и мессенджерам. Успешная форма должна фиксироваться отдельно от нажатия кнопки и ошибки.
                 </p>
-                <div className="flex gap-4 text-sm">
-                  <div>
-                    <div className="text-2xl font-bold text-primary">+40%</div>
-                    <div className="text-muted-foreground">Рост конверсии</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-primary">100%</div>
-                    <div className="text-muted-foreground">Прозрачность воронки</div>
-                  </div>
-                </div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <h3 className="text-xl font-semibold mb-3">Интернет-магазин техники</h3>
-                <p className="text-muted-foreground mb-4">
-                  Внедрили электронную торговлю: передаем ID товаров, суммы заказов, категории. Владелец увидел, что 70% выручки дает контекст, а соцсети окупаются слабо. Перераспределили бюджет — ROAS вырос в 2 раза.
+                <h3 className="text-xl font-semibold mb-3">Источник и доставка заявки</h3>
+                <p className="text-muted-foreground">
+                  Открываем страницу с тестовыми UTM, отправляем контрольное обращение и сверяем источник, страницу, уведомление и запись в CRM или журнале заявок.
                 </p>
-                <div className="flex gap-4 text-sm">
-                  <div>
-                    <div className="text-2xl font-bold text-primary">2x</div>
-                    <div className="text-muted-foreground">Рост ROAS</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-primary">-30%</div>
-                    <div className="text-muted-foreground">Снижение CPA</div>
-                  </div>
-                </div>
               </CardContent>
             </Card>
+          </div>
+          <div className="mt-8 text-center">
+            <Button asChild variant="outline">
+              <a href="/blog/nastrojka-veb-analitiki-metrika-zayavki-tyumen">Посмотреть критерии приёмки аналитики</a>
+            </Button>
           </div>
         </div>
       </section>
@@ -470,7 +461,7 @@ const WebAnalytics = () => {
                   Нужно ли что-то делать после настройки?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  Нет, аналитика работает автоматически. Вы просто заходите в отчеты и смотрите актуальные данные. Мы научим, какие метрики отслеживать и как принимать решения на их основе.
+                  Сбор событий работает автоматически, но данные нужно регулярно проверять: формы и сайт меняются, рекламные ссылки могут потерять метки, а цели — перестать соответствовать маршруту заявки. Мы показываем, какие отчёты смотреть и как выполнять контрольную отправку.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5" className="border rounded-lg px-6">
