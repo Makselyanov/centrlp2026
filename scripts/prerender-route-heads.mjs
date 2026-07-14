@@ -38,6 +38,11 @@ const canonicalUrlByRoute = {
 };
 
 const staticRouteMetaOverrides = {
+  "/services/custom-crm": {
+    title: "Персональная CRM для бизнеса в Тюмени — от 180 000 ₽ | CentrLP",
+    description:
+      "Разработка персональной CRM для малого бизнеса в Тюмени от 180 000 ₽: заявки, воронка, роли, интеграции, аналитика и автоматизация под ваши процессы.",
+  },
   "/services/android-app-development": {
     title: "Разработка Android-приложений под ключ для бизнеса | CentrLP",
     description:
@@ -687,7 +692,7 @@ const commercialStaticSections = {
     ],
   },
   "/services/custom-crm": {
-    lead: "Разрабатываем CRM под отдел продаж и сервис: заявки, статусы, ответственные, источники, уведомления и отчеты по воронке.",
+    lead: "Разрабатываем персональную CRM для малого бизнеса в Тюмени от 180 000 ₽: заявки, статусы, ответственные, источники, уведомления и отчеты по воронке.",
     sections: [
       {
         title: "Какие задачи закрывает CRM",
@@ -706,11 +711,21 @@ const commercialStaticSections = {
           "нужен личный кабинет, статусы заказов или внутренняя операционная система",
         ],
       },
+      {
+        title: "Персональная или готовая CRM",
+        items: [
+          "готовая CRM подходит для стандартной воронки и быстрого запуска",
+          "персональная CRM нужна для своих ролей, сервисных этапов, документов и расчетов",
+          "разработка персональной CRM начинается от 180 000 ₽ после разбора процесса и интеграций",
+        ],
+      },
     ],
     related: [
+      { label: "CRM для малого бизнеса", href: "/crm-dlya-biznesa" },
+      { label: "Сайт с передачей заявок в CRM", href: "/razrabotka-sajtov-tyumen" },
+      { label: "Веб-аналитика и цели", href: "/services/web-analytics" },
       { label: "AI-агенты для заявок", href: "/services/ai-agents" },
       { label: "n8n-автоматизация", href: "/services/n8n-automation" },
-      { label: "Сайт как источник заявок", href: "/razrabotka-sajtov-tyumen" },
     ],
   },
   "/services/ai-agents": {
