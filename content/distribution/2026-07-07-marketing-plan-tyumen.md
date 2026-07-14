@@ -2,6 +2,7 @@
 
 Дата: 2026-07-07
 Статус: ready_manual
+Обновлено: 2026-07-14 — добавлен прикладной пример первых 30 дней
 Кластер: маркетинговая стратегия / план маркетинга / заявки
 Основная страница: https://centrlp.ru/services/marketing-strategy?intent=marketing-express#contact
 Поддерживающая статья: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen
@@ -23,7 +24,9 @@ UTM-ссылки:
 - каналы на 30-90 дней;
 - UTM, цели и маршрут заявки до CRM или таблицы.
 
-Разбор цены и приёмки: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
+В статье появился пример первых 30 дней: от выбора одной услуги и проверки формы до первой сверки расходов и качества обращений.
+
+Разбор цены и последовательности: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=30_day_example
 
 ## VK
 
@@ -38,7 +41,9 @@ UTM-ссылки:
 
 Экспресс-план для бизнеса в Тюмени - от 35 000 ₽.
 
-Подробнее: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=price_acceptance
+Внутри — пример плана на первые 30 дней с контрольным результатом для каждого этапа.
+
+Подробнее: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=30_day_example
 
 ## Дзен
 
