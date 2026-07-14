@@ -430,6 +430,14 @@ function landingStaticHtml(title, description, routePath = "") {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(description);
   const extraSection = landingStaticSections[routePath] || "";
+  const commercial = commercialStaticSections[routePath];
+  const commercialSection = commercial
+    ? `<section style="max-width: 1180px; margin: 0 auto; padding: 10px 20px 70px;">
+    <p style="font-size: 18px; color: #334155;">${escapeHtml(commercial.lead)}</p>
+    ${commercial.sections.map((section) => `<section><h2>${escapeHtml(section.title)}</h2><ul>${section.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></section>`).join("")}
+    <p><a href="/contacts#contact-form">Оставить заявку</a> · ${commercial.related.map((item) => `<a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a>`).join(" · ")}</p>
+  </section>`
+    : "";
 
   return `<main class="seo-static-content" data-prerender="true" style="min-height: 100vh; margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0f172a; background: linear-gradient(135deg, #f8fcff 0%, #ffffff 46%, #e7f7ff 100%);">
   <header style="border-bottom: 1px solid rgba(15,23,42,.08); background: rgba(255,255,255,.88);">
@@ -467,6 +475,7 @@ function landingStaticHtml(title, description, routePath = "") {
     </aside>
   </section>
   ${extraSection}
+  ${commercialSection}
   <footer style="border-top: 1px solid rgba(15,23,42,.08); background: #0f172a; color: #e2e8f0;">
     <div style="max-width: 1180px; margin: 0 auto; padding: 26px 20px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 14px;">
       <span>CentrLP: сайты, реклама, CRM и автоматизация под рост заявок.</span>
