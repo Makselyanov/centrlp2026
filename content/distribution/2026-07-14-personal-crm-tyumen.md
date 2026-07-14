@@ -8,9 +8,9 @@
 
 Коробочное решение подходит для стандартной воронки. Персональная CRM нужна, если у бизнеса свои роли, сервисные этапы, расчёты, документы, кабинеты или несколько каналов заявок, которые приходится сводить вручную.
 
-В CentrLP разработка персональной CRM начинается от 180 000 ₽. Сначала разбираем реальный процесс, затем фиксируем роли, статусы, интеграции и критерии приёмки.
+В CentrLP разработка персональной CRM начинается от 180 000 ₽. Сначала разбираем реальный процесс, затем фиксируем первый рабочий контур и критерии приёмки: создание карточки без дубля, источник заявки, ответственного, роли, статусы и согласованный отчёт.
 
-Подробнее: https://centrlp.ru/services/custom-crm?intent=custom-crm&utm_source=telegram&utm_medium=social&utm_campaign=personal_crm_tyumen#contact
+Подробнее: https://centrlp.ru/services/custom-crm?intent=custom-crm&utm_source=telegram&utm_medium=social&utm_campaign=personal_crm_acceptance_2026_07_14&utm_content=minimum_scope#contact
 
 ## VK
 
@@ -20,7 +20,7 @@
 
 Разработка персональной CRM в CentrLP — от 180 000 ₽. В стартовый объём входят карта процесса, карточки клиентов и сделок, основные статусы и подключение ключевого источника заявок.
 
-Условия и состав работ: https://centrlp.ru/services/custom-crm?intent=custom-crm&utm_source=vk&utm_medium=social&utm_campaign=personal_crm_tyumen#contact
+Условия, стартовый объём и приёмка: https://centrlp.ru/services/custom-crm?intent=custom-crm&utm_source=vk&utm_medium=social&utm_campaign=personal_crm_acceptance_2026_07_14&utm_content=minimum_scope#contact
 
 ## Дзен
 
@@ -30,6 +30,6 @@
 
 Разработка начинается не с интерфейса, а с карты процесса: откуда приходит заявка, кто отвечает, какие статусы проходит клиент, где возникают потери и какие действия можно автоматизировать. После этого фиксируются объём, сроки и критерии приёмки.
 
-Разработка персональной CRM в Тюмени начинается от 180 000 ₽: https://centrlp.ru/services/custom-crm?intent=custom-crm&utm_source=dzen&utm_medium=article&utm_campaign=personal_crm_tyumen#contact
+Разработка персональной CRM в Тюмени начинается от 180 000 ₽. На странице есть состав первого этапа и проверяемые критерии приёмки: https://centrlp.ru/services/custom-crm?intent=custom-crm&utm_source=dzen&utm_medium=article&utm_campaign=personal_crm_acceptance_2026_07_14&utm_content=minimum_scope#contact
 
 Статус: готово к ручной публикации после проверки аккаунта и канала CentrLP.
