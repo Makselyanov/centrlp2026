@@ -68,6 +68,8 @@ interface ServicePageTemplateProps {
   ctaTitle: string;
   ctaDescription: string;
   price?: string;
+  contactIntent?: string;
+  heroCtaLabel?: string;
 }
 
 const floatingIcons = [
@@ -116,6 +118,8 @@ export const ServicePageTemplate = ({
   ctaTitle,
   ctaDescription,
   price,
+  contactIntent,
+  heroCtaLabel = "Обсудить проект",
 }: ServicePageTemplateProps) => {
   useAutoBreadcrumb(breadcrumbName);
   useServiceSchema({ name: schemaName, description: schemaDescription, price });
@@ -241,9 +245,9 @@ export const ServicePageTemplate = ({
                 asChild
                 className="border-0 bg-[linear-gradient(135deg,#0096D6_0%,#44B78B_100%)] text-white shadow-[0_18px_50px_-24px_rgba(0,150,214,0.7)] transition-transform duration-300 hover:-translate-y-0.5 hover:opacity-95"
               >
-                <a href="#contact">
-                  Обсудить проект <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
+                <Link to={contactIntent ? `?intent=${contactIntent}#contact` : "#contact"}>
+                  {heroCtaLabel} <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="border-slate-300 bg-white/80 backdrop-blur-sm">
                 <Link to="/services">Все услуги</Link>

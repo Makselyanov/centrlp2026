@@ -105,6 +105,7 @@ export const ContactForm = () => {
   const isMarketingExpressIntent = formIntent === "marketing-express";
   const isMarketingFullIntent = formIntent === "marketing-full";
   const isMarketingImplementationIntent = formIntent === "marketing-implementation";
+  const isCustomCrmIntent = formIntent === "custom-crm";
   const isMarketingStrategyPage = location.pathname === "/services/marketing-strategy";
   const isWebsiteDevelopmentPage =
     location.pathname === "/services/website-development" || location.pathname === "/razrabotka-sajtov-tyumen";
@@ -121,6 +122,8 @@ export const ContactForm = () => {
         ? "Обсудить полную маркетинговую стратегию от 55 000 ₽."
         : isMarketingImplementationIntent
           ? "Обсудить стратегию с внедрением от 80 000 ₽."
+    : isCustomCrmIntent
+      ? "Опишите процесс — подготовим первый контур персональной CRM."
     : isMarketingStrategyPage
     ? "Можно начать с короткого запроса на план маркетинга и медиаплан."
     : isWebsiteDevelopmentPage
@@ -146,6 +149,8 @@ export const ContactForm = () => {
         ? "Разберём сегменты, конкурентов, позиционирование, экономику, каналы, KPI и дорожную карту. Срок и точный состав уточним по нише и доступным данным."
         : isMarketingImplementationIntent
           ? "Кроме стратегии оценим запуск первых кампаний, аналитику, посадочные правки и контроль обращений. Итоговый объём зависит от каналов и текущей инфраструктуры."
+    : isCustomCrmIntent
+      ? "Для первого расчёта достаточно описать, откуда приходят заявки, кто с ними работает, какие этапы, документы и отчёты нужны. Разработка персональной CRM начинается от 180 000 ₽; состав и этапы фиксируем после разбора процесса."
     : isMarketingStrategyPage
     ? "Для первого контакта достаточно имени, телефона и пары слов о задаче. Нишу, город, текущие каналы и ссылку на проект можно уточнить уже после первого ответа."
     : isWebsiteDevelopmentPage
@@ -171,6 +176,8 @@ export const ContactForm = () => {
         ? "Например: нужна полная стратегия; основные услуги и сегменты; текущие каналы и продажи; какие решения должен дать документ"
         : isMarketingImplementationIntent
           ? "Например: нужна стратегия и запуск; какие каналы уже есть; что требуется внедрить на сайте, в аналитике, рекламе и CRM"
+    : isCustomCrmIntent
+      ? "Например: заявки приходят с сайта и из мессенджеров; три роли; семь этапов сделки; нужны документы, напоминания и отчёт руководителя"
     : isMarketingStrategyPage
     ? "Например: нужен план маркетинга с ценой и сроками; собрать медиаплан; понять, какие каналы тестировать в ближайшие 30-60 дней"
     : isWebsiteDevelopmentPage
@@ -196,7 +203,8 @@ export const ContactForm = () => {
       isDirectAuditIntent ||
       isMarketingExpressIntent ||
       isMarketingFullIntent ||
-      isMarketingImplementationIntent,
+      isMarketingImplementationIntent ||
+      isCustomCrmIntent,
   );
   const [formData, setFormData] = useState({
     name: "",
