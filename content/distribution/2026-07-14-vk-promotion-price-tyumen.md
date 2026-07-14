@@ -9,7 +9,7 @@
 
 Разобрали стоимость, состав работ и критерии приёмки: что входит в контент от 15 000 ₽/мес, что входит в ведение VK Ads от 30 000 ₽/мес и почему рекламный кабинет нужно сверять с реальными заявками.
 
-https://centrlp.ru/blog/prodvizhenie-biznesa-vkontakte?utm_source=telegram&utm_medium=social&utm_campaign=vk_promotion_price_tyumen
+https://centrlp.ru/services/vk-ads?intent=vk-complex&utm_source=telegram&utm_medium=social&utm_campaign=vk_promotion_price_tyumen#contact
 
 ## VK
 
@@ -19,7 +19,7 @@ https://centrlp.ru/blog/prodvizhenie-biznesa-vkontakte?utm_source=telegram&utm_m
 
 Контент и сообщество — от 15 000 ₽/мес. Ведение VK Ads — от 30 000 ₽/мес, рекламный бюджет отдельно.
 
-https://centrlp.ru/blog/prodvizhenie-biznesa-vkontakte?utm_source=vk&utm_medium=social&utm_campaign=vk_promotion_price_tyumen
+https://centrlp.ru/services/vk-ads?intent=vk-complex&utm_source=vk&utm_medium=social&utm_campaign=vk_promotion_price_tyumen#contact
 
 ## Дзен
 
@@ -27,10 +27,10 @@ https://centrlp.ru/blog/prodvizhenie-biznesa-vkontakte?utm_source=vk&utm_medium=
 
 Охваты, клики, подписчики и заявки — разные показатели. В материале показано, как собрать управляемую цепочку из сообщества, контента, VK Ads, UTM, формы и учёта обращений. Также разобраны два формата работы и критерии, по которым заказчик может принять результат.
 
-https://centrlp.ru/blog/prodvizhenie-biznesa-vkontakte?utm_source=dzen&utm_medium=referral&utm_campaign=vk_promotion_price_tyumen
+https://centrlp.ru/services/vk-ads?intent=vk-complex&utm_source=dzen&utm_medium=referral&utm_campaign=vk_promotion_price_tyumen#contact
 
 ## MAX
 
 Как принять продвижение ВКонтакте и не получить только отчёт по охватам: цена, состав работ, UTM, контрольная заявка и сверка с CRM.
 
-https://centrlp.ru/blog/prodvizhenie-biznesa-vkontakte?utm_source=max&utm_medium=social&utm_campaign=vk_promotion_price_tyumen
+https://centrlp.ru/services/vk-ads?intent=vk-complex&utm_source=max&utm_medium=social&utm_campaign=vk_promotion_price_tyumen#contact

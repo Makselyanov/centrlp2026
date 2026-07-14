@@ -71,7 +71,7 @@ const VKAds = () => {
               <div className="flex items-center gap-2"><CheckCircle2 className="w-5 h-5 text-primary" /> VK Ads — от 30 000 ₽/мес</div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg"><a href="#contact">Обсудить продвижение <ArrowRight className="ml-2" /></a></Button>
+              <Button asChild size="lg"><Link to="?intent=vk-complex#contact">Обсудить продвижение <ArrowRight className="ml-2" /></Link></Button>
               <Button asChild size="lg" variant="outline"><Link to="/blog/prodvizhenie-biznesa-vkontakte">Что входит в комплекс</Link></Button>
             </div>
             <p className="text-sm text-muted-foreground mt-5">Рекламный бюджет оплачивается отдельно. Объём работ фиксируется до старта.</p>
@@ -99,8 +99,8 @@ const VKAds = () => {
         <div className="container mx-auto px-4 max-w-5xl">
           <h2 className="text-3xl font-bold text-center mb-10">Два формата работы</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card><CardContent className="p-7"><MessageSquare className="w-9 h-9 text-primary mb-4" /><h3 className="text-2xl font-bold mb-3">Контент и сообщество</h3><p className="text-3xl font-bold mb-4">от 15 000 ₽/мес</p><ul className="space-y-2 text-muted-foreground"><li>Оффер и точки входа</li><li>Контент-план и публикации</li><li>Переходы в сообщения или на сайт</li><li>Единая UTM-разметка ссылок</li></ul></CardContent></Card>
-            <Card><CardContent className="p-7"><Megaphone className="w-9 h-9 text-primary mb-4" /><h3 className="text-2xl font-bold mb-3">Ведение VK Ads</h3><p className="text-3xl font-bold mb-4">от 30 000 ₽/мес</p><ul className="space-y-2 text-muted-foreground"><li>Структура кампаний и аудиторий</li><li>Объявления и креативные гипотезы</li><li>UTM, события и контрольная заявка</li><li>Оптимизация по фактическим данным</li></ul><p className="text-sm text-muted-foreground mt-4">Медиабюджет не входит в стоимость ведения.</p></CardContent></Card>
+            <Card><CardContent className="p-7"><MessageSquare className="w-9 h-9 text-primary mb-4" /><h3 className="text-2xl font-bold mb-3">Контент и сообщество</h3><p className="text-3xl font-bold mb-4">от 15 000 ₽/мес</p><ul className="space-y-2 text-muted-foreground"><li>Оффер и точки входа</li><li>Контент-план и публикации</li><li>Переходы в сообщения или на сайт</li><li>Единая UTM-разметка ссылок</li></ul><Button asChild className="mt-6 w-full"><Link to="?intent=vk-content#contact">Обсудить ведение сообщества</Link></Button></CardContent></Card>
+            <Card><CardContent className="p-7"><Megaphone className="w-9 h-9 text-primary mb-4" /><h3 className="text-2xl font-bold mb-3">Ведение VK Ads</h3><p className="text-3xl font-bold mb-4">от 30 000 ₽/мес</p><ul className="space-y-2 text-muted-foreground"><li>Структура кампаний и аудиторий</li><li>Объявления и креативные гипотезы</li><li>UTM, события и контрольная заявка</li><li>Оптимизация по фактическим данным</li></ul><p className="text-sm text-muted-foreground mt-4">Медиабюджет не входит в стоимость ведения.</p><Button asChild className="mt-6 w-full"><Link to="?intent=vk-ads#contact">Обсудить ведение VK Ads</Link></Button></CardContent></Card>
           </div>
         </div>
       </section>

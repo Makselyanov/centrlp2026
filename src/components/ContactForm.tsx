@@ -16,6 +16,7 @@ const goalOptions = [
   "Маркетинговая стратегия и медиаплан",
   "Сайт или лендинг под заявки",
   "Яндекс Директ и заявки",
+  "Продвижение ВКонтакте и заявки",
   "Веб-аналитика и цели",
   "CRM и учет заявок",
   "Бот или автоматизация",
@@ -27,6 +28,7 @@ const submitLabelByGoal: Record<(typeof goalOptions)[number], string> = {
   "Маркетинговая стратегия и медиаплан": "Получить расчет стратегии",
   "Сайт или лендинг под заявки": "Обсудить сайт под заявки",
   "Яндекс Директ и заявки": "Обсудить Директ под заявки",
+  "Продвижение ВКонтакте и заявки": "Обсудить продвижение ВКонтакте",
   "Веб-аналитика и цели": "Получить расчёт аналитики",
   "CRM и учет заявок": "Обсудить CRM для заявок",
   "Бот или автоматизация": "Обсудить автоматизацию",
@@ -38,6 +40,7 @@ const goalMetricPlacements = [
   "goal_marketing_strategy",
   "goal_website_landing",
   "goal_yandex_direct",
+  "goal_vk_promotion",
   "goal_web_analytics",
   "goal_crm",
   "goal_bot_automation",
@@ -61,6 +64,10 @@ const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
 
   if (pathname === "/services/yandex-direct" || pathname === "/nastroyka-yandex-direct-tyumen") {
     return "Яндекс Директ и заявки";
+  }
+
+  if (pathname === "/services/vk-ads") {
+    return "Продвижение ВКонтакте и заявки";
   }
 
   if (pathname === "/services/web-analytics") {
@@ -102,6 +109,9 @@ export const ContactForm = () => {
   const isDirectLaunchIntent = formIntent === "direct-launch";
   const isDirectManagementIntent = formIntent === "direct-management";
   const isDirectAuditIntent = formIntent === "direct-audit";
+  const isVkContentIntent = formIntent === "vk-content";
+  const isVkAdsIntent = formIntent === "vk-ads";
+  const isVkComplexIntent = formIntent === "vk-complex";
   const isMarketingExpressIntent = formIntent === "marketing-express";
   const isMarketingFullIntent = formIntent === "marketing-full";
   const isMarketingImplementationIntent = formIntent === "marketing-implementation";
@@ -134,6 +144,12 @@ export const ContactForm = () => {
           ? "Разберём ведение и оптимизацию действующих кампаний."
           : isDirectAuditIntent
             ? "Проверим, где действующая реклама теряет бюджет и заявки."
+          : isVkContentIntent
+            ? "Обсудим ведение сообщества и контент от 15 000 ₽ в месяц."
+          : isVkAdsIntent
+            ? "Рассчитаем ведение VK Ads от 30 000 ₽ в месяц."
+          : isVkComplexIntent
+            ? "Соберём комплексный маршрут ВКонтакте до измеримой заявки."
       : isYandexDirectPage
         ? "Можно начать с короткого расчета запуска или проверки действующей рекламы."
         : isWebAnalyticsPage
@@ -161,6 +177,12 @@ export const ContactForm = () => {
           ? "Добавьте ссылку на сайт и кратко укажите, какие кампании уже работают, какой расход и какие обращения бизнес считает целевыми. Ведение начинается от 30 000 ₽ в месяц."
           : isDirectAuditIntent
             ? "Добавьте ссылку на сайт и опишите текущую рекламу: Поиск или РСЯ, период работы, расход, цели Метрики и полученные обращения. Стоимость аудита определим после состава кабинета и задачи."
+          : isVkContentIntent
+            ? "Укажите ссылку на сообщество, нишу, регион, частоту публикаций и целевое действие: сообщение, звонок или переход на сайт."
+          : isVkAdsIntent
+            ? "Укажите ссылку на сообщество или сайт, регион, рекламный бюджет и какое обращение бизнес считает целевым. Медиабюджет оплачивается отдельно."
+          : isVkComplexIntent
+            ? "Укажите текущую площадку, услугу и маршрут обращения. Проверим, нужны ли контент, VK Ads, лид-форма, сайт, аналитика или CRM."
       : isYandexDirectPage
         ? "Для первого ответа достаточно контакта и пары слов о нише. Если реклама уже идет, добавьте ссылку на сайт и укажите, что важнее сейчас: снизить стоимость заявки, проверить Поиск или РСЯ, настроить цели либо пересобрать кампании."
         : isWebAnalyticsPage
@@ -188,6 +210,12 @@ export const ContactForm = () => {
           ? "Например: снизить долю нецелевых запросов; очистить площадки РСЯ; связать расходы с полученными заявками; настроить регулярный отчёт"
           : isDirectAuditIntent
             ? "Например: проверить поисковые фразы, площадки РСЯ, цели Метрики, UTM, посадочную и доставку заявки менеджеру"
+          : isVkContentIntent
+            ? "Например: сообщество услуг в Тюмени; нужен контент-план и публикации; заявки должны приходить в сообщения"
+          : isVkAdsIntent
+            ? "Например: запустить VK Ads на одну услугу; бюджет; ссылка на посадочную; целевая заявка; способ учёта обращений"
+          : isVkComplexIntent
+            ? "Например: привести в порядок сообщество, запустить рекламу, разметить ссылки UTM и передавать заявки менеджеру"
       : isYandexDirectPage
         ? "Например: запустить Поиск и РСЯ с нуля; проверить действующие кампании; настроить цели Метрики; снизить стоимость заявки; подготовить посадочную под рекламу"
         : isWebAnalyticsPage
@@ -201,6 +229,9 @@ export const ContactForm = () => {
       isDirectLaunchIntent ||
       isDirectManagementIntent ||
       isDirectAuditIntent ||
+      isVkContentIntent ||
+      isVkAdsIntent ||
+      isVkComplexIntent ||
       isMarketingExpressIntent ||
       isMarketingFullIntent ||
       isMarketingImplementationIntent ||
