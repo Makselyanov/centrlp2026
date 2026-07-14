@@ -54,8 +54,8 @@ const COMMERCIAL_TOPICS = [
     kind: "geo-llmo-article",
     title: "GEO-продвижение в Тюмени: как бизнесу попадать в ответы нейросетей и поиск",
     slug: "geo-prodvizhenie-tyumen-nejroseti-poisk",
-    moneyPage: "/services/copywriting-texts",
-    secondaryPages: ["/services/marketing-strategy", "/services/web-analytics", "/services/ai-systems"],
+    moneyPage: "/lokalnoe-seo-tyumen",
+    secondaryPages: ["/razrabotka-sajtov-tyumen", "/services/web-analytics", "/services/marketing-strategy"],
     targetQueries: [
       "geo продвижение тюмень",
       "продвижение в нейросетях",
@@ -416,7 +416,12 @@ function scoreTopic(topic, posts, gscSummary, yandexSummary) {
 }
 
 function pickTopic(topics) {
-  return [...topics].sort((a, b) => b.score - a.score || b.priority - a.priority)[0];
+  const ranked = [...topics].sort((a, b) => b.score - a.score || b.priority - a.priority);
+  return (
+    ranked.find((topic) => topic.status === "open") ||
+    ranked.find((topic) => topic.status === "partly-covered") ||
+    ranked[0]
+  );
 }
 
 function formatPercent(value) {
