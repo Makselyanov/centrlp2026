@@ -265,6 +265,9 @@ const Contacts = () => {
                       <p className="text-muted-foreground">
                         625022, г. Тюмень, проезд Солнечный, 22
                       </p>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Встречи по предварительной договорённости
+                      </p>
                     </div>
                   </div>
                 </Card>
@@ -342,7 +345,7 @@ const Contacts = () => {
                 <div className="mb-6">
                   <h3 className="text-2xl font-bold mb-2">Оставить заявку</h3>
                   <p className="text-muted-foreground">
-                    Заполните форму, и мы свяжемся с вами в течение 15 минут
+                    Опишите задачу — уточним исходные данные и предложим следующий шаг
                   </p>
                 </div>
                 <ContactForm />

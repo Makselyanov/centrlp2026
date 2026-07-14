@@ -1053,7 +1053,6 @@ function buildOrganizationSchema() {
     url: baseUrl,
     telephone: "+7-905-824-85-64",
     email: "1@centrlp.ru",
-    openingHours: "Mo-Fr 09:00-18:00",
     priceRange: "от 15 000 ₽",
     sameAs: [
       "https://vk.com/centrlp",
