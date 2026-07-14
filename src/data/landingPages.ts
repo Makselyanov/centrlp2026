@@ -224,6 +224,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
     related: [
       { title: "Проверка сайта за 48 часов", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Создание лендинга в Тюмени", href: "/sozdanie-lendinga-tyumen" },
+      { title: "Лендинг или многостраничный сайт", href: "/blog/lending-ili-mnogostranichnyj-sajt-tyumen" },
       { title: "Как связать сайт с CRM", href: "/blog/sajt-s-crm-zayavki-tyumen" },
       { title: "AI-агенты для бизнеса", href: "/services/ai-agents" },
     ],
@@ -287,6 +288,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
       { title: "Аудит перед рекламой", href: "/proverka-saita-i-zayavok-za-48-chasov" },
       { title: "Настройка Яндекс Директ", href: "/nastroyka-yandex-direct-tyumen" },
       { title: "Разработка сайтов", href: "/razrabotka-sajtov-tyumen" },
+      { title: "Лендинг или многостраничный сайт", href: "/blog/lending-ili-mnogostranichnyj-sajt-tyumen" },
     ],
   },
   yandexDirectTyumen: {

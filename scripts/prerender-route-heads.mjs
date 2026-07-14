@@ -414,7 +414,7 @@ const landingStaticSections = {
       </article>
       <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
         <h3 style="margin: 0 0 10px;">Лендинг под одну услугу</h3>
-        <p style="margin: 0; color: #475569;">Быстрый запуск от 45 000 ₽: оффер, форма, телефон, мессенджеры, Метрика и готовность к рекламе.</p>
+        <p style="margin: 0; color: #475569;">Быстрый запуск от 45 000 ₽: оффер, форма, телефон, мессенджеры, Метрика и готовность к рекламе. <a href="/blog/lending-ili-mnogostranichnyj-sajt-tyumen">Сравнить лендинг и многостраничный сайт</a>.</p>
       </article>
       <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
         <h3 style="margin: 0 0 10px;">Сайт услуг для Тюмени</h3>
@@ -425,6 +425,14 @@ const landingStaticSections = {
         <p style="margin: 0; color: #475569;">Чтобы обращение сразу попадало менеджеру без потери источника и контекста. <a href="/blog/sajt-s-crm-zayavki-tyumen">Что передавать с сайта в CRM</a>.</p>
       </article>
     </div>
+  </section>`,
+  "/sozdanie-lendinga-tyumen": `
+  <section style="max-width: 1180px; margin: 0 auto; padding: 0 20px 70px;">
+    <article style="border: 1px solid rgba(0,150,214,.16); border-radius: 20px; background: #fff; padding: 22px; box-shadow: 0 16px 42px rgba(15,23,42,.06);">
+      <p style="margin: 0 0 8px; color: #008dd2; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em;">Выбор формата</p>
+      <h2 style="margin: 0 0 12px; font-size: 26px; line-height: 1.2;">Одна услуга — лендинг, несколько направлений — сайт</h2>
+      <p style="margin: 0; color: #475569;">Сравните задачи, рекламу, SEO, аналитику и развитие после запуска: <a href="/blog/lending-ili-mnogostranichnyj-sajt-tyumen">лендинг или многостраничный сайт</a>.</p>
+    </article>
   </section>`,
   "/crm-dlya-biznesa": `
   <section style="max-width: 1180px; margin: 0 auto; padding: 0 20px 70px;">
