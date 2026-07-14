@@ -229,6 +229,7 @@ export const landingPages: Record<LandingPageKey, LandingPage> = {
       { title: "Бриф на создание сайта", href: "/blog/brif-na-sozdanie-saita-tyumen" },
       { title: "Срок разработки и календарь запуска", href: "/blog/srok-razrabotki-saita-tyumen" },
       { title: "Что входит в сайт под ключ", href: "/blog/sajt-pod-klyuch-chto-vhodit-tyumen" },
+      { title: "Гарантия и поддержка сайта после запуска", href: "/blog/garantiya-podderzhka-sajta-posle-zapuska-tyumen" },
       { title: "Лендинг или многостраничный сайт", href: "/blog/lending-ili-mnogostranichnyj-sajt-tyumen" },
       { title: "Как связать сайт с CRM", href: "/blog/sajt-s-crm-zayavki-tyumen" },
       { title: "AI-агенты для бизнеса", href: "/services/ai-agents" },
