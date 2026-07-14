@@ -289,6 +289,6 @@ description: "Пошаговая инструкция по настройке Я
 
 ## Читайте также
 
-- [Как перестать сливать бюджет в Яндекс.Директ: чек-лист аудита за 60 минут](/blog/yandex-direct-audit-checklist)
+- [Аудит сайта и пути заявки перед запуском Яндекс Директ](/blog/audit-saita-pered-zapuskom-reklamy-v-yandekse)
 - [Создание сайта для бизнеса в Тюмени в 2026 году: что нужно знать](/blog/sozdanie-saita-dlya-biznesa-tyumen)
 - [Лендинг под ключ: пошаговое руководство по созданию продающей страницы](/blog/sozdanie-landinga-rukovodstvo)
