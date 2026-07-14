@@ -6,6 +6,7 @@ declare global {
 }
 
 const METRIKA_ID = 50135101;
+const UTM_STORAGE_KEY = "centrlp:utm-attribution";
 const SERVER_EVENT_GOALS = new Set([
   "form_submit_attempt",
   "lead_form_submit",
@@ -19,17 +20,41 @@ const SERVER_EVENT_GOALS = new Set([
   "landing_secondary_cta_click",
   "form_goal_select",
   "contextual_form_view",
+  "utm_landing_view",
+  "blog_hero_primary_cta_click",
 ]);
 
 const getUtmParams = () => {
   const search = new URLSearchParams(window.location.search);
-  return {
+  const current = {
     utm_source: search.get("utm_source") || "",
     utm_medium: search.get("utm_medium") || "",
     utm_campaign: search.get("utm_campaign") || "",
     utm_content: search.get("utm_content") || "",
     utm_term: search.get("utm_term") || "",
   };
+
+  try {
+    if (Object.values(current).some(Boolean)) {
+      sessionStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(current));
+      return current;
+    }
+
+    const stored = JSON.parse(sessionStorage.getItem(UTM_STORAGE_KEY) || "null");
+    if (stored && typeof stored === "object") {
+      return {
+        utm_source: String(stored.utm_source || ""),
+        utm_medium: String(stored.utm_medium || ""),
+        utm_campaign: String(stored.utm_campaign || ""),
+        utm_content: String(stored.utm_content || ""),
+        utm_term: String(stored.utm_term || ""),
+      };
+    }
+  } catch {
+    // Attribution storage is optional and never blocks a conversion action.
+  }
+
+  return current;
 };
 
 const sendServerEvent = (goal: string, params?: Record<string, unknown>) => {

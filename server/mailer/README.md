@@ -70,9 +70,11 @@ location = /api/lead {
 
 Events with `utm_source=codex_smoke` are retained as synthetic checks but excluded
 from real funnel totals. Their count is exposed as `synthetic_events_30d`.
-form submit attempts, successful submits, errors, messenger clicks, phone clicks,
-and landing CTA clicks. It stores only normalized event names, page paths,
+UTM landing views, blog and landing CTA clicks, form submit attempts, successful
+submits, errors, messenger clicks, and phone clicks. It stores only normalized event names, page paths,
 UTM fields, placement/messenger labels, and referrer host.
+Browser session attribution preserves UTM fields after an internal SPA navigation,
+so landing and form events remain tied to the article or channel that started the visit.
 
 `GET /api/lead/metrics` returns only safe aggregates for route diagnostics:
 totals for today, 7/30 days, last lead timestamp, normalized counters by page
