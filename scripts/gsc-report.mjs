@@ -469,7 +469,7 @@ async function main() {
 
   const baseQuery = { startDate, endDate };
 
-  const [totals, byQuery, byPage, byCountry, byDevice, sitemaps] = await Promise.all([
+  const [totals, byQuery, byPage, byQueryPage, byCountry, byDevice, sitemaps] = await Promise.all([
     querySearchAnalytics(accessToken, config.siteUrl, {
       ...baseQuery,
       dimensions: [],
@@ -484,6 +484,11 @@ async function main() {
       ...baseQuery,
       dimensions: ["page"],
       rowLimit: 15,
+    }),
+    querySearchAnalytics(accessToken, config.siteUrl, {
+      ...baseQuery,
+      dimensions: ["query", "page"],
+      rowLimit: 250,
     }),
     querySearchAnalytics(accessToken, config.siteUrl, {
       ...baseQuery,
@@ -527,6 +532,7 @@ async function main() {
     totals,
     byQuery,
     byPage,
+    byQueryPage,
     byCountry,
     byDevice,
     sitemaps,

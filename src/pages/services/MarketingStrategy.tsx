@@ -26,8 +26,8 @@ const MarketingStrategy = () => {
   useFaqSchema(faqItems);
   useAutoBreadcrumb("Маркетинговая стратегия");
   useServiceSchema({
-    name: "План маркетинга и маркетинговая стратегия в Тюмени",
-    description: "Разработка маркетингового плана для бизнеса: каналы, бюджет, оффер, медиаплан, аналитика, CRM и первые действия для роста заявок.",
+    name: "Разработка маркетинговой стратегии в Тюмени",
+    description: "Маркетинговая стратегия для бизнеса: анализ рынка и аудитории, позиционирование, экономика, медиаплан, воронка, аналитика и дорожная карта внедрения.",
     price: "35000",
   });
 
@@ -215,8 +215,8 @@ const MarketingStrategy = () => {
 
   return (
     <Layout
-      title="План маркетинга в Тюмени на заказ: цена от 35 000 ₽ | CentrLP"
-      description="Заказать план маркетинга в Тюмени от 35 000 ₽: каналы, бюджет, оффер, посадочные, аналитика, CRM и первые 30–90 дней действий для роста заявок."
+      title="Разработка маркетинговой стратегии в Тюмени | CentrLP"
+      description="Разработка маркетинговой стратегии в Тюмени: анализ аудитории и конкурентов, позиционирование, экономика, медиаплан, воронка и дорожная карта внедрения."
     >
       {/* ── Hero ─────────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden bg-gradient-to-b from-white via-[#0096D6]/[0.04] to-white">
@@ -243,20 +243,20 @@ const MarketingStrategy = () => {
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-slate-200 text-[#0096D6] text-xs font-semibold uppercase tracking-wider shadow-sm mb-8">
             <Brain className="w-3.5 h-3.5" />
-            <span>Маркетинговый план от 35 000 ₽</span>
+            <span>Маркетинговая стратегия для бизнеса</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
-            План маркетинга <br />
+            Маркетинговая стратегия <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-              с понятной ценой и планом действий
+              от анализа до внедрения
             </span>
           </h1>
 
           <p className="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Собираем план маркетинга для бизнеса в Тюмени: каналы, медиаплан, бюджет,
-            KPI, посадочные страницы и гипотезы по лидам. Опираемся на аналитику и AI, чтобы вы понимали не только что делать,
-            но и сколько это будет стоить по этапам и где должен появиться первый измеримый результат.
+            Разрабатываем стратегию для бизнеса в Тюмени: анализируем рынок и аудиторию,
+            уточняем позиционирование, считаем экономику, выбираем каналы и собираем дорожную карту внедрения.
+            Экспресс-план доступен как отдельный стартовый формат от 35 000 ₽.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
