@@ -414,7 +414,7 @@ const landingStaticSections = {
       </article>
       <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
         <h3 style="margin: 0 0 10px;">Лендинг под одну услугу</h3>
-        <p style="margin: 0; color: #475569;">Быстрый запуск от 45 000 ₽: оффер, форма, телефон, мессенджеры, Метрика и готовность к рекламе. Сначала заполните <a href="/blog/brif-na-sozdanie-saita-tyumen">бриф на создание сайта</a>, затем <a href="/blog/lending-ili-mnogostranichnyj-sajt-tyumen">сравните лендинг и многостраничный сайт</a>.</p>
+        <p style="margin: 0; color: #475569;">Быстрый запуск от 45 000 ₽: оффер, форма, телефон, мессенджеры, Метрика и готовность к рекламе. Сначала изучите <a href="/blog/sajt-pod-klyuch-chto-vhodit-tyumen">состав сайта под ключ</a>, затем заполните <a href="/blog/brif-na-sozdanie-saita-tyumen">бриф на создание сайта</a>.</p>
       </article>
       <article style="border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; padding: 22px;">
         <h3 style="margin: 0 0 10px;">Сайт услуг для Тюмени</h3>
