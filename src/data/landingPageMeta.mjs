@@ -7,9 +7,9 @@ export const landingPageMeta = {
   },
   websiteDevelopmentTyumen: {
     path: "/razrabotka-sajtov-tyumen",
-    title: "Разработка сайтов и AI-агентов в Тюмени от 45 000 ₽ | CentrLP",
+    title: "Создание сайта под ключ в Тюмени от 45 000 ₽ | CentrLP",
     description:
-      "Создаем сайты и посадочные страницы для заявок в Тюмени: структура, дизайн, форма, аналитика, SEO-основа, CRM и AI-агенты для обработки обращений.",
+      "Создание сайта под ключ в Тюмени от 45 000 ₽: структура, дизайн, адаптивная верстка, форма заявки, Метрика, SEO-основа и подготовка к рекламе.",
   },
   landingTyumen: {
     path: "/sozdanie-lendinga-tyumen",
