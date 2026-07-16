@@ -1,7 +1,7 @@
 export const landingPageMeta = {
   expressAudit: {
     path: "/proverka-saita-i-zayavok-za-48-chasov",
-    title: "Нет заявок с сайта? Аудит формы и Метрики за 48 часов | CentrLP",
+    title: "Аудит сайта в Тюмени за 48 часов от 15 000 ₽ | CentrLP",
     description:
       "Экспресс-аудит сайта в Тюмени от 15 000 ₽: проверим первый экран, форму, быстрые контакты, Метрику, UTM и маршрут заявки до менеджера.",
   },

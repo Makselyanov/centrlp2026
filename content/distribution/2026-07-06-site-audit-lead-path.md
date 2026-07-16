@@ -1,13 +1,13 @@
 # Нет заявок с сайта: готовый пакет для ручной публикации
 
 Статус: ready_manual
-Обновлено: 2026-07-14 — акцент на самопроверке и аудите по данным
+Обновлено: 2026-07-16 — трафик ведём прямо на коммерческий сценарий аудита
 Целевая статья: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov
 
 UTM-ссылки:
 
-- Telegram: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14&utm_content=self_check_vs_audit
-- VK: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14&utm_content=self_check_vs_audit
+- Telegram: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?intent=site-audit&utm_source=telegram&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_16&utm_content=audit_scope#contact-form
+- VK: https://centrlp.ru/proverka-saita-i-zayavok-za-48-chasov?intent=site-audit&utm_source=vk&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_16&utm_content=audit_scope#contact-form
 - Дзен: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=dzen&utm_medium=social&utm_campaign=site_audit_lead_path_2026_07_14
 - MAX: https://centrlp.ru/blog/ekspress-audit-saita-net-zayavok-48-chasov?utm_source=max&utm_medium=messenger&utm_campaign=site_audit_lead_path_2026_07_14
 
