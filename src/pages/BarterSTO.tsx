@@ -7,23 +7,24 @@ import {
   CheckCircle2,
   CircleDollarSign,
   Clipboard,
-  Gauge,
   Globe2,
   Megaphone,
   MessageCircle,
   MonitorCheck,
   Phone,
+  Search,
   Sparkles,
   Wrench,
   X,
 } from "lucide-react";
-import { servicePriceByHref } from "@/data/pricing";
+import { packagePrices, servicePrices, type ServicePriceCategory } from "@/data/pricing";
 
 type RepairGroup = "Безопасность" | "Техника" | "Детейлинг" | "Мультимедиа";
 type RepairFilter = "Все" | RepairGroup;
 type RepairStatus = "active" | "scheduled" | "completed";
 type PageSection = "problems" | "offer" | "calculator";
 type CalculatorSide = "vehicle" | "centrlp" | "parity";
+type DigitalCatalogFilter = "all" | "packages" | ServicePriceCategory;
 
 type CaseImage = {
   src: string;
@@ -57,6 +58,9 @@ type DigitalService = {
   priceLabel: string;
   benefit: string;
   icon: typeof Globe2;
+  category: Exclude<DigitalCatalogFilter, "all">;
+  kind: "package" | "service";
+  selectionGroup?: string;
 };
 
 const money = new Intl.NumberFormat("ru-RU");
@@ -836,130 +840,79 @@ const repairJobs: RepairJob[] = [
   },
 ];
 
-const getCatalogPrice = (href: string) => {
-  const catalogEntry = servicePriceByHref[href];
-
-  if (!catalogEntry) {
-    throw new Error(`Для услуги ${href} не найдена цена в src/data/pricing.ts`);
-  }
-
-  const label = catalogEntry.price;
+const getCatalogPriceAmount = (label: string, title: string) => {
   const amountFromCatalog = Number(label.match(/\d[\d\s]*/)?.[0].replace(/\s/g, ""));
 
   if (!Number.isFinite(amountFromCatalog) || amountFromCatalog <= 0) {
-    throw new Error(`Не удалось прочитать цену «${label}» для услуги ${href}`);
+    throw new Error(`Не удалось прочитать цену «${label}» для «${title}»`);
   }
 
+  return amountFromCatalog;
+};
+
+const digitalCategoryIcons: Record<ServicePriceCategory, typeof Globe2> = {
+  growth: Megaphone,
+  packaging: Sparkles,
+  ai: MessageCircle,
+  product: Globe2,
+  compliance: MonitorCheck,
+  industry: Wrench,
+};
+
+const benefitOverrides: Record<string, string> = {
+  "/proverka-saita-i-zayavok-za-48-chasov": "Найдём каждое место, где сервис теряет клиента: в поиске, на сайте, в карточках или переписке. Соберём приоритетный план и новый путь, который доводит человека от интереса до звонка или записи.",
+  "/services/website-development": "Спроектируем полноценный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Минимальный формат начинается от 45 000 ₽, типовой проект считаем по обычной стоимости 80 000 ₽.",
+  "/services/vk-design": "Соберём услуги, цены, реальные работы, гарантии и отзывы в убедительную витрину. Клиент сразу поймёт, что вы делаете, почему вам можно доверить автомобиль и как быстро записаться.",
+  "/services/web-analytics": "Настроим цели, звонки, формы и понятные отчёты. Вы увидите, откуда пришла каждая заявка, какая услуга приносит деньги и куда больше не стоит сливать бюджет.",
+  "/services/auto-responses": "Соберём автоматический первый ответ, который не оставит тёплого клиента без внимания вечером или в выходной. Запросим марку, проблему, фото и контакт, чтобы мастер получил уже понятную заявку.",
+  "/nastroyka-yandex-direct-tyumen": "Соберём рекламу под самую маржинальную услугу, отсечём пустые запросы и приведём людей сразу на подготовленное предложение. Вы получите не показы ради отчёта, а управляемый источник обращений.",
+  "/services/operator-scripts": "Превратим опыт мастера в готовые ответы на вопросы о цене, сроках, гарантии и сложных случаях. Администратор перестанет импровизировать, а клиент будет быстрее соглашаться на запись.",
+  "/services/offer-packaging": "Разберём вашу сильную услугу и упакуем её так, чтобы клиент видел не цену одной операции, а весь результат и снятый риск. Покажем, чем ваш подход сильнее соседнего сервиса и почему за него разумно платить больше.",
+  "/services/copywriting-texts": "Соберём отдельную сильную страницу под прибыльную услугу: запрос клиента, процесс, цена, доказательства и понятный следующий шаг. Она будет одновременно продавать человеку и давать поиску точную точку входа.",
+  "/services/chatbot-vk": "Соберём сценарий и запустим бота, который уточнит марку, проблему, фото и удобное время, ответит на типовые вопросы и передаст мастеру готовую карточку обращения.",
+};
+
+const packageDigitalServices: DigitalService[] = packagePrices.map((item, index) => ({
+  id: `package:${index}`,
+  title: item.title,
+  href: "/prices",
+  price: getCatalogPriceAmount(item.price, item.title),
+  priceLabel: item.price,
+  benefit: `${item.description} ${item.result}`,
+  icon: CheckCircle2,
+  category: "packages",
+  kind: "package",
+  selectionGroup: "package",
+}));
+
+const catalogDigitalServices: DigitalService[] = servicePrices.map((item) => {
+  const isWebsite = item.href === "/services/website-development";
+  const catalogAmount = getCatalogPriceAmount(item.price, item.title);
+
   return {
-    amount: amountFromCatalog,
-    label,
+    id: `service:${item.href}`,
+    title: item.title,
+    href: item.href,
+    price: isWebsite ? 80_000 : catalogAmount,
+    priceLabel: isWebsite ? `${item.price} · типовой сайт 80 000 ₽` : item.price,
+    benefit: benefitOverrides[item.href] || `${item.description}${item.note ? ` ${item.note}` : ""}`,
+    icon: digitalCategoryIcons[item.category],
+    category: item.category,
+    kind: "service",
   };
-};
+});
 
-const catalogDigitalPricing = {
-  audit: getCatalogPrice("/proverka-saita-i-zayavok-za-48-chasov"),
-  vk: getCatalogPrice("/services/vk-design"),
-  analytics: getCatalogPrice("/services/web-analytics"),
-  answers: getCatalogPrice("/services/auto-responses"),
-  direct: getCatalogPrice("/nastroyka-yandex-direct-tyumen"),
-  scripts: getCatalogPrice("/services/operator-scripts"),
-  offer: getCatalogPrice("/services/offer-packaging"),
-  site: getCatalogPrice("/services/website-development"),
-  seoCopy: getCatalogPrice("/services/copywriting-texts"),
-  vkBot: getCatalogPrice("/services/chatbot-vk"),
-};
+const digitalServices: DigitalService[] = [...packageDigitalServices, ...catalogDigitalServices];
 
-const digitalServices: DigitalService[] = [
-  {
-    id: "audit",
-    title: "Разбор потерь и новый путь до записи",
-    href: "/proverka-saita-i-zayavok-za-48-chasov",
-    price: catalogDigitalPricing.audit.amount,
-    priceLabel: catalogDigitalPricing.audit.label,
-    benefit: "Найдём каждое место, где сервис теряет клиента: в поиске, на сайте, в карточках или переписке. Соберём приоритетный план и новый путь, который доводит человека от интереса до звонка или записи.",
-    icon: MonitorCheck,
-  },
-  {
-    id: "vk",
-    title: "ВКонтакте как полноценная витрина сервиса",
-    href: "/services/vk-design",
-    price: catalogDigitalPricing.vk.amount,
-    priceLabel: catalogDigitalPricing.vk.label,
-    benefit: "Соберём услуги, цены, реальные работы, гарантии и отзывы в убедительную витрину. Клиент сразу поймёт, что вы делаете, почему вам можно доверить автомобиль и как быстро записаться.",
-    icon: MessageCircle,
-  },
-  {
-    id: "analytics",
-    title: "Веб-аналитика",
-    href: "/services/web-analytics",
-    price: catalogDigitalPricing.analytics.amount,
-    priceLabel: catalogDigitalPricing.analytics.label,
-    benefit: "Настроим цели, звонки, формы и понятные отчёты. Вы увидите, откуда пришла каждая заявка, какая услуга приносит деньги и куда больше не стоит сливать бюджет.",
-    icon: Gauge,
-  },
-  {
-    id: "answers",
-    title: "Система ответа и записи 24/7",
-    href: "/services/auto-responses",
-    price: catalogDigitalPricing.answers.amount,
-    priceLabel: catalogDigitalPricing.answers.label,
-    benefit: "Соберём автоматический первый ответ, который не оставит тёплого клиента без внимания вечером или в выходной. Запросим марку, проблему, фото и контакт, чтобы мастер получил уже понятную заявку.",
-    icon: MessageCircle,
-  },
-  {
-    id: "direct",
-    title: "Настройка Яндекс Директа",
-    href: "/nastroyka-yandex-direct-tyumen",
-    price: catalogDigitalPricing.direct.amount,
-    priceLabel: catalogDigitalPricing.direct.label,
-    benefit: "Соберём рекламу под самую маржинальную услугу, отсечём пустые запросы и приведём людей сразу на подготовленное предложение. Вы получите не показы ради отчёта, а управляемый источник обращений.",
-    icon: Megaphone,
-  },
-  {
-    id: "scripts",
-    title: "Сильные ответы администратора и мастера",
-    href: "/services/operator-scripts",
-    price: catalogDigitalPricing.scripts.amount,
-    priceLabel: catalogDigitalPricing.scripts.label,
-    benefit: "Превратим опыт мастера в готовые ответы на вопросы о цене, сроках, гарантии и сложных случаях. Администратор перестанет импровизировать, а клиент будет быстрее понимать ценность работы и соглашаться на запись.",
-    icon: Clipboard,
-  },
-  {
-    id: "offer",
-    title: "Оффер, который продаёт дорогую услугу",
-    href: "/services/offer-packaging",
-    price: catalogDigitalPricing.offer.amount,
-    priceLabel: catalogDigitalPricing.offer.label,
-    benefit: "Разберём вашу сильную услугу и упакуем её так, чтобы клиент видел не цену одной операции, а весь результат и снятый риск. Покажем, чем ваш подход сильнее соседнего сервиса и почему за него разумно платить больше.",
-    icon: Sparkles,
-  },
-  {
-    id: "site",
-    title: "Сайт и система заявок под ключ",
-    href: "/services/website-development",
-    price: catalogDigitalPricing.site.amount,
-    priceLabel: catalogDigitalPricing.site.label,
-    benefit: "Спроектируем полноценный многостраничный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Построим цифрового продавца, который объясняет ценность и приводит клиента к записи.",
-    icon: Globe2,
-  },
-  {
-    id: "seo-copy",
-    title: "Отдельная страница под прибыльную услугу",
-    href: "/services/copywriting-texts",
-    price: catalogDigitalPricing.seoCopy.amount,
-    priceLabel: catalogDigitalPricing.seoCopy.label,
-    benefit: "Соберём отдельную сильную страницу под одну прибыльную услугу: запрос клиента, процесс, цена, доказательства и понятный следующий шаг. Она будет одновременно продавать человеку и давать поиску точную точку входа.",
-    icon: Sparkles,
-  },
-  {
-    id: "vk-bot",
-    title: "Чат-бот ВКонтакте",
-    href: "/services/chatbot-vk",
-    price: catalogDigitalPricing.vkBot.amount,
-    priceLabel: catalogDigitalPricing.vkBot.label,
-    benefit: "Соберём сценарий и запустим бота, который уточнит марку, проблему, фото и удобное время, ответит на типовые вопросы и передаст мастеру готовую карточку обращения. Клиент не потеряется между первым сообщением и записью.",
-    icon: MessageCircle,
-  },
+const digitalCategoryOptions: Array<{ id: DigitalCatalogFilter; label: string }> = [
+  { id: "all", label: "Все" },
+  { id: "packages", label: "Пакеты" },
+  { id: "growth", label: "Сайты и продажи" },
+  { id: "packaging", label: "Упаковка" },
+  { id: "ai", label: "AI и автоматизация" },
+  { id: "product", label: "Разработка" },
+  { id: "compliance", label: "Проверка данных" },
+  { id: "industry", label: "Отраслевые решения" },
 ];
 
 const priceSources = [
@@ -984,21 +937,88 @@ const priceSources = [
 function buildEquivalentServices(target: number) {
   if (target <= 0) return [];
 
-  let best: DigitalService[] = [];
-  let bestTotal = Number.POSITIVE_INFINITY;
+  const largestPrice = Math.max(...digitalServices.map((service) => service.price));
+  const ceiling = target + largestPrice;
+  const combinations = new Map<number, DigitalService[]>([[0, []]]);
 
-  for (let mask = 1; mask < 1 << digitalServices.length; mask += 1) {
-    const candidate = digitalServices.filter((_, index) => (mask & (1 << index)) !== 0);
-    const total = candidate.reduce((sum, item) => sum + item.price, 0);
+  digitalServices.forEach((service) => {
+    const currentCombinations = [...combinations.entries()];
 
-    if (total >= target && total < bestTotal) {
-      best = candidate;
-      bestTotal = total;
-    }
+    currentCombinations.forEach(([total, selected]) => {
+      const nextTotal = total + service.price;
+      if (nextTotal > ceiling) return;
+
+      const nextSelected = [...selected, service];
+      const existing = combinations.get(nextTotal);
+
+      if (!existing || nextSelected.length > existing.length) {
+        combinations.set(nextTotal, nextSelected);
+      }
+    });
+  });
+
+  const bestTotal = [...combinations.keys()]
+    .filter((total) => total >= target)
+    .sort((left, right) => left - right)[0];
+
+  if (bestTotal === undefined) {
+    return [...digitalServices].sort((left, right) => left.price - right.price);
   }
 
-  return best.length > 0 ? best : digitalServices;
+  return combinations.get(bestTotal) || [];
 }
+
+type DigitalCatalogControlsProps = {
+  filter: DigitalCatalogFilter;
+  query: string;
+  onFilterChange: (filter: DigitalCatalogFilter) => void;
+  onQueryChange: (query: string) => void;
+};
+
+const DigitalCatalogControls = ({
+  filter,
+  query,
+  onFilterChange,
+  onQueryChange,
+}: DigitalCatalogControlsProps) => (
+  <div className="space-y-3">
+    <label className="flex min-h-12 items-center gap-3 rounded-[14px] bg-[#202526] px-4 text-white focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#ffd36d]">
+      <Search className="h-5 w-5 shrink-0 text-[#ffd36d]" />
+      <span className="sr-only">Найти услугу CentrLP</span>
+      <input
+        type="search"
+        value={query}
+        onChange={(event) => onQueryChange(event.target.value)}
+        placeholder="Найти сайт, CRM, рекламу, AI-агента…"
+        className="min-w-0 flex-1 bg-transparent py-3 text-base text-white outline-none placeholder:text-[#9fa8aa]"
+      />
+    </label>
+    <div className="flex gap-2 overflow-x-auto pb-2" role="group" aria-label="Категории услуг CentrLP">
+      {digitalCategoryOptions.map((option) => {
+        const count = option.id === "all"
+          ? digitalServices.length
+          : digitalServices.filter((service) => service.category === option.id).length;
+        const active = filter === option.id;
+
+        return (
+          <button
+            key={option.id}
+            type="button"
+            onClick={() => onFilterChange(option.id)}
+            aria-pressed={active}
+            className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-black transition-colors ${
+              active
+                ? "bg-[#f3a712] text-[#111315]"
+                : "bg-[#202526] text-[#dfe3e4] hover:bg-[#2b3132] hover:text-white"
+            }`}
+          >
+            {option.label} · {count}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+);
 
 function setMeta(selector: string, attribute: string, value: string) {
   let element = document.querySelector(selector);
@@ -1018,6 +1038,8 @@ const BarterSTO = () => {
   const [copyState, setCopyState] = useState<"idle" | "copying" | "copied" | "error">("idle");
   const [activeSection, setActiveSection] = useState<PageSection>("problems");
   const [calculatorSide, setCalculatorSide] = useState<CalculatorSide>("vehicle");
+  const [digitalFilter, setDigitalFilter] = useState<DigitalCatalogFilter>("all");
+  const [digitalQuery, setDigitalQuery] = useState("");
 
   useEffect(() => {
     const previousHtmlOverflowX = document.documentElement.style.overflowX;
@@ -1111,6 +1133,19 @@ const BarterSTO = () => {
     [selectedRepairJobs],
   );
 
+  const filteredDigitalServices = useMemo(() => {
+    const query = digitalQuery.trim().toLocaleLowerCase("ru-RU");
+
+    return digitalServices.filter((service) => {
+      const matchesCategory = digitalFilter === "all" || service.category === digitalFilter;
+      const matchesQuery = !query || `${service.title} ${service.benefit} ${service.priceLabel}`
+        .toLocaleLowerCase("ru-RU")
+        .includes(query);
+
+      return matchesCategory && matchesQuery;
+    });
+  }, [digitalFilter, digitalQuery]);
+
   const selectedDigitalServices = useMemo(
     () => digitalServices.filter((service) => selectedServiceIds.includes(service.id)),
     [selectedServiceIds],
@@ -1139,9 +1174,21 @@ const BarterSTO = () => {
   };
 
   const toggleService = (id: string) => {
-    setSelectedServiceIds((current) => (
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
-    ));
+    const selectedService = digitalServices.find((service) => service.id === id);
+    if (!selectedService) return;
+
+    setSelectedServiceIds((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id);
+
+      const withoutAlternative = selectedService.selectionGroup
+        ? current.filter((item) => {
+            const other = digitalServices.find((service) => service.id === item);
+            return other?.selectionGroup !== selectedService.selectionGroup;
+          })
+        : current;
+
+      return [...withoutAlternative, id];
+    });
     setCopyState("idle");
   };
 
@@ -1543,10 +1590,36 @@ const BarterSTO = () => {
               <p className="mt-5 max-w-3xl text-lg leading-8 text-[#abb3b5]">
                 Мы сами найдём потери, соберём услуги, упакуем доказательства, настроим путь клиента и запустим нужные каналы. Ниже можно выбрать конкретные результаты, а не абстрактные обещания или набор файлов ради отчёта.
               </p>
+              <p className="mt-4 max-w-3xl font-bold leading-7 text-white">
+                Полный прайс: 36 отдельных услуг и 4 готовых пакета. Ничего не сокращено.
+              </p>
             </div>
 
-            <div className="mt-12 divide-y divide-white/10 border-y border-white/10">
-              {digitalServices.map((service) => {
+            <div className="mt-8 max-w-4xl">
+              <DigitalCatalogControls
+                filter={digitalFilter}
+                query={digitalQuery}
+                onFilterChange={setDigitalFilter}
+                onQueryChange={setDigitalQuery}
+              />
+            </div>
+
+            <div className="mt-8 divide-y divide-white/10 border-y border-white/10">
+              {filteredDigitalServices.length === 0 ? (
+                <div className="py-10 text-center">
+                  <p className="text-lg font-black text-white">По этому запросу ничего не найдено</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setDigitalFilter("all");
+                      setDigitalQuery("");
+                    }}
+                    className="mt-4 min-h-11 rounded-full bg-[#f3a712] px-5 text-sm font-black text-[#111315]"
+                  >
+                    Показать все 40 вариантов
+                  </button>
+                </div>
+              ) : filteredDigitalServices.map((service) => {
                 const Icon = service.icon;
                 return (
                   <article key={service.id} className="grid gap-4 py-7 sm:grid-cols-[56px_1fr_auto] sm:items-center sm:gap-6">
@@ -1556,6 +1629,9 @@ const BarterSTO = () => {
                     <div>
                       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                         <h3 className="text-xl font-black text-white">{service.title}</h3>
+                        {service.kind === "package" ? (
+                          <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-black text-white">Пакет</span>
+                        ) : null}
                         <span className="font-bold text-[#ffd36d]">{service.priceLabel}</span>
                       </div>
                       <p className="mt-2 max-w-[78ch] leading-7 text-[#aeb5b7]">{service.benefit}</p>
@@ -1761,7 +1837,7 @@ const BarterSTO = () => {
                         >
                           актуальным прайсом CentrLP
                         </a>
-                        . Все суммы без исключений берутся из него; для цен «от» калькулятор использует указанную нижнюю границу.
+                        : доступны все 36 услуг и все 4 пакета. Для сайта показан минимальный вход от 45 000 ₽, а в паритете типовой проект считается по 80 000 ₽.
                       </p>
                     </div>
                   </div>
@@ -1790,13 +1866,38 @@ const BarterSTO = () => {
                     </button>
                   </div>
 
+                  <div className="mt-5">
+                    <DigitalCatalogControls
+                      filter={digitalFilter}
+                      query={digitalQuery}
+                      onFilterChange={setDigitalFilter}
+                      onQueryChange={setDigitalQuery}
+                    />
+                  </div>
+
                   <fieldset className="mt-5 min-w-0">
                     <legend className="mb-4 flex w-full items-center justify-between gap-4 text-xl font-black text-white">
                       <span>Услуги CentrLP</span>
-                      <span className="text-sm font-bold text-[#8f989a]">{digitalServices.length} позиций</span>
+                      <span className="text-right text-sm font-bold text-[#8f989a]">
+                        {filteredDigitalServices.length} из {digitalServices.length} · выбрано {selectedDigitalServices.length}
+                      </span>
                     </legend>
                     <div className="grid min-w-0 gap-3 2xl:grid-cols-2">
-                      {digitalServices.map((service) => {
+                      {filteredDigitalServices.length === 0 ? (
+                        <div className="rounded-[14px] bg-[#202526] p-5 text-center 2xl:col-span-2">
+                          <p className="font-black text-white">По этому запросу ничего не найдено</p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setDigitalFilter("all");
+                              setDigitalQuery("");
+                            }}
+                            className="mt-4 min-h-11 rounded-full bg-[#f3a712] px-5 text-sm font-black text-[#111315]"
+                          >
+                            Показать все 40 вариантов
+                          </button>
+                        </div>
+                      ) : filteredDigitalServices.map((service) => {
                         const checked = selectedServiceIds.includes(service.id);
                         return (
                           <label
@@ -1813,7 +1914,14 @@ const BarterSTO = () => {
                               className="sr-only"
                             />
                             <span className="flex items-start justify-between gap-3">
-                              <span className="font-black leading-6">{service.title}</span>
+                              <span>
+                                <span className="font-black leading-6">{service.title}</span>
+                                {service.kind === "package" ? (
+                                  <span className={`ml-2 inline-flex rounded-full px-2 py-0.5 text-[11px] font-black ${checked ? "bg-[#111315]/10 text-[#303637]" : "bg-white/10 text-white"}`}>
+                                    Пакет
+                                  </span>
+                                ) : null}
+                              </span>
                               <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
                                 {checked ? <Check className="h-4 w-4" /> : null}
                               </span>
