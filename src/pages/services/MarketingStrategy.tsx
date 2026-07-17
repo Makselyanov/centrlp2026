@@ -169,6 +169,14 @@ const MarketingStrategy = () => {
     },
   ];
 
+  const acceptanceChecklist = [
+    "Выбраны 1–2 услуги, которые нужно продвигать первыми, и объяснено почему",
+    "Для каждого канала указаны роль, тестовый бюджет и условие остановки",
+    "Зафиксированы посадочная страница, оффер, цена входа и следующий шаг клиента",
+    "Описан маршрут заявки: UTM, цель, форма, уведомление и передача ответственному",
+    "Составлен план действий на 30–90 дней со сроками и точками сверки",
+  ];
+
   const pricingTiers = [
     {
       name: "Экспресс",
@@ -251,9 +259,9 @@ const MarketingStrategy = () => {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
-            План маркетинга на заказ <br />
+            Заказать план маркетинга <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] to-[#44B78B]">
-              от анализа до внедрения
+              для бизнеса в Тюмени
             </span>
           </h1>
 
@@ -333,6 +341,25 @@ const MarketingStrategy = () => {
         description="Пять шагов от хаоса к системному маркетингу с использованием AI."
       >
         <ProcessTimeline steps={process} />
+      </BentoSection>
+
+      <BentoSection
+        tone="tint"
+        eyebrow="Приёмка результата"
+        title="Что должно быть в готовом плане через 7–10 рабочих дней"
+        description="Экспресс-план принимается по решениям, которые можно выполнить и проверить, а не по числу страниц в документе."
+      >
+        <div className="grid gap-4 md:grid-cols-2">
+          {acceptanceChecklist.map((item) => (
+            <div key={item} className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+              <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-[#44B78B]" />
+              <p className="text-[15px] leading-relaxed text-slate-700">{item}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 rounded-2xl border border-[#0096D6]/20 bg-white p-6 text-sm leading-relaxed text-slate-600">
+          Для расчёта достаточно прислать основную услугу, географию продаж, средний чек, ссылки на сайт и действующие каналы, фактические расходы и доступный бюджет на первый тест. Пароли и доступы для первичной оценки не нужны.
+        </div>
       </BentoSection>
 
       <BentoSection

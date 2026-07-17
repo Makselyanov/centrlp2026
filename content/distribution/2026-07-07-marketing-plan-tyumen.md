@@ -2,9 +2,9 @@
 
 Дата: 2026-07-07
 Статус: ready_manual
-Обновлено: 2026-07-14 — добавлен прикладной пример первых 30 дней
+Обновлено: 2026-07-17 — добавлены критерии приёмки экспресс-плана
 Кластер: маркетинговая стратегия / план маркетинга / заявки
-Основная страница: https://centrlp.ru/services/marketing-strategy?intent=marketing-express#contact
+Основная страница: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_order_2026_07_17&utm_content=acceptance#contact
 Поддерживающая статья: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen
 
 UTM-ссылки:
@@ -24,9 +24,11 @@ UTM-ссылки:
 - каналы на 30-90 дней;
 - UTM, цели и маршрут заявки до CRM или таблицы.
 
+Готовый план можно принять по конкретным критериям: выбраны приоритетные услуги, для каналов указаны бюджет и условия остановки, закреплены посадочная и оффер, а действия разложены на 30–90 дней.
+
 В статье появился пример первых 30 дней: от выбора одной услуги и проверки формы до первой сверки расходов и качества обращений.
 
-Разбор цены и последовательности: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=30_day_example
+Заказать экспресс-план: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_order_2026_07_17&utm_content=acceptance#contact
 
 ## VK
 
@@ -43,7 +45,9 @@ UTM-ссылки:
 
 Внутри — пример плана на первые 30 дней с контрольным результатом для каждого этапа.
 
-Подробнее: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen?utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_tyumen_2026_07_14&utm_content=30_day_example
+До заказа можно проверить будущий результат: в нём должны быть приоритетные услуги, роли каналов, бюджет теста, посадочная, маршрут заявки и даты сверок.
+
+Заказать план: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=vk&utm_medium=social&utm_campaign=marketing_plan_order_2026_07_17&utm_content=acceptance#contact
 
 ## Дзен
 
