@@ -15,6 +15,7 @@ const ROOT_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const LANDING_ROUTE_PATHS = new Set(landingRouteMeta.map(({ path: routePath }) => routePath));
 const SITEMAP_EXCLUDED_ROUTES = new Set([
+    '/barter/sto',
     '/services/website-development',
     '/services/yandex-direct',
 ]);

@@ -180,14 +180,6 @@ export const Header = () => {
                         </li>
                         <li>
                           <Link
-                            to="/barter/sto"
-                            className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
-                          >
-                            Для СТО и детейлинга
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
                             to="/barter/cleaning"
                             className="text-sm text-muted-foreground hover:text-primary transition-colors block py-1"
                           >
@@ -356,12 +348,6 @@ export const Header = () => {
                       className="text-xs text-muted-foreground hover:text-primary transition-colors block py-1"
                     >
                       Для мебельщиков
-                    </Link>
-                    <Link
-                      to="/barter/sto"
-                      className="text-xs text-muted-foreground hover:text-primary transition-colors block py-1"
-                    >
-                      Для СТО и детейлинга
                     </Link>
                     <Link
                       to="/barter/cleaning"

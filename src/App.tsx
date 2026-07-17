@@ -72,6 +72,23 @@ const TelegramLeadAgent = lazy(() => import("./pages/services/TelegramLeadAgent"
 const TelegramServiceAgent = lazy(() => import("./pages/services/TelegramServiceAgent"));
 const Compliance2026 = lazy(() => import("./pages/services/Compliance2026"));
 
+const BARTER_HOST = "barter.centrlp.ru";
+const MAIN_SITE_ORIGIN = "https://centrlp.ru";
+
+const isBarterHost = () =>
+  typeof window !== "undefined" &&
+  (window.location.hostname === BARTER_HOST || import.meta.env.VITE_BARTER_HOST_PREVIEW === "1");
+
+const MainSiteRedirect = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.location.replace(`${MAIN_SITE_ORIGIN}${location.pathname}${location.search}${location.hash}`);
+  }, [location.hash, location.pathname, location.search]);
+
+  return <AppFallback kind="recovering" />;
+};
+
 const FirstPartyAnalytics = () => {
   const location = useLocation();
 
@@ -93,10 +110,22 @@ const FirstPartyAnalytics = () => {
   return null;
 };
 
-const AppRoutes = () => (
-  <AppErrorBoundary>
-    <Suspense fallback={<AppFallback />}>
-      <Routes>
+const AppRoutes = () => {
+  const location = useLocation();
+  const barterHost = isBarterHost();
+
+  if (barterHost && location.pathname !== "/") {
+    return <MainSiteRedirect />;
+  }
+
+  const routeLocation = barterHost
+    ? { ...location, pathname: "/barter/sto" }
+    : location;
+
+  return (
+    <AppErrorBoundary>
+      <Suspense fallback={<AppFallback />}>
+        <Routes location={routeLocation}>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<Services />} />
             <Route path="/ai" element={<AI />} />
@@ -163,10 +192,11 @@ const AppRoutes = () => (
             <Route path="/ai-turagent" element={<AiTuragent />} />
 
             <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
-  </AppErrorBoundary>
-);
+        </Routes>
+      </Suspense>
+    </AppErrorBoundary>
+  );
+};
 
 const App = () => (
   <>

@@ -33,8 +33,13 @@ const ogImageMap = {
 };
 
 const canonicalUrlByRoute = {
+  "/barter/sto": "https://barter.centrlp.ru/",
   "/services/website-development": "/razrabotka-sajtov-tyumen",
   "/services/yandex-direct": "/nastroyka-yandex-direct-tyumen",
+};
+
+const robotsByRoute = {
+  "/barter/sto": "noindex, nofollow, noarchive",
 };
 
 const staticRouteMetaOverrides = {
@@ -1017,6 +1022,7 @@ function ensureTag(html, regex, value, fallback) {
 
 function routeUrl(routePath) {
   const canonicalPath = canonicalUrlByRoute[routePath] || routePath;
+  if (/^https?:\/\//i.test(canonicalPath)) return canonicalPath;
   return `${baseUrl}${canonicalPath === "/" ? "/" : canonicalPath}`;
 }
 
@@ -1235,8 +1241,8 @@ function buildJsonLdSchemas(meta) {
 }
 
 function applyMeta(template, meta) {
-  const canonicalPath = canonicalUrlByRoute[meta.path] || meta.path;
-  const canonical = `${baseUrl}${canonicalPath === "/" ? "/" : canonicalPath}`;
+  const canonical = routeUrl(meta.path);
+  const robots = robotsByRoute[meta.path] || "index, follow";
   const ogImageUrl = `${baseUrl}/og/${getOgImage(meta.path)}`;
   const ogType = meta.path.startsWith("/blog/") ? "article" : "website";
   let html = template;
@@ -1253,6 +1259,12 @@ function applyMeta(template, meta) {
     /<link[^>]+rel=["']canonical["'][^>]+href=["'][^"']*["'][^>]*>/i,
     `<link rel="canonical" href="${canonical}" />`,
     `<link rel="canonical" href="${canonical}" />`,
+  );
+  html = ensureTag(
+    html,
+    /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*["'][^>]*>/i,
+    `<meta name="robots" content="${robots}" />`,
+    `<meta name="robots" content="${robots}" />`,
   );
   html = ensureTag(
     html,

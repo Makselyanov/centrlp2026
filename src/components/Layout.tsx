@@ -61,10 +61,14 @@ export const Layout = ({ children, title, description }: LayoutProps) => {
   const location = useLocation();
 
   useEffect(() => {
-    const canonicalUrl =
-      canonicalUrlMap[location.pathname] || `https://centrlp.ru${location.pathname === '/' ? '/' : location.pathname}`;
+    const isBarterHost =
+      window.location.hostname === "barter.centrlp.ru" || import.meta.env.VITE_BARTER_HOST_PREVIEW === "1";
+    const metadataOrigin = isBarterHost ? "https://barter.centrlp.ru" : "https://centrlp.ru";
+    const canonicalUrl = isBarterHost
+      ? "https://barter.centrlp.ru/"
+      : canonicalUrlMap[location.pathname] || `https://centrlp.ru${location.pathname === '/' ? '/' : location.pathname}`;
     const ogImageFile = getOgImage(location.pathname);
-    const ogImageUrl = `https://centrlp.ru/og/${ogImageFile}`;
+    const ogImageUrl = `${metadataOrigin}/og/${isBarterHost ? "barter.png" : ogImageFile}`;
     const metaDescriptionContent = description || "CentrLP — сайты, ВК-упаковка, чат-боты и ИИ-маркетинг под ключ в Тюмени.";
     const metaTitleContent = title || "CentrLP";
     const ogType = location.pathname.startsWith("/blog/") ? "article" : "website";
@@ -104,7 +108,12 @@ export const Layout = ({ children, title, description }: LayoutProps) => {
       robots.setAttribute('name', 'robots');
       document.head.appendChild(robots);
     }
-    robots.setAttribute('content', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+    robots.setAttribute(
+      'content',
+      isBarterHost
+        ? 'noindex, nofollow, noarchive'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+    );
 
     let ogTypeMeta = document.querySelector('meta[property="og:type"]');
     if (!ogTypeMeta) {

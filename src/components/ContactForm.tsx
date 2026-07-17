@@ -317,6 +317,11 @@ export const ContactForm = () => {
       trackMetric("form_submit_attempt", { path: location.pathname });
 
       const pagePath = location.pathname === "/" ? "/" : location.pathname.replace(/\/$/, "");
+      const leadHost =
+        typeof window !== "undefined" &&
+        (window.location.hostname === "barter.centrlp.ru" || import.meta.env.VITE_BARTER_HOST_PREVIEW === "1")
+          ? "barter.centrlp.ru"
+          : "centrlp.ru";
 
       const response = await fetch("/api/lead", {
         method: "POST",
@@ -328,7 +333,7 @@ export const ContactForm = () => {
           ...formData,
           page_path: location.pathname,
           page_url: typeof window !== "undefined" ? window.location.href : "",
-          lead_source: `centrlp.ru${pagePath}`,
+          lead_source: `${leadHost}${pagePath}`,
           consent_version: "consent-v1.0-2026-05-02",
           privacy_version: "privacy-v2.0-2026-04-17",
           cookies_version: "cookies-v2.0-2026-04-17",

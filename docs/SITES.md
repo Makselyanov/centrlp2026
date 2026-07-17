@@ -8,10 +8,20 @@
 - Локально: `G:\mvp\centrlp`
 - На сервере: `/var/www/centrlp`
 - Nginx root: `/var/www/centrlp/dist`
-- Git remote: `git@github.com:Makselyanov/centrlp2026.git`
+- Git remote: `ssh://root@90.156.168.115/home/deploy/git/centrlp.git`
 - Назначение: основной маркетинговый сайт, услуги, блог, проекты, контакты
 
-## 2. CRM-лендинг
+## 2. Закрытая бартерная витрина автомобиля
+
+- Домен: `https://barter.centrlp.ru`
+- Локально: `G:\mvp\centrlp`
+- На сервере: `/var/www/centrlp`
+- HTML: `/var/www/centrlp/dist/barter/sto/index.html`
+- Nginx-конфиг: `nginx-barter-centrlp.conf`
+- Назначение: непоисковая страница для адресной отправки потенциальным бартерным партнёрам
+- Индексация: `noindex, nofollow, noarchive`, без sitemap
+
+## 3. CRM-лендинг
 
 - Домен: `https://crm.centrlp.ru`
 - Локально: `G:\mvp\centrlp-landing`
@@ -19,11 +29,11 @@
 - Git remote: не настроен
 - Назначение: отдельный лендинг CRM-продукта
 
-## 3. Redirect/legacy
+## 4. Redirect/legacy
 
 - `app.centrlp.ru` редиректится на `crm.centrlp.ru`
 
-## 4. CRM-платформа
+## 5. CRM-платформа
 
 - Домен(ы): `https://centrlp.centrlp.ru`, `https://rosomaha.centrlp.ru` и tenant-поддомены
 - Локально: `G:\mvp\crm`
@@ -33,9 +43,10 @@
 
 ## Вывод
 
-На текущий момент экосистема разбита минимум на три разных проекта:
+На текущий момент экосистема разделена на основной сайт, отдельную бартерную витрину, CRM-лендинг и CRM-платформу:
 
 - `centrlp.ru` — основной сайт
+- `barter.centrlp.ru` — закрытая от индексации бартерная витрина
 - `crm.centrlp.ru` — CRM-лендинг
 - `G:\mvp\crm` — сама CRM
 

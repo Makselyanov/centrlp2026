@@ -7,6 +7,8 @@ const appPath = path.join(rootDir, "src", "App.tsx");
 const postsDir = path.join(rootDir, "content", "posts");
 const publicDir = path.join(rootDir, "public");
 const sitemapPath = path.join(publicDir, "sitemap.xml");
+const barterRoute = "/barter/sto";
+const barterCanonical = "https://barter.centrlp.ru/";
 
 function readText(filePath) {
   return fs.readFileSync(filePath, "utf8");
@@ -50,6 +52,14 @@ function extractBlogRoutes() {
 
 function hasNoindex(html) {
   return /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html);
+}
+
+function extractRobotsContent(html) {
+  return html.match(/<meta[^>]+name=["']robots["'][^>]+content=["']([^"']*)["'][^>]*>/i)?.[1] || "";
+}
+
+function extractCanonical(html) {
+  return html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']*)["'][^>]*>/i)?.[1] || "";
 }
 
 function extractPublicIndexRoutes() {
@@ -204,15 +214,19 @@ function main() {
     throw new Error(`dist directory not found: ${distDir}`);
   }
 
+  const sitemapRoutes = extractSitemapRoutes();
   const routes = [
     ...extractStaticRoutesFromApp(),
     ...extractBlogRoutes(),
     ...extractPublicIndexRoutes(),
-    ...extractSitemapRoutes(),
+    ...sitemapRoutes,
   ];
 
   const uniqueRoutes = [...new Set(routes)].sort();
   const violations = [];
+  if (sitemapRoutes.includes(barterRoute)) {
+    violations.push(`${barterRoute}: invitation-only route must not be present in sitemap.xml`);
+  }
   const redirectRoutes = new Set([
     "/services/yandex-direct",
   ]);
@@ -241,6 +255,23 @@ function main() {
 
     const html = readText(htmlPath);
     const prerenderH1 = extractPrerenderH1(html);
+
+    if (routePath === barterRoute) {
+      const robots = extractRobotsContent(html)
+        .split(",")
+        .map((directive) => directive.trim().toLowerCase());
+      const canonical = extractCanonical(html);
+
+      for (const directive of ["noindex", "nofollow", "noarchive"]) {
+        if (!robots.includes(directive)) {
+          violations.push(`${barterRoute}: robots meta must include ${directive}`);
+        }
+      }
+
+      if (canonical !== barterCanonical) {
+        violations.push(`${barterRoute}: canonical must be ${barterCanonical}`);
+      }
+    }
 
     if (!hasRenderableShell(html)) {
       violations.push(`${routePath}: empty #root without module script`);

@@ -368,14 +368,6 @@ export const servicePrices: ServicePrice[] = [
     seoPriority: "medium",
   },
   {
-    title: "Сборка для СТО и детейлинга",
-    href: "/barter/sto",
-    price: "эквивалент от 80 000 ₽",
-    description: "Запись, заявки, сервисные ответы, рекламный трафик и маршрут клиента.",
-    category: "industry",
-    seoPriority: "medium",
-  },
-  {
     title: "Сборка для клининга",
     href: "/barter/cleaning",
     price: "эквивалент от 80 000 ₽",

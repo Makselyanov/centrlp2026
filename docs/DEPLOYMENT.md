@@ -6,6 +6,8 @@
 - Продакшн-путь: `/var/www/centrlp`
 - Каталог раздачи nginx: `/var/www/centrlp/dist`
 - Nginx-конфиг в репозитории: `nginx-centrlp.conf`
+- Закрытая бартерная витрина: `https://barter.centrlp.ru/`
+- Nginx-конфиг бартерной витрины: `nginx-barter-centrlp.conf`
 
 ## Актуальное состояние на 2026-04-13
 
@@ -46,6 +48,33 @@
 2. `scripts/prerender-route-heads.mjs` создаёт `dist/<route>/index.html`
 3. nginx отдаёт только физически собранные маршруты
 4. прямой заход на новый URL работает только после `npm run build`
+
+## Бартерная витрина на отдельном host
+
+`barter.centrlp.ru` использует ту же production-сборку, но отдельный nginx virtual host:
+
+- `/` отдаёт собранный файл `/var/www/centrlp/dist/barter/sto/index.html`;
+- основной URL `https://centrlp.ru/barter/sto` отвечает `410 Gone`;
+- страница имеет self-canonical `https://barter.centrlp.ru/`, `noindex, nofollow, noarchive` в HTML и `X-Robots-Tag` в HTTP;
+- поддомен не публикует sitemap, а `robots.txt` не блокирует получение HTML, чтобы робот мог увидеть `noindex`;
+- формы и first-party события проксируются в существующий mailer на `127.0.0.1:3021`.
+
+DNS `A` для `barter.centrlp.ru` указывает на `90.156.168.115`. До первого включения HTTPS сертификат можно получить через уже доступный ACME webroot:
+
+```bash
+certbot certonly --webroot -w /var/www/crm/public -d barter.centrlp.ru
+cp /var/www/centrlp/nginx-barter-centrlp.conf /etc/nginx/sites-available/barter.centrlp.ru
+ln -sfn /etc/nginx/sites-available/barter.centrlp.ru /etc/nginx/sites-enabled/barter.centrlp.ru
+nginx -t
+systemctl reload nginx
+```
+
+Локальный preview корневой страницы поддомена в PowerShell:
+
+```powershell
+$env:VITE_BARTER_HOST_PREVIEW = "1"
+npm run dev
+```
 
 ## Что считать текущим источником правды
 
