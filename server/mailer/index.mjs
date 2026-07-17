@@ -7,6 +7,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import express from "express";
 import nodemailer from "nodemailer";
@@ -37,6 +38,8 @@ const {
   LEAD_FROM,
   PORT = "3021",
   LEAD_LOG_RETENTION_DAYS = "183",
+  LEAD_LOG_DIR = "",
+  MAILER_JSON_TRANSPORT = "0",
 } = process.env;
 
 if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
@@ -44,18 +47,24 @@ if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
   process.exit(1);
 }
 
-const transporter = nodemailer.createTransport({
-  host: SMTP_HOST,
-  port: Number(SMTP_PORT),
-  secure: Number(SMTP_PORT) === 465,
-  auth: { user: SMTP_USER, pass: SMTP_PASS },
-});
+const transporter = nodemailer.createTransport(
+  MAILER_JSON_TRANSPORT === "1"
+    ? { jsonTransport: true }
+    : {
+        host: SMTP_HOST,
+        port: Number(SMTP_PORT),
+        secure: Number(SMTP_PORT) === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      },
+);
 
 // Verify SMTP connection at startup so failures are loud
-transporter.verify((err) => {
-  if (err) console.error("[mailer] SMTP verify failed:", err.message);
-  else console.log("[mailer] SMTP ready (" + SMTP_HOST + ":" + SMTP_PORT + ")");
-});
+if (typeof transporter.verify === "function") {
+  transporter.verify((err) => {
+    if (err) console.error("[mailer] SMTP verify failed:", err.message);
+    else console.log("[mailer] SMTP ready (" + SMTP_HOST + ":" + SMTP_PORT + ")");
+  });
+}
 
 const app = express();
 app.set("trust proxy", "loopback"); // we sit behind nginx
@@ -81,7 +90,7 @@ function rateLimit(ip) {
 }
 
 // Log file — JSON lines for audit trail, pruned to match the public retention term.
-const LOG_DIR = path.join(__dirname, "logs");
+const LOG_DIR = LEAD_LOG_DIR || path.join(__dirname, "logs");
 fs.mkdirSync(LOG_DIR, { recursive: true });
 const LOG_FILE = path.join(LOG_DIR, "leads.jsonl");
 const EVENT_LOG_FILE = path.join(LOG_DIR, "lead-events.jsonl");
@@ -91,8 +100,10 @@ const LEAD_LOG_RETENTION_MS =
 function logLead(entry) {
   try {
     fs.appendFileSync(LOG_FILE, JSON.stringify(entry) + "\n", "utf8");
+    return true;
   } catch (e) {
     console.error("[mailer] log write failed:", e.message);
+    return false;
   }
 }
 
@@ -154,6 +165,12 @@ function renderEmail(lead) {
     ["Страница", lead.page_path],
     ["URL", lead.page_url],
     ["Источник", lead.lead_source],
+    ["ID отправки", lead.lead_submission_id],
+    ["Квитанция", lead.receipt_id],
+    ["Статус доставки", lead.delivery_status],
+    ["UTM source", lead.utm_source],
+    ["UTM medium", lead.utm_medium],
+    ["UTM campaign", lead.utm_campaign],
     ["Согласие ПДн", lead.consent_version],
     ["Политика ПДн", lead.privacy_version],
     ["Политика cookie", lead.cookies_version],
@@ -181,6 +198,37 @@ function renderEmail(lead) {
 }
 
 const METRICS_MAX_BYTES = 2 * 1024 * 1024;
+const deliveredReceiptCache = new Map();
+const pendingDeliveries = new Map();
+
+function toPublicReceipt(lead, duplicate = false) {
+  return {
+    ok: true,
+    accepted: true,
+    delivery_status: "email_delivered",
+    lead_submission_id: lead.lead_submission_id,
+    receipt_id: lead.receipt_id,
+    received_at: lead.received_at,
+    ...(duplicate ? { duplicate: true } : {}),
+  };
+}
+
+function loadDeliveredReceipts() {
+  if (!fs.existsSync(LOG_FILE)) return;
+  for (const line of fs.readFileSync(LOG_FILE, "utf8").split("\n")) {
+    if (!line.trim()) continue;
+    try {
+      const lead = JSON.parse(line);
+      if (lead.lead_submission_id && lead.receipt_id && lead.delivery_status === "email_delivered") {
+        deliveredReceiptCache.set(lead.lead_submission_id, lead);
+      }
+    } catch {
+      // Metrics report surfaces malformed rows; startup must remain available.
+    }
+  }
+}
+
+loadDeliveredReceipts();
 
 function normalizeMetricValue(value, fallback = "unknown") {
   const normalized = String(value || "")
@@ -227,6 +275,7 @@ function readLeadMetrics() {
     service: "centrlp-mailer",
     retention_days: Math.max(Number(LEAD_LOG_RETENTION_DAYS) || 183, 1),
     log_exists: fs.existsSync(LOG_FILE),
+    logged_total: 0,
     total: 0,
     today: 0,
     last_7_days: 0,
@@ -237,6 +286,8 @@ function readLeadMetrics() {
     by_lead_source_30d: [],
     events_30d: 0,
     synthetic_events_30d: 0,
+    synthetic_leads_30d: 0,
+    confirmed_leads_30d: 0,
     by_event_30d: [],
     by_event_page_30d: [],
     by_utm_source_30d: [],
@@ -282,6 +333,13 @@ function readLeadMetrics() {
     const receivedAt = new Date(entry.received_at || 0).getTime();
     if (!Number.isFinite(receivedAt)) continue;
 
+    totals.logged_total += 1;
+    const syntheticLead = normalizeMetricValue(entry.utm_source || "direct", "direct") === "codex_smoke";
+    if (syntheticLead) {
+      if (now - receivedAt <= 30 * dayMs) totals.synthetic_leads_30d += 1;
+      continue;
+    }
+
     totals.total += 1;
     if (receivedAt > lastTime) {
       lastTime = receivedAt;
@@ -292,6 +350,9 @@ function readLeadMetrics() {
     if (now - receivedAt <= 7 * dayMs) totals.last_7_days += 1;
     if (now - receivedAt <= 30 * dayMs) {
       totals.last_30_days += 1;
+      if (entry.delivery_status === "email_delivered" && entry.receipt_id) {
+        totals.confirmed_leads_30d += 1;
+      }
 
       const pagePath = normalizePathMetric(entry.page_path || entry.lead_source || "/");
       pageCounts.set(pagePath, (pageCounts.get(pagePath) || 0) + 1);
@@ -420,7 +481,7 @@ app.post("/api/lead", async (req, res) => {
   // Honeypot: bots often fill every field including hidden ones.
   if (body.website || body._hp) {
     // Pretend success so bots don't retry
-    return res.json({ ok: true });
+    return res.json({ ok: true, accepted: false });
   }
 
   const name = String(body.name || "").trim().slice(0, 200);
@@ -437,13 +498,29 @@ app.post("/api/lead", async (req, res) => {
   const consentVersion = String(body.consent_version || "").trim().slice(0, 120);
   const privacyVersion = String(body.privacy_version || "").trim().slice(0, 120);
   const cookiesVersion = String(body.cookies_version || "").trim().slice(0, 120);
+  const leadSubmissionId = String(body.lead_submission_id || "").trim().slice(0, 120);
 
   if (!consentVersion || !privacyVersion || !cookiesVersion) {
     return res.status(400).json({ ok: false, error: "missing_consent_versions" });
   }
 
+  if (!leadSubmissionId) {
+    return res.status(400).json({ ok: false, error: "missing_lead_submission_id" });
+  }
+
+  if (!/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|lead-[a-zA-Z0-9-]{12,})$/i.test(leadSubmissionId)) {
+    return res.status(400).json({ ok: false, error: "invalid_lead_submission_id" });
+  }
+
+  const existingLead = deliveredReceiptCache.get(leadSubmissionId);
+  if (existingLead) {
+    return res.json(toPublicReceipt(existingLead, true));
+  }
+
+  const attribution = body.attribution && typeof body.attribution === "object" ? body.attribution : {};
   const lead = {
     received_at: new Date().toISOString(),
+    lead_submission_id: leadSubmissionId,
     name,
     phone,
     business: String(body.business || "").trim().slice(0, 300),
@@ -454,6 +531,11 @@ app.post("/api/lead", async (req, res) => {
     page_path: String(body.page_path || "").trim().slice(0, 500),
     page_url: String(body.page_url || "").trim().slice(0, 1000),
     lead_source: String(body.lead_source || "centrlp.ru").trim().slice(0, 120),
+    utm_source: normalizeMetricValue(attribution.utm_source || "direct", "direct"),
+    utm_medium: normalizeMetricValue(attribution.utm_medium || "", ""),
+    utm_campaign: normalizeMetricValue(attribution.utm_campaign || "", ""),
+    utm_content: normalizeMetricValue(attribution.utm_content || "", ""),
+    utm_term: normalizeMetricValue(attribution.utm_term || "", ""),
     privacy_accepted: Boolean(body.privacyAccepted),
     cookies_accepted: Boolean(body.cookiesAccepted),
     consent_version: consentVersion,
@@ -463,20 +545,40 @@ app.post("/api/lead", async (req, res) => {
     user_agent: String(req.headers["user-agent"] || "").slice(0, 300),
   };
 
-  logLead(lead);
-
   try {
-    await transporter.sendMail({
-      from: `"CentrLP сайт" <${LEAD_FROM || SMTP_USER}>`,
-      to: LEAD_TO,
-      replyTo: lead.phone ? undefined : undefined, // Яндекс не принимает телефон как reply-to
-      subject: `Заявка CentrLP: ${lead.name} (${lead.phone}) — ${lead.page_path || "/"}`,
-      html: renderEmail(lead),
-    });
-    return res.json({ ok: true });
+    let delivery = pendingDeliveries.get(leadSubmissionId);
+    if (!delivery) {
+      delivery = (async () => {
+        await transporter.sendMail({
+          from: `"CentrLP сайт" <${LEAD_FROM || SMTP_USER}>`,
+          to: LEAD_TO,
+          replyTo: lead.phone ? undefined : undefined,
+          subject: `Заявка CentrLP: ${lead.name} (${lead.phone}) — ${lead.page_path || "/"}`,
+          html: renderEmail(lead),
+        });
+
+        const deliveredLead = {
+          ...lead,
+          receipt_id: crypto.randomUUID(),
+          delivery_status: "email_delivered",
+          delivered_at: new Date().toISOString(),
+        };
+        if (!logLead(deliveredLead)) {
+          throw new Error("lead_receipt_log_failed");
+        }
+        deliveredReceiptCache.set(leadSubmissionId, deliveredLead);
+        return deliveredLead;
+      })();
+      pendingDeliveries.set(leadSubmissionId, delivery);
+    }
+
+    const deliveredLead = await delivery;
+    return res.json(toPublicReceipt(deliveredLead));
   } catch (err) {
     console.error("[mailer] send failed:", err.message);
     return res.status(502).json({ ok: false, error: "mail_send_failed" });
+  } finally {
+    pendingDeliveries.delete(leadSubmissionId);
   }
 });
 

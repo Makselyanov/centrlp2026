@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { Layout } from "@/components/Layout";
@@ -25,6 +25,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { packagePrices } from "@/data/pricing";
+import { createLeadSubmissionId, readLeadReceipt } from "@/lib/leadReceipt";
+import { getAttributionSnapshot, trackMetric } from "@/lib/metrics";
 
 const CONSENT_VERSION = "consent-v1.0-2026-05-02";
 const PRIVACY_VERSION = "privacy-v2.0-2026-04-17";
@@ -318,6 +320,7 @@ const SERVICES: Service[] = [
 // --- Components ---
 
 export function AiPlanPage() {
+    const leadSubmissionIdRef = useRef<string | null>(null);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         niche: "",
@@ -390,6 +393,8 @@ export function AiPlanPage() {
         setErrors({});
 
         try {
+            const leadSubmissionId = leadSubmissionIdRef.current || createLeadSubmissionId();
+            leadSubmissionIdRef.current = leadSubmissionId;
             const totals = calculateTotal();
             const selectedServices = formData.selectedServices
                 .map((id) => SERVICES.find((service) => service.id === id)?.title)
@@ -423,6 +428,8 @@ export function AiPlanPage() {
                     page_path: "/ai-plan",
                     page_url: typeof window !== "undefined" ? window.location.href : "",
                     lead_source: "centrlp.ru/ai-plan",
+                    lead_submission_id: leadSubmissionId,
+                    attribution: getAttributionSnapshot(),
                     privacyAccepted: formData.consentPersonalData,
                     cookiesAccepted: formData.cookiesAccepted,
                     consent_version: CONSENT_VERSION,
@@ -431,13 +438,14 @@ export function AiPlanPage() {
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error(`Lead request failed with status ${response.status}`);
-            }
+            const receipt = await readLeadReceipt(response);
+            leadSubmissionIdRef.current = null;
+            trackMetric("lead_form_submit", { path: "/ai-plan" });
+            trackMetric("lead_confirmed", { path: "/ai-plan", placement: receipt.receipt_id });
 
             toast({
                 title: "Заявка отправлена!",
-                description: "Мы свяжемся с вами в течение 24 часов.",
+                description: `Заявка подтверждена, номер ${receipt.receipt_id.slice(0, 8)}. Мы свяжемся с вами в течение 24 часов.`,
             });
 
             // Reset contact fields

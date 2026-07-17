@@ -76,11 +76,22 @@ UTM fields, placement/messenger labels, and referrer host.
 Browser session attribution preserves UTM fields after an internal SPA navigation,
 so landing and form events remain tied to the article or channel that started the visit.
 
+Every real form submission includes a client-generated `lead_submission_id`. The mailer
+returns `accepted=true`, `delivery_status=email_delivered`, and a stable `receipt_id`
+only after SMTP accepts the message. A retry with the same submission id returns the
+same receipt and does not send another email. Browser goal `lead_confirmed` is therefore
+the hard delivery signal; `form_submit_attempt` remains a soft funnel event.
+Receipts tagged with `utm_source=codex_smoke` are counted separately as synthetic leads
+and never inflate real lead or confirmed-lead totals.
+
 `GET /api/lead/metrics` returns only safe aggregates for route diagnostics:
 totals for today, 7/30 days, last lead timestamp, normalized counters by page
 path and lead source, plus 30-day event/UTM counters. It never returns raw lead
 rows, names, phones, comments, IP addresses, user agents, full URLs, or form
 text fields.
+
+Run `npm run test:lead-receipt` from the repository root to verify the receipt,
+deduplication, honeypot, and aggregate-metrics contract with an isolated JSON mail transport.
 
 ## Наблюдение
 

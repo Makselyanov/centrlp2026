@@ -10,6 +10,7 @@ const UTM_STORAGE_KEY = "centrlp:utm-attribution";
 const SERVER_EVENT_GOALS = new Set([
   "form_submit_attempt",
   "lead_form_submit",
+  "lead_confirmed",
   "lead_form_error",
   "messenger_click_fastlane",
   "phone_click_fastlane",
@@ -25,7 +26,7 @@ const SERVER_EVENT_GOALS = new Set([
   "audit_self_check_select",
 ]);
 
-const getUtmParams = () => {
+export const getAttributionSnapshot = () => {
   const search = new URLSearchParams(window.location.search);
   const current = {
     utm_source: search.get("utm_source") || "",
@@ -67,7 +68,7 @@ const sendServerEvent = (goal: string, params?: Record<string, unknown>) => {
       path: String(params?.path || window.location.pathname || "/"),
       page_url: window.location.href,
       referrer: document.referrer || "",
-      ...getUtmParams(),
+      ...getAttributionSnapshot(),
       placement: params?.placement,
       messenger: params?.messenger,
     });

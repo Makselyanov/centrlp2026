@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { PhoneCall } from "lucide-react";
 import { Button } from "./ui/button";
@@ -7,7 +7,8 @@ import { Textarea } from "./ui/textarea";
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { trackMetric } from "@/lib/metrics";
+import { getAttributionSnapshot, trackMetric } from "@/lib/metrics";
+import { createLeadSubmissionId, readLeadReceipt } from "@/lib/leadReceipt";
 import { MessengerLinks } from "./MessengerLinks";
 
 const goalOptions = [
@@ -93,6 +94,7 @@ const getDefaultGoal = (pathname: string): (typeof goalOptions)[number] => {
 export const ContactForm = () => {
   const { toast } = useToast();
   const location = useLocation();
+  const leadSubmissionIdRef = useRef<string | null>(null);
   const defaultGoal = getDefaultGoal(location.pathname);
   const formIntent = new URLSearchParams(location.search).get("intent") || "";
   const auditFocus = new URLSearchParams(location.search).get("audit_focus") || "";
@@ -315,6 +317,8 @@ export const ContactForm = () => {
 
     try {
       trackMetric("form_submit_attempt", { path: location.pathname });
+      const leadSubmissionId = leadSubmissionIdRef.current || createLeadSubmissionId();
+      leadSubmissionIdRef.current = leadSubmissionId;
 
       const pagePath = location.pathname === "/" ? "/" : location.pathname.replace(/\/$/, "");
       const leadHost =
@@ -334,24 +338,26 @@ export const ContactForm = () => {
           page_path: location.pathname,
           page_url: typeof window !== "undefined" ? window.location.href : "",
           lead_source: `${leadHost}${pagePath}`,
+          lead_submission_id: leadSubmissionId,
+          attribution: getAttributionSnapshot(),
           consent_version: "consent-v1.0-2026-05-02",
           privacy_version: "privacy-v2.0-2026-04-17",
           cookies_version: "cookies-v2.0-2026-04-17",
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to send");
-      }
+      const receipt = await readLeadReceipt(response);
+      leadSubmissionIdRef.current = null;
 
       trackMetric("lead_form_submit", { path: location.pathname });
+      trackMetric("lead_confirmed", { path: location.pathname, placement: receipt.receipt_id });
 
       toast({
         title: "Заявка отправлена",
         description: (
           <div>
             <p className="mb-3">
-              Спасибо. Свяжемся с вами в ближайшее время. Если удобнее, можно сразу продолжить диалог в мессенджере.
+              Спасибо. Заявка принята, номер подтверждения {receipt.receipt_id.slice(0, 8)}. Свяжемся с вами в ближайшее время. Если удобнее, можно сразу продолжить диалог в мессенджере.
             </p>
             <MessengerLinks variant="toast" />
           </div>

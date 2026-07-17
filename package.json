@@ -16,7 +16,8 @@
     "seo:metrika": "node scripts/yandex-metrika-report.mjs",
     "seo:gsc:reauth": "node scripts/gsc-oauth-refresh.mjs",
     "seo:report": "node scripts/yandex-webmaster-report.mjs",
-    "content:brief": "node scripts/seo-topic-brief.mjs"
+    "content:brief": "node scripts/seo-topic-brief.mjs",
+    "test:lead-receipt": "node scripts/test-lead-receipt.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
