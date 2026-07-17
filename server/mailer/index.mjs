@@ -549,20 +549,20 @@ app.post("/api/lead", async (req, res) => {
     let delivery = pendingDeliveries.get(leadSubmissionId);
     if (!delivery) {
       delivery = (async () => {
-        await transporter.sendMail({
-          from: `"CentrLP сайт" <${LEAD_FROM || SMTP_USER}>`,
-          to: LEAD_TO,
-          replyTo: lead.phone ? undefined : undefined,
-          subject: `Заявка CentrLP: ${lead.name} (${lead.phone}) — ${lead.page_path || "/"}`,
-          html: renderEmail(lead),
-        });
-
         const deliveredLead = {
           ...lead,
           receipt_id: crypto.randomUUID(),
           delivery_status: "email_delivered",
           delivered_at: new Date().toISOString(),
         };
+        await transporter.sendMail({
+          from: `"CentrLP сайт" <${LEAD_FROM || SMTP_USER}>`,
+          to: LEAD_TO,
+          replyTo: lead.phone ? undefined : undefined,
+          subject: `Заявка CentrLP: ${lead.name} (${lead.phone}) — ${lead.page_path || "/"}`,
+          html: renderEmail(deliveredLead),
+        });
+
         if (!logLead(deliveredLead)) {
           throw new Error("lead_receipt_log_failed");
         }
