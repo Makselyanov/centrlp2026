@@ -22,6 +22,8 @@ import { servicePriceByHref } from "@/data/pricing";
 type RepairGroup = "Безопасность" | "Техника" | "Детейлинг" | "Мультимедиа";
 type RepairFilter = "Все" | RepairGroup;
 type RepairStatus = "active" | "scheduled" | "completed";
+type PageSection = "problems" | "offer" | "calculator";
+type CalculatorSide = "vehicle" | "centrlp" | "parity";
 
 type CaseImage = {
   src: string;
@@ -60,6 +62,17 @@ type DigitalService = {
 const money = new Intl.NumberFormat("ru-RU");
 
 const repairGroups: RepairGroup[] = ["Безопасность", "Техника", "Детейлинг", "Мультимедиа"];
+
+const pageSections: Array<{
+  id: PageSection;
+  desktopLabel: string;
+  mobileLabel: string;
+  icon: typeof Wrench;
+}> = [
+  { id: "problems", desktopLabel: "Проблемы авто", mobileLabel: "Проблемы", icon: Wrench },
+  { id: "offer", desktopLabel: "Что мы предлагаем", mobileLabel: "Предложение", icon: Globe2 },
+  { id: "calculator", desktopLabel: "Посчитать паритет", mobileLabel: "Паритет", icon: Calculator },
+];
 
 const repairJobs: RepairJob[] = [
   {
@@ -292,7 +305,7 @@ const repairJobs: RepairJob[] = [
     group: "Детейлинг",
     title: "Восстановление наружных дверных ручек",
     problem: "Чёрный пластик наружных ручек выгорел и посерел. На фоне серебристого кузова это сразу делает автомобиль визуально старше.",
-    result: "Снимем стойкое загрязнение, проверим состояние пластика и вернём ручкам глубокий ровный чёрный цвет с защитой от ультрафиолета — без жирного силиконового блеска на несколько моек.",
+    result: "Снимем стойкое загрязнение, проверим состояние пластика и вернём ручкам глубокий ровный чёрный цвет с защитой от ультрафиолета. Никакого жирного силиконового блеска на несколько моек.",
     price: 4_000,
     priceLabel: "ориентир 4 000 ₽ за комплект",
     breakdown: "В открытом прайсе детейлинга очистка пластика начинается от 700 ₽ за деталь. Для четырёх ручек закладываем подготовку, восстановление цвета и защиту; точный метод мастер выбирает после теста материала.",
@@ -835,7 +848,7 @@ const digitalServices: DigitalService[] = [
     href: "/services/website-development",
     price: 45_000,
     priceLabel: servicePriceByHref["/services/website-development"]?.price || "от 45 000 ₽",
-    benefit: "Спроектируем полноценный многостраничный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Не просто опубликуем перечень работ — построим цифрового продавца, который объясняет ценность и приводит клиента к записи.",
+    benefit: "Спроектируем полноценный многостраничный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Построим цифрового продавца, который объясняет ценность и приводит клиента к записи.",
     icon: Globe2,
   },
   {
@@ -910,8 +923,15 @@ const BarterSTO = () => {
   const [activeFilter, setActiveFilter] = useState<RepairFilter>("Все");
   const [calculatorFilter, setCalculatorFilter] = useState<RepairFilter>("Детейлинг");
   const [copyState, setCopyState] = useState<"idle" | "copying" | "copied" | "error">("idle");
+  const [activeSection, setActiveSection] = useState<PageSection>("problems");
+  const [calculatorSide, setCalculatorSide] = useState<CalculatorSide>("vehicle");
 
   useEffect(() => {
+    const previousHtmlOverflowX = document.documentElement.style.overflowX;
+    const previousBodyOverflowX = document.body.style.overflowX;
+    document.documentElement.style.overflowX = "clip";
+    document.body.style.overflowX = "clip";
+
     const title = "Pajero 1991: ремонт в обмен на сайт и заявки | CentrLP";
     const description =
       "Частное предложение для СТО и детейлинга: реальные задачи Mitsubishi Pajero, фото, рыночные ориентиры и калькулятор равноценного обмена на услуги CentrLP.";
@@ -922,6 +942,17 @@ const BarterSTO = () => {
     setMeta('meta[name="description"]', "content", description);
     const canonicalElement = setMeta('link[rel="canonical"]', "href", canonical);
     canonicalElement.setAttribute("rel", "canonical");
+    const favicon32 = setMeta('link[rel="icon"][sizes="32x32"]', "href", "/favicon-32x32.png?v=20260717");
+    favicon32.setAttribute("rel", "icon");
+    favicon32.setAttribute("type", "image/png");
+    favicon32.setAttribute("sizes", "32x32");
+    const favicon16 = setMeta('link[rel="icon"][sizes="16x16"]', "href", "/favicon-16x16.png?v=20260717");
+    favicon16.setAttribute("rel", "icon");
+    favicon16.setAttribute("type", "image/png");
+    favicon16.setAttribute("sizes", "16x16");
+    const appleIcon = setMeta('link[rel="apple-touch-icon"]', "href", "/apple-touch-icon.png?v=20260717");
+    appleIcon.setAttribute("rel", "apple-touch-icon");
+    appleIcon.setAttribute("sizes", "180x180");
     const robots = setMeta('meta[name="robots"]', "content", "noindex, nofollow, noarchive, nosnippet");
     robots.setAttribute("name", "robots");
 
@@ -940,6 +971,31 @@ const BarterSTO = () => {
       const element = setMeta(`meta[${kind}="${key}"]`, "content", content);
       element.setAttribute(kind, key);
     });
+
+    return () => {
+      document.documentElement.style.overflowX = previousHtmlOverflowX;
+      document.body.style.overflowX = previousBodyOverflowX;
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible?.target.id) setActiveSection(visible.target.id as PageSection);
+      },
+      { rootMargin: "-28% 0px -58% 0px", threshold: [0, 0.1, 0.5] },
+    );
+
+    pageSections.forEach(({ id }) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const activeRepairJobs = useMemo(() => repairJobs.filter((job) => job.status === "active"), []);
@@ -1002,6 +1058,26 @@ const BarterSTO = () => {
     setCopyState("idle");
   };
 
+  const showCalculatorSide = (side: CalculatorSide) => {
+    setCalculatorSide(side);
+    window.requestAnimationFrame(() => {
+      document.getElementById("calculator-choice")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  };
+
+  const showParitySummary = () => {
+    setCalculatorSide("parity");
+    window.requestAnimationFrame(() => {
+      document.getElementById("calculator-choice")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+  };
+
   const copySelection = async () => {
     if (selectedRepairJobs.length === 0 || selectedDigitalServices.length === 0) return;
 
@@ -1033,11 +1109,15 @@ const BarterSTO = () => {
   return (
     <div className="min-h-[100dvh] bg-[#0d1011] text-[#f2f2ed] selection:bg-[#f3a712] selection:text-[#111315]">
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0d1011]/95 backdrop-blur-md">
-        <div className="mx-auto flex min-h-16 max-w-[1400px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
+        <div className="mx-auto flex min-h-16 max-w-[1600px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-10">
           <a href="https://centrlp.ru/" className="flex items-center gap-3" aria-label="CentrLP, основной сайт">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#f3a712]/50 text-sm font-black text-[#f3a712]">
-              CL
-            </span>
+            <img
+              src="/images/brand/centrlp-logo-48.webp"
+              alt="CentrLP"
+              width={48}
+              height={48}
+              className="h-11 w-11 shrink-0 rounded-full object-contain"
+            />
             <span>
               <strong className="block text-sm tracking-[-0.02em]">CentrLP</strong>
               <span className="hidden text-xs text-[#aeb5b7] sm:block">частное предложение по Pajero</span>
@@ -1047,7 +1127,7 @@ const BarterSTO = () => {
           <div className="flex items-center gap-2">
             <a
               href="tel:+79058248564"
-              className="hidden min-h-10 items-center gap-2 px-3 text-sm font-semibold text-[#d9dddd] transition-colors hover:text-white sm:inline-flex"
+              className="hidden min-h-11 items-center gap-2 px-3 text-sm font-semibold text-[#d9dddd] transition-colors hover:text-white sm:inline-flex"
             >
               <Phone className="h-4 w-4" />
               8-905-824-85-64
@@ -1056,18 +1136,45 @@ const BarterSTO = () => {
               href="https://max.ru/u/f9LHodD0cOIJUiQnWdiLFouZRo0yILV-MOKhbvF8RIwhar0TNMO6tUYnxTI"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[#f3a712] px-4 text-sm font-black text-[#111315] transition-transform active:scale-[0.98]"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#f3a712] px-4 text-sm font-black text-[#111315] transition-transform active:scale-[0.98]"
             >
               <MessageCircle className="h-4 w-4" />
               Написать в MAX
             </a>
           </div>
         </div>
+
+        <nav className="border-t border-white/10" aria-label="Разделы предложения">
+          <div className="mx-auto grid max-w-[920px] grid-cols-3 px-2 sm:px-6">
+            {pageSections.map(({ id, desktopLabel, mobileLabel, icon: Icon }) => {
+              const isActive = activeSection === id;
+              return (
+                <a
+                  key={id}
+                  href={`#${id}`}
+                  onClick={() => setActiveSection(id)}
+                  aria-current={isActive ? "location" : undefined}
+                  className={`relative flex min-h-12 items-center justify-center gap-2 px-2 text-center text-xs font-black transition-colors sm:text-sm ${
+                    isActive ? "text-white" : "text-[#929a9d] hover:text-white"
+                  }`}
+                >
+                  <Icon className={`h-4 w-4 shrink-0 ${isActive ? "text-[#ffd36d]" : "text-[#737d80]"}`} />
+                  <span className="sm:hidden">{mobileLabel}</span>
+                  <span className="hidden sm:inline">{desktopLabel}</span>
+                  <span
+                    className={`absolute inset-x-2 bottom-0 h-0.5 transition-colors ${isActive ? "bg-[#f3a712]" : "bg-transparent"}`}
+                    aria-hidden="true"
+                  />
+                </a>
+              );
+            })}
+          </div>
+        </nav>
       </header>
 
       <main>
         <section className="relative overflow-hidden border-b border-white/10">
-          <div className="mx-auto grid min-h-[calc(100dvh-4rem)] max-w-[1400px] items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-14">
+          <div className="mx-auto grid min-h-[calc(100dvh-7rem)] max-w-[1400px] items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-14">
             <div className="relative z-10 max-w-2xl">
               <p className="mb-5 max-w-max rounded-full border border-[#f3a712]/35 bg-[#f3a712]/10 px-4 py-2 text-sm font-semibold text-[#ffd36d]">
                 Mitsubishi Pajero II, 1991, 3.0 V6
@@ -1076,7 +1183,7 @@ const BarterSTO = () => {
                 Вы закрываете задачу по Pajero. Мы усиливаем ваш сервис
               </h1>
               <p className="mt-6 max-w-[58ch] text-pretty text-lg leading-8 text-[#c9ced0]">
-                Отметьте, что можете сделать с автомобилем, и сами выберите, что хотите получить для бизнеса. Мы соберём максимально полный пакет: сайт, заявки, упаковку, рекламу и автоматизацию — без накрутки и без доплаты с вашей стороны.
+                Отметьте, что можете сделать с автомобилем, и сами выберите, что хотите получить для бизнеса. Мы соберём максимально полный пакет: сайт, заявки, упаковку, рекламу и автоматизацию. Без накрутки и доплаты с вашей стороны.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
@@ -1095,7 +1202,7 @@ const BarterSTO = () => {
                 </a>
               </div>
               <p className="mt-6 max-w-xl text-sm leading-6 text-[#929a9d]">
-                С вашей стороны — честная смета и понятный результат по автомобилю. С нашей — открытый прайс и максимум полезной работы, которую можно реально запустить в вашем бизнесе.
+                С вашей стороны нужны честная смета и понятный результат по автомобилю. С нашей стороны будет открытый прайс и максимум полезной работы, которую можно реально запустить в вашем бизнесе.
               </p>
             </div>
 
@@ -1106,7 +1213,6 @@ const BarterSTO = () => {
                 alt="Серебристый Mitsubishi Pajero второго поколения, вид сбоку"
                 width={1280}
                 height={960}
-                fetchPriority="high"
                 className="aspect-[4/3] w-full max-w-[760px] rounded-[14px] object-cover object-center"
               />
               <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm text-[#9da5a8]">
@@ -1121,7 +1227,7 @@ const BarterSTO = () => {
           <div className="mx-auto grid max-w-[1400px] gap-6 px-4 py-8 sm:px-6 md:grid-cols-3 lg:px-10">
             {[
               ["Автомобиль", "Pajero II V43W, 6G72, АКПП, Super Select"],
-              ["Принцип", "Вы выбираете обе стороны обмена. Если наш пакет немного дороже — доплаты не просим"],
+              ["Принцип", "Вы выбираете обе стороны обмена. Если наш пакет немного дороже, доплаты не просим"],
               ["Продолжение", "Если кейс сработает, развитие сайта и рекламы уже на платной основе"],
             ].map(([title, text]) => (
               <div key={title} className="border-t border-white/20 pt-4">
@@ -1132,7 +1238,7 @@ const BarterSTO = () => {
           </div>
         </section>
 
-        <section className="border-b border-white/10 py-20 lg:py-28">
+        <section id="problems" className="scroll-mt-28 border-b border-white/10 py-20 lg:py-28">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 rounded-full bg-[#25332b] px-4 py-2 text-sm font-bold text-[#a8e6bd]">
@@ -1200,7 +1306,7 @@ const BarterSTO = () => {
           </div>
         </section>
 
-        <section id="problems" className="border-b border-white/10 bg-[#111415] py-20 lg:py-28">
+        <section className="border-b border-white/10 bg-[#111415] py-20 lg:py-28">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div>
@@ -1290,7 +1396,7 @@ const BarterSTO = () => {
                     <div className="mt-6 border-l-2 border-[#f3a712] pl-4">
                       <p className="text-xl font-black text-[#ffd36d]">{job.priceLabel}</p>
                       <p className="mt-2 text-sm leading-6 text-[#929c9e]">{job.breakdown}</p>
-                      <p className="mt-2 text-xs font-bold text-[#6f797c]">{job.confidence}</p>
+                      <p className="mt-2 text-xs font-bold text-[#828c8f]">{job.confidence}</p>
                     </div>
 
                     <div className="mt-6 flex flex-wrap gap-3">
@@ -1325,14 +1431,14 @@ const BarterSTO = () => {
           </div>
         </section>
 
-        <section className="border-b border-white/10 py-20 lg:py-28">
+        <section id="offer" className="scroll-mt-28 border-b border-white/10 py-20 lg:py-28">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
-            <div className="max-w-3xl">
-              <h2 className="text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
-                Не «сделаем сайт». Построим систему, которая приводит к записи
+            <div>
+              <h2 className="text-balance text-[clamp(2.25rem,4vw,3.4rem)] font-black leading-[1.02] tracking-[-0.035em] text-white xl:whitespace-nowrap">
+                Построим систему, которая приводит к записи
               </h2>
-              <p className="mt-5 text-lg leading-8 text-[#abb3b5]">
-                Мы сами найдём потери, соберём услуги, упакуем доказательства, настроим путь клиента и запустим нужные каналы. Ниже можно выбрать конкретные результаты — не абстрактные обещания и не набор файлов ради отчёта.
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-[#abb3b5]">
+                Мы сами найдём потери, соберём услуги, упакуем доказательства, настроим путь клиента и запустим нужные каналы. Ниже можно выбрать конкретные результаты, а не абстрактные обещания или набор файлов ради отчёта.
               </p>
             </div>
 
@@ -1355,7 +1461,7 @@ const BarterSTO = () => {
                       href={`https://centrlp.ru${service.href}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex min-h-10 items-center gap-2 font-bold text-[#dfe3e4] transition-colors hover:text-[#ffd36d] sm:justify-self-end"
+                      className="inline-flex min-h-11 items-center gap-2 font-bold text-[#dfe3e4] transition-colors hover:text-[#ffd36d] sm:justify-self-end"
                       aria-label={`Подробнее: ${service.title}`}
                     >
                       <span className="sm:hidden">Подробнее</span>
@@ -1368,102 +1474,184 @@ const BarterSTO = () => {
           </div>
         </section>
 
-        <section id="calculator" className="border-b border-white/10 bg-[#141819] py-20 lg:py-28">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
-            <div className="max-w-3xl">
+        <section id="calculator" className="scroll-mt-28 border-b border-white/10 bg-[#141819] py-20 lg:py-28">
+          <div className="mx-auto max-w-[1720px] px-4 sm:px-6 lg:px-10">
+            <div className="max-w-4xl">
               <div className="flex items-center gap-3 text-[#ffd36d]">
                 <Calculator className="h-7 w-7" />
                 <span className="text-lg font-black">Интерактивный выбор обмена</span>
               </div>
               <h2 className="mt-4 text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
-                Вы выбираете обе стороны. Мы собираем максимум
+                Соберите свой вариант обмена
               </h2>
-              <p className="mt-5 text-lg leading-8 text-[#abb3b5]">
-                Сначала отметьте, что готовы сделать для Pajero. Затем выберите, что действительно нужно вашему сервису. Мы покажем честный паритет по открытому прайсу и не попросим доплату, если полезный пакет CentrLP получится немного дороже.
+              <p className="mt-5 max-w-3xl text-lg leading-8 text-[#abb3b5]">
+                Слева отметьте работы с Pajero. Справа выберите нужный результат для вашего сервиса. Ниже сразу увидите стоимость обеих сторон и разницу.
               </p>
             </div>
 
-            <div className="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.55fr)]">
-              <div className="min-w-0 space-y-12">
-                <div>
-                  <p className="text-sm font-black text-[#ffd36d]">Шаг 1 из 2</p>
-                  <h3 className="mt-2 text-3xl font-black tracking-[-0.03em] text-white">Что вы можете сделать для автомобиля</h3>
-                  <p className="mt-3 max-w-[72ch] leading-7 text-[#aeb5b7]">
-                    Выбирайте только свой профиль: одна студия может взять фары и пластик, другая — химчистку, третья — весь комплекс. Каждая задача считается отдельно.
-                  </p>
+            <div id="calculator-choice" className="scroll-mt-28">
+              <div className="sticky top-28 z-20 -mx-2 mt-8 bg-[#141819]/95 px-2 py-3 backdrop-blur-md xl:hidden">
+                <div className="grid grid-cols-3 rounded-[14px] bg-[#0d1011] p-1" role="tablist" aria-label="Этап расчёта обмена">
+                  <button
+                    id="vehicle-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected={calculatorSide === "vehicle"}
+                    aria-controls="vehicle-panel"
+                    data-calculator-side="vehicle"
+                    onClick={() => showCalculatorSide("vehicle")}
+                    className={`min-h-14 rounded-[10px] px-2 text-sm font-black transition-colors ${
+                      calculatorSide === "vehicle" ? "bg-[#f3a712] text-[#111315]" : "text-[#aeb5b7]"
+                    }`}
+                  >
+                    <span className="block">Pajero</span>
+                    <span className="mt-0.5 block text-[11px] font-bold opacity-70">{selectedRepairJobs.length} / {money.format(repairTotal)} ₽</span>
+                  </button>
+                  <button
+                    id="centrlp-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected={calculatorSide === "centrlp"}
+                    aria-controls="centrlp-panel"
+                    data-calculator-side="centrlp"
+                    onClick={() => showCalculatorSide("centrlp")}
+                    className={`min-h-14 rounded-[10px] px-2 text-sm font-black transition-colors ${
+                      calculatorSide === "centrlp" ? "bg-[#f3a712] text-[#111315]" : "text-[#aeb5b7]"
+                    }`}
+                  >
+                    <span className="block">CentrLP</span>
+                    <span className="mt-0.5 block text-[11px] font-bold opacity-70">{selectedDigitalServices.length} / {money.format(serviceTotal)} ₽</span>
+                  </button>
+                  <button
+                    id="parity-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected={calculatorSide === "parity"}
+                    aria-controls="parity-summary"
+                    data-calculator-side="parity"
+                    onClick={showParitySummary}
+                    className={`min-h-14 rounded-[10px] px-2 text-sm font-black transition-colors ${
+                      calculatorSide === "parity" ? "bg-[#f3a712] text-[#111315]" : "text-[#aeb5b7]"
+                    }`}
+                  >
+                    <span className="block">Паритет</span>
+                    <span className="mt-0.5 block text-[11px] font-bold opacity-70">Δ {money.format(Math.abs(serviceTotal - repairTotal))} ₽</span>
+                  </button>
                 </div>
+              </div>
 
-                <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Профиль работ в калькуляторе">
-                  {(["Все", ...repairGroups] as RepairFilter[]).map((filter) => (
-                    <button
-                      key={filter}
-                      type="button"
-                      data-calculator-filter={filter}
-                      onClick={() => setCalculatorFilter(filter)}
-                      className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-black transition-colors ${
-                        calculatorFilter === filter
-                          ? "bg-[#f3a712] text-[#111315]"
-                          : "border border-white/15 text-[#c6ccce] hover:border-white/35"
-                      }`}
-                    >
-                      {filter}
-                    </button>
-                  ))}
-                </div>
-
-                <fieldset className="min-w-0">
-                  <legend className="mb-4 flex w-full items-center justify-between gap-4 text-2xl font-black text-white">
-                    <span>{calculatorFilter === "Все" ? "Все работы" : calculatorFilter}</span>
-                    <span className="text-sm font-bold text-[#8f989a]">Показано: {calculatorRepairJobs.length}</span>
-                  </legend>
-                  <div className="grid min-w-0 gap-3 sm:grid-cols-2">
-                    {calculatorRepairJobs.map((job) => {
-                      const checked = selectedJobs.includes(job.id);
-                      return (
-                        <label
-                          key={job.id}
-                          className={`min-w-0 cursor-pointer rounded-[14px] p-4 transition-colors ${
-                            checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            data-job-id={job.id}
-                            checked={checked}
-                            onChange={() => toggleJob(job.id)}
-                            className="sr-only"
-                          />
-                          <span className="flex items-start justify-between gap-3">
-                            <span className="font-black leading-6">{job.title}</span>
-                            <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
-                              {checked ? <Check className="h-4 w-4" /> : null}
-                            </span>
-                          </span>
-                          <span className={`mt-3 block text-sm font-bold ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
-                            {job.priceLabel}
-                          </span>
-                          <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#9fa8aa]"}`}>
-                            {job.result}
-                          </span>
-                          <span className={`mt-3 block text-xs font-bold ${checked ? "text-[#3f4647]" : "text-[#7f898c]"}`}>
-                            {job.confidence}{job.exclusiveGroup ? " · альтернативный вариант" : ""}
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </fieldset>
-
-                <fieldset className="min-w-0 border-t border-white/10 pt-12">
-                  <legend className="w-full max-w-full">
-                    <span className="block text-sm font-black text-[#ffd36d]">Шаг 2 из 2</span>
-                    <span className="mt-2 block text-3xl font-black tracking-[-0.03em] text-white">Что вы хотите получить от CentrLP</span>
-                    <span className="mt-3 block max-w-[72ch] leading-7 text-[#aeb5b7]">
-                      Выберите нужные результаты сами или попросите калькулятор собрать максимально полный пакет по стоимости выбранных авторабот.
+              <div className="mt-8 grid min-w-0 items-start gap-6 xl:grid-cols-2">
+                <section
+                  id="vehicle-panel"
+                  role="tabpanel"
+                  aria-labelledby="vehicle-tab"
+                  className={`${calculatorSide === "vehicle" ? "block" : "hidden"} min-w-0 rounded-[14px] bg-[#0d1011] p-4 sm:p-6 xl:block xl:p-7`}
+                >
+                  <div className="flex flex-col items-start gap-4 sm:flex-row">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-[#f3a712]/10 text-[#ffd36d]">
+                      <Wrench className="h-5 w-5" />
                     </span>
-                  </legend>
+                    <div>
+                      <p className="text-sm font-black text-[#ffd36d]">Работы с автомобилем</p>
+                      <h3 className="mt-1 text-2xl font-black tracking-[-0.025em] text-white sm:text-3xl">Что вы готовы сделать для Pajero</h3>
+                      <p className="mt-3 max-w-[64ch] leading-7 text-[#aeb5b7]">
+                        Выберите свой профиль или отдельные задачи. Каждая работа считается отдельно, выбранные пункты сохраняются при смене категории.
+                      </p>
+                    </div>
+                  </div>
 
-                  <div className="mt-6 flex flex-wrap gap-3">
+                  <div className="mt-6 flex flex-wrap gap-2" aria-label="Профиль работ в калькуляторе">
+                    {(["Все", ...repairGroups] as RepairFilter[]).map((filter) => (
+                      <button
+                        key={filter}
+                        type="button"
+                        data-calculator-filter={filter}
+                        aria-pressed={calculatorFilter === filter}
+                        onClick={() => setCalculatorFilter(filter)}
+                        className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-black transition-colors ${
+                          calculatorFilter === filter
+                            ? "bg-[#f3a712] text-[#111315]"
+                            : "border border-white/15 text-[#c6ccce] hover:border-white/35"
+                        }`}
+                      >
+                        {filter}
+                      </button>
+                    ))}
+                  </div>
+
+                  <fieldset className="mt-5 min-w-0">
+                    <legend className="mb-4 flex w-full items-center justify-between gap-4 text-xl font-black text-white">
+                      <span>{calculatorFilter === "Все" ? "Все работы" : calculatorFilter}</span>
+                      <span className="text-sm font-bold text-[#8f989a]">{calculatorRepairJobs.length} позиций</span>
+                    </legend>
+                    <div className="grid min-w-0 gap-3 2xl:grid-cols-2">
+                      {calculatorRepairJobs.map((job) => {
+                        const checked = selectedJobs.includes(job.id);
+                        return (
+                          <label
+                            key={job.id}
+                            className={`min-w-0 cursor-pointer rounded-[14px] p-4 transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#ffd36d] ${
+                              checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              data-job-id={job.id}
+                              checked={checked}
+                              onChange={() => toggleJob(job.id)}
+                              className="sr-only"
+                            />
+                            <span className="flex items-start justify-between gap-3">
+                              <span className="font-black leading-6">{job.title}</span>
+                              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
+                                {checked ? <Check className="h-4 w-4" /> : null}
+                              </span>
+                            </span>
+                            <span className={`mt-3 block text-sm font-bold ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
+                              {job.priceLabel}
+                            </span>
+                            <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#aeb5b7]"}`}>
+                              {job.result}
+                            </span>
+                            <span className={`mt-3 block text-xs font-bold ${checked ? "text-[#3f4647]" : "text-[#8d9698]"}`}>
+                              {job.confidence}{job.exclusiveGroup ? ", альтернативный вариант" : ""}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+
+                  <button
+                    type="button"
+                    onClick={() => showCalculatorSide("centrlp")}
+                    className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f3a712] px-5 font-black text-[#111315] active:scale-[0.98] xl:hidden"
+                  >
+                    Выбрать результат CentrLP
+                    <ArrowUpRight className="h-5 w-5" />
+                  </button>
+                </section>
+
+                <section
+                  id="centrlp-panel"
+                  role="tabpanel"
+                  aria-labelledby="centrlp-tab"
+                  className={`${calculatorSide === "centrlp" ? "block" : "hidden"} min-w-0 rounded-[14px] bg-[#0d1011] p-4 sm:p-6 xl:block xl:p-7`}
+                >
+                  <div className="flex flex-col items-start gap-4 sm:flex-row">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] bg-[#f3a712]/10 text-[#ffd36d]">
+                      <Globe2 className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <p className="text-sm font-black text-[#ffd36d]">Результат для бизнеса</p>
+                      <h3 className="mt-1 text-2xl font-black tracking-[-0.025em] text-white sm:text-3xl">Что вы хотите получить от CentrLP</h3>
+                      <p className="mt-3 max-w-[64ch] leading-7 text-[#aeb5b7]">
+                        Отметьте нужные услуги сами или разрешите калькулятору собрать максимальный пакет по стоимости выбранных авторабот.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                     <button
                       type="button"
                       data-action="auto-package"
@@ -1483,129 +1671,172 @@ const BarterSTO = () => {
                       disabled={selectedServiceIds.length === 0}
                       className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-bold text-white transition-colors hover:border-white/45 disabled:cursor-not-allowed disabled:opacity-40"
                     >
-                      Сбросить выбор CentrLP
+                      Сбросить выбор
                     </button>
                   </div>
 
-                  <div className="mt-6 grid min-w-0 gap-3 sm:grid-cols-2">
-                    {digitalServices.map((service) => {
-                      const checked = selectedServiceIds.includes(service.id);
-                      return (
-                        <label
-                          key={service.id}
-                          className={`min-w-0 cursor-pointer rounded-[14px] p-4 transition-colors ${
-                            checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            data-service-id={service.id}
-                            checked={checked}
-                            onChange={() => toggleService(service.id)}
-                            className="sr-only"
-                          />
-                          <span className="flex items-start justify-between gap-3">
-                            <span className="font-black leading-6">{service.title}</span>
-                            <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
-                              {checked ? <Check className="h-4 w-4" /> : null}
+                  <fieldset className="mt-5 min-w-0">
+                    <legend className="mb-4 flex w-full items-center justify-between gap-4 text-xl font-black text-white">
+                      <span>Услуги CentrLP</span>
+                      <span className="text-sm font-bold text-[#8f989a]">{digitalServices.length} позиций</span>
+                    </legend>
+                    <div className="grid min-w-0 gap-3 2xl:grid-cols-2">
+                      {digitalServices.map((service) => {
+                        const checked = selectedServiceIds.includes(service.id);
+                        return (
+                          <label
+                            key={service.id}
+                            className={`min-w-0 cursor-pointer rounded-[14px] p-4 transition-colors focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#ffd36d] ${
+                              checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
+                            }`}
+                          >
+                            <input
+                              type="checkbox"
+                              data-service-id={service.id}
+                              checked={checked}
+                              onChange={() => toggleService(service.id)}
+                              className="sr-only"
+                            />
+                            <span className="flex items-start justify-between gap-3">
+                              <span className="font-black leading-6">{service.title}</span>
+                              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
+                                {checked ? <Check className="h-4 w-4" /> : null}
+                              </span>
                             </span>
-                          </span>
-                          <span className={`mt-3 block text-sm font-black ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
-                            {service.priceLabel}
-                          </span>
-                          <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#9fa8aa]"}`}>
-                            {service.benefit}
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </fieldset>
+                            <span className={`mt-3 block text-sm font-black ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
+                              {service.priceLabel}
+                            </span>
+                            <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#aeb5b7]"}`}>
+                              {service.benefit}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </fieldset>
+
+                  <button
+                    type="button"
+                    onClick={showParitySummary}
+                    className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f3a712] px-5 font-black text-[#111315] active:scale-[0.98] xl:hidden"
+                  >
+                    Посчитать паритет
+                    <Calculator className="h-5 w-5" />
+                  </button>
+                </section>
               </div>
 
-              <aside className="rounded-[14px] bg-[#0d1011] p-5 lg:sticky lg:top-24 lg:p-7" aria-live="polite">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-bold text-[#9fa8aa]">Ваш вариант обмена</p>
-                    <p className="mt-1 text-4xl font-black tracking-[-0.04em] text-white">{money.format(repairTotal)} ₽</p>
-                    <p className="mt-1 text-xs leading-5 text-[#7f898c]">ориентир выбранных авторабот</p>
+              <aside
+                id="parity-summary"
+                role="tabpanel"
+                aria-labelledby="parity-tab"
+                className={`${calculatorSide === "parity" ? "block" : "hidden"} mt-6 scroll-mt-52 overflow-hidden rounded-[14px] bg-[#0d1011] xl:block`}
+                aria-live="polite"
+              >
+                <div className="grid gap-px bg-white/10 sm:grid-cols-3">
+                  <div className="bg-[#0d1011] p-5 sm:p-6">
+                    <p className="text-sm font-bold text-[#9fa8aa]">Работы с Pajero</p>
+                    <p className="mt-2 text-3xl font-black tracking-[-0.035em] text-white">{money.format(repairTotal)} ₽</p>
+                    <p className="mt-1 text-xs leading-5 text-[#7f898c]">выбрано: {selectedRepairJobs.length}</p>
                   </div>
-                  <CircleDollarSign className="h-8 w-8 text-[#ffd36d]" />
+                  <div className="bg-[#0d1011] p-5 sm:p-6">
+                    <p className="text-sm font-bold text-[#9fa8aa]">Результат CentrLP</p>
+                    <p className="mt-2 text-3xl font-black tracking-[-0.035em] text-white">{money.format(serviceTotal)} ₽</p>
+                    <p className="mt-1 text-xs leading-5 text-[#7f898c]">выбрано: {selectedDigitalServices.length}</p>
+                  </div>
+                  <div className="bg-[#0d1011] p-5 sm:p-6">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-sm font-bold text-[#9fa8aa]">Разница по прайсу</p>
+                        <p className="mt-2 text-3xl font-black tracking-[-0.035em] text-[#ffd36d]">{money.format(Math.abs(serviceTotal - repairTotal))} ₽</p>
+                      </div>
+                      <CircleDollarSign className="h-8 w-8 text-[#ffd36d]" />
+                    </div>
+                  </div>
                 </div>
 
                 {selectedRepairJobs.length === 0 ? (
-                  <div className="mt-7 rounded-[14px] bg-[#1a1f20] p-5 text-sm leading-6 text-[#aeb5b7]">
-                    Начните с первого шага: отметьте одну или несколько работ, которые готовы выполнить для Pajero.
+                  <div className="p-5 text-sm leading-6 text-[#aeb5b7] sm:p-7">
+                    Сначала выберите хотя бы одну работу с Pajero. Стоимость и количество сразу появятся в этом блоке.
                   </div>
                 ) : selectedDigitalServices.length === 0 ? (
-                  <div className="mt-7 rounded-[14px] bg-[#1a1f20] p-5 text-sm leading-6 text-[#aeb5b7]">
-                    Авторабот выбрано: <strong className="text-white">{selectedRepairJobs.length}</strong>. Теперь выберите, что хотите получить от CentrLP, или нажмите «Подобрать максимум без доплаты».
+                  <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                    <p className="max-w-3xl text-sm leading-6 text-[#aeb5b7]">
+                      Вы выбрали {selectedRepairJobs.length} автомобильных работ. Теперь отметьте нужные услуги CentrLP или соберите максимальный пакет автоматически.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        selectMaximumPackage();
+                        setCalculatorSide("centrlp");
+                      }}
+                      className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-[#f3a712] px-5 text-sm font-black text-[#111315] active:scale-[0.98]"
+                    >
+                      Собрать пакет
+                    </button>
                   </div>
                 ) : (
-                  <>
-                    <div className="mt-7 border-t border-white/10 pt-6">
-                      <p className="font-black text-white">Вы выбрали у CentrLP</p>
-                      <div className="mt-4 max-h-64 space-y-3 overflow-y-auto pr-1">
-                        {selectedDigitalServices.map((service) => (
-                          <div key={service.id} className="flex items-start justify-between gap-4">
-                            <p className="font-bold leading-6 text-[#e6e9ea]">{service.title}</p>
-                            <span className="shrink-0 text-sm font-black text-[#ffd36d]">{money.format(service.price)} ₽</span>
+                  <div className="grid gap-6 p-5 sm:p-7 lg:grid-cols-[1fr_1fr_0.95fr] lg:gap-8">
+                    <div className="min-w-0">
+                      <p className="font-black text-white">Вы делаете для Pajero</p>
+                      <div className="mt-4 max-h-56 space-y-3 overflow-y-auto pr-2">
+                        {selectedRepairJobs.map((job) => (
+                          <div key={job.id} className="flex items-start justify-between gap-4 text-sm">
+                            <p className="font-bold leading-6 text-[#e6e9ea]">{job.title}</p>
+                            <span className="shrink-0 font-black text-[#ffd36d]">{money.format(job.price)} ₽</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="mt-6 border-t border-white/10 pt-5">
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="text-sm font-bold text-[#aeb5b7]">Автомобильные работы</span>
-                          <span className="font-black text-white">{money.format(repairTotal)} ₽</span>
-                        </div>
-                        <div className="flex items-center justify-between gap-4">
-                          <span className="text-sm font-bold text-[#aeb5b7]">Пакет CentrLP по прайсу</span>
-                          <span className="font-black text-white">{money.format(serviceTotal)} ₽</span>
-                        </div>
-                        <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-2">
-                          <span className="text-sm font-black text-[#d9dede]">Разница по прайсу</span>
-                          <span className="text-xl font-black text-[#ffd36d]">{money.format(Math.abs(serviceTotal - repairTotal))} ₽</span>
-                        </div>
+                    <div className="min-w-0 border-t border-white/10 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                      <p className="font-black text-white">Мы делаем для вашего сервиса</p>
+                      <div className="mt-4 max-h-56 space-y-3 overflow-y-auto pr-2">
+                        {selectedDigitalServices.map((service) => (
+                          <div key={service.id} className="flex items-start justify-between gap-4 text-sm">
+                            <p className="font-bold leading-6 text-[#e6e9ea]">{service.title}</p>
+                            <span className="shrink-0 font-black text-[#ffd36d]">{money.format(service.price)} ₽</span>
+                          </div>
+                        ))}
                       </div>
-                      {availableBalance > 0 ? (
-                        <p className="mt-3 rounded-[14px] bg-[#1f2b24] p-3 text-sm leading-6 text-[#b8e4c3]">
-                          До паритета остаётся {money.format(availableBalance)} ₽. Можно добавить ещё услуги CentrLP; если стандартный каталог уже выбран, предложим индивидуальный этап под ваш сервис.
-                        </p>
-                      ) : centrlpBonus > 0 ? (
-                        <p className="mt-3 rounded-[14px] bg-[#3a2b14] p-3 text-sm leading-6 text-[#ffe0a3]">
-                          Пакет CentrLP выше авторабот на {money.format(centrlpBonus)} ₽. Доплачивать не нужно: не режем полезный объём автоматически, а берём эту разницу на себя как вклад в сильный первый кейс.
-                        </p>
-                      ) : (
-                        <p className="mt-3 flex items-start gap-2 text-sm leading-6 text-[#9fd7ae]">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
-                          Получился точный паритет по открытому прайсу. Осталось зафиксировать состав работ, сроки и критерий результата.
-                        </p>
-                      )}
-                      <p className="mt-4 border-t border-white/10 pt-4 text-sm font-bold leading-6 text-white">
-                        Без накрутки. Без встречной доплаты. Наша задача — дать вам максимум результата, а не вычесть полезную работу до последнего рубля.
-                      </p>
                     </div>
 
-                    <button
-                      type="button"
-                      data-action="copy-exchange"
-                      onClick={copySelection}
-                      disabled={copyState === "copying"}
-                      className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f3a712] px-5 font-black text-[#111315] transition-transform active:scale-[0.98] disabled:cursor-wait disabled:opacity-70"
-                    >
-                      {copyState === "copied" ? <Check className="h-5 w-5" /> : <Clipboard className="h-5 w-5" />}
-                      {copyState === "copying" ? "Копируем..." : copyState === "copied" ? "Вариант скопирован" : "Скопировать выбранный обмен"}
-                    </button>
-                    {copyState === "error" ? (
-                      <p className="mt-3 flex items-start gap-2 text-sm text-[#ffb4a9]">
-                        <X className="mt-0.5 h-4 w-4 shrink-0" />
-                        Браузер не дал скопировать текст. Можно сделать скриншот этого блока.
+                    <div className="border-t border-white/10 pt-6 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+                      {availableBalance > 0 ? (
+                        <p className="rounded-[14px] bg-[#1f2b24] p-4 text-sm leading-6 text-[#b8e4c3]">
+                          До паритета остаётся {money.format(availableBalance)} ₽. Добавим ещё полезный этап или соберём индивидуальную работу под ваш сервис.
+                        </p>
+                      ) : centrlpBonus > 0 ? (
+                        <p className="rounded-[14px] bg-[#3a2b14] p-4 text-sm leading-6 text-[#ffe0a3]">
+                          Наш пакет выше авторабот на {money.format(centrlpBonus)} ₽. Доплачивать не нужно: эту разницу берём на себя как вклад в первый совместный кейс.
+                        </p>
+                      ) : (
+                        <p className="flex items-start gap-2 text-sm leading-6 text-[#9fd7ae]">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+                          Получился точный паритет по открытому прайсу. Осталось согласовать сроки и критерии результата.
+                        </p>
+                      )}
+                      <p className="mt-4 text-sm font-bold leading-6 text-white">
+                        Без накрутки и встречной доплаты. Даём максимум результата, а не вычитаем полезную работу до последнего рубля.
                       </p>
-                    ) : null}
-                  </>
+                      <button
+                        type="button"
+                        data-action="copy-exchange"
+                        onClick={copySelection}
+                        disabled={copyState === "copying"}
+                        className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f3a712] px-5 text-sm font-black text-[#111315] transition-transform active:scale-[0.98] disabled:cursor-wait disabled:opacity-70"
+                      >
+                        {copyState === "copied" ? <Check className="h-5 w-5" /> : <Clipboard className="h-5 w-5" />}
+                        {copyState === "copying" ? "Копируем..." : copyState === "copied" ? "Вариант скопирован" : "Скопировать вариант"}
+                      </button>
+                      {copyState === "error" ? (
+                        <p className="mt-3 flex items-start gap-2 text-sm text-[#ffb4a9]">
+                          <X className="mt-0.5 h-4 w-4 shrink-0" />
+                          Браузер не дал скопировать текст. Можно сделать скриншот этого блока.
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
                 )}
               </aside>
             </div>
