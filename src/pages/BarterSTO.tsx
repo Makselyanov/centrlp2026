@@ -836,13 +836,36 @@ const repairJobs: RepairJob[] = [
   },
 ];
 
+const getCatalogPrice = (href: string, fallbackAmount: number) => {
+  const label = servicePriceByHref[href]?.price || `от ${fallbackAmount.toLocaleString("ru-RU")} ₽`;
+  const amountFromCatalog = Number(label.match(/\d[\d\s]*/)?.[0].replace(/\s/g, ""));
+
+  return {
+    amount: Number.isFinite(amountFromCatalog) && amountFromCatalog > 0 ? amountFromCatalog : fallbackAmount,
+    label,
+  };
+};
+
+const catalogDigitalPricing = {
+  audit: getCatalogPrice("/proverka-saita-i-zayavok-za-48-chasov", 15_000),
+  vk: getCatalogPrice("/services/vk-design", 15_000),
+  analytics: getCatalogPrice("/services/web-analytics", 15_000),
+  answers: getCatalogPrice("/services/auto-responses", 15_000),
+  direct: getCatalogPrice("/nastroyka-yandex-direct-tyumen", 20_000),
+  scripts: getCatalogPrice("/services/operator-scripts", 20_000),
+  offer: getCatalogPrice("/services/offer-packaging", 25_000),
+  siteMinimum: getCatalogPrice("/services/website-development", 45_000),
+  seoCopy: getCatalogPrice("/services/copywriting-texts", 12_000),
+  vkBot: getCatalogPrice("/services/chatbot-vk", 30_000),
+};
+
 const digitalServices: DigitalService[] = [
   {
     id: "audit",
     title: "Разбор потерь и новый путь до записи",
     href: "/proverka-saita-i-zayavok-za-48-chasov",
-    price: 15_000,
-    priceLabel: servicePriceByHref["/proverka-saita-i-zayavok-za-48-chasov"]?.price || "от 15 000 ₽",
+    price: catalogDigitalPricing.audit.amount,
+    priceLabel: catalogDigitalPricing.audit.label,
     benefit: "Найдём каждое место, где сервис теряет клиента: в поиске, на сайте, в карточках или переписке. Соберём приоритетный план и новый путь, который доводит человека от интереса до звонка или записи.",
     icon: MonitorCheck,
   },
@@ -850,8 +873,8 @@ const digitalServices: DigitalService[] = [
     id: "vk",
     title: "ВКонтакте как полноценная витрина сервиса",
     href: "/services/vk-design",
-    price: 15_000,
-    priceLabel: servicePriceByHref["/services/vk-design"]?.price || "от 15 000 ₽",
+    price: catalogDigitalPricing.vk.amount,
+    priceLabel: catalogDigitalPricing.vk.label,
     benefit: "Соберём услуги, цены, реальные работы, гарантии и отзывы в убедительную витрину. Клиент сразу поймёт, что вы делаете, почему вам можно доверить автомобиль и как быстро записаться.",
     icon: MessageCircle,
   },
@@ -859,8 +882,8 @@ const digitalServices: DigitalService[] = [
     id: "analytics",
     title: "Веб-аналитика",
     href: "/services/web-analytics",
-    price: 15_000,
-    priceLabel: servicePriceByHref["/services/web-analytics"]?.price || "от 15 000 ₽",
+    price: catalogDigitalPricing.analytics.amount,
+    priceLabel: catalogDigitalPricing.analytics.label,
     benefit: "Настроим цели, звонки, формы и понятные отчёты. Вы увидите, откуда пришла каждая заявка, какая услуга приносит деньги и куда больше не стоит сливать бюджет.",
     icon: Gauge,
   },
@@ -868,8 +891,8 @@ const digitalServices: DigitalService[] = [
     id: "answers",
     title: "Система ответа и записи 24/7",
     href: "/services/auto-responses",
-    price: 15_000,
-    priceLabel: servicePriceByHref["/services/auto-responses"]?.price || "от 15 000 ₽",
+    price: catalogDigitalPricing.answers.amount,
+    priceLabel: catalogDigitalPricing.answers.label,
     benefit: "Соберём автоматический первый ответ, который не оставит тёплого клиента без внимания вечером или в выходной. Запросим марку, проблему, фото и контакт, чтобы мастер получил уже понятную заявку.",
     icon: MessageCircle,
   },
@@ -877,8 +900,8 @@ const digitalServices: DigitalService[] = [
     id: "direct",
     title: "Настройка Яндекс Директа",
     href: "/nastroyka-yandex-direct-tyumen",
-    price: 20_000,
-    priceLabel: servicePriceByHref["/nastroyka-yandex-direct-tyumen"]?.price || "от 20 000 ₽",
+    price: catalogDigitalPricing.direct.amount,
+    priceLabel: catalogDigitalPricing.direct.label,
     benefit: "Соберём рекламу под самую маржинальную услугу, отсечём пустые запросы и приведём людей сразу на подготовленное предложение. Вы получите не показы ради отчёта, а управляемый источник обращений.",
     icon: Megaphone,
   },
@@ -886,8 +909,8 @@ const digitalServices: DigitalService[] = [
     id: "scripts",
     title: "Сильные ответы администратора и мастера",
     href: "/services/operator-scripts",
-    price: 20_000,
-    priceLabel: servicePriceByHref["/services/operator-scripts"]?.price || "от 20 000 ₽",
+    price: catalogDigitalPricing.scripts.amount,
+    priceLabel: catalogDigitalPricing.scripts.label,
     benefit: "Превратим опыт мастера в готовые ответы на вопросы о цене, сроках, гарантии и сложных случаях. Администратор перестанет импровизировать, а клиент будет быстрее понимать ценность работы и соглашаться на запись.",
     icon: Clipboard,
   },
@@ -895,8 +918,8 @@ const digitalServices: DigitalService[] = [
     id: "offer",
     title: "Оффер, который продаёт дорогую услугу",
     href: "/services/offer-packaging",
-    price: 25_000,
-    priceLabel: servicePriceByHref["/services/offer-packaging"]?.price || "от 25 000 ₽",
+    price: catalogDigitalPricing.offer.amount,
+    priceLabel: catalogDigitalPricing.offer.label,
     benefit: "Разберём вашу сильную услугу и упакуем её так, чтобы клиент видел не цену одной операции, а весь результат и снятый риск. Покажем, чем ваш подход сильнее соседнего сервиса и почему за него разумно платить больше.",
     icon: Sparkles,
   },
@@ -904,8 +927,8 @@ const digitalServices: DigitalService[] = [
     id: "site",
     title: "Сайт и система заявок под ключ",
     href: "/services/website-development",
-    price: 45_000,
-    priceLabel: servicePriceByHref["/services/website-development"]?.price || "от 45 000 ₽",
+    price: 80_000,
+    priceLabel: `${catalogDigitalPricing.siteMinimum.label.replace(/^от\s+/i, "")} — минимальный формат; 80 000 ₽ — типовой сайт`,
     benefit: "Спроектируем полноценный многостраничный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Построим цифрового продавца, который объясняет ценность и приводит клиента к записи.",
     icon: Globe2,
   },
@@ -913,8 +936,8 @@ const digitalServices: DigitalService[] = [
     id: "seo-copy",
     title: "Отдельная страница под прибыльную услугу",
     href: "/services/copywriting-texts",
-    price: 12_000,
-    priceLabel: servicePriceByHref["/services/copywriting-texts"]?.price || "от 12 000 ₽",
+    price: catalogDigitalPricing.seoCopy.amount,
+    priceLabel: catalogDigitalPricing.seoCopy.label,
     benefit: "Соберём отдельную сильную страницу под одну прибыльную услугу: запрос клиента, процесс, цена, доказательства и понятный следующий шаг. Она будет одновременно продавать человеку и давать поиску точную точку входа.",
     icon: Sparkles,
   },
@@ -922,8 +945,8 @@ const digitalServices: DigitalService[] = [
     id: "vk-bot",
     title: "Чат-бот ВКонтакте",
     href: "/services/chatbot-vk",
-    price: 30_000,
-    priceLabel: servicePriceByHref["/services/chatbot-vk"]?.price || "от 30 000 ₽",
+    price: catalogDigitalPricing.vkBot.amount,
+    priceLabel: catalogDigitalPricing.vkBot.label,
     benefit: "Соберём сценарий и запустим бота, который уточнит марку, проблему, фото и удобное время, ответит на типовые вопросы и передаст мастеру готовую карточку обращения. Клиент не потеряется между первым сообщением и записью.",
     icon: MessageCircle,
   },
@@ -1717,6 +1740,18 @@ const BarterSTO = () => {
                       <h3 className="mt-1 text-2xl font-black tracking-[-0.025em] text-white sm:text-3xl">Что вы хотите получить от CentrLP</h3>
                       <p className="mt-3 max-w-[64ch] leading-7 text-[#aeb5b7]">
                         Отметьте нужные услуги сами или разрешите калькулятору собрать максимальный пакет по стоимости выбранных авторабот.
+                      </p>
+                      <p className="mt-3 max-w-[64ch] text-sm leading-6 text-[#8f989a]">
+                        Расчёт синхронизирован с{" "}
+                        <a
+                          href="https://centrlp.ru/prices"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="font-bold text-[#ffd36d] underline decoration-[#ffd36d]/40 underline-offset-4 hover:decoration-[#ffd36d]"
+                        >
+                          актуальным прайсом CentrLP
+                        </a>
+                        . Для сайта в паритете используется типовая стоимость 80 000 ₽; 45 000 ₽ — только минимальный формат.
                       </p>
                     </div>
                   </div>
