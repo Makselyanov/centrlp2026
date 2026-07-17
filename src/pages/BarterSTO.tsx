@@ -225,7 +225,7 @@ const repairJobs: RepairJob[] = [
     group: "Техника",
     title: "Поворотники и ревизия старой проводки",
     problem: "Поворотники не всегда автоматически отключаются после возврата руля. Под рулём есть следы старой сигнализации.",
-    result: "Проверить подрулевой механизм, безопасно разобрать старые подключения и привести проводку в понятное состояние.",
+    result: "Проверить механизм автоматического возврата подрулевого переключателя, контактную группу и разъёмы. Затем безопасно разобрать старые подключения и привести проводку в понятное, документированное состояние.",
     price: 6_000,
     priceLabel: "предварительно 6 000 ₽",
     breakdown: "Диагностика автоэлектрики 1 500-2 300 ₽, ремонт проводки и детали считаются после вскрытия.",
@@ -237,6 +237,12 @@ const repairJobs: RepairJob[] = [
         src: "/images/barter/pajero/steering.webp",
         alt: "Зона под рулём Mitsubishi Pajero со старой проводкой",
         caption: "Рулевая колонка и зона, где обнаружены старые подключения.",
+      },
+      {
+        src: "/images/barter/pajero/turn-signal-switch.webp",
+        alt: "Подрулевой переключатель поворотников и света Mitsubishi Pajero",
+        caption: "Иллюстративное фото блока поворотников и света. Точный номер детали нужно сверить по VIN и снятому узлу.",
+        sourceUrl: "https://www.fridayparts.com/headlight-indicator-turn-signal-switch-mr301406-for-mitsubshi-pajero-montero",
       },
     ],
   },
@@ -408,6 +414,27 @@ const repairJobs: RepairJob[] = [
     ],
   },
   {
+    id: "steering-wheel-upholstery",
+    group: "Детейлинг",
+    title: "Перетяжка руля натуральной кожей",
+    problem: "Штатный руль заметно состарился: поверхность выглядит уставшей, а хват уже не даёт ощущения аккуратного и собранного салона.",
+    result: "Снять руль, восстановить основу при необходимости и перетянуть его нескользящей натуральной кожей. Согласовать цвет, фактуру и строчку, сохранить штатную геометрию и удобный хват.",
+    price: 5_000,
+    priceLabel: "публичная цена 5 000 ₽",
+    breakdown: "Тюменское автоателье указывает 5 000 ₽ за перетяжку руля натуральной кожей. Дополнительное восстановление основы, изменение анатомии или подогрев считаются отдельно после осмотра.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужно автоателье",
+    sourceUrl: "https://peretyazhka72.ru/ceny/",
+    images: [
+      {
+        src: "/images/barter/pajero/steering.webp",
+        alt: "Штатный руль Mitsubishi Pajero перед перетяжкой натуральной кожей",
+        caption: "Фактическое состояние руля. Материал и рисунок строчки согласуем с мастером до разборки.",
+      },
+    ],
+  },
+  {
     id: "eva-mats",
     group: "Детейлинг",
     title: "EVA-коврики по лекалам Pajero",
@@ -473,9 +500,9 @@ const repairJobs: RepairJob[] = [
   {
     id: "vinyl-wrap",
     group: "Детейлинг",
-    title: "Полная оклейка цветной плёнкой",
-    problem: "Кузову нужен единый свежий образ без дорогостоящей полной окраски.",
-    result: "Подготовить ЛКП, согласовать цвет и полностью оклеить кузов винилом с аккуратными подворотами и разборкой по технологии студии.",
+    title: "Полная оклейка декоративной цветной плёнкой",
+    problem: "Кузову нужен единый свежий образ без дорогостоящей полной окраски. Рассматриваем как спокойный однотонный вариант, так и заметную декоративную концепцию.",
+    result: "Проверить ЛКП, выбрать доступную виниловую плёнку и адаптировать выбранную визуальную идею под реальный кузов. Полностью оклеить автомобиль с аккуратными подворотами и разборкой по технологии студии.",
     price: 120_000,
     priceLabel: "оценка около 120 000 ₽",
     breakdown: "Рабочий оценочный коридор 90 000-165 000 ₽. Локальные студии обычно считают такой Pajero только после осмотра.",
@@ -486,7 +513,37 @@ const repairJobs: RepairJob[] = [
       {
         src: "/images/barter/pajero/pajero-side.webp",
         alt: "Кузов Mitsubishi Pajero для полной оклейки виниловой плёнкой",
-        caption: "Левая сторона кузова до оклейки.",
+        caption: "Реальный автомобиль до оклейки.",
+      },
+      {
+        src: "/images/barter/pajero/wrap-concepts/red-flames.webp",
+        alt: "Визуализация Mitsubishi Pajero в красной плёнке с огненной графикой",
+        caption: "Концепт: красная база и динамичная графика.",
+      },
+      {
+        src: "/images/barter/pajero/wrap-concepts/graffiti.webp",
+        alt: "Визуализация Mitsubishi Pajero в яркой плёнке с граффити",
+        caption: "Концепт: яркое граффити по всему кузову.",
+      },
+      {
+        src: "/images/barter/pajero/wrap-concepts/neon-blue.webp",
+        alt: "Визуализация Mitsubishi Pajero в сине-фиолетовой неоновой плёнке",
+        caption: "Концепт: холодный неон и цветовые переливы.",
+      },
+      {
+        src: "/images/barter/pajero/wrap-concepts/black-red.webp",
+        alt: "Визуализация Mitsubishi Pajero в чёрно-красной декоративной плёнке",
+        caption: "Концепт: чёрная база с красными акцентами.",
+      },
+      {
+        src: "/images/barter/pajero/wrap-concepts/black-teal.webp",
+        alt: "Визуализация Mitsubishi Pajero в чёрной плёнке с бирюзовым рисунком",
+        caption: "Концепт: тёмная база и технологичная бирюзовая графика.",
+      },
+      {
+        src: "/images/barter/pajero/wrap-concepts/comic.webp",
+        alt: "Визуализация Mitsubishi Pajero в цветной плёнке в стиле комикса",
+        caption: "Концепт: крупная комикс-графика. Все варианты являются визуализациями, а не обещанием точного совпадения с готовой плёнкой.",
       },
     ],
   },
@@ -713,15 +770,16 @@ const repairJobs: RepairJob[] = [
   {
     id: "alarm",
     group: "Мультимедиа",
-    title: "Сигнализация с автозапуском",
+    title: "StarLine A93 v2 или выше с автозапуском",
     problem: "Под рулём остались неизвестные элементы старой охранной системы. Новую нельзя подключать поверх непонятной проводки.",
-    result: "Удалить или безопасно отключить старую систему, установить новый комплект с автозапуском и проверить блокировки.",
-    price: 22_000,
-    priceLabel: "комплект с монтажом около 22 000 ₽",
-    breakdown: "Публичный коридор комплектов с установкой в Тюмени 17 000-25 000 ₽.",
+    result: "Удалить или безопасно отключить старую систему, установить комплекс не ниже StarLine A93 v2 с интеллектуальным автозапуском и проверить блокировки. Настроить запуск с брелока, по температуре и времени; более современную S96 или E96 можно предложить как улучшение.",
+    price: 25_000,
+    priceLabel: "ориентир 25 000 ₽ с установкой",
+    breakdown: "В фирменном центре Тюмени StarLine A93 v2 ECO стоит 11 800 ₽, версия 2CAN+2LIN ECO — 18 150 ₽. Рекомендованная установка для Тюмени по прайсу StarLine от 29.06.2026 составляет 10 000 ₽; демонтаж старой системы и нестандартные модули считаются после ревизии.",
     confidence: "Публичный прайс",
     status: "active",
     statusLabel: "Нужен автоэлектрик",
+    sourceUrl: "https://starline72.ru/",
     images: [
       {
         src: "/images/barter/pajero/steering.webp",
@@ -886,6 +944,8 @@ const priceSources = [
   ["TEYES CC4 Pro 12/256", "https://teyes.com.ru/product/planshet-teyes-cc4-pro-12-256-9-dyujmov/"],
   ["TEYES Digital 360", "https://teyes.com.ru/yakutsk/product/kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro/"],
   ["TEYES 360 + ADAS", "https://teyes.com.ru/product/komplekt-krugovogo-obzora-teyes-360-ahd-adas-dlya-cc4-pro/"],
+  ["Фирменный центр StarLine в Тюмени", "https://starline72.ru/"],
+  ["StarLine, прайс оборудования и установки от 29.06.2026", "https://starline.ru/wp-content/uploads/latest_prices.pdf"],
 ] as const;
 
 function buildEquivalentServices(target: number) {
@@ -1347,8 +1407,15 @@ const BarterSTO = () => {
             <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
               {filteredRepairJobs.map((job, index) => (
                 <article key={job.id} className="grid gap-8 py-10 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)] lg:items-start">
-                  <div className={index % 3 === 2 ? "lg:order-2" : ""}>
-                    <div className={`grid gap-3 ${job.images.length > 1 ? "grid-cols-2" : ""}`}>
+                  <div className={`order-2 ${index % 3 === 2 ? "lg:order-2" : "lg:order-1"}`}>
+                    {job.id === "vinyl-wrap" ? (
+                      <p className="mb-3 text-sm font-black text-[#ffd36d] lg:hidden">Листайте варианты оклейки</p>
+                    ) : null}
+                    <div
+                      className={job.id === "vinyl-wrap"
+                        ? "flex snap-x snap-mandatory gap-3 overflow-x-auto pb-3 lg:grid lg:grid-cols-2 lg:overflow-visible lg:pb-0"
+                        : `grid gap-3 ${job.images.length > 1 ? "grid-cols-2" : ""}`}
+                    >
                       {job.images.map((image, imageIndex) => {
                         const photo = (
                           <img
@@ -1362,7 +1429,10 @@ const BarterSTO = () => {
                         );
 
                         return (
-                          <figure key={`${job.id}-${image.src}`} className={imageIndex === 0 && job.images.length > 2 ? "col-span-2" : ""}>
+                          <figure
+                            key={`${job.id}-${image.src}`}
+                            className={`${job.id === "vinyl-wrap" ? "min-w-[86%] snap-start lg:min-w-0" : ""} ${imageIndex === 0 && job.images.length > 2 ? "lg:col-span-2" : ""}`}
+                          >
                             {image.sourceUrl ? (
                               <a href={image.sourceUrl} target="_blank" rel="noreferrer" className="block transition-opacity hover:opacity-90">
                                 {photo}
@@ -1375,7 +1445,7 @@ const BarterSTO = () => {
                     </div>
                   </div>
 
-                  <div className={index % 3 === 2 ? "lg:order-1" : ""}>
+                  <div className={`order-1 ${index % 3 === 2 ? "lg:order-1" : "lg:order-2"}`}>
                     <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
                       <span className="rounded-full bg-[#242a2b] px-3 py-1 text-[#d4dadb]">{job.group}</span>
                       <span className="text-[#f3a712]">{job.statusLabel}</span>
@@ -1393,7 +1463,7 @@ const BarterSTO = () => {
                       </div>
                     </div>
 
-                    <div className="mt-6 border-l-2 border-[#f3a712] pl-4">
+                    <div className="mt-6 rounded-[14px] bg-[#171b1c] p-4">
                       <p className="text-xl font-black text-[#ffd36d]">{job.priceLabel}</p>
                       <p className="mt-2 text-sm leading-6 text-[#929c9e]">{job.breakdown}</p>
                       <p className="mt-2 text-xs font-bold text-[#828c8f]">{job.confidence}</p>
