@@ -836,27 +836,37 @@ const repairJobs: RepairJob[] = [
   },
 ];
 
-const getCatalogPrice = (href: string, fallbackAmount: number) => {
-  const label = servicePriceByHref[href]?.price || `от ${fallbackAmount.toLocaleString("ru-RU")} ₽`;
+const getCatalogPrice = (href: string) => {
+  const catalogEntry = servicePriceByHref[href];
+
+  if (!catalogEntry) {
+    throw new Error(`Для услуги ${href} не найдена цена в src/data/pricing.ts`);
+  }
+
+  const label = catalogEntry.price;
   const amountFromCatalog = Number(label.match(/\d[\d\s]*/)?.[0].replace(/\s/g, ""));
 
+  if (!Number.isFinite(amountFromCatalog) || amountFromCatalog <= 0) {
+    throw new Error(`Не удалось прочитать цену «${label}» для услуги ${href}`);
+  }
+
   return {
-    amount: Number.isFinite(amountFromCatalog) && amountFromCatalog > 0 ? amountFromCatalog : fallbackAmount,
+    amount: amountFromCatalog,
     label,
   };
 };
 
 const catalogDigitalPricing = {
-  audit: getCatalogPrice("/proverka-saita-i-zayavok-za-48-chasov", 15_000),
-  vk: getCatalogPrice("/services/vk-design", 15_000),
-  analytics: getCatalogPrice("/services/web-analytics", 15_000),
-  answers: getCatalogPrice("/services/auto-responses", 15_000),
-  direct: getCatalogPrice("/nastroyka-yandex-direct-tyumen", 20_000),
-  scripts: getCatalogPrice("/services/operator-scripts", 20_000),
-  offer: getCatalogPrice("/services/offer-packaging", 25_000),
-  siteMinimum: getCatalogPrice("/services/website-development", 45_000),
-  seoCopy: getCatalogPrice("/services/copywriting-texts", 12_000),
-  vkBot: getCatalogPrice("/services/chatbot-vk", 30_000),
+  audit: getCatalogPrice("/proverka-saita-i-zayavok-za-48-chasov"),
+  vk: getCatalogPrice("/services/vk-design"),
+  analytics: getCatalogPrice("/services/web-analytics"),
+  answers: getCatalogPrice("/services/auto-responses"),
+  direct: getCatalogPrice("/nastroyka-yandex-direct-tyumen"),
+  scripts: getCatalogPrice("/services/operator-scripts"),
+  offer: getCatalogPrice("/services/offer-packaging"),
+  site: getCatalogPrice("/services/website-development"),
+  seoCopy: getCatalogPrice("/services/copywriting-texts"),
+  vkBot: getCatalogPrice("/services/chatbot-vk"),
 };
 
 const digitalServices: DigitalService[] = [
@@ -927,8 +937,8 @@ const digitalServices: DigitalService[] = [
     id: "site",
     title: "Сайт и система заявок под ключ",
     href: "/services/website-development",
-    price: 80_000,
-    priceLabel: `${catalogDigitalPricing.siteMinimum.label.replace(/^от\s+/i, "")} — минимальный формат; 80 000 ₽ — типовой сайт`,
+    price: catalogDigitalPricing.site.amount,
+    priceLabel: catalogDigitalPricing.site.label,
     benefit: "Спроектируем полноценный многостраничный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Построим цифрового продавца, который объясняет ценность и приводит клиента к записи.",
     icon: Globe2,
   },
@@ -1751,7 +1761,7 @@ const BarterSTO = () => {
                         >
                           актуальным прайсом CentrLP
                         </a>
-                        . Для сайта в паритете используется типовая стоимость 80 000 ₽; 45 000 ₽ — только минимальный формат.
+                        . Все суммы без исключений берутся из него; для цен «от» калькулятор использует указанную нижнюю границу.
                       </p>
                     </div>
                   </div>
