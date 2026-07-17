@@ -22,7 +22,7 @@ import { packagePrices, servicePrices, type ServicePriceCategory } from "@/data/
 type RepairGroup = "Безопасность" | "Техника" | "Детейлинг" | "Мультимедиа";
 type RepairFilter = "Все" | RepairGroup;
 type RepairStatus = "active" | "scheduled" | "completed";
-type PageSection = "problems" | "offer" | "calculator";
+type PageSection = "problems" | "calculator";
 type CalculatorSide = "vehicle" | "centrlp" | "parity";
 type DigitalCatalogFilter = "all" | "packages" | ServicePriceCategory;
 
@@ -74,7 +74,6 @@ const pageSections: Array<{
   icon: typeof Wrench;
 }> = [
   { id: "problems", desktopLabel: "Проблемы авто", mobileLabel: "Проблемы", icon: Wrench },
-  { id: "offer", desktopLabel: "Что мы предлагаем", mobileLabel: "Предложение", icon: Globe2 },
   { id: "calculator", desktopLabel: "Посчитать паритет", mobileLabel: "Паритет", icon: Calculator },
 ];
 
@@ -1325,8 +1324,8 @@ const BarterSTO = () => {
           </div>
         </div>
 
-        <nav className="border-t border-white/10" aria-label="Разделы предложения">
-          <div className="mx-auto grid max-w-[920px] grid-cols-3 px-2 sm:px-6">
+        <nav className="border-t border-white/10" aria-label="Навигация по странице">
+          <div className="mx-auto grid max-w-[720px] grid-cols-2 px-2 sm:px-6">
             {pageSections.map(({ id, desktopLabel, mobileLabel, icon: Icon }) => {
               const isActive = activeSection === id;
               return (
@@ -1618,78 +1617,6 @@ const BarterSTO = () => {
                   </div>
                 </article>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="offer" className="scroll-mt-28 border-b border-white/10 py-20 lg:py-28">
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
-            <div>
-              <h2 className="text-balance text-[clamp(2.25rem,4vw,3.4rem)] font-black leading-[1.02] tracking-[-0.035em] text-white xl:whitespace-nowrap">
-                Построим систему, которая приводит к записи
-              </h2>
-              <p className="mt-5 max-w-3xl text-lg leading-8 text-[#abb3b5]">
-                Мы сами найдём потери, соберём услуги, упакуем доказательства, настроим путь клиента и запустим нужные каналы. Ниже можно выбрать конкретные результаты, а не абстрактные обещания или набор файлов ради отчёта.
-              </p>
-              <p className="mt-4 max-w-3xl font-bold leading-7 text-white">
-                Полный прайс: 36 отдельных услуг и 4 готовых пакета. Ничего не сокращено.
-              </p>
-            </div>
-
-            <div className="mt-8 max-w-4xl">
-              <DigitalCatalogControls
-                filter={digitalFilter}
-                query={digitalQuery}
-                onFilterChange={setDigitalFilter}
-                onQueryChange={setDigitalQuery}
-              />
-            </div>
-
-            <div className="mt-8 divide-y divide-white/10 border-y border-white/10">
-              {filteredDigitalServices.length === 0 ? (
-                <div className="py-10 text-center">
-                  <p className="text-lg font-black text-white">По этому запросу ничего не найдено</p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setDigitalFilter("all");
-                      setDigitalQuery("");
-                    }}
-                    className="mt-4 min-h-11 rounded-full bg-[#f3a712] px-5 text-sm font-black text-[#111315]"
-                  >
-                    Показать все 40 вариантов
-                  </button>
-                </div>
-              ) : filteredDigitalServices.map((service) => {
-                const Icon = service.icon;
-                return (
-                  <article key={service.id} className="grid gap-4 py-7 sm:grid-cols-[56px_1fr_auto] sm:items-center sm:gap-6">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-[#f3a712]/10 text-[#ffd36d]">
-                      <Icon className="h-6 w-6" />
-                    </span>
-                    <div>
-                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                        <h3 className="text-xl font-black text-white">{service.title}</h3>
-                        {service.kind === "package" ? (
-                          <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-black text-white">Пакет</span>
-                        ) : null}
-                        <span className="font-bold text-[#ffd36d]">{service.priceLabel}</span>
-                      </div>
-                      <p className="mt-2 max-w-[78ch] leading-7 text-[#aeb5b7]">{service.benefit}</p>
-                    </div>
-                    <a
-                      href={`https://centrlp.ru${service.href}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex min-h-11 items-center gap-2 font-bold text-[#dfe3e4] transition-colors hover:text-[#ffd36d] sm:justify-self-end"
-                      aria-label={`Подробнее: ${service.title}`}
-                    >
-                      <span className="sm:hidden">Подробнее</span>
-                      <ArrowUpRight className="h-5 w-5" />
-                    </a>
-                  </article>
-                );
-              })}
             </div>
           </div>
         </section>
