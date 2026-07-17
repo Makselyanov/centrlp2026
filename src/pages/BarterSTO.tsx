@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight,
   Calculator,
@@ -980,45 +980,86 @@ const DigitalCatalogControls = ({
   query,
   onFilterChange,
   onQueryChange,
-}: DigitalCatalogControlsProps) => (
-  <div className="space-y-3">
-    <label className="flex min-h-12 items-center gap-3 rounded-[14px] bg-[#202526] px-4 text-white focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#ffd36d]">
-      <Search className="h-5 w-5 shrink-0 text-[#ffd36d]" />
-      <span className="sr-only">Найти услугу CentrLP</span>
-      <input
-        type="search"
-        value={query}
-        onChange={(event) => onQueryChange(event.target.value)}
-        placeholder="Найти сайт, CRM, рекламу, AI-агента…"
-        className="min-w-0 flex-1 bg-transparent py-3 text-base text-white outline-none placeholder:text-[#9fa8aa]"
-      />
-    </label>
-    <div className="flex gap-2 overflow-x-auto pb-2" role="group" aria-label="Категории услуг CentrLP">
-      {digitalCategoryOptions.map((option) => {
-        const count = option.id === "all"
-          ? digitalServices.length
-          : digitalServices.filter((service) => service.category === option.id).length;
-        const active = filter === option.id;
+}: DigitalCatalogControlsProps) => {
+  const categoryScrollerRef = useRef<HTMLDivElement>(null);
+  const [scrollEdges, setScrollEdges] = useState({ left: false, right: false });
 
-        return (
-          <button
-            key={option.id}
-            type="button"
-            onClick={() => onFilterChange(option.id)}
-            aria-pressed={active}
-            className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-black transition-colors ${
-              active
-                ? "bg-[#f3a712] text-[#111315]"
-                : "bg-[#202526] text-[#dfe3e4] hover:bg-[#2b3132] hover:text-white"
-            }`}
-          >
-            {option.label} · {count}
-          </button>
-        );
-      })}
+  useEffect(() => {
+    const scroller = categoryScrollerRef.current;
+    if (!scroller) return undefined;
+
+    const updateScrollEdges = () => {
+      const maxScrollLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+      setScrollEdges({
+        left: scroller.scrollLeft > 4,
+        right: scroller.scrollLeft < maxScrollLeft - 4,
+      });
+    };
+
+    const resizeObserver = new ResizeObserver(updateScrollEdges);
+    resizeObserver.observe(scroller);
+    scroller.addEventListener("scroll", updateScrollEdges, { passive: true });
+    updateScrollEdges();
+
+    return () => {
+      resizeObserver.disconnect();
+      scroller.removeEventListener("scroll", updateScrollEdges);
+    };
+  }, []);
+
+  return (
+    <div className="space-y-3">
+      <label className="flex min-h-12 items-center gap-3 rounded-[14px] bg-[#202526] px-4 text-white focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#ffd36d]">
+        <Search className="h-5 w-5 shrink-0 text-[#ffd36d]" />
+        <span className="sr-only">Найти услугу CentrLP</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => onQueryChange(event.target.value)}
+          placeholder="Найти сайт, CRM, рекламу, AI-агента…"
+          className="min-w-0 flex-1 bg-transparent py-3 text-base text-white outline-none placeholder:text-[#9fa8aa]"
+        />
+      </label>
+      <div className="relative">
+        <div
+          ref={categoryScrollerRef}
+          className="flex snap-x snap-mandatory gap-2 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          role="group"
+          aria-label="Категории услуг CentrLP"
+        >
+          {digitalCategoryOptions.map((option) => {
+            const count = option.id === "all"
+              ? digitalServices.length
+              : digitalServices.filter((service) => service.category === option.id).length;
+            const active = filter === option.id;
+
+            return (
+              <button
+                key={option.id}
+                type="button"
+                onClick={() => onFilterChange(option.id)}
+                aria-pressed={active}
+                className={`min-h-11 shrink-0 snap-start rounded-full px-4 text-sm font-black transition-colors ${
+                  active
+                    ? "bg-[#f3a712] text-[#111315]"
+                    : "bg-[#202526] text-[#dfe3e4] hover:bg-[#2b3132] hover:text-white"
+                }`}
+              >
+                {option.label} · {count}
+              </button>
+            );
+          })}
+        </div>
+        {scrollEdges.left ? (
+          <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-[#0d1011] to-transparent" />
+        ) : null}
+        {scrollEdges.right ? (
+          <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0d1011] to-transparent" />
+        ) : null}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 function setMeta(selector: string, attribute: string, value: string) {
   let element = document.querySelector(selector);
