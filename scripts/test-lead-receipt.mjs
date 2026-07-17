@@ -72,7 +72,8 @@ try {
   assert.equal(first.status, 200);
   const firstReceipt = await first.json();
   assert.equal(firstReceipt.accepted, true);
-  assert.equal(firstReceipt.delivery_status, "email_delivered");
+  assert.equal(firstReceipt.delivery_status, "stored");
+  assert.equal(firstReceipt.notification_status, "sent");
   assert.equal(firstReceipt.lead_submission_id, submissionId);
   assert.match(firstReceipt.receipt_id, /^[0-9a-f-]{36}$/i);
 
@@ -86,6 +87,11 @@ try {
 
   const leadLines = fs.readFileSync(path.join(logDir, "leads.jsonl"), "utf8").trim().split("\n");
   assert.equal(leadLines.length, 1, "duplicate submission must not create a second delivered lead");
+  const storedReceipt = JSON.parse(
+    fs.readFileSync(path.join(logDir, "receipts", `${submissionId}.json`), "utf8"),
+  );
+  assert.equal(storedReceipt.receipt_id, firstReceipt.receipt_id);
+  assert.equal(storedReceipt.notification_status, "sent");
 
   const metrics = await (await fetch(`${baseUrl}/api/lead/metrics`)).json();
   assert.equal(metrics.confirmed_leads_30d, 0);
@@ -93,7 +99,7 @@ try {
   assert.equal(metrics.synthetic_leads_30d, 1);
   assert.equal(metrics.logged_total, 1);
 
-  console.log("Lead receipt integration test passed: confirmed delivery, stable receipt, deduplication, honeypot.");
+  console.log("Lead receipt integration test passed: durable receipt, notification, deduplication, honeypot.");
 } finally {
   child.kill("SIGTERM");
   fs.rmSync(logDir, { recursive: true, force: true });

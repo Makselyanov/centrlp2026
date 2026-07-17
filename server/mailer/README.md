@@ -77,10 +77,12 @@ Browser session attribution preserves UTM fields after an internal SPA navigatio
 so landing and form events remain tied to the article or channel that started the visit.
 
 Every real form submission includes a client-generated `lead_submission_id`. The mailer
-returns `accepted=true`, `delivery_status=email_delivered`, and a stable `receipt_id`
-only after SMTP accepts the message. A retry with the same submission id returns the
-same receipt and does not send another email. Browser goal `lead_confirmed` is therefore
-the hard delivery signal; `form_submit_attempt` remains a soft funnel event.
+returns `accepted=true`, `delivery_status=stored`, and a stable `receipt_id` only after
+an atomic receipt is saved on the server. SMTP is a separate notification layer: its
+state is returned as `notification_status` and failed notifications are retried. A retry
+with the same submission id returns the same receipt and never creates a second lead.
+Browser goal `lead_confirmed` is therefore the hard server-receipt signal;
+`form_submit_attempt` remains a soft funnel event.
 Receipts tagged with `utm_source=codex_smoke` are counted separately as synthetic leads
 and never inflate real lead or confirmed-lead totals.
 

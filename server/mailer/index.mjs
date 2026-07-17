@@ -47,6 +47,7 @@ if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
   process.exit(1);
 }
 
+let smtpReady = MAILER_JSON_TRANSPORT === "1";
 const transporter = nodemailer.createTransport(
   MAILER_JSON_TRANSPORT === "1"
     ? { jsonTransport: true }
@@ -61,6 +62,7 @@ const transporter = nodemailer.createTransport(
 // Verify SMTP connection at startup so failures are loud
 if (typeof transporter.verify === "function") {
   transporter.verify((err) => {
+    smtpReady = !err;
     if (err) console.error("[mailer] SMTP verify failed:", err.message);
     else console.log("[mailer] SMTP ready (" + SMTP_HOST + ":" + SMTP_PORT + ")");
   });
@@ -94,6 +96,8 @@ const LOG_DIR = LEAD_LOG_DIR || path.join(__dirname, "logs");
 fs.mkdirSync(LOG_DIR, { recursive: true });
 const LOG_FILE = path.join(LOG_DIR, "leads.jsonl");
 const EVENT_LOG_FILE = path.join(LOG_DIR, "lead-events.jsonl");
+const RECEIPT_DIR = path.join(LOG_DIR, "receipts");
+fs.mkdirSync(RECEIPT_DIR, { recursive: true });
 const LEAD_LOG_RETENTION_MS =
   Math.max(Number(LEAD_LOG_RETENTION_DAYS) || 183, 1) * 24 * 60 * 60 * 1000;
 
@@ -200,12 +204,27 @@ function renderEmail(lead) {
 const METRICS_MAX_BYTES = 2 * 1024 * 1024;
 const deliveredReceiptCache = new Map();
 const pendingDeliveries = new Map();
+const pendingNotifications = new Map();
+
+function receiptFilePath(leadSubmissionId) {
+  return path.join(RECEIPT_DIR, `${leadSubmissionId}.json`);
+}
+
+function persistReceipt(lead) {
+  const target = receiptFilePath(lead.lead_submission_id);
+  const temporary = `${target}.${process.pid}.${crypto.randomUUID()}.tmp`;
+  fs.writeFileSync(temporary, JSON.stringify(lead) + "\n", "utf8");
+  fs.renameSync(temporary, target);
+  deliveredReceiptCache.set(lead.lead_submission_id, lead);
+  return lead;
+}
 
 function toPublicReceipt(lead, duplicate = false) {
   return {
     ok: true,
     accepted: true,
-    delivery_status: "email_delivered",
+    delivery_status: lead.delivery_status,
+    notification_status: lead.notification_status || "sent",
     lead_submission_id: lead.lead_submission_id,
     receipt_id: lead.receipt_id,
     received_at: lead.received_at,
@@ -214,13 +233,33 @@ function toPublicReceipt(lead, duplicate = false) {
 }
 
 function loadDeliveredReceipts() {
+  for (const file of fs.readdirSync(RECEIPT_DIR, { withFileTypes: true })) {
+    if (!file.isFile() || !file.name.endsWith(".json")) continue;
+    try {
+      const lead = JSON.parse(fs.readFileSync(path.join(RECEIPT_DIR, file.name), "utf8"));
+      if (lead.lead_submission_id && lead.receipt_id && ["stored", "email_delivered"].includes(lead.delivery_status)) {
+        deliveredReceiptCache.set(lead.lead_submission_id, lead);
+      }
+    } catch {
+      console.error(`[mailer] invalid receipt file: ${file.name}`);
+    }
+  }
+
   if (!fs.existsSync(LOG_FILE)) return;
   for (const line of fs.readFileSync(LOG_FILE, "utf8").split("\n")) {
     if (!line.trim()) continue;
     try {
       const lead = JSON.parse(line);
-      if (lead.lead_submission_id && lead.receipt_id && lead.delivery_status === "email_delivered") {
-        deliveredReceiptCache.set(lead.lead_submission_id, lead);
+      if (
+        lead.lead_submission_id &&
+        lead.receipt_id &&
+        lead.delivery_status === "email_delivered" &&
+        !deliveredReceiptCache.has(lead.lead_submission_id)
+      ) {
+        deliveredReceiptCache.set(lead.lead_submission_id, {
+          ...lead,
+          notification_status: "sent",
+        });
       }
     } catch {
       // Metrics report surfaces malformed rows; startup must remain available.
@@ -229,6 +268,54 @@ function loadDeliveredReceipts() {
 }
 
 loadDeliveredReceipts();
+
+async function notifyLead(storedLead) {
+  if (storedLead.notification_status === "sent") return storedLead;
+
+  let notification = pendingNotifications.get(storedLead.lead_submission_id);
+  if (!notification) {
+    notification = (async () => {
+      let updatedLead;
+      try {
+        await transporter.sendMail({
+          from: `"CentrLP site" <${LEAD_FROM || SMTP_USER}>`,
+          to: LEAD_TO,
+          subject: `CentrLP lead: ${storedLead.name} (${storedLead.phone}) - ${storedLead.page_path || "/"}`,
+          html: renderEmail(storedLead),
+        });
+        smtpReady = true;
+        updatedLead = {
+          ...storedLead,
+          notification_status: "sent",
+          notified_at: new Date().toISOString(),
+        };
+      } catch (err) {
+        smtpReady = false;
+        console.error("[mailer] notification failed:", err.message);
+        updatedLead = {
+          ...storedLead,
+          notification_status: "failed",
+          notification_failed_at: new Date().toISOString(),
+          notification_error: String(err.code || err.responseCode || "smtp_error").slice(0, 120),
+        };
+      }
+      return persistReceipt(updatedLead);
+    })();
+    pendingNotifications.set(storedLead.lead_submission_id, notification);
+  }
+
+  try {
+    return await notification;
+  } finally {
+    pendingNotifications.delete(storedLead.lead_submission_id);
+  }
+}
+
+setInterval(() => {
+  for (const lead of deliveredReceiptCache.values()) {
+    if (lead.notification_status !== "sent") void notifyLead(lead);
+  }
+}, 10 * 60 * 1000).unref();
 
 function normalizeMetricValue(value, fallback = "unknown") {
   const normalized = String(value || "")
@@ -288,6 +375,7 @@ function readLeadMetrics() {
     synthetic_events_30d: 0,
     synthetic_leads_30d: 0,
     confirmed_leads_30d: 0,
+    notification_failures_30d: 0,
     by_event_30d: [],
     by_event_page_30d: [],
     by_utm_source_30d: [],
@@ -330,11 +418,12 @@ function readLeadMetrics() {
       continue;
     }
 
-    const receivedAt = new Date(entry.received_at || 0).getTime();
+    const currentEntry = deliveredReceiptCache.get(entry.lead_submission_id) || entry;
+    const receivedAt = new Date(currentEntry.received_at || 0).getTime();
     if (!Number.isFinite(receivedAt)) continue;
 
     totals.logged_total += 1;
-    const syntheticLead = normalizeMetricValue(entry.utm_source || "direct", "direct") === "codex_smoke";
+    const syntheticLead = normalizeMetricValue(currentEntry.utm_source || "direct", "direct") === "codex_smoke";
     if (syntheticLead) {
       if (now - receivedAt <= 30 * dayMs) totals.synthetic_leads_30d += 1;
       continue;
@@ -346,18 +435,19 @@ function readLeadMetrics() {
       totals.last_received_at = new Date(receivedAt).toISOString();
     }
 
-    if (String(entry.received_at || "").slice(0, 10) === today) totals.today += 1;
+    if (String(currentEntry.received_at || "").slice(0, 10) === today) totals.today += 1;
     if (now - receivedAt <= 7 * dayMs) totals.last_7_days += 1;
     if (now - receivedAt <= 30 * dayMs) {
       totals.last_30_days += 1;
-      if (entry.delivery_status === "email_delivered" && entry.receipt_id) {
+      if (["stored", "email_delivered"].includes(currentEntry.delivery_status) && currentEntry.receipt_id) {
         totals.confirmed_leads_30d += 1;
       }
+      if (currentEntry.notification_status === "failed") totals.notification_failures_30d += 1;
 
-      const pagePath = normalizePathMetric(entry.page_path || entry.lead_source || "/");
+      const pagePath = normalizePathMetric(currentEntry.page_path || currentEntry.lead_source || "/");
       pageCounts.set(pagePath, (pageCounts.get(pagePath) || 0) + 1);
 
-      const source = normalizeMetricValue(entry.lead_source || "centrlp.ru", "centrlp.ru");
+      const source = normalizeMetricValue(currentEntry.lead_source || "centrlp.ru", "centrlp.ru");
       sourceCounts.set(source, (sourceCounts.get(source) || 0) + 1);
     }
   }
@@ -411,7 +501,13 @@ function readLeadMetrics() {
 }
 
 app.get(["/health", "/api/lead/health"], (_req, res) => {
-  res.json({ ok: true, service: "centrlp-mailer", port: PORT });
+  res.json({
+    ok: true,
+    service: "centrlp-mailer",
+    port: PORT,
+    receipt_storage: "ready",
+    notification_status: smtpReady ? "ready" : "degraded",
+  });
 });
 
 app.get("/api/lead/metrics", (_req, res) => {
@@ -549,34 +645,28 @@ app.post("/api/lead", async (req, res) => {
     let delivery = pendingDeliveries.get(leadSubmissionId);
     if (!delivery) {
       delivery = (async () => {
-        const deliveredLead = {
+        const storedLead = persistReceipt({
           ...lead,
           receipt_id: crypto.randomUUID(),
-          delivery_status: "email_delivered",
-          delivered_at: new Date().toISOString(),
-        };
-        await transporter.sendMail({
-          from: `"CentrLP сайт" <${LEAD_FROM || SMTP_USER}>`,
-          to: LEAD_TO,
-          replyTo: lead.phone ? undefined : undefined,
-          subject: `Заявка CentrLP: ${lead.name} (${lead.phone}) — ${lead.page_path || "/"}`,
-          html: renderEmail(deliveredLead),
+          delivery_status: "stored",
+          notification_status: "pending",
+          stored_at: new Date().toISOString(),
         });
+        const notifiedLead = await notifyLead(storedLead);
 
-        if (!logLead(deliveredLead)) {
+        if (!logLead(notifiedLead)) {
           throw new Error("lead_receipt_log_failed");
         }
-        deliveredReceiptCache.set(leadSubmissionId, deliveredLead);
-        return deliveredLead;
+        return notifiedLead;
       })();
       pendingDeliveries.set(leadSubmissionId, delivery);
     }
 
-    const deliveredLead = await delivery;
-    return res.json(toPublicReceipt(deliveredLead));
+    const storedLead = await delivery;
+    return res.json(toPublicReceipt(storedLead));
   } catch (err) {
-    console.error("[mailer] send failed:", err.message);
-    return res.status(502).json({ ok: false, error: "mail_send_failed" });
+    console.error("[mailer] receipt storage failed:", err.message);
+    return res.status(503).json({ ok: false, error: "lead_storage_failed" });
   } finally {
     pendingDeliveries.delete(leadSubmissionId);
   }
