@@ -288,6 +288,48 @@ const repairJobs: RepairJob[] = [
     ],
   },
   {
+    id: "exterior-handles",
+    group: "Детейлинг",
+    title: "Восстановление наружных дверных ручек",
+    problem: "Чёрный пластик наружных ручек выгорел и посерел. На фоне серебристого кузова это сразу делает автомобиль визуально старше.",
+    result: "Снимем стойкое загрязнение, проверим состояние пластика и вернём ручкам глубокий ровный чёрный цвет с защитой от ультрафиолета — без жирного силиконового блеска на несколько моек.",
+    price: 4_000,
+    priceLabel: "ориентир 4 000 ₽ за комплект",
+    breakdown: "В открытом прайсе детейлинга очистка пластика начинается от 700 ₽ за деталь. Для четырёх ручек закладываем подготовку, восстановление цвета и защиту; точный метод мастер выбирает после теста материала.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Можно взять отдельным этапом",
+    sourceUrl: "https://royaldetailing72.ru/",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Чёрные наружные ручки на серебристом Mitsubishi Pajero",
+        caption: "На реальном автомобиле видны все четыре наружные ручки: этот этап можно выполнить отдельно от остальных пластиковых деталей.",
+      },
+    ],
+  },
+  {
+    id: "exterior-plastic",
+    group: "Детейлинг",
+    title: "Восстановление наружного чёрного пластика",
+    problem: "Молдинги, накладки, углы бамперов и другой неокрашенный пластик выцветают неравномерно и дробят внешний вид автомобиля.",
+    result: "Составим перечень деталей, глубоко очистим пластик, восстановим ровный цвет и нанесём защиту. Результат должен выглядеть заводским, а не замаскированным дешёвым чернителем.",
+    price: 8_000,
+    priceLabel: "предварительно 8 000 ₽",
+    breakdown: "Ориентир рассчитан как отдельная работа по нескольким наружным деталям. Трещины, глубокие царапины, окраска и снятие сложных накладок считаются после осмотра.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужен детейлинг",
+    sourceUrl: "https://royaldetailing72.ru/",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Наружные пластиковые накладки Mitsubishi Pajero до восстановления",
+        caption: "Молдинги и наружные накладки считаем отдельно от дверных ручек, чтобы студия могла выбрать реальный объём.",
+      },
+    ],
+  },
+  {
     id: "dashboard-relight",
     group: "Детейлинг",
     title: "Пересвет панели приборов и кнопок",
@@ -312,10 +354,10 @@ const repairJobs: RepairJob[] = [
     group: "Детейлинг",
     title: "Полная химчистка салона внедорожника",
     problem: "После долгого простоя салону нужна глубокая очистка, включая трудные зоны трёхрядного внедорожника.",
-    result: "Очистить сиденья, потолок, ковролин, пластик, ремни, дверные карты, багажную часть и зоны под сиденьями, затем высушить салон.",
-    price: 15_000,
-    priceLabel: "ориентир 15 000 ₽",
-    breakdown: "Публичный коридор полной химчистки внедорожника в Тюмени 7 500-20 000 ₽.",
+    result: "Глубоко очистить потолок, ковролин, пластик, ремни, дверные карты, багажную часть и зоны под сиденьями, удалить пыль и запах долгого простоя, затем полностью высушить салон.",
+    price: 20_000,
+    priceLabel: "ориентир 20 000 ₽",
+    breakdown: "Актуальный открытый прайс полной химчистки автомобиля 3-го класса в Тюмени начинается от 20 000 ₽. Съёмные чехлы вынесены в отдельную задачу и не дублируют эту сумму.",
     confidence: "Публичный прайс",
     status: "active",
     statusLabel: "Нужен детейлинг",
@@ -333,22 +375,85 @@ const repairJobs: RepairJob[] = [
     ],
   },
   {
+    id: "seat-cover-cleaning",
+    group: "Детейлинг",
+    title: "Химчистка съёмных чехлов сидений",
+    problem: "Чехлы на сиденьях накопили пыль и загрязнения за время простоя. Простая мойка вместе с салоном может оставить влагу, разводы или запах.",
+    result: "Снять чехлы, проверить стойкость ткани, глубоко очистить их с двух сторон, полностью высушить и аккуратно установить обратно без перекосов и складок.",
+    price: 4_000,
+    priceLabel: "предварительно 4 000 ₽",
+    breakdown: "Рабочий ориентир 3 000-6 000 ₽ зависит от количества чехлов, ткани, наполнителя и возможности безопасного снятия. Эта строка выбирается отдельно от химчистки самого салона.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Можно взять отдельно",
+    images: [
+      {
+        src: "/images/barter/pajero/rear-seats.webp",
+        alt: "Чехлы на сиденьях Mitsubishi Pajero перед химчисткой",
+        caption: "Фактические чехлы второго и третьего рядов. Перед работой мастер проверяет, как они снимаются и переносят влажную чистку.",
+      },
+    ],
+  },
+  {
+    id: "eva-mats",
+    group: "Детейлинг",
+    title: "EVA-коврики по лекалам Pajero",
+    problem: "Старому трёхрядному внедорожнику нужен комплект, который повторяет пол, закрывает сложные зоны и удерживает воду и грязь внутри ячеек.",
+    result: "Снять точные лекала или подобрать проверенный шаблон Pajero II, изготовить комплект для нужных рядов, выбрать цвет канта и поставить штатные крепления и подпятник.",
+    price: 5_000,
+    priceLabel: "ориентир 5 000 ₽",
+    breakdown: "Базовый комплект EVA в тюменской мастерской стоит 3 300 ₽. Для старого трёхрядного Pajero закладываем индивидуальный расчёт; коврик багажника и дополнительные детали согласуются отдельно.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен изготовитель ковриков",
+    sourceUrl: "https://kovrik72.ru/",
+    images: [
+      {
+        src: "/images/barter/pajero/rear-seats.webp",
+        alt: "Пол второго и третьего ряда Mitsubishi Pajero для изготовления EVA-ковриков",
+        caption: "Трёхрядный салон требует проверки лекал и количества отдельных ковриков до раскроя.",
+      },
+    ],
+  },
+  {
     id: "tint",
     group: "Детейлинг",
     title: "Тонировка автомобиля",
     problem: "Нужна новая аккуратная тонировка с понятной светопропускаемостью и без пузырей старого слоя.",
-    result: "Снять старую плёнку при необходимости, подготовить стёкла и затонировать выбранные зоны законным материалом.",
+    result: "Замерить фактическое светопропускание, снять старую плёнку при необходимости и затонировать заднюю полусферу. Передние стёкла делать только в пределах действующих требований и после контрольного замера.",
     price: 9_500,
     priceLabel: "ориентир 9 500 ₽",
-    breakdown: "Публичный коридор тонировки в круг в Тюмени 5 300-14 000 ₽. Задняя полусфера отдельно обычно 2 500-5 000 ₽.",
+    breakdown: "Публичный коридор тонировки в круг в Тюмени 5 300-14 000 ₽. На 17 июля 2026 года лобовое и передние боковые стёкла должны пропускать не менее 70% света; обсуждавшееся смягчение не стало действующим правилом. Поэтому сначала измеряем само стекло, затем подбираем законный вариант.",
     confidence: "Публичный прайс",
     status: "active",
     statusLabel: "Нужен детейлинг",
+    sourceUrl: "https://www.consultant.ru/document/cons_doc_LAW_518324/a55e4bdd7cb36a689c21e538b92bec8bf21e5ec7/",
     images: [
       {
         src: "/images/barter/pajero/pajero-side.webp",
         alt: "Mitsubishi Pajero перед обновлением тонировки",
         caption: "Реальный автомобиль и текущая площадь остекления.",
+      },
+    ],
+  },
+  {
+    id: "headlight-ppf",
+    group: "Детейлинг",
+    title: "Бронеплёнка на стеклянные фары",
+    problem: "Стеклянная оптика Pajero устойчива к помутнению, но получает пескоструй, мелкие сколы и риск трещины от камня. Найти хорошую замену на старую модель становится сложнее.",
+    result: "Очистить и подготовить обе фары, при необходимости сделать лёгкую коррекцию поверхности и закрыть стекло прозрачной полиуретановой плёнкой без искажения света.",
+    price: 3_000,
+    priceLabel: "ориентир 3 000 ₽ за пару",
+    breakdown: "Открытая цена бронирования фар в Тюмени начинается от 2 000 ₽. Для крупной стеклянной оптики Pajero оставляем запас на подготовку и индивидуальное построение лекала.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Можно взять отдельным этапом",
+    sourceUrl: "https://xenonshop72.ru/services/bronirovanie-far-zashchitnoy-plenkoy-/",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-front.jpg",
+        alt: "Стеклянные передние фары Mitsubishi Pajero второго поколения",
+        caption: "Реальная передняя оптика автомобиля. Плёнка на фары считается отдельно от защиты кузова.",
       },
     ],
   },
@@ -377,7 +482,7 @@ const repairJobs: RepairJob[] = [
     group: "Детейлинг",
     title: "Бронеплёнка на зоны риска",
     problem: "Передняя часть и зоны частых касаний нуждаются в защите от сколов и царапин.",
-    result: "Закрыть полиуретаном капот, передний бампер, фары, зеркала и согласованные зоны риска.",
+    result: "Закрыть полиуретаном капот, передний бампер, зеркала и согласованные зоны риска. Стеклянные фары вынесены в отдельную задачу, чтобы их можно было выбрать без большого пакета.",
     price: 65_000,
     priceLabel: "ориентир 65 000 ₽",
     breakdown: "Публичный коридор по Тюмени 62 000-70 000 ₽. Это альтернатива полной бронеплёнке, а не дополнительная строка к ней.",
@@ -663,20 +768,20 @@ const repairJobs: RepairJob[] = [
 const digitalServices: DigitalService[] = [
   {
     id: "audit",
-    title: "Разбор сайта и пути заявки",
+    title: "Разбор потерь и новый путь до записи",
     href: "/proverka-saita-i-zayavok-za-48-chasov",
     price: 15_000,
     priceLabel: servicePriceByHref["/proverka-saita-i-zayavok-za-48-chasov"]?.price || "от 15 000 ₽",
-    benefit: "Покажет, где сервис теряет обращения и какие правки быстрее всего превращаются в записи.",
+    benefit: "Найдём каждое место, где сервис теряет клиента: в поиске, на сайте, в карточках или переписке. Соберём приоритетный план и новый путь, который доводит человека от интереса до звонка или записи.",
     icon: MonitorCheck,
   },
   {
     id: "vk",
-    title: "Упаковка ВКонтакте",
+    title: "ВКонтакте как полноценная витрина сервиса",
     href: "/services/vk-design",
     price: 15_000,
     priceLabel: servicePriceByHref["/services/vk-design"]?.price || "от 15 000 ₽",
-    benefit: "Соберёт услуги, цены, доказательства и быстрый вход в диалог в одном понятном профиле.",
+    benefit: "Соберём услуги, цены, реальные работы, гарантии и отзывы в убедительную витрину. Клиент сразу поймёт, что вы делаете, почему вам можно доверить автомобиль и как быстро записаться.",
     icon: MessageCircle,
   },
   {
@@ -685,16 +790,16 @@ const digitalServices: DigitalService[] = [
     href: "/services/web-analytics",
     price: 15_000,
     priceLabel: servicePriceByHref["/services/web-analytics"]?.price || "от 15 000 ₽",
-    benefit: "Покажет источник каждой заявки и отделит работающий трафик от красивых, но пустых цифр.",
+    benefit: "Настроим цели, звонки, формы и понятные отчёты. Вы увидите, откуда пришла каждая заявка, какая услуга приносит деньги и куда больше не стоит сливать бюджет.",
     icon: Gauge,
   },
   {
     id: "answers",
-    title: "Автоответы и запись 24/7",
+    title: "Система ответа и записи 24/7",
     href: "/services/auto-responses",
     price: 15_000,
     priceLabel: servicePriceByHref["/services/auto-responses"]?.price || "от 15 000 ₽",
-    benefit: "Соберёт марку, проблему, фото и контакт до разговора с мастером, чтобы не терять тёплых клиентов.",
+    benefit: "Соберём автоматический первый ответ, который не оставит тёплого клиента без внимания вечером или в выходной. Запросим марку, проблему, фото и контакт, чтобы мастер получил уже понятную заявку.",
     icon: MessageCircle,
   },
   {
@@ -703,43 +808,43 @@ const digitalServices: DigitalService[] = [
     href: "/nastroyka-yandex-direct-tyumen",
     price: 20_000,
     priceLabel: servicePriceByHref["/nastroyka-yandex-direct-tyumen"]?.price || "от 20 000 ₽",
-    benefit: "Быстро проверит спрос на одну дорогую услугу и приведёт людей на подготовленную посадочную страницу.",
+    benefit: "Соберём рекламу под самую маржинальную услугу, отсечём пустые запросы и приведём людей сразу на подготовленное предложение. Вы получите не показы ради отчёта, а управляемый источник обращений.",
     icon: Megaphone,
   },
   {
     id: "scripts",
-    title: "Скрипты продаж и FAQ",
+    title: "Сильные ответы администратора и мастера",
     href: "/services/operator-scripts",
     price: 20_000,
     priceLabel: servicePriceByHref["/services/operator-scripts"]?.price || "от 20 000 ₽",
-    benefit: "Поможет отвечать по цене, срокам и гарантии одинаково уверенно, без долгой импровизации в каждом чате.",
+    benefit: "Превратим опыт мастера в готовые ответы на вопросы о цене, сроках, гарантии и сложных случаях. Администратор перестанет импровизировать, а клиент будет быстрее понимать ценность работы и соглашаться на запись.",
     icon: Clipboard,
   },
   {
     id: "offer",
-    title: "Упаковка оффера",
+    title: "Оффер, который продаёт дорогую услугу",
     href: "/services/offer-packaging",
     price: 25_000,
     priceLabel: servicePriceByHref["/services/offer-packaging"]?.price || "от 25 000 ₽",
-    benefit: "Объяснит, за что клиент платит, почему услуга стоит своих денег и чем ваш подход отличается от соседнего сервиса.",
+    benefit: "Разберём вашу сильную услугу и упакуем её так, чтобы клиент видел не цену одной операции, а весь результат и снятый риск. Покажем, чем ваш подход сильнее соседнего сервиса и почему за него разумно платить больше.",
     icon: Sparkles,
   },
   {
     id: "site",
-    title: "Сайт под ключ",
+    title: "Сайт и система заявок под ключ",
     href: "/services/website-development",
     price: 45_000,
     priceLabel: servicePriceByHref["/services/website-development"]?.price || "от 45 000 ₽",
-    benefit: "Превратит перечень работ в убедительную витрину с фото, этапами, сметой и заявкой с нужными данными.",
+    benefit: "Спроектируем полноценный многостраничный сайт под реальные услуги сервиса: структура, тексты, фото, доверие, SEO, заявки и аналитика. Не просто опубликуем перечень работ — построим цифрового продавца, который объясняет ценность и приводит клиента к записи.",
     icon: Globe2,
   },
   {
     id: "seo-copy",
-    title: "Продающая SEO-страница услуги",
+    title: "Отдельная страница под прибыльную услугу",
     href: "/services/copywriting-texts",
     price: 12_000,
     priceLabel: servicePriceByHref["/services/copywriting-texts"]?.price || "от 12 000 ₽",
-    benefit: "Закроет одну конкретную боль клиента, ответит на вопросы по цене и процессу и даст поиску отдельную точку входа на прибыльную услугу.",
+    benefit: "Соберём отдельную сильную страницу под одну прибыльную услугу: запрос клиента, процесс, цена, доказательства и понятный следующий шаг. Она будет одновременно продавать человеку и давать поиску точную точку входа.",
     icon: Sparkles,
   },
   {
@@ -748,7 +853,7 @@ const digitalServices: DigitalService[] = [
     href: "/services/chatbot-vk",
     price: 30_000,
     priceLabel: servicePriceByHref["/services/chatbot-vk"]?.price || "от 30 000 ₽",
-    benefit: "Квалифицирует обращение, соберёт марку, проблему и фото, ответит на типовые вопросы и передаст мастеру уже понятную заявку.",
+    benefit: "Соберём сценарий и запустим бота, который уточнит марку, проблему, фото и удобное время, ответит на типовые вопросы и передаст мастеру готовую карточку обращения. Клиент не потеряется между первым сообщением и записью.",
     icon: MessageCircle,
   },
 ];
@@ -760,7 +865,10 @@ const priceSources = [
   ["Перетяжка72", "https://peretyazhka72.ru/ceny/"],
   ["Royal Detailing", "https://royaldetailing72.ru/"],
   ["Auberg, бронеплёнка", "https://auberg.pro/kuzov/okleika-antigraviynoi-plenkoi/"],
+  ["Xenonshop72, бронеплёнка на фары", "https://xenonshop72.ru/services/bronirovanie-far-zashchitnoy-plenkoy-/"],
   ["ТонировкаПрофи", "https://tonirovka-72.ru/price"],
+  ["Действующие требования к тонировке", "https://www.consultant.ru/document/cons_doc_LAW_518324/a55e4bdd7cb36a689c21e538b92bec8bf21e5ec7/"],
+  ["Автоковрик, EVA по лекалам", "https://kovrik72.ru/"],
   ["Teyes Тюмень", "https://install.teyes72.ru/"],
   ["TEYES CC4 Pro 12/256", "https://teyes.com.ru/product/planshet-teyes-cc4-pro-12-256-9-dyujmov/"],
   ["TEYES Digital 360", "https://teyes.com.ru/yakutsk/product/kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro/"],
@@ -798,7 +906,9 @@ function setMeta(selector: string, attribute: string, value: string) {
 
 const BarterSTO = () => {
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
+  const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
   const [activeFilter, setActiveFilter] = useState<RepairFilter>("Все");
+  const [calculatorFilter, setCalculatorFilter] = useState<RepairFilter>("Детейлинг");
   const [copyState, setCopyState] = useState<"idle" | "copying" | "copied" | "error">("idle");
 
   useEffect(() => {
@@ -838,6 +948,10 @@ const BarterSTO = () => {
     () => activeFilter === "Все" ? activeRepairJobs : activeRepairJobs.filter((job) => job.group === activeFilter),
     [activeFilter, activeRepairJobs],
   );
+  const calculatorRepairJobs = useMemo(
+    () => calculatorFilter === "Все" ? activeRepairJobs : activeRepairJobs.filter((job) => job.group === calculatorFilter),
+    [calculatorFilter, activeRepairJobs],
+  );
   const selectedRepairJobs = useMemo(
     () => activeRepairJobs.filter((job) => selectedJobs.includes(job.id)),
     [activeRepairJobs, selectedJobs],
@@ -848,10 +962,13 @@ const BarterSTO = () => {
     [selectedRepairJobs],
   );
 
-  const recommendedServices = useMemo(() => buildEquivalentServices(repairTotal), [repairTotal]);
-  const serviceTotal = recommendedServices.reduce((sum, service) => sum + service.price, 0);
-  const uncovered = Math.max(0, repairTotal - serviceTotal);
-  const serviceOverage = Math.max(0, serviceTotal - repairTotal);
+  const selectedDigitalServices = useMemo(
+    () => digitalServices.filter((service) => selectedServiceIds.includes(service.id)),
+    [selectedServiceIds],
+  );
+  const serviceTotal = selectedDigitalServices.reduce((sum, service) => sum + service.price, 0);
+  const availableBalance = Math.max(0, repairTotal - serviceTotal);
+  const centrlpBonus = Math.max(0, serviceTotal - repairTotal);
 
   const toggleJob = (id: string) => {
     const selectedJob = activeRepairJobs.find((job) => job.id === id);
@@ -872,8 +989,21 @@ const BarterSTO = () => {
     setCopyState("idle");
   };
 
+  const toggleService = (id: string) => {
+    setSelectedServiceIds((current) => (
+      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
+    ));
+    setCopyState("idle");
+  };
+
+  const selectMaximumPackage = () => {
+    if (repairTotal <= 0) return;
+    setSelectedServiceIds(buildEquivalentServices(repairTotal).map((service) => service.id));
+    setCopyState("idle");
+  };
+
   const copySelection = async () => {
-    if (selectedRepairJobs.length === 0) return;
+    if (selectedRepairJobs.length === 0 || selectedDigitalServices.length === 0) return;
 
     setCopyState("copying");
     const summary = [
@@ -883,11 +1013,12 @@ const BarterSTO = () => {
       ...selectedRepairJobs.map((job) => `- ${job.title}: ${job.priceLabel}`),
       `Итого по ориентиру: ${money.format(repairTotal)} ₽`,
       "",
-      "Эквивалент CentrLP:",
-      ...recommendedServices.map((service) => `- ${service.title}: ${service.priceLabel}`),
+      "Что партнёр выбрал у CentrLP:",
+      ...selectedDigitalServices.map((service) => `- ${service.title}: ${service.priceLabel}`),
       `Итого по прайсу CentrLP: ${money.format(serviceTotal)} ₽`,
-      `Разница: ${money.format(Math.abs(serviceTotal - repairTotal))} ₽ ${serviceTotal >= repairTotal ? "в сторону CentrLP" : "в сторону автомобильных работ"}`,
+      `Разница по открытому прайсу: ${money.format(Math.abs(serviceTotal - repairTotal))} ₽ ${serviceTotal >= repairTotal ? "в пользу партнёра" : "доступно для расширения пакета CentrLP"}`,
       "",
+      "Доплаты со стороны партнёра не просим: если выбранный пакет CentrLP немного дороже авторабот, берём разницу на себя и фиксируем максимум полезного объёма в первом совместном кейсе.",
       "Точная смета, материалы, сроки и критерии приёмки фиксируются после осмотра.",
     ].join("\n");
 
@@ -942,29 +1073,29 @@ const BarterSTO = () => {
                 Mitsubishi Pajero II, 1991, 3.0 V6
               </p>
               <h1 className="max-w-[18ch] text-balance text-[clamp(2.8rem,4.5vw,4.5rem)] font-black leading-[0.95] tracking-[-0.04em] text-white">
-                Ремонт в обмен на рост автосервиса
+                Вы закрываете задачу по Pajero. Мы усиливаем ваш сервис
               </h1>
               <p className="mt-6 max-w-[58ch] text-pretty text-lg leading-8 text-[#c9ced0]">
-                Вы закрываете реальные задачи по автомобилю. CentrLP взамен строит сайт и канал заявок под вашу дорогую услугу.
+                Отметьте, что можете сделать с автомобилем, и сами выберите, что хотите получить для бизнеса. Мы соберём максимально полный пакет: сайт, заявки, упаковку, рекламу и автоматизацию — без накрутки и без доплаты с вашей стороны.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
                   href="#calculator"
                   className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[#f3a712] px-6 font-black text-[#111315] transition-transform active:scale-[0.98]"
                 >
-                  Собрать обмен
+                  Собрать свой вариант обмена
                   <Calculator className="h-5 w-5" />
                 </a>
                 <a
                   href="#problems"
                   className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/25 px-6 font-bold text-white transition-colors hover:border-white/50"
                 >
-                  Смотреть задачи
+                  Выбрать автоработы
                   <ArrowUpRight className="h-5 w-5" />
                 </a>
               </div>
               <p className="mt-6 max-w-xl text-sm leading-6 text-[#929a9d]">
-                Не абстрактная просьба о скидке. На странице есть фото, симптомы, рыночные ориентиры и прозрачный эквивалент услуг CentrLP.
+                С вашей стороны — честная смета и понятный результат по автомобилю. С нашей — открытый прайс и максимум полезной работы, которую можно реально запустить в вашем бизнесе.
               </p>
             </div>
 
@@ -990,7 +1121,7 @@ const BarterSTO = () => {
           <div className="mx-auto grid max-w-[1400px] gap-6 px-4 py-8 sm:px-6 md:grid-cols-3 lg:px-10">
             {[
               ["Автомобиль", "Pajero II V43W, 6G72, АКПП, Super Select"],
-              ["Принцип", "Работы и материалы по смете. Цифровой пакет по тому же прайсу"],
+              ["Принцип", "Вы выбираете обе стороны обмена. Если наш пакет немного дороже — доплаты не просим"],
               ["Продолжение", "Если кейс сработает, развитие сайта и рекламы уже на платной основе"],
             ].map(([title, text]) => (
               <div key={title} className="border-t border-white/20 pt-4">
@@ -1198,10 +1329,10 @@ const BarterSTO = () => {
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
             <div className="max-w-3xl">
               <h2 className="text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
-                Что получает партнёр взамен
+                Не «сделаем сайт». Построим систему, которая приводит к записи
               </h2>
               <p className="mt-5 text-lg leading-8 text-[#abb3b5]">
-                Каждая услуга CentrLP привязана к бизнес-результату и совпадает с прайсом основного сайта. Это не набор красивых файлов ради отчёта.
+                Мы сами найдём потери, соберём услуги, упакуем доказательства, настроим путь клиента и запустим нужные каналы. Ниже можно выбрать конкретные результаты — не абстрактные обещания и не набор файлов ради отчёта.
               </p>
             </div>
 
@@ -1242,99 +1373,182 @@ const BarterSTO = () => {
             <div className="max-w-3xl">
               <div className="flex items-center gap-3 text-[#ffd36d]">
                 <Calculator className="h-7 w-7" />
-                <span className="text-lg font-black">Калькулятор паритета</span>
+                <span className="text-lg font-black">Интерактивный выбор обмена</span>
               </div>
               <h2 className="mt-4 text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
-                Выберите работы, которые можете закрыть
+                Вы выбираете обе стороны. Мы собираем максимум
               </h2>
               <p className="mt-5 text-lg leading-8 text-[#abb3b5]">
-                Калькулятор соберёт ближайший по стоимости набор услуг CentrLP. Это основа для разговора, не публичная оферта и не замена осмотру.
+                Сначала отметьте, что готовы сделать для Pajero. Затем выберите, что действительно нужно вашему сервису. Мы покажем честный паритет по открытому прайсу и не попросим доплату, если полезный пакет CentrLP получится немного дороже.
               </p>
             </div>
 
             <div className="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.55fr)]">
-              <div className="space-y-9">
-                <div className="rounded-[14px] border border-[#6abf86]/30 bg-[#193023]/40 p-5">
-                  <p className="text-xs font-black uppercase tracking-[0.16em] text-[#8bdd9f]">Не участвуют в расчёте</p>
-                  <div className="mt-4 space-y-4">
-                    {closedRepairJobs.map((job) => (
-                      <div key={job.id} className="flex gap-3">
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8bdd9f]" />
-                        <div>
-                          <p className="font-black text-[#98a69c] line-through decoration-[#8bdd9f] decoration-2">{job.title}</p>
-                          <p className="mt-1 text-sm leading-6 text-[#b9c9bd]">{job.statusLabel}. {job.priceLabel}.</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+              <div className="min-w-0 space-y-12">
+                <div>
+                  <p className="text-sm font-black text-[#ffd36d]">Шаг 1 из 2</p>
+                  <h3 className="mt-2 text-3xl font-black tracking-[-0.03em] text-white">Что вы можете сделать для автомобиля</h3>
+                  <p className="mt-3 max-w-[72ch] leading-7 text-[#aeb5b7]">
+                    Выбирайте только свой профиль: одна студия может взять фары и пластик, другая — химчистку, третья — весь комплекс. Каждая задача считается отдельно.
+                  </p>
                 </div>
 
-                {repairGroups.map((group) => (
-                  <fieldset key={group}>
-                    <legend className="mb-4 text-2xl font-black text-white">{group}</legend>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      {activeRepairJobs.filter((job) => job.group === group).map((job) => {
-                        const checked = selectedJobs.includes(job.id);
-                        return (
-                          <label
-                            key={job.id}
-                            className={`cursor-pointer rounded-[14px] p-4 transition-colors ${
-                              checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={checked}
-                              onChange={() => toggleJob(job.id)}
-                              className="sr-only"
-                            />
-                            <span className="flex items-start justify-between gap-3">
-                              <span className="font-black leading-6">{job.title}</span>
-                              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
-                                {checked ? <Check className="h-4 w-4" /> : null}
-                              </span>
+                <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Профиль работ в калькуляторе">
+                  {(["Все", ...repairGroups] as RepairFilter[]).map((filter) => (
+                    <button
+                      key={filter}
+                      type="button"
+                      data-calculator-filter={filter}
+                      onClick={() => setCalculatorFilter(filter)}
+                      className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-black transition-colors ${
+                        calculatorFilter === filter
+                          ? "bg-[#f3a712] text-[#111315]"
+                          : "border border-white/15 text-[#c6ccce] hover:border-white/35"
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
+                </div>
+
+                <fieldset className="min-w-0">
+                  <legend className="mb-4 flex w-full items-center justify-between gap-4 text-2xl font-black text-white">
+                    <span>{calculatorFilter === "Все" ? "Все работы" : calculatorFilter}</span>
+                    <span className="text-sm font-bold text-[#8f989a]">Показано: {calculatorRepairJobs.length}</span>
+                  </legend>
+                  <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+                    {calculatorRepairJobs.map((job) => {
+                      const checked = selectedJobs.includes(job.id);
+                      return (
+                        <label
+                          key={job.id}
+                          className={`min-w-0 cursor-pointer rounded-[14px] p-4 transition-colors ${
+                            checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            data-job-id={job.id}
+                            checked={checked}
+                            onChange={() => toggleJob(job.id)}
+                            className="sr-only"
+                          />
+                          <span className="flex items-start justify-between gap-3">
+                            <span className="font-black leading-6">{job.title}</span>
+                            <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
+                              {checked ? <Check className="h-4 w-4" /> : null}
                             </span>
-                            <span className={`mt-3 block text-sm font-bold ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
-                              {job.priceLabel}
+                          </span>
+                          <span className={`mt-3 block text-sm font-bold ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
+                            {job.priceLabel}
+                          </span>
+                          <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#9fa8aa]"}`}>
+                            {job.result}
+                          </span>
+                          <span className={`mt-3 block text-xs font-bold ${checked ? "text-[#3f4647]" : "text-[#7f898c]"}`}>
+                            {job.confidence}{job.exclusiveGroup ? " · альтернативный вариант" : ""}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                <fieldset className="min-w-0 border-t border-white/10 pt-12">
+                  <legend className="w-full max-w-full">
+                    <span className="block text-sm font-black text-[#ffd36d]">Шаг 2 из 2</span>
+                    <span className="mt-2 block text-3xl font-black tracking-[-0.03em] text-white">Что вы хотите получить от CentrLP</span>
+                    <span className="mt-3 block max-w-[72ch] leading-7 text-[#aeb5b7]">
+                      Выберите нужные результаты сами или попросите калькулятор собрать максимально полный пакет по стоимости выбранных авторабот.
+                    </span>
+                  </legend>
+
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      data-action="auto-package"
+                      onClick={selectMaximumPackage}
+                      disabled={repairTotal <= 0}
+                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#f3a712] px-5 text-sm font-black text-[#111315] transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      Подобрать максимум без доплаты
+                    </button>
+                    <button
+                      type="button"
+                      data-action="clear-services"
+                      onClick={() => {
+                        setSelectedServiceIds([]);
+                        setCopyState("idle");
+                      }}
+                      disabled={selectedServiceIds.length === 0}
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-bold text-white transition-colors hover:border-white/45 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      Сбросить выбор CentrLP
+                    </button>
+                  </div>
+
+                  <div className="mt-6 grid min-w-0 gap-3 sm:grid-cols-2">
+                    {digitalServices.map((service) => {
+                      const checked = selectedServiceIds.includes(service.id);
+                      return (
+                        <label
+                          key={service.id}
+                          className={`min-w-0 cursor-pointer rounded-[14px] p-4 transition-colors ${
+                            checked ? "bg-[#f3a712] text-[#111315]" : "bg-[#202526] text-white hover:bg-[#272d2e]"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            data-service-id={service.id}
+                            checked={checked}
+                            onChange={() => toggleService(service.id)}
+                            className="sr-only"
+                          />
+                          <span className="flex items-start justify-between gap-3">
+                            <span className="font-black leading-6">{service.title}</span>
+                            <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${checked ? "border-[#111315] bg-[#111315] text-[#f3a712]" : "border-white/30"}`}>
+                              {checked ? <Check className="h-4 w-4" /> : null}
                             </span>
-                            <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#9fa8aa]"}`}>
-                              {job.result}
-                            </span>
-                            <span className={`mt-3 block text-xs font-bold ${checked ? "text-[#3f4647]" : "text-[#7f898c]"}`}>
-                              {job.confidence}{job.exclusiveGroup ? " · альтернативный вариант" : ""}
-                            </span>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </fieldset>
-                ))}
+                          </span>
+                          <span className={`mt-3 block text-sm font-black ${checked ? "text-[#303637]" : "text-[#ffd36d]"}`}>
+                            {service.priceLabel}
+                          </span>
+                          <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#9fa8aa]"}`}>
+                            {service.benefit}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </fieldset>
               </div>
 
               <aside className="rounded-[14px] bg-[#0d1011] p-5 lg:sticky lg:top-24 lg:p-7" aria-live="polite">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-sm font-bold text-[#9fa8aa]">Автоработы по ориентиру</p>
+                    <p className="text-sm font-bold text-[#9fa8aa]">Ваш вариант обмена</p>
                     <p className="mt-1 text-4xl font-black tracking-[-0.04em] text-white">{money.format(repairTotal)} ₽</p>
+                    <p className="mt-1 text-xs leading-5 text-[#7f898c]">ориентир выбранных авторабот</p>
                   </div>
                   <CircleDollarSign className="h-8 w-8 text-[#ffd36d]" />
                 </div>
 
                 {selectedRepairJobs.length === 0 ? (
                   <div className="mt-7 rounded-[14px] bg-[#1a1f20] p-5 text-sm leading-6 text-[#aeb5b7]">
-                    Отметьте одну или несколько работ. Здесь появится сопоставимый пакет CentrLP.
+                    Начните с первого шага: отметьте одну или несколько работ, которые готовы выполнить для Pajero.
+                  </div>
+                ) : selectedDigitalServices.length === 0 ? (
+                  <div className="mt-7 rounded-[14px] bg-[#1a1f20] p-5 text-sm leading-6 text-[#aeb5b7]">
+                    Авторабот выбрано: <strong className="text-white">{selectedRepairJobs.length}</strong>. Теперь выберите, что хотите получить от CentrLP, или нажмите «Подобрать максимум без доплаты».
                   </div>
                 ) : (
                   <>
                     <div className="mt-7 border-t border-white/10 pt-6">
-                      <p className="font-black text-white">Предлагаемый эквивалент</p>
-                      <div className="mt-4 space-y-4">
-                        {recommendedServices.map((service) => (
+                      <p className="font-black text-white">Вы выбрали у CentrLP</p>
+                      <div className="mt-4 max-h-64 space-y-3 overflow-y-auto pr-1">
+                        {selectedDigitalServices.map((service) => (
                           <div key={service.id} className="flex items-start justify-between gap-4">
-                            <div>
-                              <p className="font-bold text-[#e6e9ea]">{service.title}</p>
-                              <p className="mt-1 text-xs leading-5 text-[#8e989a]">{service.benefit}</p>
-                            </div>
+                            <p className="font-bold leading-6 text-[#e6e9ea]">{service.title}</p>
                             <span className="shrink-0 text-sm font-black text-[#ffd36d]">{money.format(service.price)} ₽</span>
                           </div>
                         ))}
@@ -1352,34 +1566,38 @@ const BarterSTO = () => {
                           <span className="font-black text-white">{money.format(serviceTotal)} ₽</span>
                         </div>
                         <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-2">
-                          <span className="text-sm font-black text-[#d9dede]">Разница</span>
+                          <span className="text-sm font-black text-[#d9dede]">Разница по прайсу</span>
                           <span className="text-xl font-black text-[#ffd36d]">{money.format(Math.abs(serviceTotal - repairTotal))} ₽</span>
                         </div>
                       </div>
-                      {uncovered > 0 ? (
-                        <p className="mt-3 rounded-[14px] bg-[#3a2414] p-3 text-sm leading-6 text-[#ffd39a]">
-                          Автомобильный объём выше полного стандартного набора CentrLP на {money.format(uncovered)} ₽. Разницу можно закрыть отдельным цифровым этапом или доплатой.
+                      {availableBalance > 0 ? (
+                        <p className="mt-3 rounded-[14px] bg-[#1f2b24] p-3 text-sm leading-6 text-[#b8e4c3]">
+                          До паритета остаётся {money.format(availableBalance)} ₽. Можно добавить ещё услуги CentrLP; если стандартный каталог уже выбран, предложим индивидуальный этап под ваш сервис.
                         </p>
-                      ) : serviceOverage > 0 ? (
-                        <p className="mt-3 rounded-[14px] bg-[#1a2a20] p-3 text-sm leading-6 text-[#a8ddb4]">
-                          Пакет CentrLP выше авторабот на {money.format(serviceOverage)} ₽. Уберём один этап, сузим его объём или согласуем встречную доплату.
+                      ) : centrlpBonus > 0 ? (
+                        <p className="mt-3 rounded-[14px] bg-[#3a2b14] p-3 text-sm leading-6 text-[#ffe0a3]">
+                          Пакет CentrLP выше авторабот на {money.format(centrlpBonus)} ₽. Доплачивать не нужно: не режем полезный объём автоматически, а берём эту разницу на себя как вклад в сильный первый кейс.
                         </p>
                       ) : (
                         <p className="mt-3 flex items-start gap-2 text-sm leading-6 text-[#9fd7ae]">
                           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
-                          Получился равный ориентир. Финальный состав фиксируем после сметы.
+                          Получился точный паритет по открытому прайсу. Осталось зафиксировать состав работ, сроки и критерий результата.
                         </p>
                       )}
+                      <p className="mt-4 border-t border-white/10 pt-4 text-sm font-bold leading-6 text-white">
+                        Без накрутки. Без встречной доплаты. Наша задача — дать вам максимум результата, а не вычесть полезную работу до последнего рубля.
+                      </p>
                     </div>
 
                     <button
                       type="button"
+                      data-action="copy-exchange"
                       onClick={copySelection}
                       disabled={copyState === "copying"}
                       className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#f3a712] px-5 font-black text-[#111315] transition-transform active:scale-[0.98] disabled:cursor-wait disabled:opacity-70"
                     >
                       {copyState === "copied" ? <Check className="h-5 w-5" /> : <Clipboard className="h-5 w-5" />}
-                      {copyState === "copying" ? "Копируем..." : copyState === "copied" ? "Вариант скопирован" : "Скопировать вариант"}
+                      {copyState === "copying" ? "Копируем..." : copyState === "copied" ? "Вариант скопирован" : "Скопировать выбранный обмен"}
                     </button>
                     {copyState === "error" ? (
                       <p className="mt-3 flex items-start gap-2 text-sm text-[#ffb4a9]">
@@ -1429,10 +1647,10 @@ const BarterSTO = () => {
               <div>
                 <Wrench className="h-9 w-9" />
                 <h2 className="mt-5 max-w-[15ch] text-balance text-4xl font-black tracking-[-0.04em] sm:text-6xl">
-                  Начнём с одного честного этапа
+                  Выберите обмен. Мы не будем торговаться за каждую мелочь
                 </h2>
                 <p className="mt-5 max-w-[64ch] text-lg leading-8 text-[#303637]">
-                  Сначала фиксируем диагностику, смету, материалы, сроки и критерий результата. Затем подписываем состав встречных работ CentrLP. Если обе стороны довольны, продолжаем уже как обычные платные партнёры.
+                  Вы называете реальный объём работ, материалов и срок. Мы фиксируем максимум полезного объёма CentrLP по выбранным вами задачам. Если наш пакет немного выше по прайсу, доплату не просим: нам важнее сделать сильный совместный кейс и затем продолжить работу уже как обычные платные партнёры.
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
