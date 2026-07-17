@@ -350,7 +350,10 @@ export const ContactForm = () => {
       leadSubmissionIdRef.current = null;
 
       trackMetric("lead_form_submit", { path: location.pathname });
-      trackMetric("lead_confirmed", { path: location.pathname, placement: receipt.receipt_id });
+      trackMetric("lead_stored", { path: location.pathname, placement: receipt.receipt_id });
+      if (receipt.crm_status === "sent") {
+        trackMetric("lead_confirmed", { path: location.pathname, placement: receipt.receipt_id });
+      }
 
       toast({
         title: "Заявка отправлена",

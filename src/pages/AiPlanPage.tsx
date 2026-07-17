@@ -441,7 +441,10 @@ export function AiPlanPage() {
             const receipt = await readLeadReceipt(response);
             leadSubmissionIdRef.current = null;
             trackMetric("lead_form_submit", { path: "/ai-plan" });
-            trackMetric("lead_confirmed", { path: "/ai-plan", placement: receipt.receipt_id });
+            trackMetric("lead_stored", { path: "/ai-plan", placement: receipt.receipt_id });
+            if (receipt.crm_status === "sent") {
+                trackMetric("lead_confirmed", { path: "/ai-plan", placement: receipt.receipt_id });
+            }
 
             toast({
                 title: "Заявка отправлена!",

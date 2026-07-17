@@ -4,10 +4,30 @@ import os from "node:os";
 import path from "node:path";
 import { spawn } from "node:child_process";
 import crypto from "node:crypto";
+import http from "node:http";
 
 const port = 34000 + Math.floor(Math.random() * 1000);
+const crmPort = port + 1000;
 const logDir = fs.mkdtempSync(path.join(os.tmpdir(), "centrlp-lead-receipt-"));
 const serverPath = path.resolve("server/mailer/index.mjs");
+const crmCalls = [];
+const crmServer = http.createServer((req, res) => {
+  let rawBody = "";
+  req.on("data", (chunk) => { rawBody += chunk; });
+  req.on("end", () => {
+    const payload = JSON.parse(rawBody);
+    crmCalls.push(payload);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({
+      status: "ok",
+      deal_id: 123,
+      lead_submission_id: payload.lead_submission_id,
+      created: true,
+      deduplicated: false,
+    }));
+  });
+});
+await new Promise((resolve) => crmServer.listen(crmPort, "127.0.0.1", resolve));
 const child = spawn(process.execPath, [serverPath], {
   env: {
     ...process.env,
@@ -17,6 +37,7 @@ const child = spawn(process.execPath, [serverPath], {
     LEAD_TO: "test@centrlp.ru",
     MAILER_JSON_TRANSPORT: "1",
     LEAD_LOG_DIR: logDir,
+    CRM_WEBHOOK_URL: `http://127.0.0.1:${crmPort}/api/webhooks/site-form`,
   },
   stdio: ["ignore", "pipe", "pipe"],
 });
@@ -58,7 +79,7 @@ const validLead = {
   lead_submission_id: submissionId,
   page_path: "/test",
   lead_source: "integration-test",
-  attribution: { utm_source: "codex_smoke", utm_campaign: "lead_receipt" },
+  attribution: { utm_source: "integration_test", utm_campaign: "lead_receipt" },
 };
 
 try {
@@ -74,6 +95,7 @@ try {
   assert.equal(firstReceipt.accepted, true);
   assert.equal(firstReceipt.delivery_status, "stored");
   assert.equal(firstReceipt.notification_status, "sent");
+  assert.equal(firstReceipt.crm_status, "sent");
   assert.equal(firstReceipt.lead_submission_id, submissionId);
   assert.match(firstReceipt.receipt_id, /^[0-9a-f-]{36}$/i);
 
@@ -92,15 +114,29 @@ try {
   );
   assert.equal(storedReceipt.receipt_id, firstReceipt.receipt_id);
   assert.equal(storedReceipt.notification_status, "sent");
+  assert.equal(storedReceipt.crm_status, "sent");
+  assert.equal(storedReceipt.crm_deal_id, 123);
+  assert.equal(crmCalls.length, 1);
+  assert.equal(crmCalls[0].lead_submission_id, submissionId);
+
+  const synthetic = await postLead({
+    ...validLead,
+    lead_submission_id: crypto.randomUUID(),
+    attribution: { utm_source: "codex_smoke", utm_campaign: "lead_receipt" },
+  });
+  assert.equal((await synthetic.json()).crm_status, "skipped");
+  assert.equal(crmCalls.length, 1, "synthetic smoke leads must never enter CRM");
 
   const metrics = await (await fetch(`${baseUrl}/api/lead/metrics`)).json();
-  assert.equal(metrics.confirmed_leads_30d, 0);
-  assert.equal(metrics.last_30_days, 0);
+  assert.equal(metrics.confirmed_leads_30d, 1);
+  assert.equal(metrics.crm_confirmed_leads_30d, 1);
+  assert.equal(metrics.last_30_days, 1);
   assert.equal(metrics.synthetic_leads_30d, 1);
-  assert.equal(metrics.logged_total, 1);
+  assert.equal(metrics.logged_total, 2);
 
   console.log("Lead receipt integration test passed: durable receipt, notification, deduplication, honeypot.");
 } finally {
   child.kill("SIGTERM");
+  crmServer.close();
   fs.rmSync(logDir, { recursive: true, force: true });
 }

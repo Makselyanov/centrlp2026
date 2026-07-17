@@ -11,6 +11,7 @@ const SERVER_EVENT_GOALS = new Set([
   "form_submit_attempt",
   "lead_form_submit",
   "lead_confirmed",
+  "lead_stored",
   "lead_form_error",
   "messenger_click_fastlane",
   "phone_click_fastlane",

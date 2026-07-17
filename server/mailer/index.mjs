@@ -40,6 +40,8 @@ const {
   LEAD_LOG_RETENTION_DAYS = "183",
   LEAD_LOG_DIR = "",
   MAILER_JSON_TRANSPORT = "0",
+  CRM_WEBHOOK_URL = "https://centrlp.centrlp.ru/api/webhooks/site-form",
+  CRM_TIMEOUT_MS = "8000",
 } = process.env;
 
 if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
@@ -205,6 +207,8 @@ const METRICS_MAX_BYTES = 2 * 1024 * 1024;
 const deliveredReceiptCache = new Map();
 const pendingDeliveries = new Map();
 const pendingNotifications = new Map();
+const pendingCrmDeliveries = new Map();
+let crmReady = Boolean(CRM_WEBHOOK_URL);
 
 function receiptFilePath(leadSubmissionId) {
   return path.join(RECEIPT_DIR, `${leadSubmissionId}.json`);
@@ -225,6 +229,7 @@ function toPublicReceipt(lead, duplicate = false) {
     accepted: true,
     delivery_status: lead.delivery_status,
     notification_status: lead.notification_status || "sent",
+    crm_status: lead.crm_status || "disabled",
     lead_submission_id: lead.lead_submission_id,
     receipt_id: lead.receipt_id,
     received_at: lead.received_at,
@@ -311,9 +316,84 @@ async function notifyLead(storedLead) {
   }
 }
 
+async function deliverLeadToCrm(storedLead) {
+  if (["sent", "skipped"].includes(storedLead.crm_status)) return storedLead;
+  if (!CRM_WEBHOOK_URL) return persistReceipt({ ...storedLead, crm_status: "disabled" });
+  if (storedLead.utm_source === "codex_smoke") {
+    return persistReceipt({ ...storedLead, crm_status: "skipped" });
+  }
+
+  let delivery = pendingCrmDeliveries.get(storedLead.lead_submission_id);
+  if (!delivery) {
+    delivery = (async () => {
+      let updatedLead;
+      try {
+        const response = await fetch(CRM_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: AbortSignal.timeout(Math.max(Number(CRM_TIMEOUT_MS) || 8000, 1000)),
+          body: JSON.stringify({
+            lead_submission_id: storedLead.lead_submission_id,
+            name: storedLead.name,
+            phone: storedLead.phone,
+            comment: storedLead.comment,
+            source: storedLead.lead_source || "centrlp.ru",
+            page_url: storedLead.page_url,
+            city: storedLead.city,
+            utm_source: storedLead.utm_source,
+            utm_medium: storedLead.utm_medium,
+            utm_campaign: storedLead.utm_campaign,
+            utm_content: storedLead.utm_content,
+            utm_term: storedLead.utm_term,
+            privacyAccepted: storedLead.privacy_accepted,
+            consent_version: storedLead.consent_version,
+            privacy_version: storedLead.privacy_version,
+            cookies_version: storedLead.cookies_version,
+          }),
+        });
+        const result = await response.json().catch(() => null);
+        if (
+          !response.ok ||
+          result?.status !== "ok" ||
+          result?.lead_submission_id !== storedLead.lead_submission_id ||
+          !Number.isInteger(result?.deal_id)
+        ) {
+          throw new Error(`crm_http_${response.status}`);
+        }
+        crmReady = true;
+        updatedLead = {
+          ...storedLead,
+          crm_status: "sent",
+          crm_deal_id: result.deal_id,
+          crm_deduplicated: result.deduplicated === true,
+          crm_delivered_at: new Date().toISOString(),
+        };
+      } catch (err) {
+        crmReady = false;
+        console.error("[mailer] CRM delivery failed:", err.message);
+        updatedLead = {
+          ...storedLead,
+          crm_status: "failed",
+          crm_failed_at: new Date().toISOString(),
+          crm_error: String(err.name || err.code || "crm_error").slice(0, 120),
+        };
+      }
+      return persistReceipt(updatedLead);
+    })();
+    pendingCrmDeliveries.set(storedLead.lead_submission_id, delivery);
+  }
+
+  try {
+    return await delivery;
+  } finally {
+    pendingCrmDeliveries.delete(storedLead.lead_submission_id);
+  }
+}
+
 setInterval(() => {
   for (const lead of deliveredReceiptCache.values()) {
     if (lead.notification_status !== "sent") void notifyLead(lead);
+    if (["pending", "failed"].includes(lead.crm_status)) void deliverLeadToCrm(lead);
   }
 }, 10 * 60 * 1000).unref();
 
@@ -375,6 +455,8 @@ function readLeadMetrics() {
     synthetic_events_30d: 0,
     synthetic_leads_30d: 0,
     confirmed_leads_30d: 0,
+    crm_confirmed_leads_30d: 0,
+    crm_failures_30d: 0,
     notification_failures_30d: 0,
     by_event_30d: [],
     by_event_page_30d: [],
@@ -442,6 +524,8 @@ function readLeadMetrics() {
       if (["stored", "email_delivered"].includes(currentEntry.delivery_status) && currentEntry.receipt_id) {
         totals.confirmed_leads_30d += 1;
       }
+      if (currentEntry.crm_status === "sent" && currentEntry.crm_deal_id) totals.crm_confirmed_leads_30d += 1;
+      if (currentEntry.crm_status === "failed") totals.crm_failures_30d += 1;
       if (currentEntry.notification_status === "failed") totals.notification_failures_30d += 1;
 
       const pagePath = normalizePathMetric(currentEntry.page_path || currentEntry.lead_source || "/");
@@ -507,6 +591,7 @@ app.get(["/health", "/api/lead/health"], (_req, res) => {
     port: PORT,
     receipt_storage: "ready",
     notification_status: smtpReady ? "ready" : "degraded",
+    crm_status: CRM_WEBHOOK_URL ? (crmReady ? "ready" : "degraded") : "disabled",
   });
 });
 
@@ -650,9 +735,11 @@ app.post("/api/lead", async (req, res) => {
           receipt_id: crypto.randomUUID(),
           delivery_status: "stored",
           notification_status: "pending",
+          crm_status: lead.utm_source === "codex_smoke" ? "skipped" : "pending",
           stored_at: new Date().toISOString(),
         });
-        const notifiedLead = await notifyLead(storedLead);
+        const crmLead = await deliverLeadToCrm(storedLead);
+        const notifiedLead = await notifyLead(crmLead);
 
         if (!logLead(notifiedLead)) {
           throw new Error("lead_receipt_log_failed");

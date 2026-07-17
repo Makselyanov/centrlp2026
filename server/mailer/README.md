@@ -81,10 +81,17 @@ returns `accepted=true`, `delivery_status=stored`, and a stable `receipt_id` onl
 an atomic receipt is saved on the server. SMTP is a separate notification layer: its
 state is returned as `notification_status` and failed notifications are retried. A retry
 with the same submission id returns the same receipt and never creates a second lead.
-Browser goal `lead_confirmed` is therefore the hard server-receipt signal;
-`form_submit_attempt` remains a soft funnel event.
+Browser goal `lead_stored` records this durable receipt; `form_submit_attempt`
+remains a soft funnel event.
 Receipts tagged with `utm_source=codex_smoke` are counted separately as synthetic leads
 and never inflate real lead or confirmed-lead totals.
+
+The server also forwards real leads to the isolated CentrLP CRM tenant at
+`https://centrlp.centrlp.ru/api/webhooks/site-form`. CRM delivery reuses
+`lead_submission_id`, is retried after failure, and returns `crm_status`. The browser
+fires `lead_confirmed` only when CRM returns the matching submission id and a deal id;
+`lead_stored` records the earlier durable server receipt. Synthetic smoke leads are
+never forwarded to CRM.
 
 `GET /api/lead/metrics` returns only safe aggregates for route diagnostics:
 totals for today, 7/30 days, last lead timestamp, normalized counters by page
