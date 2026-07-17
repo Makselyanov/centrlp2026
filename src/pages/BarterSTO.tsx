@@ -13,23 +13,38 @@ import {
   MessageCircle,
   MonitorCheck,
   Phone,
-  ShieldCheck,
   Sparkles,
   Wrench,
   X,
 } from "lucide-react";
 import { servicePriceByHref } from "@/data/pricing";
 
-type RepairGroup = "Безопасность" | "Техника" | "Салон" | "Рестомод";
+type RepairGroup = "Безопасность" | "Техника" | "Детейлинг" | "Мультимедиа";
+type RepairFilter = "Все" | RepairGroup;
+type RepairStatus = "active" | "scheduled" | "completed";
+
+type CaseImage = {
+  src: string;
+  alt: string;
+  caption: string;
+  sourceUrl?: string;
+};
 
 type RepairJob = {
   id: string;
   group: RepairGroup;
   title: string;
+  problem: string;
+  result: string;
   price: number;
   priceLabel: string;
-  note: string;
-  confidence: "Публичный прайс" | "Предварительная оценка" | "Товар и работа";
+  breakdown: string;
+  confidence: "Публичный прайс" | "Предварительная оценка" | "Ориентир владельца" | "Согласованная стоимость";
+  status: RepairStatus;
+  statusLabel: string;
+  images: CaseImage[];
+  sourceUrl?: string;
+  exclusiveGroup?: string;
 };
 
 type DigitalService = {
@@ -44,159 +59,604 @@ type DigitalService = {
 
 const money = new Intl.NumberFormat("ru-RU");
 
+const repairGroups: RepairGroup[] = ["Безопасность", "Техника", "Детейлинг", "Мультимедиа"];
+
 const repairJobs: RepairJob[] = [
   {
-    id: "brakes",
+    id: "brake-discs",
     group: "Безопасность",
-    title: "Тормоза, ручник и ревизия суппортов",
-    price: 18_000,
-    priceLabel: "около 18 000 ₽ за работу",
-    note: "Диски, колодки, тросы и другие детали считаются отдельно после осмотра.",
-    confidence: "Предварительная оценка",
+    title: "Тормозные диски и колодки",
+    problem: "На дисках большая выработка. Это отдельная задача по рабочей тормозной системе, не связанная с ручником.",
+    result: "Заменить изношенные диски и колодки по нужным осям, проверить суппорты и направляющие, затем проконтролировать торможение.",
+    price: 7_000,
+    priceLabel: "работа около 7 000 ₽",
+    breakdown: "Запчасти и их стоимость берём из счёта МаслоМаркета владельца. В калькулятор сейчас входит только работа; оси, колодки и ревизия суппортов уточняются по счёту и осмотру.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен исполнитель",
+    images: [
+      {
+        src: "/images/barter/pajero/wheel-31.webp",
+        alt: "Переднее колесо Mitsubishi Pajero перед ремонтом тормозов",
+        caption: "Фото колеса автомобиля. Крупный план рабочих поверхностей дисков нужно сделать при разборке.",
+      },
+    ],
   },
   {
-    id: "steering",
+    id: "handbrake",
     group: "Безопасность",
-    title: "Диагностика и устранение люфта руля",
+    title: "Неработающий ручник",
+    problem: "Стояночный тормоз не удерживает автомобиль. Это отдельный кейс со своими тросами, колодками и механизмом.",
+    result: "Проверить ход рычага, тросы, задние механизмы и регулировку. Вернуть уверенную фиксацию автомобиля на уклоне.",
+    price: 5_000,
+    priceLabel: "около 5 000 ₽ за работу",
+    breakdown: "Диагностика и восстановление механизма. Тросы, колодки ручника и закисшие детали считаются отдельно после разборки.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужен исполнитель",
+    images: [
+      {
+        src: "/images/barter/pajero/handbrake-console.webp",
+        alt: "Центральная консоль Mitsubishi Pajero с рычагом ручника",
+        caption: "Штатный рычаг ручника между передними сиденьями.",
+      },
+    ],
+  },
+  {
+    id: "steering-play",
+    group: "Безопасность",
+    title: "Рулевой люфт около 2 см",
+    problem: "Колёса реагируют с задержкой, автомобиль может уводить, а в повороте чувствуется пауза между рулём и траекторией.",
+    result: "Локализовать люфт от рулевого колеса до редуктора, тяг и наконечников. Устранить причину и проверить автомобиль на дороге.",
     price: 10_000,
     priceLabel: "около 10 000 ₽ за работу",
-    note: "Сначала локализовать люфт. Рулевой редуктор и детали в сумму не включены.",
+    breakdown: "Диагностика в Тюмени начинается примерно от 660-850 ₽. Детали и возможная замена рулевого редуктора в сумму не включены.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужен исполнитель",
+    images: [
+      {
+        src: "/images/barter/pajero/steering.webp",
+        alt: "Рулевое колесо Mitsubishi Pajero с зафиксированным свободным ходом",
+        caption: "Руль и зона старой проводки. Для диагностики добавим короткое видео свободного хода.",
+      },
+    ],
   },
   {
-    id: "tires",
+    id: "matching-tires",
     group: "Безопасность",
-    title: "Одинаковый комплект шин 265/70 R15",
-    price: 55_000,
-    priceLabel: "ориентир 55 000 ₽",
-    note: "Сейчас на автомобиле зафиксированы разные размеры. Цена зависит от бренда и состояния шин.",
-    confidence: "Товар и работа",
+    title: "Разные размеры шин",
+    problem: "На автомобиле одновременно стоят 31x10.50 R15 LT и 265/70 R15. До выравнивания размера полный привод использовать нельзя.",
+    result: "Подобрать одинаковый комплект 265/70 R15 или согласованный эквивалент, выполнить монтаж и проверить давление на всех колёсах.",
+    price: 57_800,
+    priceLabel: "комплект с монтажом около 57 800 ₽",
+    breakdown: "Ориентир на комплект шин 55 000 ₽ плюс около 2 800 ₽ за шиномонтаж R15 для внедорожника.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен комплект",
+    images: [
+      {
+        src: "/images/barter/pajero/wheel-31.webp",
+        alt: "Шина Pajero размера 31x10.50 R15 LT",
+        caption: "Фактический размер на одном колесе: 31x10.50 R15 LT.",
+      },
+      {
+        src: "/images/barter/pajero/wheel-265.webp",
+        alt: "Шина Pajero размера 265/70 R15",
+        caption: "Фактический размер на другом колесе: 265/70 R15.",
+      },
+    ],
   },
   {
     id: "sunroof",
     group: "Техника",
     title: "Диагностика и ремонт штатного люка",
+    problem: "Штатный электролюк не работает. Сам люк и блок POWER SUNROOF физически находятся на месте.",
+    result: "Проверить питание, кнопку, привод, тросы, направляющие и дренажи. Вернуть открытие, закрытие и герметичность.",
     price: 15_000,
     priceLabel: "предварительно 15 000 ₽",
-    note: "Точная цена только после дефектовки привода, тросов, направляющих и электрики.",
+    breakdown: "Реалистичный коридор старого механизма 10 000-30 000 ₽. Точная цена только после дефектовки.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужна дефектовка",
+    images: [
+      {
+        src: "/images/barter/pajero/sunroof.webp",
+        alt: "Штатный люк Mitsubishi Pajero из салона",
+        caption: "Физически люк и блок управления на месте.",
+      },
+    ],
   },
   {
     id: "ac",
     group: "Техника",
     title: "Диагностика и восстановление кондиционера",
+    problem: "Штатное управление и элементы системы установлены, но рабочее состояние и тип хладагента пока не подтверждены.",
+    result: "Проверить герметичность, компрессор, муфту, трубки, электрику и температуру на выходе. После этого восстановить систему по смете.",
     price: 25_000,
     priceLabel: "предварительно 25 000 ₽",
-    note: "Система установлена. Нужно проверить герметичность, компрессор, муфту, трубки и тип хладагента.",
+    breakdown: "Диагностика 500-1 500 ₽. Мелкий ремонт обычно 5 000-15 000 ₽, крупный с деталями может стоить 20 000-60 000 ₽.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужна диагностика",
+    images: [
+      {
+        src: "/images/barter/pajero/ac-controls.webp",
+        alt: "Штатное управление кондиционером Mitsubishi Pajero",
+        caption: "На панели есть штатное управление кондиционером.",
+      },
+    ],
   },
   {
     id: "selector",
     group: "Техника",
     title: "Селектор АКПП: положение D включается не всегда",
+    problem: "Положение D иногда не включается с первого перевода рычага, приходится возвращать селектор и повторять.",
+    result: "Начать с троса, втулок, регулировки и датчика положения. Не разбирать АКПП до проверки внешнего механизма.",
     price: 5_000,
     priceLabel: "предварительно 5 000 ₽",
-    note: "Начать с троса, втулок, регулировки и датчика положения. Это не смета на ремонт АКПП.",
+    breakdown: "Это оценка диагностики и регулировки селектора, не смета капитального ремонта коробки.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужна диагностика",
+    images: [
+      {
+        src: "/images/barter/pajero/handbrake-console.webp",
+        alt: "Селектор автоматической коробки Mitsubishi Pajero",
+        caption: "Штатный селектор АКПП и раздаточной коробки.",
+      },
+    ],
   },
   {
     id: "electrics",
     group: "Техника",
     title: "Поворотники и ревизия старой проводки",
+    problem: "Поворотники не всегда автоматически отключаются после возврата руля. Под рулём есть следы старой сигнализации.",
+    result: "Проверить подрулевой механизм, безопасно разобрать старые подключения и привести проводку в понятное состояние.",
     price: 6_000,
     priceLabel: "предварительно 6 000 ₽",
-    note: "Поворотники не всегда отключаются. Под рулём также есть следы старой сигнализации.",
+    breakdown: "Диагностика автоэлектрики 1 500-2 300 ₽, ремонт проводки и детали считаются после вскрытия.",
     confidence: "Предварительная оценка",
-  },
-  {
-    id: "exhaust",
-    group: "Техника",
-    title: "Восстановление задней части выхлопа",
-    price: 6_000,
-    priceLabel: "ориентир 6 000 ₽",
-    note: "Сгнившая конечная труба уже снята. Нужно проверить фланец следующей секции.",
-    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен автоэлектрик",
+    images: [
+      {
+        src: "/images/barter/pajero/steering.webp",
+        alt: "Зона под рулём Mitsubishi Pajero со старой проводкой",
+        caption: "Рулевая колонка и зона, где обнаружены старые подключения.",
+      },
+    ],
   },
   {
     id: "fuel-door",
     group: "Техника",
     title: "Замок лючка бензобака",
+    problem: "Ключ зажигания не открывает личинку лючка. Возможны закисание или ранее заменённый замок.",
+    result: "Разобрать и очистить личинку, восстановить её либо подобрать совместимый замок под понятный ключ.",
     price: 4_500,
     priceLabel: "предварительно 4 500 ₽",
-    note: "Ключ зажигания не открывает личинку. Нужны очистка, ремонт или подбор замка.",
+    breakdown: "Оценка 3 000-8 000 ₽ в зависимости от сохранности личинки и наличия совместимой детали.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужен мастер",
+    images: [
+      {
+        src: "/images/barter/pajero/fuel-door.webp",
+        alt: "Лючок бензобака Mitsubishi Pajero и снятая деталь замка",
+        caption: "Фактическое состояние лючка, ключа и снятой детали.",
+      },
+    ],
   },
   {
     id: "heater",
     group: "Техника",
     title: "Очистка печки и воздуховодов",
+    problem: "При включении печки из воздуховодов пошла пыль после долгого простоя автомобиля.",
+    result: "Очистить моторчик, короб, воздухозаборник, воздуховоды и доступную часть испарителя без маскировки запаха ароматизатором.",
     price: 5_000,
     priceLabel: "предварительно 5 000 ₽",
-    note: "При включении печки из воздуховодов пошла пыль. Нужна разборка и очистка контура.",
+    breakdown: "Объём зависит от необходимой разборки панели и состояния испарителя.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужна очистка",
+    images: [
+      {
+        src: "/images/barter/pajero/interior-dashboard-wide.webp",
+        alt: "Панель и воздуховоды салона Mitsubishi Pajero",
+        caption: "Штатная панель, воздуховоды и зона блока отопителя.",
+      },
+    ],
   },
   {
     id: "door-card",
-    group: "Салон",
+    group: "Детейлинг",
     title: "Ремонт трещины на левой дверной карте",
+    problem: "На подлокотнике водительской двери есть глубокая трещина и разрыв покрытия. Это дефект салонного пластика, не кузовной металл.",
+    result: "Задекорировать повреждение без грубой заплатки: ремонт пластика, восстановление фактуры или локальная перетяжка элемента.",
     price: 4_500,
     priceLabel: "ориентир 4 500 ₽",
-    note: "Это дефект пластика и покрытия в салоне. Нужен аккуратный ремонт или перетяжка элемента.",
+    breakdown: "Публичный коридор ремонта дверной карты в Тюмени 2 000-6 500 ₽.",
     confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен мастер салона",
+    images: [
+      {
+        src: "/images/barter/pajero/door-card-crack.webp",
+        alt: "Трещина на пластике водительской дверной карты Pajero",
+        caption: "Крупный план трещины и разрыва покрытия.",
+      },
+    ],
   },
   {
-    id: "dashboard",
-    group: "Салон",
-    title: "Ровная подсветка приборов и кнопок",
+    id: "dashboard-relight",
+    group: "Детейлинг",
+    title: "Пересвет панели приборов и кнопок",
+    problem: "Подсветка шкал и органов управления неравномерная, часть зон выглядит тускло.",
+    result: "Сделать ровный аккуратный свет приборов, кнопок и селектора, сохранить точность стрелок и не вмешиваться в пробег.",
     price: 6_000,
     priceLabel: "предварительно 6 000 ₽",
-    note: "Сохранить точность стрелок, выровнять подсветку шкал и органов управления.",
+    breakdown: "Рыночный коридор пересвета щитка 3 000-8 000 ₽. Расширенный пересвет кнопок и климата оценивается отдельно.",
     confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужен автоэлектрик",
+    images: [
+      {
+        src: "/images/barter/pajero/dashboard.webp",
+        alt: "Приборная панель Mitsubishi Pajero перед пересветом",
+        caption: "Реальная приборная панель до пересвета.",
+      },
+    ],
   },
   {
-    id: "detailing",
-    group: "Салон",
+    id: "interior-cleaning",
+    group: "Детейлинг",
     title: "Полная химчистка салона внедорожника",
+    problem: "После долгого простоя салону нужна глубокая очистка, включая трудные зоны трёхрядного внедорожника.",
+    result: "Очистить сиденья, потолок, ковролин, пластик, ремни, дверные карты, багажную часть и зоны под сиденьями, затем высушить салон.",
     price: 15_000,
     priceLabel: "ориентир 15 000 ₽",
-    note: "Глубокая очистка сидений, пластика, ковролина, потолка и трудных зон.",
+    breakdown: "Публичный коридор полной химчистки внедорожника в Тюмени 7 500-20 000 ₽.",
     confidence: "Публичный прайс",
-  },
-  {
-    id: "multimedia",
-    group: "Рестомод",
-    title: "Teyes, две камеры и шесть динамиков",
-    price: 27_000,
-    priceLabel: "около 27 000 ₽ за монтаж",
-    note: "Оборудование и нестандартная доработка старой проводки считаются отдельно.",
-    confidence: "Предварительная оценка",
-  },
-  {
-    id: "alarm",
-    group: "Рестомод",
-    title: "Сигнализация с автозапуском",
-    price: 22_000,
-    priceLabel: "ориентир 22 000 ₽",
-    note: "Комплект и монтаж. Сначала удалить или безопасно отключить старую систему.",
-    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен детейлинг",
+    images: [
+      {
+        src: "/images/barter/pajero/rear-seats.webp",
+        alt: "Задние ряды салона Mitsubishi Pajero перед химчисткой",
+        caption: "Фактическое состояние второго и третьего рядов.",
+      },
+      {
+        src: "/images/barter/pajero/interior-dashboard-wide.webp",
+        alt: "Передняя часть салона Mitsubishi Pajero перед химчисткой",
+        caption: "Передняя панель, ковролин и трудные зоны салона.",
+      },
+    ],
   },
   {
     id: "tint",
-    group: "Рестомод",
-    title: "Новая тонировка",
+    group: "Детейлинг",
+    title: "Тонировка автомобиля",
+    problem: "Нужна новая аккуратная тонировка с понятной светопропускаемостью и без пузырей старого слоя.",
+    result: "Снять старую плёнку при необходимости, подготовить стёкла и затонировать выбранные зоны законным материалом.",
     price: 9_500,
     priceLabel: "ориентир 9 500 ₽",
-    note: "Стоимость зависит от плёнки, количества стёкол и демонтажа старого слоя.",
+    breakdown: "Публичный коридор тонировки в круг в Тюмени 5 300-14 000 ₽. Задняя полусфера отдельно обычно 2 500-5 000 ₽.",
     confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен детейлинг",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Mitsubishi Pajero перед обновлением тонировки",
+        caption: "Реальный автомобиль и текущая площадь остекления.",
+      },
+    ],
+  },
+  {
+    id: "vinyl-wrap",
+    group: "Детейлинг",
+    title: "Полная оклейка цветной плёнкой",
+    problem: "Кузову нужен единый свежий образ без дорогостоящей полной окраски.",
+    result: "Подготовить ЛКП, согласовать цвет и полностью оклеить кузов винилом с аккуратными подворотами и разборкой по технологии студии.",
+    price: 120_000,
+    priceLabel: "оценка около 120 000 ₽",
+    breakdown: "Рабочий оценочный коридор 90 000-165 000 ₽. Локальные студии обычно считают такой Pajero только после осмотра.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужна студия плёнки",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Кузов Mitsubishi Pajero для полной оклейки виниловой плёнкой",
+        caption: "Левая сторона кузова до оклейки.",
+      },
+    ],
+  },
+  {
+    id: "ppf-risk",
+    group: "Детейлинг",
+    title: "Бронеплёнка на зоны риска",
+    problem: "Передняя часть и зоны частых касаний нуждаются в защите от сколов и царапин.",
+    result: "Закрыть полиуретаном капот, передний бампер, фары, зеркала и согласованные зоны риска.",
+    price: 65_000,
+    priceLabel: "ориентир 65 000 ₽",
+    breakdown: "Публичный коридор по Тюмени 62 000-70 000 ₽. Это альтернатива полной бронеплёнке, а не дополнительная строка к ней.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужна студия плёнки",
+    exclusiveGroup: "ppf",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Передняя часть Mitsubishi Pajero для оклейки бронеплёнкой",
+        caption: "Кузов и передние зоны риска до защиты.",
+      },
+    ],
+  },
+  {
+    id: "ppf-full",
+    group: "Детейлинг",
+    title: "Полная бронеплёнка кузова",
+    problem: "Максимальный сценарий защиты нужен только при хорошем состоянии и подготовке ЛКП.",
+    result: "Оклеить полиуретаном весь кузов без крыши либо согласованный полный набор деталей.",
+    price: 180_000,
+    priceLabel: "ориентир 180 000 ₽",
+    breakdown: "Публичный коридор для внедорожника без крыши 170 000-190 000 ₽. В калькуляторе выбирается вместо зон риска.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужна студия плёнки",
+    exclusiveGroup: "ppf",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Mitsubishi Pajero для полной оклейки полиуретановой плёнкой",
+        caption: "Полная площадь кузова оценивается после проверки ЛКП.",
+      },
+    ],
   },
   {
     id: "polish",
-    group: "Рестомод",
+    group: "Детейлинг",
     title: "Восстановительная полировка кузова",
+    problem: "ЛКП нужно очистить, измерить и вернуть ему более ровный блеск перед защитой или как самостоятельный этап.",
+    result: "Провести тест толщины, согласовать допустимую глубину коррекции, отполировать кузов и защитить поверхность.",
     price: 30_000,
     priceLabel: "ориентир 30 000 ₽",
-    note: "Финальная стоимость после осмотра ЛКП и теста толщины покрытия.",
+    breakdown: "Публичный коридор восстановительной полировки в Тюмени 10 000-38 000 ₽.",
     confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен детейлинг",
+    images: [
+      {
+        src: "/images/barter/pajero/pajero-side.webp",
+        alt: "Лакокрасочное покрытие Mitsubishi Pajero перед полировкой",
+        caption: "Левая сторона кузова для первичной оценки ЛКП.",
+      },
+    ],
+  },
+  {
+    id: "teyes-unit",
+    group: "Мультимедиа",
+    title: "TEYES CC4 Pro 12/256 и рамка",
+    problem: "Сейчас установлена старая однодиновая Sony. Нужен современный экран с навигацией, связью, камерой и запасом памяти.",
+    result: "Подобрать TEYES CC4 Pro 12/256 подходящего размера с совместимой рамкой для панели Pajero II 1991-1999.",
+    price: 50_000,
+    priceLabel: "ориентир владельца около 50 000 ₽",
+    breakdown: "Ориентир владельца на AliExpress около 50 000 ₽. Официальный прайс TEYES на 9-дюймовую версию 12/256 сейчас 66 600 ₽. Совместимость конкретной рамки проверяем до заказа.",
+    confidence: "Ориентир владельца",
+    status: "active",
+    statusLabel: "Можно закрыть оборудованием",
+    sourceUrl: "https://teyes.com.ru/product/planshet-teyes-cc4-pro-12-256-9-dyujmov/",
+    images: [
+      {
+        src: "/images/barter/pajero/teyes-cc4-pro.webp",
+        alt: "Автомагнитола TEYES CC4 Pro 12/256",
+        caption: "TEYES CC4 Pro 12/256, официальный продуктовый рендер.",
+        sourceUrl: "https://teyes.com.ru/product/planshet-teyes-cc4-pro-12-256-9-dyujmov/",
+      },
+      {
+        src: "/images/barter/pajero/teyes-installed-reference.webp",
+        alt: "Автомагнитола TEYES, установленная на верхней части панели",
+        caption: "Реальный референс посадки экрана TEYES на верхней части панели. Это пример установки, не текущий Pajero.",
+      },
+      {
+        src: "/images/barter/pajero/pajero-radio-frame.webp",
+        alt: "Переходная рамка 9 дюймов для Mitsubishi Pajero II 1991-1999",
+        caption: "Пример рамки 9 дюймов для Pajero II. Геометрию верхней части панели сверяем перед покупкой.",
+        sourceUrl: "https://www.smartclub27.ru/collection/pajero-2/product/perehodnaya-ramka-magnitoly-mitsubishi-pajero-ii-1991-1999-9-dyuymov",
+      },
+    ],
+  },
+  {
+    id: "teyes-install",
+    group: "Мультимедиа",
+    title: "Монтаж TEYES CC4 Pro в Pajero",
+    problem: "Даже если голову покупает владелец, нужен отдельный установочный кейс со старой проводкой и нестандартной рамкой.",
+    result: "Снять Sony, установить экран с рамкой на панели, подключить питание, звук, GPS, микрофон и проверить отсутствие паразитного разряда.",
+    price: 18_000,
+    priceLabel: "монтаж около 18 000 ₽",
+    breakdown: "Фирменный минимум за ГУ, переднюю и заднюю камеры начинается примерно от 14 390 ₽. Для Pajero 1991 заложен запас на старую проводку и подгонку рамки.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Можно взять только монтаж",
+    sourceUrl: "https://install.teyes72.ru/",
+    images: [
+      {
+        src: "/images/barter/pajero/current-sony-head-unit.webp",
+        alt: "Текущая автомагнитола Sony в Mitsubishi Pajero",
+        caption: "Текущая однодиновая Sony, которую предстоит заменить.",
+      },
+      {
+        src: "/images/barter/pajero/pajero-radio-frame.webp",
+        alt: "Рамка для установки девятидюймовой магнитолы в Pajero II",
+        caption: "Пример установочной рамки, точная совместимость проверяется мастером.",
+        sourceUrl: "https://www.smartclub27.ru/collection/pajero-2/product/perehodnaya-ramka-magnitoly-mitsubishi-pajero-ii-1991-1999-9-dyuymov",
+      },
+    ],
+  },
+  {
+    id: "teyes-digital-360",
+    group: "Мультимедиа",
+    title: "TEYES Digital 360, комплект камер",
+    problem: "Большому рамному внедорожнику нужен обзор слепых зон при парковке и манёврах.",
+    result: "Поставить четыре цифровые камеры, откалибровать панораму и вывести круговой обзор на CC4 Pro.",
+    price: 21_900,
+    priceLabel: "оборудование 21 900 ₽",
+    breakdown: "Это комплект Digital 360 без отдельной AHD ADAS-камеры. В калькуляторе он является альтернативой расширенному набору 360 + ADAS.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Можно закрыть оборудованием",
+    exclusiveGroup: "teyes-360-kit",
+    sourceUrl: "https://teyes.com.ru/yakutsk/product/kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro/",
+    images: [
+      {
+        src: "/images/barter/pajero/teyes-digital-360.webp",
+        alt: "Комплект цифровых камер TEYES Digital 360",
+        caption: "Четыре цифровые камеры кругового обзора для CC4 Pro.",
+        sourceUrl: "https://teyes.com.ru/yakutsk/product/kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro/",
+      },
+    ],
+  },
+  {
+    id: "teyes-360-adas",
+    group: "Мультимедиа",
+    title: "TEYES 360 + AHD ADAS",
+    problem: "Расширенный сценарий добавляет к круговому обзору переднюю ADAS-камеру и видеорегистратор.",
+    result: "Установить совместный комплект 360, AHD ADAS и регистратора, выполнить калибровку и проверку всех режимов.",
+    price: 34_900,
+    priceLabel: "оборудование 34 900 ₽",
+    breakdown: "Официальный комплект 360 + AHD ADAS стоит дороже базовых камер за 21 900 ₽. В калькуляторе эти два набора взаимоисключающие.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Расширенный вариант",
+    exclusiveGroup: "teyes-360-kit",
+    sourceUrl: "https://teyes.com.ru/product/komplekt-krugovogo-obzora-teyes-360-ahd-adas-dlya-cc4-pro/",
+    images: [
+      {
+        src: "/images/barter/pajero/teyes-360-adas.webp",
+        alt: "Схема комплекта TEYES 360 с AHD ADAS",
+        caption: "Схема цифровых камер 360 и AHD ADAS из официальной карточки TEYES.",
+        sourceUrl: "https://teyes.com.ru/product/komplekt-krugovogo-obzora-teyes-360-ahd-adas-dlya-cc4-pro/",
+      },
+    ],
+  },
+  {
+    id: "teyes-360-install",
+    group: "Мультимедиа",
+    title: "Монтаж и калибровка кругового обзора",
+    problem: "Камеры недостаточно просто закрепить: нужны скрытая проводка, правильные точки установки и геометрическая калибровка.",
+    result: "Установить четыре камеры, проложить проводку, откалибровать изображение и проверить обзор вокруг автомобиля.",
+    price: 25_000,
+    priceLabel: "монтаж от 25 000 ₽",
+    breakdown: "Фирменный публичный ориентир TEYES в Тюмени. Нестандартная разборка старого Pajero оценивается мастером отдельно.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Можно взять только монтаж",
+    sourceUrl: "https://teyes.com.ru/tyumen/product/cifrovye-kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro-kvadratnye/",
+    images: [
+      {
+        src: "/images/barter/pajero/teyes-digital-360.webp",
+        alt: "Камеры TEYES Digital 360 для установки на Pajero",
+        caption: "Комплект требует монтажа по четырём сторонам автомобиля и калибровки.",
+        sourceUrl: "https://teyes.com.ru/tyumen/product/cifrovye-kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro-kvadratnye/",
+      },
+    ],
+  },
+  {
+    id: "audio-system",
+    group: "Мультимедиа",
+    title: "Усилитель и новая акустика",
+    problem: "Нужна цельная система, а не случайная замена пары динамиков. В салоне предусмотрено несколько штатных точек.",
+    result: "Собрать схему: две точки в торпедо, две в передних дверях, две в задних дверях, две у третьего ряда либо сабвуфер. Установить усилитель, проводку и настроить звук.",
+    price: 18_000,
+    priceLabel: "монтаж предварительно 18 000 ₽",
+    breakdown: "Это оценка работы с проводкой и настройкой. Усилитель, восемь динамиков или сабвуфер подбираются и считаются отдельно.",
+    confidence: "Предварительная оценка",
+    status: "active",
+    statusLabel: "Нужен установочный центр",
+    images: [
+      {
+        src: "/images/barter/pajero/speaker-dashboard.webp",
+        alt: "Штатная точка акустики в торпедо Mitsubishi Pajero",
+        caption: "Одна из точек акустики в торпедо.",
+      },
+      {
+        src: "/images/barter/pajero/speaker-door.webp",
+        alt: "Штатная точка акустики в двери Mitsubishi Pajero",
+        caption: "Дверная карта со штатной зоной динамика.",
+      },
+      {
+        src: "/images/barter/pajero/rear-seats.webp",
+        alt: "Задние ряды Mitsubishi Pajero для размещения акустики или сабвуфера",
+        caption: "Зона второго и третьего рядов для финальной конфигурации.",
+      },
+    ],
+  },
+  {
+    id: "alarm",
+    group: "Мультимедиа",
+    title: "Сигнализация с автозапуском",
+    problem: "Под рулём остались неизвестные элементы старой охранной системы. Новую нельзя подключать поверх непонятной проводки.",
+    result: "Удалить или безопасно отключить старую систему, установить новый комплект с автозапуском и проверить блокировки.",
+    price: 22_000,
+    priceLabel: "комплект с монтажом около 22 000 ₽",
+    breakdown: "Публичный коридор комплектов с установкой в Тюмени 17 000-25 000 ₽.",
+    confidence: "Публичный прайс",
+    status: "active",
+    statusLabel: "Нужен автоэлектрик",
+    images: [
+      {
+        src: "/images/barter/pajero/steering.webp",
+        alt: "Зона старой сигнализации под рулём Mitsubishi Pajero",
+        caption: "Перед новой установкой нужна ревизия старых подключений.",
+      },
+    ],
+  },
+  {
+    id: "underbody-amg",
+    group: "Техника",
+    title: "Пескоструй днища, антикор и скрытые полости",
+    problem: "На раме, подвеске и кронштейнах есть поверхностная коррозия. Нужна полноценная подготовка, а не нанесение состава поверх ржавчины.",
+    result: "AMG выполнит пескоструй днища, антикор и обработку скрытых полостей. Работы назначены на 4 августа 2026.",
+    price: 100_000,
+    priceLabel: "согласованный пакет около 100 000 ₽",
+    breakdown: "Стоимость исправлена по фактической договорённости с AMG и включает пескоструй. В новый калькулятор задача не входит.",
+    confidence: "Согласованная стоимость",
+    status: "scheduled",
+    statusLabel: "В работе с AMG",
+    images: [
+      {
+        src: "/images/barter/pajero/underbody.webp",
+        alt: "Днище Mitsubishi Pajero до пескоструя и антикора",
+        caption: "Состояние днища до работ AMG.",
+      },
+      {
+        src: "/images/barter/pajero/amg-site-preview.webp",
+        alt: "Сайт-прототип AMG Antikor 72, подготовленный CentrLP",
+        caption: "Встречная работа CentrLP уже показана на сайте 72o.ru.",
+        sourceUrl: "https://72o.ru/",
+      },
+    ],
+  },
+  {
+    id: "exhaust-completed",
+    group: "Техника",
+    title: "Восстановление задней части выхлопа",
+    problem: "Задняя оконечная часть была сгнившей, а конечная труба ранее была снята. На фото виден выхлопной тракт и соединение во время первичного осмотра.",
+    result: "По подтверждению владельца задняя часть выхлопа уже восстановлена. Новый исполнитель по этой задаче не нужен.",
+    price: 6_000,
+    priceLabel: "рыночный ориентир выполненной работы около 6 000 ₽",
+    breakdown: "Фото фиксирует состояние до закрытия задачи. После-фото и точный состав сварки или заменённых деталей пока не приложены, поэтому мы не выдумываем технологию ремонта.",
+    confidence: "Предварительная оценка",
+    status: "completed",
+    statusLabel: "Выполнено",
+    images: [
+      {
+        src: "/images/barter/pajero/exhaust-before.webp",
+        alt: "Выхлопной тракт Mitsubishi Pajero на подъёмнике до восстановления задней части",
+        caption: "Фото до закрытия задачи: участок выхлопа и фланцевое соединение на подъёмнике.",
+      },
+    ],
   },
 ];
 
@@ -273,55 +733,38 @@ const digitalServices: DigitalService[] = [
     benefit: "Превратит перечень работ в убедительную витрину с фото, этапами, сметой и заявкой с нужными данными.",
     icon: Globe2,
   },
-];
-
-const problemStories = [
   {
-    title: "Неработающий штатный люк",
-    text: "Нужна дефектовка привода, направляющих и электрики. Физически люк и блок управления на месте.",
-    image: "/images/barter/pajero/sunroof.webp",
-    alt: "Штатный люк Mitsubishi Pajero из салона",
-    price: "10 000-30 000 ₽ после дефектовки",
+    id: "seo-copy",
+    title: "Продающая SEO-страница услуги",
+    href: "/services/copywriting-texts",
+    price: 12_000,
+    priceLabel: servicePriceByHref["/services/copywriting-texts"]?.price || "от 12 000 ₽",
+    benefit: "Закроет одну конкретную боль клиента, ответит на вопросы по цене и процессу и даст поиску отдельную точку входа на прибыльную услугу.",
+    icon: Sparkles,
   },
   {
-    title: "Трещина на левой дверной карте",
-    text: "Глубокая трещина и разрыв покрытия на подлокотнике. Нужен ремонт пластика или локальная перетяжка.",
-    image: "/images/barter/pajero/door-card-crack.webp",
-    alt: "Трещина на пластике водительской дверной карты Pajero",
-    price: "2 000-6 500 ₽",
-  },
-  {
-    title: "Кондиционер установлен, состояние неизвестно",
-    text: "На панели есть штатное управление. До сметы нужны проверка герметичности, компрессора, муфты, трубок и хладагента.",
-    image: "/images/barter/pajero/ac-controls.webp",
-    alt: "Штатное управление кондиционером Mitsubishi Pajero",
-    price: "диагностика 500-1 500 ₽, ремонт по результату",
-  },
-  {
-    title: "Подсветка приборов и кнопок",
-    text: "Задача не в декоративной ленте. Нужны ровный свет, аккуратная шкала и сохранение точности стрелок.",
-    image: "/images/barter/pajero/dashboard.webp",
-    alt: "Приборная панель Mitsubishi Pajero перед пересветом",
-    price: "3 000-8 000 ₽",
-  },
-  {
-    title: "Замок лючка бензобака",
-    text: "Ключ зажигания не открывает личинку. Возможны закисание, замена замка или подбор совместимой детали.",
-    image: "/images/barter/pajero/fuel-door.webp",
-    alt: "Открытый лючок бензобака Pajero и снятая пластиковая деталь",
-    price: "предварительно 3 000-8 000 ₽",
+    id: "vk-bot",
+    title: "Чат-бот ВКонтакте",
+    href: "/services/chatbot-vk",
+    price: 30_000,
+    priceLabel: servicePriceByHref["/services/chatbot-vk"]?.price || "от 30 000 ₽",
+    benefit: "Квалифицирует обращение, соберёт марку, проблему и фото, ответит на типовые вопросы и передаст мастеру уже понятную заявку.",
+    icon: MessageCircle,
   },
 ];
 
 const priceSources = [
-  ["Антикор ЛАБ Тюмень", "https://tjumen.antikorlab.ru/"],
-  ["Антикор 72", "https://antikor72.ru/"],
   ["АвтоКлимат", "https://carclimate.ru/news/%D1%86%D0%B5%D0%BD%D1%8B-%D0%BD%D0%B0-%D0%B7%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D1%83-%D1%80%D0%B5%D0%BC%D0%BE%D0%BD%D1%82-%D0%BE%D0%B1%D1%81%D0%BB%D1%83%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/"],
   ["А-Бренд", "https://autoservice72.ru/"],
   ["REAKTOR", "https://tyumen.reaktor24.ru/service/repair/repair_electrics/"],
   ["Перетяжка72", "https://peretyazhka72.ru/ceny/"],
   ["Royal Detailing", "https://royaldetailing72.ru/"],
+  ["Auberg, бронеплёнка", "https://auberg.pro/kuzov/okleika-antigraviynoi-plenkoi/"],
+  ["ТонировкаПрофи", "https://tonirovka-72.ru/price"],
   ["Teyes Тюмень", "https://install.teyes72.ru/"],
+  ["TEYES CC4 Pro 12/256", "https://teyes.com.ru/product/planshet-teyes-cc4-pro-12-256-9-dyujmov/"],
+  ["TEYES Digital 360", "https://teyes.com.ru/yakutsk/product/kamery-krugovogo-obzora-teyes-digital-360-dlya-cc4-pro/"],
+  ["TEYES 360 + ADAS", "https://teyes.com.ru/product/komplekt-krugovogo-obzora-teyes-360-ahd-adas-dlya-cc4-pro/"],
 ] as const;
 
 function buildEquivalentServices(target: number) {
@@ -355,6 +798,7 @@ function setMeta(selector: string, attribute: string, value: string) {
 
 const BarterSTO = () => {
   const [selectedJobs, setSelectedJobs] = useState<string[]>([]);
+  const [activeFilter, setActiveFilter] = useState<RepairFilter>("Все");
   const [copyState, setCopyState] = useState<"idle" | "copying" | "copied" | "error">("idle");
 
   useEffect(() => {
@@ -388,9 +832,15 @@ const BarterSTO = () => {
     });
   }, []);
 
+  const activeRepairJobs = useMemo(() => repairJobs.filter((job) => job.status === "active"), []);
+  const closedRepairJobs = useMemo(() => repairJobs.filter((job) => job.status !== "active"), []);
+  const filteredRepairJobs = useMemo(
+    () => activeFilter === "Все" ? activeRepairJobs : activeRepairJobs.filter((job) => job.group === activeFilter),
+    [activeFilter, activeRepairJobs],
+  );
   const selectedRepairJobs = useMemo(
-    () => repairJobs.filter((job) => selectedJobs.includes(job.id)),
-    [selectedJobs],
+    () => activeRepairJobs.filter((job) => selectedJobs.includes(job.id)),
+    [activeRepairJobs, selectedJobs],
   );
 
   const repairTotal = useMemo(
@@ -401,11 +851,24 @@ const BarterSTO = () => {
   const recommendedServices = useMemo(() => buildEquivalentServices(repairTotal), [repairTotal]);
   const serviceTotal = recommendedServices.reduce((sum, service) => sum + service.price, 0);
   const uncovered = Math.max(0, repairTotal - serviceTotal);
+  const serviceOverage = Math.max(0, serviceTotal - repairTotal);
 
   const toggleJob = (id: string) => {
-    setSelectedJobs((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
-    );
+    const selectedJob = activeRepairJobs.find((job) => job.id === id);
+    if (!selectedJob) return;
+
+    setSelectedJobs((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id);
+
+      const withoutAlternative = selectedJob.exclusiveGroup
+        ? current.filter((item) => {
+            const other = activeRepairJobs.find((job) => job.id === item);
+            return other?.exclusiveGroup !== selectedJob.exclusiveGroup;
+          })
+        : current;
+
+      return [...withoutAlternative, id];
+    });
     setCopyState("idle");
   };
 
@@ -423,6 +886,7 @@ const BarterSTO = () => {
       "Эквивалент CentrLP:",
       ...recommendedServices.map((service) => `- ${service.title}: ${service.priceLabel}`),
       `Итого по прайсу CentrLP: ${money.format(serviceTotal)} ₽`,
+      `Разница: ${money.format(Math.abs(serviceTotal - repairTotal))} ₽ ${serviceTotal >= repairTotal ? "в сторону CentrLP" : "в сторону автомобильных работ"}`,
       "",
       "Точная смета, материалы, сроки и критерии приёмки фиксируются после осмотра.",
     ].join("\n");
@@ -472,12 +936,12 @@ const BarterSTO = () => {
 
       <main>
         <section className="relative overflow-hidden border-b border-white/10">
-          <div className="mx-auto grid min-h-[calc(100dvh-4rem)] max-w-[1400px] items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-10 lg:py-14">
+          <div className="mx-auto grid min-h-[calc(100dvh-4rem)] max-w-[1400px] items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:py-14">
             <div className="relative z-10 max-w-2xl">
               <p className="mb-5 max-w-max rounded-full border border-[#f3a712]/35 bg-[#f3a712]/10 px-4 py-2 text-sm font-semibold text-[#ffd36d]">
                 Mitsubishi Pajero II, 1991, 3.0 V6
               </p>
-              <h1 className="max-w-[12ch] text-balance text-[clamp(2.8rem,6.4vw,5.8rem)] font-black leading-[0.95] tracking-[-0.04em] text-white">
+              <h1 className="max-w-[18ch] text-balance text-[clamp(2.8rem,4.5vw,4.5rem)] font-black leading-[0.95] tracking-[-0.04em] text-white">
                 Ремонт в обмен на рост автосервиса
               </h1>
               <p className="mt-6 max-w-[58ch] text-pretty text-lg leading-8 text-[#c9ced0]">
@@ -539,135 +1003,193 @@ const BarterSTO = () => {
 
         <section className="border-b border-white/10 py-20 lg:py-28">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
-            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-              <div className="lg:sticky lg:top-28">
-                <div className="inline-flex items-center gap-2 rounded-full bg-[#25332b] px-4 py-2 text-sm font-bold text-[#a8e6bd]">
-                  <CheckCircle2 className="h-4 w-4" />
-                  Исполнитель найден
-                </div>
-                <h2 className="mt-5 text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-5xl">
-                  Поиск по мовилю закрыт
-                </h2>
-                <p className="mt-5 max-w-[52ch] text-lg leading-8 text-[#b9c0c2]">
-                  С AMG уже встретились. Пескоструй днища, антикор и обработка скрытых полостей записаны на 4 августа 2026.
-                </p>
-                <div className="mt-7 rounded-[14px] bg-[#1a201d] p-5">
-                  <p className="line-through decoration-[#a8e6bd] decoration-2 text-lg font-bold text-[#89928d]">
-                    Найти партнёра на пескоструй, антикор и скрытые полости
-                  </p>
-                  <p className="mt-3 text-sm leading-6 text-[#c6cdca]">
-                    Согласовано, но ещё не завершено. На странице останется весь путь, а после работ добавим фото результата.
-                  </p>
-                  <p className="mt-4 font-black text-[#a8e6bd]">Рыночный ориентир пакета: 48 900-55 000 ₽</p>
-                </div>
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#25332b] px-4 py-2 text-sm font-bold text-[#a8e6bd]">
+                <CheckCircle2 className="h-4 w-4" />
+                Прогресс уже есть
               </div>
+              <h2 className="mt-5 text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
+                Закрытые и взятые в работу кейсы
+              </h2>
+              <p className="mt-5 max-w-[66ch] text-lg leading-8 text-[#b9c0c2]">
+                Их не прячем: они показывают, что обмен уже работает. Но повторно выбрать эти задачи в калькуляторе нельзя.
+              </p>
+            </div>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                <figure>
-                  <img
-                    src="/images/barter/pajero/underbody.webp"
-                    alt="Коррозия на днище и элементах рамы Pajero перед обработкой"
-                    width={960}
-                    height={1280}
-                    className="aspect-[4/5] w-full rounded-[14px] object-cover"
-                    loading="lazy"
-                  />
-                  <figcaption className="mt-3 text-sm leading-6 text-[#929a9d]">
-                    Видимая поверхностная коррозия. Явные силовые дыры по фото не подтверждены.
-                  </figcaption>
-                </figure>
-                <figure className="sm:pt-20">
-                  <a href="https://72o.ru/" target="_blank" rel="noreferrer" className="block group">
-                    <img
-                      src="/images/barter/pajero/amg-site-preview.webp"
-                      alt="Первый экран сайта AMG Antikor 72, подготовленного CentrLP"
-                      width={1440}
-                      height={850}
-                      className="aspect-[16/10] w-full rounded-[14px] object-cover object-top transition-transform group-active:scale-[0.99]"
-                      loading="lazy"
-                    />
-                  </a>
-                  <figcaption className="mt-3 text-sm leading-6 text-[#c6cdca]">
-                    Встречная работа уже показана делом: CentrLP подготовил сайт-прототип для AMG на{" "}
-                    <a className="font-bold text-[#ffd36d] underline decoration-[#ffd36d]/40 underline-offset-4" href="https://72o.ru/" target="_blank" rel="noreferrer">
-                      72o.ru
-                    </a>.
-                  </figcaption>
-                </figure>
-              </div>
+            <div className="mt-12 divide-y divide-white/10 border-y border-white/10">
+              {closedRepairJobs.map((job, index) => (
+                <article key={job.id} className="grid gap-8 py-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start">
+                  <div className={index % 2 === 1 ? "lg:order-2" : ""}>
+                    <div className={`grid gap-3 ${job.images.length > 1 ? "sm:grid-cols-2" : ""}`}>
+                      {job.images.map((image, imageIndex) => (
+                        <figure key={image.src} className={imageIndex === 0 && job.images.length > 2 ? "sm:col-span-2" : ""}>
+                          {image.sourceUrl ? (
+                            <a href={image.sourceUrl} target="_blank" rel="noreferrer" className="group block">
+                              <img
+                                src={image.src}
+                                alt={image.alt}
+                                width={1280}
+                                height={960}
+                                className="aspect-[4/3] w-full rounded-[14px] object-cover transition-transform group-active:scale-[0.99]"
+                                loading="lazy"
+                              />
+                            </a>
+                          ) : (
+                            <img
+                              src={image.src}
+                              alt={image.alt}
+                              width={1280}
+                              height={960}
+                              className="aspect-[4/3] w-full rounded-[14px] object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                          <figcaption className="mt-2 text-sm leading-6 text-[#899295]">{image.caption}</figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className={index % 2 === 1 ? "lg:order-1" : ""}>
+                    <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
+                      <span className="rounded-full bg-[#26342c] px-3 py-1 text-[#9fe2b1]">{job.statusLabel}</span>
+                      <span className="text-[#899295]">{job.group}</span>
+                    </div>
+                    <h3 className="mt-4 text-3xl font-black tracking-[-0.03em] text-[#929b96] line-through decoration-[#8bdd9f] decoration-2 sm:text-4xl">
+                      {job.title}
+                    </h3>
+                    <p className="mt-5 leading-7 text-[#aeb5b7]"><strong className="text-white">Было:</strong> {job.problem}</p>
+                    <p className="mt-3 leading-7 text-[#c7ceca]"><strong className="text-white">Статус:</strong> {job.result}</p>
+                    <p className="mt-5 text-xl font-black text-[#a8e6bd]">{job.priceLabel}</p>
+                    <p className="mt-3 rounded-[14px] bg-[#171c1a] p-4 text-sm leading-6 text-[#98a39d]">{job.breakdown}</p>
+                  </div>
+                </article>
+              ))}
             </div>
           </div>
         </section>
 
         <section id="problems" className="border-b border-white/10 bg-[#111415] py-20 lg:py-28">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
-            <h2 className="max-w-[16ch] text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
-              Что ещё нужно сделать
-            </h2>
-            <p className="mt-5 max-w-[66ch] text-lg leading-8 text-[#abb3b5]">
-              Ниже не список желаний из каталога. Это зафиксированные симптомы и видимые дефекты. Точная смета появляется только после профильной диагностики.
-            </p>
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h2 className="max-w-[16ch] text-balance text-4xl font-black tracking-[-0.035em] text-white sm:text-6xl">
+                  Каждая задача отдельно
+                </h2>
+                <p className="mt-5 max-w-[68ch] text-lg leading-8 text-[#abb3b5]">
+                  Тормоза, ручник, рулевой люфт и шины больше не смешаны. У каждого кейса есть симптом, ожидаемый результат, фото и свой ориентир стоимости.
+                </p>
+              </div>
+              <a
+                href="#calculator"
+                className="inline-flex min-h-12 w-max items-center gap-2 rounded-full border border-[#f3a712]/45 px-5 font-black text-[#ffd36d] transition-colors hover:border-[#f3a712]"
+              >
+                Перейти к расчёту
+                <Calculator className="h-5 w-5" />
+              </a>
+            </div>
 
-            <div className="mt-12 grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-12">
-              {problemStories.map((problem, index) => (
-                <article
-                  key={problem.title}
-                  className={index === 0 || index === 3 ? "lg:col-span-7" : "lg:col-span-5"}
+            <div className="mt-9 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" aria-label="Фильтр задач">
+              {(["Все", ...repairGroups] as RepairFilter[]).map((filter) => (
+                <button
+                  key={filter}
+                  type="button"
+                  onClick={() => setActiveFilter(filter)}
+                  aria-pressed={activeFilter === filter}
+                  className={`min-h-11 shrink-0 rounded-full px-4 text-sm font-black transition-colors ${
+                    activeFilter === filter
+                      ? "bg-[#f3a712] text-[#111315]"
+                      : "border border-white/15 text-[#c8cdcf] hover:border-white/35"
+                  }`}
                 >
-                  <img
-                    src={problem.image}
-                    alt={problem.alt}
-                    width={1280}
-                    height={960}
-                    className={`w-full rounded-[14px] object-cover ${index === 0 || index === 3 ? "aspect-[16/10]" : "aspect-[4/3]"}`}
-                    loading="lazy"
-                  />
-                  <div className="mt-5 max-w-2xl">
-                    <h3 className="text-2xl font-black tracking-[-0.025em] text-white">{problem.title}</h3>
-                    <p className="mt-3 leading-7 text-[#aeb5b7]">{problem.text}</p>
-                    <p className="mt-3 font-bold text-[#ffd36d]">{problem.price}</p>
+                  {filter}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-10 divide-y divide-white/10 border-y border-white/10">
+              {filteredRepairJobs.map((job, index) => (
+                <article key={job.id} className="grid gap-8 py-10 lg:grid-cols-[minmax(280px,0.72fr)_minmax(0,1.28fr)] lg:items-start">
+                  <div className={index % 3 === 2 ? "lg:order-2" : ""}>
+                    <div className={`grid gap-3 ${job.images.length > 1 ? "grid-cols-2" : ""}`}>
+                      {job.images.map((image, imageIndex) => {
+                        const photo = (
+                          <img
+                            src={image.src}
+                            alt={image.alt}
+                            width={1280}
+                            height={960}
+                            className={`w-full rounded-[14px] object-cover ${imageIndex === 0 && job.images.length > 2 ? "aspect-[16/10]" : "aspect-[4/3]"}`}
+                            loading="lazy"
+                          />
+                        );
+
+                        return (
+                          <figure key={`${job.id}-${image.src}`} className={imageIndex === 0 && job.images.length > 2 ? "col-span-2" : ""}>
+                            {image.sourceUrl ? (
+                              <a href={image.sourceUrl} target="_blank" rel="noreferrer" className="block transition-opacity hover:opacity-90">
+                                {photo}
+                              </a>
+                            ) : photo}
+                            <figcaption className="mt-2 text-xs leading-5 text-[#818b8e]">{image.caption}</figcaption>
+                          </figure>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className={index % 3 === 2 ? "lg:order-1" : ""}>
+                    <div className="flex flex-wrap items-center gap-2 text-sm font-bold">
+                      <span className="rounded-full bg-[#242a2b] px-3 py-1 text-[#d4dadb]">{job.group}</span>
+                      <span className="text-[#f3a712]">{job.statusLabel}</span>
+                    </div>
+                    <h3 className="mt-4 text-3xl font-black tracking-[-0.03em] text-white sm:text-4xl">{job.title}</h3>
+
+                    <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                      <div>
+                        <p className="text-xs font-black uppercase tracking-[0.16em] text-[#788285]">Что происходит</p>
+                        <p className="mt-2 leading-7 text-[#aeb5b7]">{job.problem}</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-black uppercase tracking-[0.16em] text-[#788285]">Какой нужен результат</p>
+                        <p className="mt-2 leading-7 text-[#d2d7d8]">{job.result}</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-6 border-l-2 border-[#f3a712] pl-4">
+                      <p className="text-xl font-black text-[#ffd36d]">{job.priceLabel}</p>
+                      <p className="mt-2 text-sm leading-6 text-[#929c9e]">{job.breakdown}</p>
+                      <p className="mt-2 text-xs font-bold text-[#6f797c]">{job.confidence}</p>
+                    </div>
+
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        onClick={() => toggleJob(job.id)}
+                        className={`inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-black transition-colors ${
+                          selectedJobs.includes(job.id)
+                            ? "bg-[#f3a712] text-[#111315]"
+                            : "border border-white/20 text-white hover:border-[#f3a712]/70"
+                        }`}
+                      >
+                        {selectedJobs.includes(job.id) ? <Check className="h-4 w-4" /> : <CircleDollarSign className="h-4 w-4" />}
+                        {selectedJobs.includes(job.id) ? "Добавлено в расчёт" : "Добавить в расчёт"}
+                      </button>
+                      {job.sourceUrl ? (
+                        <a
+                          href={job.sourceUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex min-h-11 items-center gap-2 px-2 text-sm font-bold text-[#aeb5b7] transition-colors hover:text-[#ffd36d]"
+                        >
+                          Источник цены
+                          <ArrowUpRight className="h-4 w-4" />
+                        </a>
+                      ) : null}
+                    </div>
                   </div>
                 </article>
               ))}
-
-              <article className="lg:col-span-12">
-                <div className="grid gap-5 rounded-[14px] bg-[#1b2021] p-5 sm:grid-cols-2 lg:grid-cols-[0.8fr_1.2fr] lg:p-8">
-                  <div>
-                    <div className="flex items-center gap-2 text-[#ffd36d]">
-                      <ShieldCheck className="h-5 w-5" />
-                      <span className="font-black">Приоритет безопасности</span>
-                    </div>
-                    <h3 className="mt-4 text-3xl font-black tracking-[-0.03em] text-white">Тормоза, ручник, рулевой люфт и разные шины</h3>
-                    <p className="mt-4 max-w-[50ch] leading-7 text-[#aeb5b7]">
-                      Большая выработка тормозных дисков, неработающий ручник, задержка реакции руля и два размера шин. До выравнивания колёс полный привод использовать нельзя.
-                    </p>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <figure>
-                      <img
-                        src="/images/barter/pajero/wheel-31.webp"
-                        alt="Шина Pajero размера 31 на переднем колесе"
-                        width={1280}
-                        height={960}
-                        className="aspect-square w-full rounded-[14px] object-cover"
-                        loading="lazy"
-                      />
-                      <figcaption className="mt-2 text-sm text-[#929a9d]">31x10.50 R15 LT</figcaption>
-                    </figure>
-                    <figure>
-                      <img
-                        src="/images/barter/pajero/wheel-265.webp"
-                        alt="Шина Pajero размера 265/70 R15 на другом колесе"
-                        width={1280}
-                        height={960}
-                        className="aspect-square w-full rounded-[14px] object-cover"
-                        loading="lazy"
-                      />
-                      <figcaption className="mt-2 text-sm text-[#929a9d]">265/70 R15</figcaption>
-                    </figure>
-                  </div>
-                </div>
-              </article>
             </div>
           </div>
         </section>
@@ -733,24 +1255,25 @@ const BarterSTO = () => {
             <div className="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(340px,0.55fr)]">
               <div className="space-y-9">
                 <div className="rounded-[14px] border border-[#6abf86]/30 bg-[#193023]/40 p-5">
-                  <div className="flex gap-3">
-                    <CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-[#8bdd9f]" />
-                    <div>
-                      <p className="line-through decoration-[#8bdd9f] decoration-2 font-black text-[#98a69c]">
-                        Пескоструй, антикор и скрытые полости
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-[#b9c9bd]">
-                        Уже в работе с AMG. Дата записи: 4 августа 2026. Рыночный ориентир 52 000 ₽ не участвует в новом расчёте.
-                      </p>
-                    </div>
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-[#8bdd9f]">Не участвуют в расчёте</p>
+                  <div className="mt-4 space-y-4">
+                    {closedRepairJobs.map((job) => (
+                      <div key={job.id} className="flex gap-3">
+                        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#8bdd9f]" />
+                        <div>
+                          <p className="font-black text-[#98a69c] line-through decoration-[#8bdd9f] decoration-2">{job.title}</p>
+                          <p className="mt-1 text-sm leading-6 text-[#b9c9bd]">{job.statusLabel}. {job.priceLabel}.</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                {(["Безопасность", "Техника", "Салон", "Рестомод"] as RepairGroup[]).map((group) => (
+                {repairGroups.map((group) => (
                   <fieldset key={group}>
                     <legend className="mb-4 text-2xl font-black text-white">{group}</legend>
                     <div className="grid gap-3 sm:grid-cols-2">
-                      {repairJobs.filter((job) => job.group === group).map((job) => {
+                      {activeRepairJobs.filter((job) => job.group === group).map((job) => {
                         const checked = selectedJobs.includes(job.id);
                         return (
                           <label
@@ -775,10 +1298,10 @@ const BarterSTO = () => {
                               {job.priceLabel}
                             </span>
                             <span className={`mt-2 block text-sm leading-6 ${checked ? "text-[#303637]" : "text-[#9fa8aa]"}`}>
-                              {job.note}
+                              {job.result}
                             </span>
                             <span className={`mt-3 block text-xs font-bold ${checked ? "text-[#3f4647]" : "text-[#7f898c]"}`}>
-                              {job.confidence}
+                              {job.confidence}{job.exclusiveGroup ? " · альтернативный вариант" : ""}
                             </span>
                           </label>
                         );
@@ -819,18 +1342,32 @@ const BarterSTO = () => {
                     </div>
 
                     <div className="mt-6 border-t border-white/10 pt-5">
-                      <div className="flex items-center justify-between gap-4">
-                        <span className="text-sm font-bold text-[#aeb5b7]">Пакет CentrLP по прайсу</span>
-                        <span className="text-xl font-black text-white">{money.format(serviceTotal)} ₽</span>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="text-sm font-bold text-[#aeb5b7]">Автомобильные работы</span>
+                          <span className="font-black text-white">{money.format(repairTotal)} ₽</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="text-sm font-bold text-[#aeb5b7]">Пакет CentrLP по прайсу</span>
+                          <span className="font-black text-white">{money.format(serviceTotal)} ₽</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-4 border-t border-white/10 pt-2">
+                          <span className="text-sm font-black text-[#d9dede]">Разница</span>
+                          <span className="text-xl font-black text-[#ffd36d]">{money.format(Math.abs(serviceTotal - repairTotal))} ₽</span>
+                        </div>
                       </div>
                       {uncovered > 0 ? (
                         <p className="mt-3 rounded-[14px] bg-[#3a2414] p-3 text-sm leading-6 text-[#ffd39a]">
-                          Выбранный объём выше стандартного набора на {money.format(uncovered)} ₽. Нужен индивидуальный цифровой этап или денежная доплата.
+                          Автомобильный объём выше полного стандартного набора CentrLP на {money.format(uncovered)} ₽. Разницу можно закрыть отдельным цифровым этапом или доплатой.
+                        </p>
+                      ) : serviceOverage > 0 ? (
+                        <p className="mt-3 rounded-[14px] bg-[#1a2a20] p-3 text-sm leading-6 text-[#a8ddb4]">
+                          Пакет CentrLP выше авторабот на {money.format(serviceOverage)} ₽. Уберём один этап, сузим его объём или согласуем встречную доплату.
                         </p>
                       ) : (
                         <p className="mt-3 flex items-start gap-2 text-sm leading-6 text-[#9fd7ae]">
                           <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
-                          Пакет закрывает ориентир авторабот. Финальный состав фиксируем после сметы.
+                          Получился равный ориентир. Финальный состав фиксируем после сметы.
                         </p>
                       )}
                     </div>
