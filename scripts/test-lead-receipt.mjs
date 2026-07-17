@@ -8,6 +8,7 @@ import http from "node:http";
 
 const port = 34000 + Math.floor(Math.random() * 1000);
 const crmPort = port + 1000;
+const maxPort = port + 2000;
 const logDir = fs.mkdtempSync(path.join(os.tmpdir(), "centrlp-lead-receipt-"));
 const serverPath = path.resolve("server/mailer/index.mjs");
 const crmCalls = [];
@@ -28,6 +29,17 @@ const crmServer = http.createServer((req, res) => {
   });
 });
 await new Promise((resolve) => crmServer.listen(crmPort, "127.0.0.1", resolve));
+const maxCalls = [];
+const maxServer = http.createServer((req, res) => {
+  let rawBody = "";
+  req.on("data", (chunk) => { rawBody += chunk; });
+  req.on("end", () => {
+    maxCalls.push({ url: req.url, authorization: req.headers.authorization, payload: JSON.parse(rawBody) });
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: { id: "max-test-message" } }));
+  });
+});
+await new Promise((resolve) => maxServer.listen(maxPort, "127.0.0.1", resolve));
 const child = spawn(process.execPath, [serverPath], {
   env: {
     ...process.env,
@@ -38,6 +50,9 @@ const child = spawn(process.execPath, [serverPath], {
     MAILER_JSON_TRANSPORT: "1",
     LEAD_LOG_DIR: logDir,
     CRM_WEBHOOK_URL: `http://127.0.0.1:${crmPort}/api/webhooks/site-form`,
+    MAX_BOT_TOKEN: "test-max-token",
+    MAX_RECIPIENT_USER_ID: "6382431",
+    MAX_API_BASE: `http://127.0.0.1:${maxPort}`,
   },
   stdio: ["ignore", "pipe", "pipe"],
 });
@@ -96,6 +111,7 @@ try {
   assert.equal(firstReceipt.delivery_status, "stored");
   assert.equal(firstReceipt.notification_status, "sent");
   assert.equal(firstReceipt.crm_status, "sent");
+  assert.equal(firstReceipt.max_status, "sent");
   assert.equal(firstReceipt.lead_submission_id, submissionId);
   assert.match(firstReceipt.receipt_id, /^[0-9a-f-]{36}$/i);
 
@@ -116,8 +132,14 @@ try {
   assert.equal(storedReceipt.notification_status, "sent");
   assert.equal(storedReceipt.crm_status, "sent");
   assert.equal(storedReceipt.crm_deal_id, 123);
+  assert.equal(storedReceipt.max_status, "sent");
   assert.equal(crmCalls.length, 1);
   assert.equal(crmCalls[0].lead_submission_id, submissionId);
+  assert.equal(maxCalls.length, 1);
+  assert.match(maxCalls[0].url, /user_id=6382431/);
+  assert.equal(maxCalls[0].authorization, "test-max-token");
+  assert.match(maxCalls[0].payload.text, /Новая заявка CentrLP/);
+  assert.match(maxCalls[0].payload.text, /Интеграционный тест/);
 
   const synthetic = await postLead({
     ...validLead,
@@ -126,6 +148,7 @@ try {
   });
   assert.equal((await synthetic.json()).crm_status, "skipped");
   assert.equal(crmCalls.length, 1, "synthetic smoke leads must never enter CRM");
+  assert.equal(maxCalls.length, 1, "synthetic smoke leads must never enter MAX");
 
   const metrics = await (await fetch(`${baseUrl}/api/lead/metrics`)).json();
   assert.equal(metrics.confirmed_leads_30d, 1);
@@ -138,5 +161,6 @@ try {
 } finally {
   child.kill("SIGTERM");
   crmServer.close();
+  maxServer.close();
   fs.rmSync(logDir, { recursive: true, force: true });
 }

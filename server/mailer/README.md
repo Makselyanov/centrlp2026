@@ -93,6 +93,12 @@ fires `lead_confirmed` only when CRM returns the matching submission id and a de
 `lead_stored` records the earlier durable server receipt. Synthetic smoke leads are
 never forwarded to CRM.
 
+Real leads are also sent by the CentrLP MAX bot directly to the owner's private
+MAX user id. The publication channel is never used for lead notifications. The
+mailer does not configure a webhook, poll updates, process commands, or answer
+incoming bot messages; the bot token remains server-only. Failed MAX deliveries
+are persisted and retried, while synthetic smoke leads are always skipped.
+
 `GET /api/lead/metrics` returns only safe aggregates for route diagnostics:
 totals for today, 7/30 days, last lead timestamp, normalized counters by page
 path and lead source, plus 30-day event/UTM counters. It never returns raw lead

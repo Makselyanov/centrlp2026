@@ -42,6 +42,9 @@ const {
   MAILER_JSON_TRANSPORT = "0",
   CRM_WEBHOOK_URL = "https://centrlp.centrlp.ru/api/webhooks/site-form",
   CRM_TIMEOUT_MS = "8000",
+  MAX_BOT_TOKEN = "",
+  MAX_RECIPIENT_USER_ID = "6382431",
+  MAX_API_BASE = "https://platform-api.max.ru",
 } = process.env;
 
 if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
@@ -208,7 +211,9 @@ const deliveredReceiptCache = new Map();
 const pendingDeliveries = new Map();
 const pendingNotifications = new Map();
 const pendingCrmDeliveries = new Map();
+const pendingMaxDeliveries = new Map();
 let crmReady = Boolean(CRM_WEBHOOK_URL);
+let maxReady = Boolean(MAX_BOT_TOKEN && MAX_RECIPIENT_USER_ID);
 
 function receiptFilePath(leadSubmissionId) {
   return path.join(RECEIPT_DIR, `${leadSubmissionId}.json`);
@@ -230,6 +235,7 @@ function toPublicReceipt(lead, duplicate = false) {
     delivery_status: lead.delivery_status,
     notification_status: lead.notification_status || "sent",
     crm_status: lead.crm_status || "disabled",
+    max_status: lead.max_status || "disabled",
     lead_submission_id: lead.lead_submission_id,
     receipt_id: lead.receipt_id,
     received_at: lead.received_at,
@@ -390,10 +396,82 @@ async function deliverLeadToCrm(storedLead) {
   }
 }
 
+function renderMaxNotification(lead) {
+  return [
+    "Новая заявка CentrLP",
+    `Имя: ${lead.name}`,
+    `Телефон: ${lead.phone}`,
+    lead.business ? `Бизнес: ${lead.business}` : "",
+    lead.city ? `Город: ${lead.city}` : "",
+    lead.goal ? `Задача: ${lead.goal}` : "",
+    lead.comment ? `Комментарий: ${lead.comment}` : "",
+    `Страница: ${lead.page_path || "/"}`,
+    `Источник: ${lead.utm_source || "direct"}`,
+    `CRM: ${lead.crm_deal_id ? `сделка ${lead.crm_deal_id}` : lead.crm_status}`,
+    `Квитанция: ${lead.receipt_id}`,
+  ].filter(Boolean).join("\n").slice(0, 3900);
+}
+
+async function deliverLeadToMax(storedLead) {
+  if (["sent", "skipped", "disabled"].includes(storedLead.max_status)) return storedLead;
+  if (!MAX_BOT_TOKEN || !MAX_RECIPIENT_USER_ID) {
+    return persistReceipt({ ...storedLead, max_status: "disabled" });
+  }
+  if (storedLead.utm_source === "codex_smoke") {
+    return persistReceipt({ ...storedLead, max_status: "skipped" });
+  }
+
+  let delivery = pendingMaxDeliveries.get(storedLead.lead_submission_id);
+  if (!delivery) {
+    delivery = (async () => {
+      let updatedLead;
+      try {
+        const url = new URL("/messages", MAX_API_BASE);
+        url.searchParams.set("user_id", MAX_RECIPIENT_USER_ID);
+        url.searchParams.set("disable_link_preview", "true");
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: MAX_BOT_TOKEN,
+            "Content-Type": "application/json",
+          },
+          signal: AbortSignal.timeout(8000),
+          body: JSON.stringify({ text: renderMaxNotification(storedLead), notify: true }),
+        });
+        if (!response.ok) throw new Error(`max_http_${response.status}`);
+        maxReady = true;
+        updatedLead = {
+          ...storedLead,
+          max_status: "sent",
+          max_delivered_at: new Date().toISOString(),
+        };
+      } catch (err) {
+        maxReady = false;
+        console.error("[mailer] MAX delivery failed:", err.message);
+        updatedLead = {
+          ...storedLead,
+          max_status: "failed",
+          max_failed_at: new Date().toISOString(),
+          max_error: String(err.name || err.code || "max_error").slice(0, 120),
+        };
+      }
+      return persistReceipt(updatedLead);
+    })();
+    pendingMaxDeliveries.set(storedLead.lead_submission_id, delivery);
+  }
+
+  try {
+    return await delivery;
+  } finally {
+    pendingMaxDeliveries.delete(storedLead.lead_submission_id);
+  }
+}
+
 setInterval(() => {
   for (const lead of deliveredReceiptCache.values()) {
     if (lead.notification_status !== "sent") void notifyLead(lead);
     if (["pending", "failed"].includes(lead.crm_status)) void deliverLeadToCrm(lead);
+    if (["pending", "failed"].includes(lead.max_status)) void deliverLeadToMax(lead);
   }
 }, 10 * 60 * 1000).unref();
 
@@ -457,6 +535,8 @@ function readLeadMetrics() {
     confirmed_leads_30d: 0,
     crm_confirmed_leads_30d: 0,
     crm_failures_30d: 0,
+    max_notifications_30d: 0,
+    max_failures_30d: 0,
     notification_failures_30d: 0,
     by_event_30d: [],
     by_event_page_30d: [],
@@ -526,6 +606,8 @@ function readLeadMetrics() {
       }
       if (currentEntry.crm_status === "sent" && currentEntry.crm_deal_id) totals.crm_confirmed_leads_30d += 1;
       if (currentEntry.crm_status === "failed") totals.crm_failures_30d += 1;
+      if (currentEntry.max_status === "sent") totals.max_notifications_30d += 1;
+      if (currentEntry.max_status === "failed") totals.max_failures_30d += 1;
       if (currentEntry.notification_status === "failed") totals.notification_failures_30d += 1;
 
       const pagePath = normalizePathMetric(currentEntry.page_path || currentEntry.lead_source || "/");
@@ -592,6 +674,7 @@ app.get(["/health", "/api/lead/health"], (_req, res) => {
     receipt_storage: "ready",
     notification_status: smtpReady ? "ready" : "degraded",
     crm_status: CRM_WEBHOOK_URL ? (crmReady ? "ready" : "degraded") : "disabled",
+    max_status: MAX_BOT_TOKEN && MAX_RECIPIENT_USER_ID ? (maxReady ? "ready" : "degraded") : "disabled",
   });
 });
 
@@ -736,10 +819,12 @@ app.post("/api/lead", async (req, res) => {
           delivery_status: "stored",
           notification_status: "pending",
           crm_status: lead.utm_source === "codex_smoke" ? "skipped" : "pending",
+          max_status: lead.utm_source === "codex_smoke" ? "skipped" : "pending",
           stored_at: new Date().toISOString(),
         });
         const crmLead = await deliverLeadToCrm(storedLead);
-        const notifiedLead = await notifyLead(crmLead);
+        const maxLead = await deliverLeadToMax(crmLead);
+        const notifiedLead = await notifyLead(maxLead);
 
         if (!logLead(notifiedLead)) {
           throw new Error("lead_receipt_log_failed");
