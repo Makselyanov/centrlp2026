@@ -4,15 +4,6 @@ import { AppErrorBoundary } from "./components/AppErrorBoundary";
 import { AppFallback } from "./components/AppFallback";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { CookieConsent } from "./components/CookieConsent";
-import {
-  AiAutomationPage,
-  CrmBusinessPage,
-  ExpressAuditPage,
-  LandingTyumenPage,
-  LocalSeoTyumenPage,
-  WebsiteDevelopmentTyumenPage,
-  YandexDirectTyumenPage,
-} from "./pages/LandingPages";
 import { trackMetric } from "./lib/metrics";
 
 // Lazy-loaded pages
@@ -22,6 +13,9 @@ const Services = lazy(() => import("./pages/Services"));
 const AI = lazy(() => import("./pages/AI"));
 const Barter = lazy(() => import("./pages/Barter"));
 const BarterFurniture = lazy(() => import("./pages/BarterFurniture"));
+if (typeof window !== "undefined" && window.location.hostname === "barter.centrlp.ru") {
+  void import("./pages/BarterSTO");
+}
 const BarterSTO = lazy(() => import("./pages/BarterSTO"));
 const BarterCleaning = lazy(() => import("./pages/BarterCleaning"));
 const BusinessPlans = lazy(() => import("./pages/BusinessPlans"));
@@ -38,6 +32,13 @@ const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default:
 const AiTuragent = lazy(() => import("./pages/AiTuragent"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const ExpressAuditPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.ExpressAuditPage })));
+const WebsiteDevelopmentTyumenPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.WebsiteDevelopmentTyumenPage })));
+const LandingTyumenPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.LandingTyumenPage })));
+const YandexDirectTyumenPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.YandexDirectTyumenPage })));
+const CrmBusinessPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.CrmBusinessPage })));
+const AiAutomationPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.AiAutomationPage })));
+const LocalSeoTyumenPage = lazy(() => import("./pages/LandingPages").then((module) => ({ default: module.LocalSeoTyumenPage })));
 
 // Lazy-loaded service pages
 const WebsiteDevelopment = lazy(() => import("./pages/services/WebsiteDevelopment"));
@@ -198,18 +199,24 @@ const AppRoutes = () => {
   );
 };
 
-const App = () => (
-  <>
-    <Suspense fallback={null}>
-      <GlobalToasters />
-    </Suspense>
-    <BrowserRouter>
-      <FirstPartyAnalytics />
-      <ScrollToTop />
-      <AppRoutes />
-      <CookieConsent />
-    </BrowserRouter>
-  </>
-);
+const App = () => {
+  const barterHost = isBarterHost();
+
+  return (
+    <>
+      {!barterHost ? (
+        <Suspense fallback={null}>
+          <GlobalToasters />
+        </Suspense>
+      ) : null}
+      <BrowserRouter>
+        <FirstPartyAnalytics />
+        <ScrollToTop />
+        <AppRoutes />
+        {!barterHost ? <CookieConsent /> : null}
+      </BrowserRouter>
+    </>
+  );
+};
 
 export default App;

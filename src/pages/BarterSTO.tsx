@@ -65,6 +65,40 @@ type DigitalService = {
 
 const money = new Intl.NumberFormat("ru-RU");
 
+const responsiveCaseImages: Record<string, { small: string; originalWidth: number }> = {
+  "/images/barter/pajero/pajero-side.webp": {
+    small: "/images/barter/pajero/pajero-side-640.webp",
+    originalWidth: 1280,
+  },
+  "/images/barter/pajero/rear-seats.webp": {
+    small: "/images/barter/pajero/rear-seats-640.webp",
+    originalWidth: 1280,
+  },
+  "/images/barter/pajero/underbody.webp": {
+    small: "/images/barter/pajero/underbody-640.webp",
+    originalWidth: 960,
+  },
+  "/images/barter/pajero/exhaust-before.webp": {
+    small: "/images/barter/pajero/exhaust-before-640.webp",
+    originalWidth: 960,
+  },
+  "/images/barter/pajero/steering.webp": {
+    small: "/images/barter/pajero/steering-640.webp",
+    originalWidth: 1280,
+  },
+};
+
+const responsiveImageProps = (src: string, sizes: string) => {
+  const responsive = responsiveCaseImages[src];
+  if (!responsive) return { src };
+
+  return {
+    src,
+    srcSet: `${responsive.small} 640w, ${src} ${responsive.originalWidth}w`,
+    sizes,
+  };
+};
+
 const repairGroups: RepairGroup[] = ["Безопасность", "Техника", "Детейлинг", "Мультимедиа"];
 
 const pageSections: Array<{
@@ -785,9 +819,10 @@ const repairJobs: RepairJob[] = [
     sourceUrl: "https://starline72.ru/",
     images: [
       {
-        src: "/images/barter/pajero/steering.webp",
-        alt: "Зона старой сигнализации под рулём Mitsubishi Pajero",
-        caption: "Перед новой установкой нужна ревизия старых подключений.",
+        src: "/images/barter/pajero/starline-a93-v2.webp",
+        alt: "Охранный комплекс StarLine A93 v2 с автозапуском и брелоком",
+        caption: "StarLine A93 v2 с интеллектуальным автозапуском. Фото производителя.",
+        sourceUrl: "https://store.starline.ru/catalog/avtosignalizatsii/starline_a93_v2/",
       },
     ],
   },
@@ -1389,10 +1424,16 @@ const BarterSTO = () => {
             <figure className="relative lg:justify-self-end">
               <div className="absolute -inset-8 -z-10 bg-[#f3a712]/10 blur-3xl" aria-hidden="true" />
               <img
-                src="/images/barter/pajero/pajero-side.webp"
+                {...responsiveImageProps(
+                  "/images/barter/pajero/pajero-side.webp",
+                  "(max-width: 1023px) calc(100vw - 32px), 47vw",
+                )}
                 alt="Серебристый Mitsubishi Pajero второго поколения, вид сбоку"
                 width={1280}
                 height={960}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="aspect-[4/3] w-full max-w-[760px] rounded-[14px] object-cover object-center"
               />
               <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm text-[#9da5a8]">
@@ -1443,7 +1484,10 @@ const BarterSTO = () => {
                           {image.sourceUrl ? (
                             <a href={image.sourceUrl} target="_blank" rel="noreferrer" className="group block">
                               <img
-                                src={image.src}
+                                {...responsiveImageProps(
+                                  image.src,
+                                  "(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) 50vw, 44vw",
+                                )}
                                 alt={image.alt}
                                 width={1280}
                                 height={960}
@@ -1453,7 +1497,10 @@ const BarterSTO = () => {
                             </a>
                           ) : (
                             <img
-                              src={image.src}
+                              {...responsiveImageProps(
+                                image.src,
+                                "(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) 50vw, 44vw",
+                              )}
                               alt={image.alt}
                               width={1280}
                               height={960}
@@ -1486,7 +1533,7 @@ const BarterSTO = () => {
           </div>
         </section>
 
-        <section className="border-b border-white/10 bg-[#111415] py-20 lg:py-28">
+        <section className="border-b border-white/10 bg-[#111415] py-20 [content-visibility:auto] [contain-intrinsic-size:auto_1200px] lg:py-28">
           <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
             <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
               <div>
@@ -1539,7 +1586,10 @@ const BarterSTO = () => {
                       {job.images.map((image, imageIndex) => {
                         const photo = (
                           <img
-                            src={image.src}
+                            {...responsiveImageProps(
+                              image.src,
+                              "(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) 50vw, 42vw",
+                            )}
                             alt={image.alt}
                             width={1280}
                             height={960}
@@ -1621,7 +1671,7 @@ const BarterSTO = () => {
           </div>
         </section>
 
-        <section id="calculator" className="scroll-mt-28 border-b border-white/10 bg-[#141819] py-20 lg:py-28">
+        <section id="calculator" className="scroll-mt-28 border-b border-white/10 bg-[#141819] py-20 [content-visibility:auto] [contain-intrinsic-size:auto_1600px] lg:py-28">
           <div className="mx-auto max-w-[1720px] px-4 sm:px-6 lg:px-10">
             <div className="max-w-4xl">
               <div className="flex items-center gap-3 text-[#ffd36d]">
