@@ -8,6 +8,14 @@
 
 Основная услуга: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic#contact
 
+## Адаптация 18 июля: подтверждённая заявка вместо клика
+
+Счётчик кликов по кнопке не отвечает на главный вопрос: дошла ли заявка до менеджера. Рабочая веб-аналитика должна разделять открытие формы, ошибку, сохранённое обращение и подтверждение CRM.
+
+В CentrLP контрольный маршрут включает серверную квитанцию, защиту от дублей, сохранение источника и UTM, а также подтверждение CRM с номером сделки. Так рекламные отчёты можно сверять с реальными обращениями, не смешивая их с тестами.
+
+Проверить маршрут заявки и рассчитать настройку от 15 000 ₽: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=telegram&utm_medium=social&utm_campaign=confirmed_lead_analytics_2026_07_18&utm_content=receipt_crm#contact
+
 ## UTM-ссылки
 
 - Telegram — базовая настройка: https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_leads_tyumen_2026_07_14&utm_content=basic_goals#contact

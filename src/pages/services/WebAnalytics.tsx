@@ -64,6 +64,45 @@ const WebAnalytics = () => {
 
       <ServiceImageBand slug="web-analytics" alt="web-analytics — иллюстрация услуги CentrLP" />
 
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Что считаем подтверждённой заявкой</h2>
+              <p className="text-lg text-muted-foreground">
+                Клик по кнопке ещё не означает, что обращение принято. Настройка должна подтвердить весь маршрут: сайт сохранил заявку, не создал дубль, передал источник и UTM, а CRM приняла обращение с собственным номером.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Серверная квитанция",
+                  text: "После успешной отправки форма получает идентификатор приёма. Ошибка формы, нажатие кнопки и сохранённая заявка учитываются раздельно.",
+                },
+                {
+                  title: "Защита от дублей",
+                  text: "Повторная отправка с тем же идентификатором не создаёт второе обращение. Это помогает не завышать число лидов и не дублировать работу менеджера.",
+                },
+                {
+                  title: "Подтверждение CRM",
+                  text: "Конверсию считаем подтверждённой только после ответа CRM с номером сделки. Источник, UTM и страница входа сохраняются для сверки рекламы с обращениями.",
+                },
+              ].map((item) => (
+                <Card key={item.title} className="h-full">
+                  <CardContent className="pt-6">
+                    <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <p className="mt-8 text-center text-muted-foreground">
+              Такой контрольный контур уже используется на формах CentrLP: заявки сохраняются до отправки уведомлений, синтетические проверки отделяются от реальных обращений, а подтверждение CRM и доставка уведомления проверяются независимо.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-card">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
