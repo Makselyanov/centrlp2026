@@ -5,6 +5,8 @@
 Обновлено: 2026-07-17 — добавлены критерии приёмки экспресс-плана
 Кластер: маркетинговая стратегия / план маркетинга / заявки
 Основная страница: https://centrlp.ru/services/marketing-strategy?intent=marketing-express&utm_source=telegram&utm_medium=social&utm_campaign=marketing_plan_order_2026_07_17&utm_content=acceptance#contact
+
+Обновлено 2026-07-20: для расчёта достаточно прислать нишу и регион, 1–2 приоритетные услуги, текущие источники заявок и ориентир по бюджету на тест. Если есть сайт, реклама или CRM, добавьте ссылки и укажите, где сейчас теряются обращения.
 Поддерживающая статья: https://centrlp.ru/blog/plan-marketinga-cena-zakazat-tyumen
 
 UTM-ссылки:
