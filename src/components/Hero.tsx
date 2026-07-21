@@ -198,21 +198,25 @@ export const Hero = () => {
                             </div>
                         </div>
 
-                        <motion.div
+                        <motion.a
+                            href="https://2gis.ru/tyumen/firm/70000001033718655"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute -right-4 top-32 z-30 rounded-2xl border border-white/50 bg-white/90 p-4 shadow-xl backdrop-blur-md"
+                            className="pointer-events-auto absolute -right-4 top-32 z-30 rounded-2xl border border-white/50 bg-white/90 p-4 shadow-xl backdrop-blur-md transition-transform hover:scale-105"
+                            aria-label="Открыть отзывы о CentrLP в 2ГИС"
                         >
                             <div className="flex items-center gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-[#44B78B]">
                                     <Zap className="h-6 w-6" />
                                 </div>
                                 <div>
-                                    <div className="text-lg font-bold text-slate-800">+127%</div>
-                                    <div className="text-xs text-slate-500">Рост эффективности</div>
+                                    <div className="text-lg font-bold text-slate-800">Отзывы клиентов</div>
+                                    <div className="text-xs text-slate-500">CentrLP в 2ГИС</div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </motion.a>
 
                         <motion.div
                             animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
