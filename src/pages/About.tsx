@@ -258,6 +258,15 @@ const About = () => {
                 <span className="font-medium">Flamp</span>
               </a>
               <a
+                href="https://zoon.ru/tyumen/internet/agentstvo_razvitiya_biznesa_centrlp/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 bg-background rounded-full shadow-sm border border-border/50 hover:border-[#8A5CF6] hover:text-[#8A5CF6] transition-all"
+              >
+                <MapPin className="w-5 h-5" />
+                <span className="font-medium">Zoon</span>
+              </a>
+              <a
                 href="https://vk.com/reviews-9137191"
                 target="_blank"
                 rel="noopener noreferrer"

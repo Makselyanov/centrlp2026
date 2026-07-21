@@ -178,6 +178,7 @@ const AuditSelfCheckSection = () => {
 const localTrustLinks = [
   { label: "2ГИС", href: "https://2gis.ru/tyumen/firm/70000001033718655", detail: "карточка и отзывы" },
   { label: "Яндекс Карты", href: "https://yandex.ru/maps/-/CLSbvKjF", detail: "локальная карточка" },
+  { label: "Zoon", href: "https://zoon.ru/tyumen/internet/agentstvo_razvitiya_biznesa_centrlp/", detail: "карточка компании" },
   { label: "ВКонтакте", href: "https://vk.com/reviews-9137191", detail: "отзывы клиентов" },
 ] as const;
 

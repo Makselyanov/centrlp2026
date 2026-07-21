@@ -1172,6 +1172,7 @@ function buildOrganizationSchema() {
       "https://go.2gis.com/hUyea",
       "https://yandex.ru/maps/-/CLSbvKjF",
       "https://tyumen.flamp.ru/firm/centrlp_agentstvo_razvitiya_biznesa-70000001033718655",
+      "https://zoon.ru/tyumen/internet/agentstvo_razvitiya_biznesa_centrlp/",
     ],
     address: {
       "@type": "PostalAddress",
