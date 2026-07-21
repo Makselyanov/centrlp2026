@@ -274,8 +274,10 @@ function buildActions(report) {
       actions.push(`Homepage index verdict: ${verdict} (${coverage || "no coverage state"}) — investigate.`);
     }
     const mobile = result.mobileUsabilityResult?.verdict || "";
-    if (mobile && mobile !== "PASS" && mobile !== "NEUTRAL") {
+    if (mobile === "FAIL") {
       actions.push(`Mobile usability verdict: ${mobile} — fix mobile issues.`);
+    } else if (mobile === "VERDICT_UNSPECIFIED") {
+      actions.push("Homepage mobile usability data is unavailable in URL Inspection; do not infer a technical mobile error from this field.");
     }
   }
 
@@ -361,6 +363,25 @@ function createMarkdownReport(report, days) {
     }
   } else {
     lines.push(`- failed: ${report.byDevice.error.message}`);
+  }
+  lines.push("");
+
+  lines.push("## Top pages by device");
+  if (report.byPageDevice.ok) {
+    const rows = report.byPageDevice.data.rows || [];
+    if (rows.length === 0) {
+      lines.push("- (no page/device data)");
+    } else {
+      lines.push("| # | Page | Device | Clicks | Impressions | CTR | Position |");
+      lines.push("|---|---|---|---:|---:|---:|---:|");
+      rows.forEach((r, i) => {
+        lines.push(
+          `| ${i + 1} | ${r.keys[0]} | ${r.keys[1]} | ${r.clicks} | ${r.impressions} | ${(r.ctr * 100).toFixed(2)}% | ${r.position.toFixed(1)} |`,
+        );
+      });
+    }
+  } else {
+    lines.push(`- failed: ${report.byPageDevice.error.message}`);
   }
   lines.push("");
 
@@ -469,7 +490,7 @@ async function main() {
 
   const baseQuery = { startDate, endDate };
 
-  const [totals, byQuery, byPage, byQueryPage, byCountry, byDevice, sitemaps] = await Promise.all([
+  const [totals, byQuery, byPage, byQueryPage, byCountry, byDevice, byPageDevice, sitemaps] = await Promise.all([
     querySearchAnalytics(accessToken, config.siteUrl, {
       ...baseQuery,
       dimensions: [],
@@ -499,6 +520,11 @@ async function main() {
       ...baseQuery,
       dimensions: ["device"],
       rowLimit: 3,
+    }),
+    querySearchAnalytics(accessToken, config.siteUrl, {
+      ...baseQuery,
+      dimensions: ["page", "device"],
+      rowLimit: 250,
     }),
     safeGscRequest(
       accessToken,
@@ -535,6 +561,7 @@ async function main() {
     byQueryPage,
     byCountry,
     byDevice,
+    byPageDevice,
     sitemaps,
     inspection,
   };
