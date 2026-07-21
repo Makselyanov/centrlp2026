@@ -182,6 +182,16 @@ export default function WebsiteDevelopment() {
                 Как мы работаем
               </Button>
             </div>
+
+            <a
+              href="https://2gis.ru/tyumen/firm/70000001033718655/tab/reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/80 px-4 py-2 text-sm font-semibold text-emerald-900 transition-colors hover:bg-emerald-100"
+            >
+              <ShieldCheck className="h-4 w-4 text-emerald-600" />
+              5.0, 54 оценки и 52 отзыва в 2ГИС
+            </a>
           </div>
         </div>
       </section>
