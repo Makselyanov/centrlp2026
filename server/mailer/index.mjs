@@ -40,6 +40,7 @@ const {
   LEAD_LOG_RETENTION_DAYS = "183",
   LEAD_LOG_DIR = "",
   MAILER_JSON_TRANSPORT = "0",
+  SMTP_ENABLED = "1",
   CRM_WEBHOOK_URL = "https://centrlp.centrlp.ru/api/webhooks/site-form",
   CRM_TIMEOUT_MS = "8000",
   MAX_BOT_TOKEN = "",
@@ -47,25 +48,29 @@ const {
   MAX_API_BASE = "https://platform-api.max.ru",
 } = process.env;
 
-if (!SMTP_USER || !SMTP_PASS || !LEAD_TO) {
+const smtpEnabled = SMTP_ENABLED !== "0";
+
+if (smtpEnabled && (!SMTP_USER || !SMTP_PASS || !LEAD_TO)) {
   console.error("[mailer] missing SMTP_USER / SMTP_PASS / LEAD_TO in env");
   process.exit(1);
 }
 
-let smtpReady = MAILER_JSON_TRANSPORT === "1";
-const transporter = nodemailer.createTransport(
-  MAILER_JSON_TRANSPORT === "1"
-    ? { jsonTransport: true }
-    : {
-        host: SMTP_HOST,
-        port: Number(SMTP_PORT),
-        secure: Number(SMTP_PORT) === 465,
-        auth: { user: SMTP_USER, pass: SMTP_PASS },
-      },
-);
+let smtpReady = !smtpEnabled || MAILER_JSON_TRANSPORT === "1";
+const transporter = smtpEnabled
+  ? nodemailer.createTransport(
+      MAILER_JSON_TRANSPORT === "1"
+        ? { jsonTransport: true }
+        : {
+            host: SMTP_HOST,
+            port: Number(SMTP_PORT),
+            secure: Number(SMTP_PORT) === 465,
+            auth: { user: SMTP_USER, pass: SMTP_PASS },
+          },
+    )
+  : null;
 
 // Verify SMTP connection at startup so failures are loud
-if (typeof transporter.verify === "function") {
+if (transporter && typeof transporter.verify === "function") {
   transporter.verify((err) => {
     smtpReady = !err;
     if (err) console.error("[mailer] SMTP verify failed:", err.message);
@@ -282,6 +287,9 @@ loadDeliveredReceipts();
 
 async function notifyLead(storedLead) {
   if (storedLead.notification_status === "sent") return storedLead;
+  if (!smtpEnabled) {
+    return persistReceipt({ ...storedLead, notification_status: "disabled" });
+  }
 
   let notification = pendingNotifications.get(storedLead.lead_submission_id);
   if (!notification) {
@@ -672,7 +680,7 @@ app.get(["/health", "/api/lead/health"], (_req, res) => {
     service: "centrlp-mailer",
     port: PORT,
     receipt_storage: "ready",
-    notification_status: smtpReady ? "ready" : "degraded",
+    notification_status: smtpEnabled ? (smtpReady ? "ready" : "degraded") : "disabled",
     crm_status: CRM_WEBHOOK_URL ? (crmReady ? "ready" : "degraded") : "disabled",
     max_status: MAX_BOT_TOKEN && MAX_RECIPIENT_USER_ID ? (maxReady ? "ready" : "degraded") : "disabled",
   });

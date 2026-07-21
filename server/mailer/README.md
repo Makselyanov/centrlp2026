@@ -29,6 +29,11 @@ PORT=3021
 LEAD_LOG_RETENTION_DAYS=183
 ```
 
+Set `SMTP_ENABLED=0` when CRM and MAX are the active notification channels and
+the mailbox tariff does not permit SMTP. Receipts continue to be stored and
+forwarded to CRM/MAX; health reports email notifications as `disabled` instead
+of `degraded`.
+
 ## Развёртывание
 
 ```bash

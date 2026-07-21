@@ -2,7 +2,7 @@ export type LeadReceipt = {
   ok: true;
   accepted: true;
   delivery_status: "stored" | "email_delivered";
-  notification_status: "pending" | "sent" | "failed";
+  notification_status: "pending" | "sent" | "failed" | "disabled";
   crm_status: "pending" | "sent" | "failed" | "skipped" | "disabled";
   lead_submission_id: string;
   receipt_id: string;
@@ -25,7 +25,7 @@ export const readLeadReceipt = async (response: Response): Promise<LeadReceipt> 
     payload?.ok !== true ||
     payload?.accepted !== true ||
     !["stored", "email_delivered"].includes(payload?.delivery_status) ||
-    !["pending", "sent", "failed"].includes(payload?.notification_status) ||
+    !["pending", "sent", "failed", "disabled"].includes(payload?.notification_status) ||
     !["pending", "sent", "failed", "skipped", "disabled"].includes(payload?.crm_status) ||
     typeof payload?.lead_submission_id !== "string" ||
     typeof payload?.receipt_id !== "string"
