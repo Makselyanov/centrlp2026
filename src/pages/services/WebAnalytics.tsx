@@ -2,6 +2,7 @@ import { Layout } from "@/components/Layout";
 import { ServiceImageBand } from "@/components/ServiceImageBand";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
+import { MessengerLinks } from "@/components/MessengerLinks";
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, Target, TrendingUp, Eye, Zap, CheckCircle, Settings, LineChart } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -56,9 +57,15 @@ const WebAnalytics = () => {
                 <span>Заявки и CRM</span>
               </div>
             </div>
-            <Button size="lg" className="text-lg px-8" asChild>
-              <a href="?intent=web-analytics#contact">Получить расчёт от 15 000 ₽</a>
-            </Button>
+            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button size="lg" className="text-lg px-8" asChild>
+                <a href="?intent=web-analytics#contact">Получить расчёт от 15 000 ₽</a>
+              </Button>
+              <MessengerLinks variant="fastlane" only={["telegram"]} />
+            </div>
+            <p className="mt-4 text-sm text-muted-foreground">
+              Для первого ответа достаточно ссылки на сайт и короткого описания задачи — пароли не нужны.
+            </p>
           </div>
         </div>
       </section>
