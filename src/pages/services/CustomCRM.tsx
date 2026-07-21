@@ -13,6 +13,8 @@ export default function CustomCRM() {
       price="180000"
       contactIntent="custom-crm"
       heroCtaLabel="Обсудить персональную CRM"
+      heroContactHref="https://t.me/centrlp"
+      heroContactLabel="Написать о CRM в Telegram"
       badge="CRM под вашу модель бизнеса"
       heroTitle="Персональная CRM для малого бизнеса в Тюмени — под ваши продажи и заявки"
       heroDescription="Разрабатываем персональную CRM от 180 000 ₽ под вашу модель продаж, сервиса и внутренней работы. Если готовая система не отражает реальные процессы, собираем нужные роли, статусы, источники заявок, отчёты и автоматизацию без лишних модулей."

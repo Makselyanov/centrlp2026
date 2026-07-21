@@ -9,7 +9,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, Bot, Orbit, Sparkles, Workflow } from "lucide-react";
+import { ArrowRight, Bot, MessageCircle, Orbit, Sparkles, Workflow } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type FeatureItem = {
@@ -70,6 +70,8 @@ interface ServicePageTemplateProps {
   price?: string;
   contactIntent?: string;
   heroCtaLabel?: string;
+  heroContactHref?: string;
+  heroContactLabel?: string;
 }
 
 const floatingIcons = [
@@ -120,6 +122,8 @@ export const ServicePageTemplate = ({
   price,
   contactIntent,
   heroCtaLabel = "Обсудить проект",
+  heroContactHref,
+  heroContactLabel = "Написать в Telegram",
 }: ServicePageTemplateProps) => {
   useAutoBreadcrumb(breadcrumbName);
   useServiceSchema({ name: schemaName, description: schemaDescription, price });
@@ -249,9 +253,17 @@ export const ServicePageTemplate = ({
                   {heroCtaLabel} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="border-slate-300 bg-white/80 backdrop-blur-sm">
-                <Link to="/services">Все услуги</Link>
-              </Button>
+              {heroContactHref ? (
+                <Button size="lg" variant="outline" asChild className="border-slate-300 bg-white/80 backdrop-blur-sm">
+                  <a href={heroContactHref} target="_blank" rel="noreferrer">
+                    <MessageCircle className="mr-2 h-4 w-4" /> {heroContactLabel}
+                  </a>
+                </Button>
+              ) : (
+                <Button size="lg" variant="outline" asChild className="border-slate-300 bg-white/80 backdrop-blur-sm">
+                  <Link to="/services">Все услуги</Link>
+                </Button>
+              )}
             </motion.div>
           </div>
         </div>
