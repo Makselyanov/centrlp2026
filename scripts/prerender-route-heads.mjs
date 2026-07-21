@@ -1160,6 +1160,7 @@ function buildOrganizationSchema() {
       value: "1267200004818",
     },
     url: baseUrl,
+    hasMap: "https://2gis.ru/tyumen/firm/70000001033718655",
     telephone: "+7-905-824-85-64",
     email: "1@centrlp.ru",
     priceRange: "от 15 000 ₽",

@@ -194,6 +194,7 @@ export const useServiceSchema = ({ name, description, price }: ServiceSchemaProp
           "value": "1267200004818"
         },
         "url": "https://centrlp.ru",
+        "hasMap": "https://2gis.ru/tyumen/firm/70000001033718655",
         "telephone": "+7-905-824-85-64",
         "email": "1@centrlp.ru",
         "priceRange": "от 15 000 ₽",
