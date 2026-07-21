@@ -49,7 +49,25 @@ function getGitLastmod(targetPath) {
     return null;
 }
 
+function hasWorkingTreeChange(targetPath) {
+    try {
+        const output = execFileSync(
+            'git',
+            ['status', '--porcelain', '--', toGitPath(targetPath)],
+            { cwd: ROOT_DIR, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }
+        ).trim();
+
+        return Boolean(output);
+    } catch {
+        return false;
+    }
+}
+
 function getFileLastmod(targetPath) {
+    if (hasWorkingTreeChange(targetPath)) {
+        return new Date().toISOString().split('T')[0];
+    }
+
     const gitLastmod = getGitLastmod(targetPath);
     if (gitLastmod) {
         return gitLastmod;
@@ -119,12 +137,9 @@ function getBlogRoutes() {
             let slug = file.replace(/\.md$/, '');
             slug = slug.replace(/^\d{4}-\d{2}-\d{2}-/, '');
             const filePath = path.join(CONTENT_DIR, file);
-            const stat = fs.statSync(filePath);
-            const gitLastmod = getGitLastmod(path.relative(ROOT_DIR, filePath));
-
             return {
                 route: `/blog/${slug}`,
-                lastmod: gitLastmod || stat.mtime.toISOString().split('T')[0],
+                lastmod: getFileLastmod(path.relative(ROOT_DIR, filePath)),
             };
         });
 
@@ -151,12 +166,9 @@ function getPublicIndexRoutes() {
                 return null;
             }
 
-            const stat = fs.statSync(indexPath);
-            const gitLastmod = getGitLastmod(path.relative(ROOT_DIR, indexPath));
-
             return {
                 route: `/${entry.name}`,
-                lastmod: gitLastmod || stat.mtime.toISOString().split('T')[0],
+                lastmod: getFileLastmod(path.relative(ROOT_DIR, indexPath)),
             };
         })
         .filter(Boolean);
