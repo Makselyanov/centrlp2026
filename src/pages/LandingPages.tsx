@@ -176,7 +176,7 @@ const AuditSelfCheckSection = () => {
 };
 
 const localTrustLinks = [
-  { label: "2ГИС", href: "https://go.2gis.com/hUyea", detail: "карточка и отзывы" },
+  { label: "2ГИС", href: "https://2gis.ru/tyumen/firm/70000001033718655", detail: "карточка и отзывы" },
   { label: "Яндекс Карты", href: "https://yandex.ru/maps/-/CLSbvKjF", detail: "локальная карточка" },
   { label: "ВКонтакте", href: "https://vk.com/reviews-9137191", detail: "отзывы клиентов" },
 ] as const;
@@ -184,7 +184,7 @@ const localTrustLinks = [
 const localTrustFacts = [
   { icon: Building2, label: "ООО «ААМХ»", detail: "ИНН 7203606424, официальный договор и закрывающие документы" },
   { icon: MapPin, label: "Тюмень", detail: "офис и встречи: 625022, г. Тюмень, проезд Солнечный, 22" },
-  { icon: Star, label: "5.0 и 52 отзыва", detail: "сводно по 2ГИС, Flamp и Яндекс Картам" },
+  { icon: Star, label: "5.0 и более 50 оценок", detail: "проверяемая карточка CentrLP в 2ГИС" },
 ] as const;
 
 type LandingVisual = {

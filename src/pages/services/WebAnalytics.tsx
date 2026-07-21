@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ContactForm } from "@/components/ContactForm";
 import { MessengerLinks } from "@/components/MessengerLinks";
 import { Card, CardContent } from "@/components/ui/card";
-import { BarChart3, Target, TrendingUp, Eye, Zap, CheckCircle, Settings, LineChart } from "lucide-react";
+import { BarChart3, Target, TrendingUp, Eye, Zap, CheckCircle, Settings, LineChart, Star, ExternalLink } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
 
@@ -66,6 +66,17 @@ const WebAnalytics = () => {
             <p className="mt-4 text-sm text-muted-foreground">
               Для первого ответа достаточно ссылки на сайт и короткого описания задачи — пароли не нужны.
             </p>
+            <a
+              href="https://2gis.ru/tyumen/firm/70000001033718655"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-metric="review-click"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary"
+            >
+              <Star className="h-4 w-4 fill-primary text-primary" />
+              5.0 и более 50 оценок в 2ГИС
+              <ExternalLink className="h-4 w-4" />
+            </a>
           </div>
         </div>
       </section>
