@@ -427,12 +427,24 @@ const BlogPost = () => {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <Button asChild className={`flex-1 w-full bg-gradient-to-r ${BRAND_GRADIENT} text-white hover:opacity-90 transition-opacity h-12 text-base font-semibold rounded-lg`}>
-                            <Link to={primaryCtaHref}>
+                            <Link
+                                to={primaryCtaHref}
+                                onClick={() => trackMetric("blog_bottom_primary_cta_click", {
+                                    path: `/blog/${post.slug}`,
+                                    placement: primaryCtaHref,
+                                })}
+                            >
                                 {primaryCtaLabel}
                             </Link>
                         </Button>
                         <Button asChild variant="outline" className="flex-1 w-full h-12 text-base font-semibold rounded-lg border-2 border-[#0096D6] text-[#0096D6] hover:bg-[#0096D6]/10">
-                            <Link to={secondaryCtaHref}>
+                            <Link
+                                to={secondaryCtaHref}
+                                onClick={() => trackMetric("blog_bottom_secondary_cta_click", {
+                                    path: `/blog/${post.slug}`,
+                                    placement: secondaryCtaHref,
+                                })}
+                            >
                                 {secondaryCtaLabel}
                             </Link>
                         </Button>
