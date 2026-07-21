@@ -195,6 +195,8 @@ const growthServices = [
     title: "План маркетинга",
     text: "Формулируем позиционирование, продуктовый контур, офферы и карту гипотез перед запуском.",
     href: "/services/marketing-strategy",
+    secondaryHref: "/blog/plan-marketinga-cena-zakazat-tyumen",
+    secondaryLabel: "Сравнить цены и форматы",
     icon: Target,
   },
   {
@@ -443,9 +445,19 @@ const Index = () => {
                 <item.icon className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground mb-6 flex-1">{item.text}</p>
-                <Button variant="outline" asChild>
-                  <Link to={item.href}>Подробнее</Link>
-                </Button>
+                <div className="space-y-3">
+                  <Button variant="outline" asChild className="w-full">
+                    <Link to={item.href}>Подробнее</Link>
+                  </Button>
+                  {item.secondaryHref && (
+                    <Link
+                      to={item.secondaryHref}
+                      className="block text-center text-sm font-medium text-primary underline-offset-4 hover:underline"
+                    >
+                      {item.secondaryLabel}
+                    </Link>
+                  )}
+                </div>
               </Card>
             ))}
           </div>

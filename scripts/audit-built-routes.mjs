@@ -240,6 +240,12 @@ function main() {
     "/lokalnoe-seo-tyumen",
     "/services/web-analytics",
   ]);
+  const routeSpecificStaticMarkers = new Map([
+    ["/", "Цена и форматы плана маркетинга"],
+    ["/services/custom-crm", "Какие задачи закрывает CRM"],
+    ["/services/web-analytics", "Сколько стоит заказать настройку веб-аналитики"],
+    ["/blog/plan-marketinga-cena-zakazat-tyumen", "Сколько стоит план маркетинга в Тюмени?"],
+  ]);
 
   for (const routePath of uniqueRoutes) {
     if (redirectRoutes.has(routePath)) {
@@ -275,6 +281,11 @@ function main() {
 
     if (!hasRenderableShell(html)) {
       violations.push(`${routePath}: empty #root without module script`);
+    }
+
+    const staticMarker = routeSpecificStaticMarkers.get(routePath);
+    if (staticMarker && !html.includes(staticMarker)) {
+      violations.push(`${routePath}: missing route-specific prerender marker: ${staticMarker}`);
     }
 
     if (/\|\s*CentrLP(?:\s+Тюмень)?$/i.test(prerenderH1)) {

@@ -566,6 +566,24 @@ function landingStaticHtml(title, description, routePath = "") {
 }
 
 const commercialStaticSections = {
+  "/": {
+    lead: "Помогаем бизнесу связать сайт, рекламу, аналитику и CRM в один понятный маршрут заявки.",
+    sections: [
+      {
+        title: "Что можно заказать",
+        items: [
+          "сайт или лендинг с понятным предложением и рабочей формой",
+          "план маркетинга с ценой входа, каналами и приоритетами запуска",
+          "веб-аналитику и передачу источника обращения в CRM",
+        ],
+      },
+    ],
+    related: [
+      { label: "Цена и форматы плана маркетинга", href: "/blog/plan-marketinga-cena-zakazat-tyumen" },
+      { label: "Создание сайта", href: "/razrabotka-sajtov-tyumen" },
+      { label: "Проверка пути заявки", href: "/proverka-saita-i-zayavok-za-48-chasov" },
+    ],
+  },
   "/crm-dlya-biznesa": {
     lead: "Внедряем CRM для малого бизнеса в Тюмени от 45 000 ₽ и проверяем не только воронку, но и полный путь обращения от источника до ответственного менеджера.",
     sections: [
@@ -1391,7 +1409,7 @@ function applyMeta(template, meta) {
 
   if (meta.staticHtml) {
     html = html.replace(
-      /<div\s+id=["']root["']\s*>\s*<\/div>/i,
+      /<div\s+id=["']root["'][^>]*>[\s\S]*<\/div>\s*(?=<noscript>)/i,
       `<div id="root">${meta.staticHtml}</div>`,
     );
   }
