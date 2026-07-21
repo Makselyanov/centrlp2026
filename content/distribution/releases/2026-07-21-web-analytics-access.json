@@ -1,0 +1,39 @@
+{
+  "schema": "centrlp.distribution_release.v1",
+  "release_id": "centrlp:2026-07-21:web-analytics-access",
+  "status": "ready_supervised",
+  "cluster": "настройка веб-аналитики / Метрика / цели / заявки",
+  "canonical_url": "https://centrlp.ru/services/web-analytics",
+  "dedupe_key": "web-analytics-access-2026-07-21",
+  "approval": {
+    "required": true,
+    "approved_at": null,
+    "approved_by": null
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "target": "@centrlp_ideas",
+      "media_path": "public/og/services/web-analytics.png",
+      "url": "https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_access_2026_07_21&utm_content=no_passwords#contact",
+      "text": "Чтобы рассчитать настройку веб-аналитики, не нужно сразу передавать пароли от сайта, Метрики или CRM.\n\nДля первого шага достаточно ссылки на сайт, списка рекламных каналов и описания, куда сейчас приходят заявки.\n\nПосле согласования доступы выдаются отдельными приглашениями с минимально необходимыми правами. Счётчики, цели и отчёты остаются в аккаунтах заказчика.\n\nНастройка веб-аналитики в CentrLP - от 15 000 ₽.\n\nhttps://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=telegram&utm_medium=social&utm_campaign=web_analytics_access_2026_07_21&utm_content=no_passwords#contact",
+      "receipt": null
+    },
+    "vk": {
+      "enabled": true,
+      "target": "group:9137191",
+      "media_path": "public/og/services/web-analytics.png",
+      "url": "https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=vk&utm_medium=social&utm_campaign=web_analytics_access_2026_07_21&utm_content=no_passwords#contact",
+      "text": "Нужно ли передавать подрядчику пароли от сайта, Метрики и CRM, чтобы получить расчёт аналитики? Нет.\n\nДля первого шага достаточно ссылки на сайт, списка рекламных каналов и описания текущего маршрута заявки. После согласования работ доступы выдаются отдельными приглашениями с минимально необходимыми правами. Счётчики, цели и отчёты остаются в аккаунтах заказчика.\n\nНастройка веб-аналитики в CentrLP - от 15 000 ₽.\n\nhttps://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=vk&utm_medium=social&utm_campaign=web_analytics_access_2026_07_21&utm_content=no_passwords#contact\n\n#вебаналитика #яндексметрика #тюмень #заявки",
+      "receipt": null
+    },
+    "max": {
+      "enabled": false,
+      "target": "pending_verified_centrlp_channel",
+      "media_path": "public/og/services/web-analytics.png",
+      "url": "https://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=max&utm_medium=messenger&utm_campaign=web_analytics_access_2026_07_21&utm_content=no_passwords#contact",
+      "text": "Для расчёта веб-аналитики не нужны пароли. Достаточно ссылки на сайт, списка рекламных каналов и описания, куда приходят заявки. После согласования выдаются приглашения с минимальными правами, а счётчики и отчёты остаются у заказчика. Настройка CentrLP - от 15 000 ₽.\n\nhttps://centrlp.ru/services/web-analytics?intent=web-analytics-basic&utm_source=max&utm_medium=messenger&utm_campaign=web_analytics_access_2026_07_21&utm_content=no_passwords#contact",
+      "receipt": null
+    }
+  }
+}

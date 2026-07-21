@@ -17,6 +17,7 @@
     "seo:gsc:reauth": "node scripts/gsc-oauth-refresh.mjs",
     "seo:report": "node scripts/yandex-webmaster-report.mjs",
     "content:brief": "node scripts/seo-topic-brief.mjs",
+    "distribution:preflight": "node scripts/distribution-release-preflight.mjs",
     "test:lead-receipt": "node scripts/test-lead-receipt.mjs"
   },
   "dependencies": {
