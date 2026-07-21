@@ -349,6 +349,25 @@ function createMarkdownReport(report, days) {
   }
   lines.push("");
 
+  lines.push("## Top query-page pairs");
+  if (report.byQueryPage.ok) {
+    const rows = report.byQueryPage.data.rows || [];
+    if (rows.length === 0) {
+      lines.push("- (no query/page data)");
+    } else {
+      lines.push("| # | Query | Page | Clicks | Impressions | CTR | Position |");
+      lines.push("|---|---|---|---:|---:|---:|---:|");
+      rows.slice(0, 30).forEach((r, i) => {
+        lines.push(
+          `| ${i + 1} | ${r.keys[0]} | ${r.keys[1]} | ${r.clicks} | ${r.impressions} | ${(r.ctr * 100).toFixed(2)}% | ${r.position.toFixed(1)} |`,
+        );
+      });
+    }
+  } else {
+    lines.push(`- failed: ${report.byQueryPage.error.message}`);
+  }
+  lines.push("");
+
   lines.push("## By device");
   if (report.byDevice.ok) {
     const rows = report.byDevice.data.rows || [];
@@ -587,6 +606,12 @@ async function main() {
     console.log(`Sitemaps registered: ${feeds.length}`);
   } else {
     console.log(`Sitemaps request failed: ${report.sitemaps.error.message}`);
+  }
+
+  if (report.byQueryPage.ok) {
+    console.log(`Query/page pairs: ${(report.byQueryPage.data.rows || []).length}`);
+  } else {
+    console.log(`Query/page request failed: ${report.byQueryPage.error.message}`);
   }
 
   if (report.inspection.ok) {
