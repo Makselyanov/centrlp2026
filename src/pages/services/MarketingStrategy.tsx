@@ -8,11 +8,13 @@ import { ProcessTimeline } from "@/components/services/ProcessTimeline";
 import {
   Map, Rocket, Brain, Globe, Search, Target, BarChart3,
   TrendingUp, CheckCircle2, XCircle, FileText, Zap, Sparkles,
+  Star, ExternalLink,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
 import { Link } from "react-router-dom";
+import { MessengerLinks } from "@/components/MessengerLinks";
 
 const MarketingStrategy = () => {
   const faqItems = [
@@ -280,7 +282,24 @@ const MarketingStrategy = () => {
             <Button size="lg" variant="outline" onClick={scrollToPricing}>
               Смотреть состав и цены
             </Button>
+            <MessengerLinks variant="fastlane" only={["telegram"]} />
           </div>
+
+          <p className="mb-4 text-sm text-slate-500">
+            Для первого ответа достаточно назвать нишу, регион и 1–2 приоритетные услуги — доступы и пароли не нужны.
+          </p>
+
+          <a
+            href="https://2gis.ru/tyumen/firm/70000001033718655"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-metric="review-click"
+            className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-700 underline decoration-[#0096D6]/40 underline-offset-4 transition-colors hover:text-[#0096D6]"
+          >
+            <Star className="h-4 w-4 fill-[#0096D6] text-[#0096D6]" />
+            5.0 и более 50 оценок в 2ГИС
+            <ExternalLink className="h-4 w-4" />
+          </a>
 
           <p className="text-sm text-slate-500 flex items-center justify-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-[#44B78B]" />
