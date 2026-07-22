@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { ArrowRight, Bot, MessageCircle, Orbit, Sparkles, Workflow } from "lucide-react";
 import { Link } from "react-router-dom";
+import { trackMetric } from "@/lib/metrics";
 
 type FeatureItem = {
   icon: LucideIcon;
@@ -249,13 +250,28 @@ export const ServicePageTemplate = ({
                 asChild
                 className="border-0 bg-[linear-gradient(135deg,#0096D6_0%,#44B78B_100%)] text-white shadow-[0_18px_50px_-24px_rgba(0,150,214,0.7)] transition-transform duration-300 hover:-translate-y-0.5 hover:opacity-95"
               >
-                <Link to={contactIntent ? `?intent=${contactIntent}#contact` : "#contact"}>
+                <Link
+                  to={contactIntent ? `?intent=${contactIntent}#contact` : "#contact"}
+                  onClick={() => trackMetric("service_hero_primary_cta_click", {
+                    path: window.location.pathname,
+                    placement: contactIntent || slug,
+                  })}
+                >
                   {heroCtaLabel} <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               {heroContactHref ? (
                 <Button size="lg" variant="outline" asChild className="border-slate-300 bg-white/80 backdrop-blur-sm">
-                  <a href={heroContactHref} target="_blank" rel="noreferrer">
+                  <a
+                    href={heroContactHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackMetric("service_hero_secondary_cta_click", {
+                      path: window.location.pathname,
+                      placement: contactIntent || slug,
+                      messenger: "telegram",
+                    })}
+                  >
                     <MessageCircle className="mr-2 h-4 w-4" /> {heroContactLabel}
                   </a>
                 </Button>
