@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, Target, TrendingUp, Eye, Zap, CheckCircle, Settings, LineChart, Star, ExternalLink } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useFaqSchema, useAutoBreadcrumb, useServiceSchema } from "@/components/SeoSchemas";
+import { trackMetric } from "@/lib/metrics";
 
 const WebAnalytics = () => {
   const faqItems = [
@@ -424,7 +425,15 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="?intent=web-analytics-basic#contact">Заказать базовую настройку</a>
+                  <a
+                    href="?intent=web-analytics-basic#contact"
+                    onClick={() => trackMetric("web_analytics_package_cta_click", {
+                      path: "/services/web-analytics",
+                      placement: "basic",
+                    })}
+                  >
+                    Заказать базовую настройку
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -454,7 +463,15 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button className="w-full" asChild>
-                  <a href="?intent=web-analytics-advanced#contact">Заказать расширенную настройку</a>
+                  <a
+                    href="?intent=web-analytics-advanced#contact"
+                    onClick={() => trackMetric("web_analytics_package_cta_click", {
+                      path: "/services/web-analytics",
+                      placement: "advanced",
+                    })}
+                  >
+                    Заказать расширенную настройку
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -481,7 +498,15 @@ const WebAnalytics = () => {
                   </li>
                 </ul>
                 <Button variant="outline" className="w-full" asChild>
-                  <a href="?intent=web-analytics-full#contact">Обсудить связку под ключ</a>
+                  <a
+                    href="?intent=web-analytics-full#contact"
+                    onClick={() => trackMetric("web_analytics_package_cta_click", {
+                      path: "/services/web-analytics",
+                      placement: "full",
+                    })}
+                  >
+                    Обсудить связку под ключ
+                  </a>
                 </Button>
               </CardContent>
             </Card>

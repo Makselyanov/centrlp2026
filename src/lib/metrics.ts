@@ -28,6 +28,7 @@ const SERVER_EVENT_GOALS = new Set([
   "blog_bottom_secondary_cta_click",
   "service_hero_primary_cta_click",
   "service_hero_secondary_cta_click",
+  "web_analytics_package_cta_click",
   "audit_self_check_select",
 ]);
 
