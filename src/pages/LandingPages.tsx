@@ -166,7 +166,17 @@ const AuditSelfCheckSection = () => {
               {selected ? selected.result : "Выберите один вариант — форма сохранит этот контекст, и не придётся объяснять проблему с нуля."}
             </p>
             <Button asChild={Boolean(selected)} disabled={!selected} className="mt-4 w-full sm:w-auto">
-              {selected ? <Link to={href}>Передать фокус в аудит</Link> : <span>Сначала выбрать ситуацию</span>}
+              {selected ? (
+                <Link
+                  to={href}
+                  onClick={() => trackMetric("audit_self_check_cta_click", {
+                    path: "/proverka-saita-i-zayavok-za-48-chasov",
+                    placement: selected.id,
+                  })}
+                >
+                  Передать фокус в аудит
+                </Link>
+              ) : <span>Сначала выбрать ситуацию</span>}
             </Button>
           </div>
         </div>

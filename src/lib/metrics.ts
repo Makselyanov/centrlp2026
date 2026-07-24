@@ -30,6 +30,7 @@ const SERVER_EVENT_GOALS = new Set([
   "service_hero_secondary_cta_click",
   "web_analytics_package_cta_click",
   "audit_self_check_select",
+  "audit_self_check_cta_click",
 ]);
 
 export const getAttributionSnapshot = () => {
