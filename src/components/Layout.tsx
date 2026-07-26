@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SocialGuide } from "./SocialGuide";
 import { trackMetric } from "@/lib/metrics";
 
 // OG image mapping: exact pathname → image filename (relative to /og/).
@@ -211,6 +212,7 @@ export const Layout = ({ children, title, description }: LayoutProps) => {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
+      <SocialGuide key={location.pathname} />
     </div>
   );
 };

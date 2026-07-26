@@ -162,6 +162,81 @@ All colors MUST be HSL.
   .perspective-1000 {
     perspective: 1000px;
   }
+
+  .social-guide-panel {
+    opacity: 0;
+    transform: translate3d(18px, 12px, 0) scale(0.96);
+    transform-origin: bottom right;
+    pointer-events: none;
+    visibility: hidden;
+    transition:
+      opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 320ms;
+  }
+
+  .social-guide-panel--open {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .social-guide-character {
+    animation: social-guide-arrive 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform-origin: bottom center;
+  }
+
+  .social-guide-character::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border-radius: 999px;
+    background: hsl(var(--accent-2) / 0.25);
+    animation: social-guide-signal 3.6s ease-out 1.2s infinite;
+  }
+
+  .social-guide-character--active::before {
+    animation: none;
+    opacity: 0;
+  }
+
+  @keyframes social-guide-arrive {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 30px, 0) rotate(8deg) scale(0.72);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) rotate(0) scale(1);
+    }
+  }
+
+  @keyframes social-guide-signal {
+    0%,
+    70% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    82% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social-guide-panel,
+    .social-guide-panel--open,
+    .social-guide-character,
+    .social-guide-character::before {
+      animation: none;
+      transition-duration: 0.01ms;
+    }
+  }
 }
 
 @layer base {
