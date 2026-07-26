@@ -559,7 +559,7 @@ function landingStaticHtml(title, description, routePath = "") {
   <footer style="border-top: 1px solid rgba(15,23,42,.08); background: #0f172a; color: #e2e8f0;">
     <div style="max-width: 1180px; margin: 0 auto; padding: 26px 20px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 14px;">
       <span>CentrLP: сайты, реклама, CRM и автоматизация под рост заявок.</span>
-      <span><a href="/contacts" style="color: #7dd3fc; text-decoration: none;">Контакты</a> · <a href="/privacy" style="color: #7dd3fc; text-decoration: none;">Политика</a></span>
+      <span><a href="/contacts" style="color: #7dd3fc; text-decoration: none;">Контакты</a> · <a href="/terms" style="color: #7dd3fc; text-decoration: none;">Условия</a> · <a href="/privacy" style="color: #7dd3fc; text-decoration: none;">Политика</a></span>
     </div>
   </footer>
 </main>`;

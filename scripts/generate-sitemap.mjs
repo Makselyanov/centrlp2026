@@ -182,14 +182,14 @@ function getPriority(route) {
     if (route === '/nastroyka-yandex-direct-tyumen') return '0.9';
     if (route.startsWith('/services/') || route === '/contacts' || route === '/about') return '0.8';
     if (route.startsWith('/blog/')) return '0.7';
-    if (route === '/privacy' || route === '/cookies' || route === '/consent') return '0.3';
+    if (route === '/privacy' || route === '/cookies' || route === '/consent' || route === '/terms') return '0.3';
     return '0.7';
 }
 
 function getChangefreq(route) {
     if (route === '/' || route === '/blog') return 'daily';
     if (route.startsWith('/blog/')) return 'monthly';
-    if (route === '/privacy' || route === '/cookies' || route === '/consent') return 'yearly';
+    if (route === '/privacy' || route === '/cookies' || route === '/consent' || route === '/terms') return 'yearly';
     return 'weekly';
 }
 

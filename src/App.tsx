@@ -27,6 +27,7 @@ const Contacts = lazy(() => import("./pages/Contacts"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Cookies = lazy(() => import("./pages/Cookies"));
 const Consent = lazy(() => import("./pages/Consent"));
+const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default: m.AiPlanPage })));
 const AiTuragent = lazy(() => import("./pages/AiTuragent"));
@@ -143,6 +144,7 @@ const AppRoutes = () => {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/cookies" element={<Cookies />} />
             <Route path="/consent" element={<Consent />} />
+            <Route path="/terms" element={<Terms />} />
 
             {/* Service pages */}
             <Route path="/services/website-development" element={<WebsiteDevelopment />} />

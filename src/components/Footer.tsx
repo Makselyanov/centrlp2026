@@ -112,6 +112,12 @@ export const Footer = () => {
             <h4 className="font-semibold text-foreground mb-4">Документы</h4>
             <div className="space-y-2">
               <Link
+                to="/terms"
+                className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                Условия использования
+              </Link>
+              <Link
                 to="/privacy"
                 className="block text-sm text-muted-foreground hover:text-primary transition-colors"
               >
