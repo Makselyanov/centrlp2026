@@ -89,7 +89,7 @@ const variantClasses: Record<
 > = {
   header: {
     wrapper: "flex items-center gap-2",
-    link: "h-9 rounded-full px-3 text-xs font-semibold shadow-sm transition-all duration-200",
+    link: "h-11 rounded-full px-3 text-xs font-semibold shadow-sm transition-all duration-200 xl:h-9",
     showText: false,
     maxText: "MAX",
     emphasizeMax: true,
@@ -97,7 +97,7 @@ const variantClasses: Record<
   },
   mobile: {
     wrapper: "flex flex-wrap items-center gap-2",
-    link: "h-10 rounded-full px-3 text-sm font-semibold transition-all duration-200",
+    link: "h-11 rounded-full px-3 text-sm font-semibold transition-all duration-200",
     showText: false,
     maxText: "MAX",
     emphasizeMax: true,
@@ -105,7 +105,7 @@ const variantClasses: Record<
   },
   footer: {
     wrapper: "flex flex-wrap items-center gap-2",
-    link: "h-10 rounded-full px-3 text-sm font-semibold transition-all duration-200",
+    link: "h-11 rounded-full px-3 text-sm font-semibold transition-all duration-200",
     showText: false,
     maxText: "MAX",
     emphasizeMax: true,
@@ -153,7 +153,7 @@ export const MessengerLinks = ({
               styles.link,
               link.className,
               isMax && styles.emphasizeMax && "min-w-[92px] px-4",
-              isIconOnly && "w-9 min-w-0 px-0",
+              isIconOnly && "w-11 min-w-0 px-0 xl:w-9",
             )}
             data-metric="messenger-click"
             aria-label={isMax ? "Написать в MAX" : link.label}

@@ -45,7 +45,9 @@ export const SocialChannelLinks = ({
           className={cn(
             "inline-flex items-center justify-center gap-2 font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
             channel.className,
-            iconOnly ? "h-8 w-8 rounded-full" : "min-h-10 rounded-full px-3 py-2 text-sm",
+            iconOnly
+              ? "h-11 w-11 rounded-full xl:h-8 xl:w-8"
+              : "min-h-11 rounded-full px-3 py-2 text-sm",
           )}
         >
           <SocialChannelIcon id={channel.id} />

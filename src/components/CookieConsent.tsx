@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { COOKIE_CONSENT_CHANGE_EVENT, COOKIE_CONSENT_KEY } from "@/lib/cookieConsent";
 
-const CONSENT_KEY = "cookie-consent";
 const METRIKA_ID = 50135101;
 
 const loadYandexMetrika = () => {
@@ -45,10 +45,10 @@ export const CookieConsent = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(CONSENT_KEY);
+    const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
 
     if (stored === "true" || stored === "accepted") {
-      localStorage.setItem(CONSENT_KEY, "accepted");
+      localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
       loadYandexMetrika();
       return;
     }
@@ -60,21 +60,23 @@ export const CookieConsent = () => {
   }, []);
 
   const accept = () => {
-    localStorage.setItem(CONSENT_KEY, "accepted");
+    localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
     loadYandexMetrika();
     setVisible(false);
+    window.dispatchEvent(new Event(COOKIE_CONSENT_CHANGE_EVENT));
   };
 
   const decline = () => {
-    localStorage.setItem(CONSENT_KEY, "declined");
+    localStorage.setItem(COOKIE_CONSENT_KEY, "declined");
     setVisible(false);
+    window.dispatchEvent(new Event(COOKIE_CONSENT_CHANGE_EVENT));
   };
 
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 animate-fade-in pointer-events-none">
-      <div className="pointer-events-auto max-w-4xl mx-auto bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col sm:flex-row items-center gap-4">
+    <div className="cookie-consent-shell fixed bottom-0 left-0 right-0 z-50 p-4 animate-fade-in pointer-events-none">
+      <div className="pointer-events-auto max-w-4xl mx-auto bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
         <p className="text-sm text-muted-foreground flex-1">
           Мы используем технические cookie для работы сайта. Аналитические cookie
           Яндекс.Метрики включаются только после согласия и помогают понять, какие
@@ -83,16 +85,16 @@ export const CookieConsent = () => {
             политике cookie
           </Link>.
         </p>
-        <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+        <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row">
           <button
             onClick={decline}
-            className="rounded-full border border-border px-6 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            className="min-h-11 w-full rounded-full border border-border px-6 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary sm:w-auto"
           >
             Отклонить
           </button>
           <button
             onClick={accept}
-            className="rounded-full bg-primary px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90"
+            className="min-h-11 w-full rounded-full bg-primary px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 sm:w-auto"
           >
             Принять
           </button>

@@ -33,6 +33,32 @@ export const Header = () => {
     setMobileBarterOpen(false);
   }, [location]);
 
+  useEffect(() => {
+    document.body.classList.toggle("mobile-menu-open", isMenuOpen);
+
+    if (!isMenuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.body.classList.remove("mobile-menu-open");
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    const desktopNavigation = window.matchMedia("(min-width: 1280px)");
+    const closeMobileMenu = (event: MediaQueryListEvent) => {
+      if (event.matches) setIsMenuOpen(false);
+    };
+
+    desktopNavigation.addEventListener("change", closeMobileMenu);
+    return () => desktopNavigation.removeEventListener("change", closeMobileMenu);
+  }, []);
+
   const handleServicesMouseEnter = () => {
     if (servicesTimeoutRef.current) {
       clearTimeout(servicesTimeoutRef.current);
@@ -250,8 +276,10 @@ export const Header = () => {
             <SocialChannelLinks variant="header" />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-foreground hover:text-primary transition-colors"
-              aria-label="РњРµРЅСЋ"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              aria-label="Меню"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -260,8 +288,10 @@ export const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden text-foreground hover:text-primary transition-colors"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-foreground transition-colors hover:bg-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 lg:hidden"
             aria-label="Меню"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -269,7 +299,7 @@ export const Header = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="xl:hidden pb-4 animate-fade-in">
+          <div id="mobile-navigation" className="mobile-menu-scroll xl:hidden">
             <nav className="flex flex-col space-y-3">
               {/* Services Mobile */}
               <div>

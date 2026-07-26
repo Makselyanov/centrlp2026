@@ -1,25 +1,75 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { SocialChannelIcon } from "./SocialChannelLinks";
 import { SOCIAL_CHANNELS } from "@/data/socialChannels";
+import { COOKIE_CONSENT_CHANGE_EVENT, COOKIE_CONSENT_KEY } from "@/lib/cookieConsent";
 
 export const SocialGuide = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [hasCookieChoice, setHasCookieChoice] = useState(false);
+  const [isQuietZoneVisible, setIsQuietZoneVisible] = useState(false);
 
   useEffect(() => {
     if (window.location.hostname === "barter.centrlp.ru") return;
 
+    const syncCookieChoice = () => {
+      const choice = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+      setHasCookieChoice(choice === "accepted" || choice === "declined" || choice === "true");
+    };
+
+    syncCookieChoice();
+    window.addEventListener(COOKIE_CONSENT_CHANGE_EVENT, syncCookieChoice);
+    return () => window.removeEventListener(COOKIE_CONSENT_CHANGE_EVENT, syncCookieChoice);
+  }, []);
+
+  useEffect(() => {
+    if (!hasCookieChoice || window.location.hostname === "barter.centrlp.ru") return;
+
     const dismissed = window.sessionStorage.getItem("centrlp-social-guide-dismissed") === "1";
-    const canAutoOpen = window.matchMedia("(min-width: 1280px)").matches;
+    const canAutoOpen =
+      window.innerWidth >= 1280 &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
     setIsReady(true);
     if (dismissed || !canAutoOpen) return;
 
     const timer = window.setTimeout(() => setIsOpen(true), 3200);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [hasCookieChoice]);
 
-  if (!isReady || window.location.hostname === "barter.centrlp.ru") return null;
+  useEffect(() => {
+    if (!isReady || !("IntersectionObserver" in window)) return;
+
+    const quietZones = [
+      document.getElementById("site-footer"),
+      document.getElementById("contact-form"),
+    ].filter((element): element is HTMLElement => Boolean(element));
+    if (!quietZones.length) return;
+
+    const visibleZones = new Set<Element>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visibleZones.add(entry.target);
+          else visibleZones.delete(entry.target);
+        });
+
+        const nextVisible = visibleZones.size > 0;
+        setIsQuietZoneVisible(nextVisible);
+        if (nextVisible) setIsOpen(false);
+      },
+      { threshold: 0.05 },
+    );
+
+    quietZones.forEach((zone) => observer.observe(zone));
+    return () => observer.disconnect();
+  }, [isReady, location.pathname]);
+
+  if (!isReady || isQuietZoneVisible || window.location.hostname === "barter.centrlp.ru") return null;
 
   const close = () => {
     setIsOpen(false);
@@ -27,10 +77,10 @@ export const SocialGuide = () => {
   };
 
   return (
-    <aside className="fixed bottom-3 right-3 z-[60] w-24 sm:bottom-5 sm:right-6 xl:flex xl:w-auto xl:items-end xl:gap-2" aria-label="Каналы CentrLP">
+    <aside className="social-guide-shell fixed bottom-1 right-1 z-[60] w-14 sm:right-6 sm:w-24 xl:bottom-5 xl:flex xl:w-auto xl:items-end xl:gap-2" aria-label="Каналы CentrLP">
       <div
         id="centrlp-social-channels"
-        className={`social-guide-panel absolute bottom-[8.5rem] right-0 w-[min(19rem,calc(100vw-1.5rem))] overflow-hidden rounded-2xl bg-[#071d28] text-white xl:static xl:mb-5 xl:w-[19rem] ${
+        className={`social-guide-panel fixed bottom-24 left-3 right-3 w-auto overflow-hidden rounded-2xl bg-[#071d28] text-white sm:absolute sm:bottom-[8.5rem] sm:left-auto sm:right-0 sm:w-[19rem] xl:static xl:mb-5 xl:w-[19rem] ${
           isOpen ? "social-guide-panel--open" : ""
         }`}
         aria-hidden={!isOpen}
@@ -43,7 +93,7 @@ export const SocialGuide = () => {
           <button
             type="button"
             onClick={close}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sky-100 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#46d7a1]"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-sky-100 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#46d7a1] xl:h-9 xl:w-9"
             aria-label="Закрыть список каналов"
           >
             <X className="h-4 w-4" />
@@ -73,7 +123,7 @@ export const SocialGuide = () => {
       <button
         type="button"
         onClick={() => setIsOpen((value) => !value)}
-        className={`social-guide-character relative ml-auto block h-32 w-24 shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#009ada]/35 sm:h-40 sm:w-28 ${
+        className={`social-guide-character relative ml-auto block h-20 w-14 shrink-0 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#009ada]/35 sm:h-32 sm:w-24 xl:h-40 xl:w-28 ${
           isOpen ? "social-guide-character--active" : ""
         }`}
         aria-expanded={isOpen}
@@ -89,7 +139,7 @@ export const SocialGuide = () => {
           className="relative h-full w-full object-contain drop-shadow-[0_5px_4px_rgba(3,28,40,0.28)]"
         />
         {!isOpen && (
-          <span className="absolute -left-16 top-5 whitespace-nowrap rounded-full bg-[#071d28] px-3 py-1.5 text-xs font-bold text-white shadow-sm sm:-left-20 sm:top-8">
+          <span className="absolute -left-20 top-8 hidden whitespace-nowrap rounded-full bg-[#071d28] px-3 py-1.5 text-xs font-bold text-white shadow-sm xl:block">
             Мои каналы
           </span>
         )}

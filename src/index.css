@@ -8,6 +8,10 @@ body {
   scroll-behavior: smooth;
 }
 
+body.mobile-menu-open {
+  overflow: hidden;
+}
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
@@ -181,6 +185,35 @@ All colors MUST be HSL.
     pointer-events: auto;
     visibility: visible;
     transition-delay: 0s;
+  }
+
+  .mobile-menu-scroll {
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    scrollbar-gutter: stable;
+  }
+
+  .mobile-menu-scroll a,
+  .mobile-menu-scroll button {
+    min-height: 2.75rem;
+  }
+
+  .mobile-menu-open .social-guide-shell {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .cookie-consent-shell {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  @media (max-height: 560px) and (max-width: 1279px) {
+    .social-guide-shell {
+      bottom: max(0.25rem, env(safe-area-inset-bottom));
+    }
   }
 
   .social-guide-character {

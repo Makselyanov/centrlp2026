@@ -725,12 +725,12 @@ const Services = () => {
           </div>
           <div className="grid gap-8 xl:grid-cols-3">
             {businessProfiles.map((profile) => (
-              <Card key={profile.title} className="relative flex h-full flex-col overflow-hidden rounded-[28px] border border-white/70 bg-white/90 p-8 shadow-[0_20px_70px_-34px_rgba(0,150,214,0.32)] backdrop-blur">
+              <Card key={profile.title} className="relative flex h-full min-w-0 flex-col overflow-hidden rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_70px_-34px_rgba(0,150,214,0.32)] backdrop-blur sm:p-8">
                 <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-[#0096D6]/55 to-transparent" />
                 <div className="mb-4 inline-flex w-fit rounded-full border border-[#44B78B]/20 bg-[#44B78B]/8 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-[#0b7cb0]">
                   {profile.eyebrow}
                 </div>
-                <h3 className="mb-4 text-[28px] font-bold leading-[1.15] tracking-tight text-slate-900">{profile.title}</h3>
+                <h3 className="mb-4 break-words text-2xl font-bold leading-[1.15] tracking-tight text-slate-900 sm:text-[28px]">{profile.title}</h3>
                 <p className="mb-6 text-base leading-7 text-slate-600">{profile.text}</p>
                 <div className="mb-6 space-y-3">
                   {profile.bullets.map((bullet) => (
@@ -798,7 +798,12 @@ const Services = () => {
               <Link to="/contacts">Обсудить формат старта</Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link to="/services/openclaw-ai">Посмотреть self-hosted направление</Link>
+              <Link
+                to="/services/openclaw-ai"
+                className="h-auto min-h-11 max-w-full whitespace-normal px-5 py-3 text-center leading-snug sm:px-8"
+              >
+                Посмотреть self-hosted направление
+              </Link>
             </Button>
           </div>
         </div>
@@ -837,7 +842,12 @@ const Services = () => {
 
           <div className="mt-10 flex justify-center">
             <Button asChild className="border-0 bg-[linear-gradient(135deg,#0096D6_0%,#44B78B_100%)] text-white shadow-[0_18px_50px_-24px_rgba(0,150,214,0.7)]">
-              <Link to="/services/compliance-2026">Открыть проверку сайта по персональным данным</Link>
+              <Link
+                to="/services/compliance-2026"
+                className="h-auto min-h-11 max-w-full whitespace-normal px-5 py-3 text-center leading-snug sm:px-8"
+              >
+                Открыть проверку сайта по персональным данным
+              </Link>
             </Button>
           </div>
         </div>

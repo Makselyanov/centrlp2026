@@ -662,7 +662,7 @@ const Projects = () => {
                   type="button"
                   onClick={() => setActiveFilter(filter.id)}
                   className={cn(
-                    "inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
+                    "inline-flex min-h-11 items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
                     isActive
                       ? "border-transparent bg-[linear-gradient(135deg,#0096D6_0%,#44B78B_100%)] text-white shadow-sm"
                       : "border-slate-200 bg-white text-slate-700 hover:border-[#0096D6]/40 hover:bg-[#0096D6]/5",
@@ -710,23 +710,24 @@ const Projects = () => {
 
       <section className="py-14 md:py-20">
         <div className="container mx-auto px-4">
-          <motion.div layout className="grid gap-10">
+          <motion.div layout className="grid min-w-0 gap-10">
             {visibleProjects.map((project, index) => (
               <motion.article
                 layout
                 key={project.title}
+                className="min-w-0"
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: Math.min(index * 0.035, 0.12) }}
               >
-                <Card className="overflow-hidden rounded-lg border-slate-200 bg-white shadow-sm">
-                  <div className="grid gap-8 p-5 md:p-7 lg:grid-cols-[0.86fr_1.14fr] lg:p-9">
-                    <div className="flex flex-col">
+                <Card className="min-w-0 overflow-hidden rounded-lg border-slate-200 bg-white shadow-sm">
+                  <div className="grid min-w-0 gap-8 p-5 md:p-7 lg:grid-cols-[0.86fr_1.14fr] lg:p-9">
+                    <div className="flex min-w-0 flex-col">
                       <div>
                         <div className="mb-4 inline-flex rounded-full border border-[#0096D6]/15 bg-gradient-to-r from-[#0096D6]/[0.07] to-[#44B78B]/[0.07] px-3 py-1.5 text-xs font-semibold text-[#0096D6]">
                           {project.categoryLabel}
                         </div>
-                        <h2 className="text-3xl font-bold leading-tight text-slate-950 md:text-4xl">
+                        <h2 className="break-words text-3xl font-bold leading-tight text-slate-950 md:text-4xl">
                           {project.title}
                         </h2>
                         <p className={cn("mt-3 text-xl font-bold leading-snug", brandGradient)}>
@@ -791,13 +792,13 @@ const Projects = () => {
                             href={project.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#0096D6]/20 bg-white px-4 py-2 text-sm font-semibold text-[#007DB3] shadow-sm transition-colors hover:bg-[#0096D6]/5"
+                            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#0096D6]/20 bg-white px-4 py-2 text-sm font-semibold text-[#007DB3] shadow-sm transition-colors hover:bg-[#0096D6]/5"
                           >
                             <ExternalLink className="h-4 w-4" />
                             Открыть проект
                           </a>
                         )}
-                        <Button asChild variant="outline" className="gap-2 rounded-lg" data-metric="projects_discuss_similar_click">
+                        <Button asChild variant="outline" className="min-h-11 gap-2 rounded-lg" data-metric="projects_discuss_similar_click">
                           <Link to="/contacts" className="inline-flex">
                             Обсудить похожую задачу
                             <ArrowRight className="h-4 w-4" />
@@ -806,7 +807,7 @@ const Projects = () => {
                       </div>
                     </div>
 
-                    <div className="grid content-start gap-4 rounded-lg border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[#0096D6]/[0.06] p-3 md:p-4">
+                    <div className="grid min-w-0 content-start gap-4 rounded-lg border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[#0096D6]/[0.06] p-3 md:p-4">
                       <BrowserFrame screen={project.screens[0]} featured eager={index < 2} />
                       <div className="grid gap-4 md:grid-cols-2">
                         {project.screens.slice(1).map((screen) => (

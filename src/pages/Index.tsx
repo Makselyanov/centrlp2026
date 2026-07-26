@@ -393,7 +393,12 @@ const Index = () => {
 
           <div className="text-center">
             <Button size="lg" asChild>
-              <Link to="/services/compliance-2026">Открыть проверку сайта по персональным данным</Link>
+              <Link
+                to="/services/compliance-2026"
+                className="h-auto min-h-11 max-w-full whitespace-normal px-5 py-3 text-center leading-snug sm:px-8"
+              >
+                Открыть проверку сайта по персональным данным
+              </Link>
             </Button>
           </div>
         </div>
