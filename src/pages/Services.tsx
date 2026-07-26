@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { CharacterStoryCallout } from "@/components/CharacterStoryCallout";
 import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -606,6 +607,17 @@ const Services = () => {
           </div>
         </div>
       </section>
+
+      <CharacterStoryCallout
+        id="services-character-guide"
+        title="Сначала разбираемся, потом выбираем инструменты"
+        text="Сайт, CRM, реклама или AI-агент не должны жить по отдельности. Сначала смотрим, где теряется заявка, и только потом собираем решение под этот участок."
+        imageSrc="/images/brand/characters/max-services-guide.webp"
+        imageAlt="Мультяшный Максим с планшетом показывает направление"
+        actionLabel="Обсудить задачу"
+        actionHref="/contacts"
+        tone="services"
+      />
 
       <section className="relative overflow-hidden bg-white py-20">
         <div className="pointer-events-none absolute inset-0">

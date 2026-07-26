@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { CharacterStoryCallout } from "@/components/CharacterStoryCallout";
 import { ContactForm } from "@/components/ContactForm";
 import { Phone, MapPin, FileText, MessageCircle, Mail, ArrowRight, Copy, CheckCircle2, XCircle, ScanSearch, ExternalLink, Star } from "lucide-react";
 import { motion } from "framer-motion";
@@ -215,6 +216,17 @@ const Contacts = () => {
           </div>
         </div>
       </section>
+
+      <CharacterStoryCallout
+        id="contacts-character-guide"
+        title="Можно начать с одного сообщения"
+        text="Напишите, что сейчас не работает или чего хотите добиться. Я уточню контекст и предложу ближайший понятный шаг — без обязательства сразу запускать большой проект."
+        imageSrc="/images/brand/characters/max-contacts-guide.webp"
+        imageAlt="Мультяшный Максим приветствует посетителя со смартфоном"
+        actionLabel="Перейти к форме"
+        actionHref="#contact-form"
+        tone="contacts"
+      />
 
       {/* Contact Info & Form */}
       <section className="py-20 bg-secondary/20">

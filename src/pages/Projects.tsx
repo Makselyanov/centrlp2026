@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Layout } from "@/components/Layout";
+import { CharacterStoryCallout } from "@/components/CharacterStoryCallout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -677,6 +678,18 @@ const Projects = () => {
           </div>
         </div>
       </section>
+
+      <CharacterStoryCallout
+        id="projects-character-guide"
+        title="Показываю не только экран, но и логику работы"
+        text="В каждом проекте важен маршрут: что увидит клиент, почему поверит, как рассчитает стоимость и куда попадёт обращение. Поэтому в портфолио — несколько экранов и контекст задачи."
+        imageSrc="/images/brand/characters/max-projects-guide.webp"
+        imageAlt="Мультяшный Максим показывает проекты"
+        actionLabel="Обсудить похожий проект"
+        actionHref="/contacts"
+        tone="projects"
+        imageSide="left"
+      />
 
       <section className="bg-slate-50/70 py-14 md:py-18">
         <div className="container mx-auto px-4">

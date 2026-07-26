@@ -75,9 +75,9 @@ export const CookieConsent = () => {
   if (!visible) return null;
 
   return (
-    <div className="cookie-consent-shell fixed bottom-0 left-0 right-0 z-50 p-4 animate-fade-in pointer-events-none">
-      <div className="pointer-events-auto max-w-4xl mx-auto bg-card/95 backdrop-blur-md border border-border rounded-2xl shadow-2xl p-4 md:p-6 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-        <p className="text-sm text-muted-foreground flex-1">
+    <div className="cookie-consent-shell pointer-events-none fixed bottom-0 left-0 right-0 z-50 animate-fade-in p-2 sm:p-4">
+      <div className="pointer-events-auto mx-auto flex max-w-3xl flex-col items-stretch gap-3 rounded-xl border border-border bg-card/95 p-3 shadow-lg backdrop-blur-md sm:flex-row sm:items-center sm:p-4 md:p-5">
+        <p className="flex-1 text-[13px] leading-5 text-muted-foreground sm:text-sm">
           Мы используем технические cookie для работы сайта. Аналитические cookie
           Яндекс.Метрики включаются только после согласия и помогают понять, какие
           страницы и формы работают лучше. Подробнее — в{" "}
@@ -85,16 +85,16 @@ export const CookieConsent = () => {
             политике cookie
           </Link>.
         </p>
-        <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row">
+        <div className="grid w-full shrink-0 grid-cols-2 gap-2 sm:flex sm:w-auto">
           <button
             onClick={decline}
-            className="min-h-11 w-full rounded-full border border-border px-6 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary sm:w-auto"
+            className="min-h-11 w-full rounded-full border border-border px-3 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary sm:w-auto sm:px-5"
           >
             Отклонить
           </button>
           <button
             onClick={accept}
-            className="min-h-11 w-full rounded-full bg-primary px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 sm:w-auto"
+            className="min-h-11 w-full rounded-full bg-primary px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-primary/90 sm:w-auto sm:px-5"
           >
             Принять
           </button>
