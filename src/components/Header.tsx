@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Phone, Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { MessengerLinks } from "./MessengerLinks";
+import { SocialChannelLinks } from "./SocialChannelLinks";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -226,23 +227,27 @@ export const Header = () => {
           </nav>
 
           {/* Contact Info */}
-          <div className="hidden xl:flex items-center gap-2.5 border-l border-border/60 pl-4 ml-2 xl:gap-3 xl:pl-5 xl:ml-3 whitespace-nowrap shrink-0">
-            <MessengerLinks variant="header" className="pr-1" />
+          <div className="hidden xl:flex items-center gap-2 border-l border-border/60 pl-3 ml-1 whitespace-nowrap shrink-0">
+            <MessengerLinks variant="header" only={["max", "whatsapp"]} />
+            <SocialChannelLinks variant="header" />
             <a
               href="tel:+79058248564"
-              className="inline-flex items-center gap-1.5 text-xs xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
+              className="inline-flex h-9 w-9 2xl:w-auto items-center justify-center gap-1.5 text-xs 2xl:text-[13px] font-medium text-foreground hover:text-primary transition-colors whitespace-nowrap shrink-0"
               data-metric="phone-click"
+              aria-label="Позвонить: 8-905-824-85-64"
+              title="8-905-824-85-64"
             >
               <Phone className="w-4 h-4" />
-              8&#8209;905&#8209;824&#8209;85&#8209;64
+              <span className="hidden 2xl:inline">8&#8209;905&#8209;824&#8209;85&#8209;64</span>
             </a>
-            <Button asChild className="animate-gentle-pulse px-4 text-xs xl:text-sm shadow-button">
+            <Button asChild className="animate-gentle-pulse px-3 text-xs 2xl:px-4 2xl:text-sm shadow-button">
               <Link to="/contacts#contact-form">Оставить заявку</Link>
             </Button>
           </div>
 
           <div className="hidden items-center gap-2 lg:flex xl:hidden">
             <MessengerLinks variant="header" only={["max"]} />
+            <SocialChannelLinks variant="header" />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-foreground hover:text-primary transition-colors"
@@ -400,7 +405,12 @@ export const Header = () => {
                   8-905-824-85-64
                 </a>
                 <div className="mt-3">
-                  <MessengerLinks variant="mobile" />
+                  <p className="mb-2 text-xs font-semibold text-muted-foreground">Написать напрямую</p>
+                  <MessengerLinks variant="mobile" only={["max", "whatsapp"]} />
+                </div>
+                <div className="mt-4">
+                  <p className="mb-2 text-xs font-semibold text-muted-foreground">Каналы CentrLP</p>
+                  <SocialChannelLinks variant="mobile" />
                 </div>
               </div>
             </nav>
