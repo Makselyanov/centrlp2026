@@ -82,7 +82,7 @@ const digitalBlocks = [
     ],
     href: "/services/mvp-development",
     icon: Layers3,
-    image: "/images/home/digital-products.png",
+    image: "/images/home/digital-products.webp",
     imageAlt: "3D-иллюстрация смартфона с интерфейсом Telegram Mini App",
   },
   {
@@ -96,7 +96,7 @@ const digitalBlocks = [
     ],
     href: "/services/ai-systems",
     icon: Brain,
-    image: "/images/home/ai-systems.png",
+    image: "/images/home/ai-systems.webp",
     imageAlt: "Изометрическая иллюстрация AI-мозга и панели управления",
   },
   {
@@ -110,7 +110,7 @@ const digitalBlocks = [
     ],
     href: "/services/browser-extensions",
     icon: ScanSearch,
-    image: "/images/home/team-tools.png",
+    image: "/images/home/team-tools.webp",
     imageAlt: "Изометрическая иллюстрация браузерного дашборда для команды",
   },
   {
@@ -124,7 +124,7 @@ const digitalBlocks = [
     ],
     href: "/services/max-messenger",
     icon: Compass,
-    image: "/images/home/new-channels.png",
+    image: "/images/home/new-channels.webp",
     imageAlt: "Изометрическая иллюстрация компаса с тремя путями в новые каналы",
   },
 ];
@@ -304,7 +304,10 @@ const Index = () => {
                   <img
                     src={item.image}
                     alt={item.imageAlt}
+                    width="1024"
+                    height="1024"
                     loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </div>

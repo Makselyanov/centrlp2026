@@ -2,7 +2,7 @@ import { Layout } from "@/components/Layout";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, History, CheckCircle, Zap, Users, TrendingUp, MapPin, Star, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
-import founderImage from "@/assets/founder.png";
+import founderImage from "@/assets/founder.webp";
 import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 
 const About = () => {
@@ -51,11 +51,7 @@ const About = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
+            <div>
               <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-white/50 backdrop-blur-md border border-[#0096D6]/20 text-[#0096D6] font-semibold text-sm tracking-wide shadow-sm">
                 О компании и основателе
               </div>
@@ -70,15 +66,10 @@ const About = () => {
                   CentrLP помогает бизнесу связать сайт, рекламу, формы, аналитику и CRM в понятный маршрут заявки. Основатель — Максим Владимирович Кузнецов. Проекты выполняются официально от ООО «ААМХ»: с договором, согласованным составом работ и закрывающими документами. Основной регион работы — Тюмень и Тюменская область; цифровые проекты можно вести дистанционно по России.
                 </p>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right: Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
+            <div className="relative">
               {/* Glow behind image */}
               <div className="absolute inset-0 bg-gradient-to-tr from-[#0096D6] to-[#44B78B] rounded-[3rem] blur-2xl opacity-20 transform translate-y-4 translate-x-4" />
 
@@ -92,12 +83,16 @@ const About = () => {
                 <img
                   src={founderImage}
                   alt="Основатель CentrLP"
+                  width="800"
+                  height="1344"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105"
                 />
                 {/* Glass overlay/shine */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none" />
               </motion.div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>

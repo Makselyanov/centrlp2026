@@ -89,17 +89,17 @@ const projects: Project[] = [
     url: "https://xn--80aa8ahaki9a.site",
     screens: [
       {
-        src: "/projects/gallery/rosomaha-hero.jpg",
+        src: "/projects/gallery/rosomaha-hero.webp",
         title: "Первый экран",
         note: "Каталог и расчет видны сразу, без поиска нужной кнопки.",
       },
       {
-        src: "/projects/gallery/rosomaha-models.jpg",
+        src: "/projects/gallery/rosomaha-models.webp",
         title: "Доверие перед выбором",
         note: "Преимущества помогают объяснить сложную покупку до просмотра моделей.",
       },
       {
-        src: "/projects/gallery/rosomaha-dealers.jpg",
+        src: "/projects/gallery/rosomaha-dealers.webp",
         title: "Карточки моделей",
         note: "Покупатель видит фото, комплектацию, наличие, цену и переход к подробностям.",
       },
@@ -145,17 +145,17 @@ const projects: Project[] = [
     url: "https://xn----7sboc2ad7bd2a.xn--p1ai/",
     screens: [
       {
-        src: "/projects/gallery/metallteh-hero.jpg",
+        src: "/projects/gallery/metallteh-hero.webp",
         title: "Первый экран",
         note: "Сразу считываются производство, город, мощность и действие для расчета.",
       },
       {
-        src: "/projects/gallery/metallteh-catalog.jpg",
+        src: "/projects/gallery/metallteh-catalog.webp",
         title: "Каталог изделий",
         note: "Категории помогают найти типовую позицию или перейти к нестандартной задаче.",
       },
       {
-        src: "/projects/gallery/metallteh-production.jpg",
+        src: "/projects/gallery/metallteh-production.webp",
         title: "Производство",
         note: "Отдельный раздел показывает цех, оборудование и маршрут изготовления.",
       },
@@ -201,19 +201,19 @@ const projects: Project[] = [
     url: "https://crm.centrlp.ru/",
     screens: [
       {
-        src: "/projects/gallery/crm-hero.jpg",
+        src: "/projects/gallery/crm-hero.webp",
         video: "/projects/gallery/crm-hero.webm",
         title: "Живая витрина",
         note: "Движение интерфейса показывает, что система реагирует на действия, а не остается плоской картинкой.",
         aspect: "tall",
       },
       {
-        src: "/projects/gallery/crm-route.jpg",
+        src: "/projects/gallery/crm-route.webp",
         title: "Путь заявки",
         note: "Источник, контекст, задача, сделка и контроль соединены в один процесс.",
       },
       {
-        src: "/projects/gallery/crm-modules.jpg",
+        src: "/projects/gallery/crm-modules.webp",
         title: "Места потерь",
         note: "Показано, где обращения обычно выпадают между людьми и действиями.",
       },
@@ -259,17 +259,17 @@ const projects: Project[] = [
     url: "https://svrq.ru",
     screens: [
       {
-        src: "/projects/gallery/svrq-hero.jpg",
+        src: "/projects/gallery/svrq-hero.webp",
         title: "Первый экран",
         note: "Сразу объяснено, из каких источников приходит заявка и куда она попадает.",
       },
       {
-        src: "/projects/gallery/svrq-input.jpg",
+        src: "/projects/gallery/svrq-input.webp",
         title: "Путь обращения",
         note: "Показан переход от первого запроса к заявке в кабинете.",
       },
       {
-        src: "/projects/gallery/svrq-result.jpg",
+        src: "/projects/gallery/svrq-result.webp",
         title: "Расчет",
         note: "Заявка доводится до стоимости и понятного предложения.",
       },
@@ -315,17 +315,17 @@ const projects: Project[] = [
     url: "https://xn--c1andi.xn--p1ai",
     screens: [
       {
-        src: "/projects/gallery/klng-hero.jpg",
+        src: "/projects/gallery/klng-hero.webp",
         title: "Первый экран",
         note: "Показывает источники заявок и обещание быстрого расчета.",
       },
       {
-        src: "/projects/gallery/klng-calc.jpg",
+        src: "/projects/gallery/klng-calc.webp",
         title: "Путь заявки",
         note: "Звонок или сообщение превращаются в расчет и дальнейшее действие.",
       },
       {
-        src: "/projects/gallery/klng-flow.jpg",
+        src: "/projects/gallery/klng-flow.webp",
         title: "До оплаты",
         note: "Процесс объяснен шагами: обращение, расчет, предложение, согласование.",
       },
@@ -371,18 +371,18 @@ const projects: Project[] = [
     url: "https://cs-hm.ru/",
     screens: [
       {
-        src: "/projects/gallery/cshm-hero.jpg",
+        src: "/projects/gallery/cshm-hero.webp",
         title: "Первый экран",
         note: "Сразу видны услуга, города работы, телефон, кнопки и путь к расчету.",
         aspect: "tall",
       },
       {
-        src: "/projects/gallery/cshm-services.jpg",
+        src: "/projects/gallery/cshm-services.webp",
         title: "Условия и доверие",
         note: "Цены, сроки, рейтинг и опыт собраны рядом, чтобы снизить тревогу клиента.",
       },
       {
-        src: "/projects/gallery/cshm-proof.jpg",
+        src: "/projects/gallery/cshm-proof.webp",
         title: "Страницы услуг",
         note: "Сайт объясняет, что входит в уборку и почему компании можно доверять.",
       },
@@ -444,27 +444,22 @@ const summary = [
 
 const heroReel: Array<{ src: string; video?: string; title: string; text: string }> = [
   {
-    src: "/projects/gallery/rosomaha-dealers.jpg",
+    src: "/projects/gallery/rosomaha-dealers.webp",
     title: "Каталог",
     text: "модели, цены и переход к заявке",
   },
   {
-    src: "/projects/gallery/metallteh-catalog.jpg",
+    src: "/projects/gallery/metallteh-catalog.webp",
     title: "Производство",
     text: "категории изделий и расчет",
   },
   {
-    src: "/projects/gallery/crm-hero.jpg",
+    src: "/projects/gallery/crm-hero.webp",
     video: "/projects/gallery/crm-hero.webm",
     title: "CRM",
     text: "заявки, звонки и контроль",
   },
 ];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0 },
-};
 
 const startPreviewVideo = (video: HTMLVideoElement) => {
   void video.play().catch(() => undefined);
@@ -505,7 +500,11 @@ const BrowserFrame = ({
             onCanPlay={(event) => startPreviewVideo(event.currentTarget)}
             onMouseEnter={(event) => startPreviewVideo(event.currentTarget)}
           >
-            <source src={screen.video} type="video/webm" />
+            <source
+              src={screen.video}
+              type="video/webm"
+              media="(min-width: 768px)"
+            />
           </video>
           <div className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#007DB3] shadow-sm backdrop-blur">
             <Sparkles className="h-3.5 w-3.5" />
@@ -558,13 +557,7 @@ const Projects = () => {
       <section className="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-white via-[#0096D6]/[0.035] to-white pt-32">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.035]" />
         <div className="container relative mx-auto px-4 pb-14 md:pb-18">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            transition={{ duration: 0.55 }}
-            className="mx-auto max-w-4xl text-center"
-          >
+          <div className="mx-auto max-w-4xl text-center">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#0096D6]/15 bg-white/85 px-4 py-2 text-sm font-semibold text-[#0096D6] shadow-sm backdrop-blur">
               <Sparkles className="h-4 w-4" />
               Работы, которые можно открыть и разобрать
@@ -575,14 +568,9 @@ const Projects = () => {
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-slate-600 md:text-xl">
               Показываем работы не одним обрезанным кадром, а несколькими экранами: первый контакт, структура, доверие, расчет и путь обращения.
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.08 }}
-            className="mx-auto mt-10 grid max-w-6xl gap-4 lg:grid-cols-[1.05fr_0.9fr_1.05fr] lg:items-start"
-          >
+          <div className="mx-auto mt-10 grid max-w-6xl gap-4 lg:grid-cols-[1.05fr_0.9fr_1.05fr] lg:items-start">
             {heroReel.map((item, index) => (
               <div
                 key={item.title}
@@ -611,7 +599,11 @@ const Projects = () => {
                         onCanPlay={(event) => startPreviewVideo(event.currentTarget)}
                         onMouseEnter={(event) => startPreviewVideo(event.currentTarget)}
                       >
-                        <source src={item.video} type="video/webm" />
+                        <source
+                          src={item.video}
+                          type="video/webm"
+                          media="(min-width: 768px)"
+                        />
                       </video>
                       <div className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-[#007DB3] shadow-sm">
                         движение
@@ -621,6 +613,10 @@ const Projects = () => {
                     <img
                       src={item.src}
                       alt={`${item.title} проекта CentrLP`}
+                      width="960"
+                      height="480"
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                      decoding="async"
                       className="h-full w-full rounded-md object-contain object-top transition-transform duration-500 group-hover:scale-[1.015]"
                       loading="eager"
                     />
@@ -632,7 +628,7 @@ const Projects = () => {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
