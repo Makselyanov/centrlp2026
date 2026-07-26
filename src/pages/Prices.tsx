@@ -1,28 +1,28 @@
-import { Layout } from "@/components/Layout";
 import { ContactForm } from "@/components/ContactForm";
-import { Card } from "@/components/ui/card";
+import { Layout } from "@/components/Layout";
+import { useAutoBreadcrumb } from "@/components/SeoSchemas";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
-  Zap,
-  Star,
-  TrendingUp,
-  Shield,
-  Target,
-  BarChart,
-  PenTool,
-  Layout as LayoutIcon,
-  MessageSquare,
-  Search,
-  Briefcase,
-  RefreshCw,
-  HelpCircle,
-  CheckCircle,
-  ArrowUpRight,
+  ArrowRight,
+  Bot,
+  BriefcaseBusiness,
+  Check,
+  Layers3,
+  LineChart,
+  Palette,
+  ShieldCheck,
   Sparkles,
+  Target,
+  Workflow,
+  type LucideIcon,
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useAutoBreadcrumb } from "@/components/SeoSchemas";
 import {
   packagePrices,
   pricingGroups,
@@ -31,442 +31,427 @@ import {
   type ServicePriceCategory,
 } from "@/data/pricing";
 
+type CategoryMeta = {
+  icon: LucideIcon;
+  from: string;
+  short: string;
+  accent: string;
+};
+
+const categoryMeta: Record<ServicePriceCategory, CategoryMeta> = {
+  growth: {
+    icon: LineChart,
+    from: "от 15 000 ₽",
+    short: "Сайты, реклама, аналитика и стратегия",
+    accent: "text-sky-700 bg-sky-50",
+  },
+  packaging: {
+    icon: Palette,
+    from: "от 12 000 ₽",
+    short: "Оффер, дизайн, тексты и контент",
+    accent: "text-violet-700 bg-violet-50",
+  },
+  product: {
+    icon: Layers3,
+    from: "от 90 000 ₽",
+    short: "CRM, приложения, Mini App и MVP",
+    accent: "text-blue-700 bg-blue-50",
+  },
+  ai: {
+    icon: Bot,
+    from: "от 15 000 ₽",
+    short: "AI-агенты, боты и автоматизация",
+    accent: "text-emerald-700 bg-emerald-50",
+  },
+  compliance: {
+    icon: ShieldCheck,
+    from: "от 45 000 ₽",
+    short: "Сайт, формы, cookie и персональные данные",
+    accent: "text-amber-800 bg-amber-50",
+  },
+  industry: {
+    icon: BriefcaseBusiness,
+    from: "от 80 000 ₽",
+    short: "Готовые отраслевые сценарии",
+    accent: "text-rose-700 bg-rose-50",
+  },
+};
+
+const orderedGroupIds: ServicePriceCategory[] = [
+  "growth",
+  "packaging",
+  "product",
+  "ai",
+  "compliance",
+  "industry",
+];
+
+const packageStages = [
+  {
+    label: "Проверить",
+    icon: Target,
+    tone: "bg-emerald-50 text-emerald-700",
+  },
+  {
+    label: "Запустить",
+    icon: Sparkles,
+    tone: "bg-sky-50 text-sky-700",
+  },
+  {
+    label: "Выстроить продажи",
+    icon: LineChart,
+    tone: "bg-blue-50 text-blue-700",
+  },
+  {
+    label: "Автоматизировать",
+    icon: Workflow,
+    tone: "bg-violet-50 text-violet-700",
+  },
+];
+
+const formatServicesCount = (count: number) => {
+  const lastTwoDigits = count % 100;
+  const lastDigit = count % 10;
+
+  if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
+    return `${count} услуг`;
+  }
+
+  if (lastDigit === 1) {
+    return `${count} услуга`;
+  }
+
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return `${count} услуги`;
+  }
+
+  return `${count} услуг`;
+};
+
 const Prices = () => {
   useAutoBreadcrumb("Цены");
-  const scrollToForm = () => {
-    const element = document.getElementById('form');
-    element?.scrollIntoView({ behavior: 'smooth' });
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToPackages = () => {
-    const element = document.getElementById('packages');
-    element?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const groupedServices = orderedGroupIds.map((id) => {
+    const group = pricingGroups.find((item) => item.id === id);
 
-  const tags = [
-    { text: "Скидки", top: "15%", left: "10%", delay: 0 },
-    { text: "Пакеты", top: "25%", right: "15%", delay: 1.5 },
-    { text: "Договор", bottom: "20%", left: "15%", delay: 1 },
-    { text: "Рассрочка", bottom: "30%", right: "10%", delay: 2 },
-    { text: "Бонусы", top: "10%", left: "50%", delay: 0.5 },
-  ];
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.5 }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+    if (!group) {
+      throw new Error(`Pricing group "${id}" is missing`);
     }
-  };
 
-  const packageStyles = [
-    {
-      id: "express",
-      icon: Target,
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-500/10",
-      borderColor: "border-emerald-500/20",
-    },
-    {
-      id: "start",
-      icon: Zap,
-      color: "text-blue-500",
-      bgColor: "bg-blue-500/10",
-      borderColor: "border-blue-500/20",
-    },
-    {
-      id: "sales",
-      icon: Star,
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-      borderColor: "border-primary/50",
-    },
-    {
-      id: "automation",
-      icon: TrendingUp,
-      color: "text-purple-500",
-      bgColor: "bg-purple-500/10",
-      borderColor: "border-purple-500/20",
-    },
-  ];
-
-  const packages = packagePrices.map((pkg, index) => ({
-    ...pkg,
-    ...packageStyles[index],
-    solve: pkg.result,
-    popular: Boolean(pkg.highlighted),
-  }));
-
-  const categoryIcon: Record<ServicePriceCategory, typeof LayoutIcon> = {
-    product: LayoutIcon,
-    ai: MessageSquare,
-    growth: Search,
-    packaging: PenTool,
-    industry: Briefcase,
-    compliance: Shield,
-  };
-
-  const categorySolve = pricingGroups.reduce<Record<ServicePriceCategory, string>>((acc, group) => {
-    acc[group.id] = group.title;
-    return acc;
-  }, {} as Record<ServicePriceCategory, string>);
-
-  const services = servicePrices.map((service) => ({
-    title: service.title,
-    price: service.price,
-    desc: service.description,
-    solve: categorySolve[service.category],
-    icon: categoryIcon[service.category],
-    href: service.href,
-  }));
-
-  const tickerItems = ["Маркетинг", "Разработка", "Дизайн", "Аналитика", "Автоматизация", "ИИ-решения", "Трафик", "Упаковка", "Стратегия"];
+    return {
+      group,
+      services: servicePrices.filter((service) => service.category === id),
+    };
+  });
 
   return (
     <Layout
-      title="Цены на сайты, рекламу, нейросети и проверку данных | CentrLP Тюмень"
-      description="Цены CentrLP: экспресс-разбор заявок от 15 000 ₽, сайт от 45 000 ₽, упаковка от 75 000 ₽, продажи под ключ от 140 000 ₽, проверка данных от 45 000 ₽."
+      title="Цены на сайты, рекламу, AI и CRM | Прайс CentrLP Тюмень"
+      description="Прайс CentrLP по понятным группам: разбор заявок от 15 000 ₽, сайт от 45 000 ₽, продвижение от 20 000 ₽, CRM и цифровые продукты от 90 000 ₽, AI-сценарии от 15 000 ₽."
     >
-      {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5 min-h-[80vh] flex flex-col justify-center">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--primary-rgb),0.08),transparent_70%)]" />
-
-        {/* Floating Tags */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-          {tags.map((tag, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: [0.3, 0.7, 0.3],
-                y: [0, -15, 0],
-              }}
-              transition={{
-                duration: 4 + i,
-                repeat: Infinity,
-                delay: tag.delay,
-                ease: "easeInOut"
-              }}
-              className="absolute px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/5 border border-primary/10 text-primary/50 text-xs md:text-sm font-medium backdrop-blur-sm hidden sm:block"
-              style={{ top: tag.top, left: tag.left, right: tag.right, bottom: tag.bottom }}
-            >
-              {tag.text}
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>Прайс-лист: {pricingUpdatedAt}</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-8 leading-tight"
-          >
-            Сначала понять, где <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0096D6] via-[#44B78B] to-[#0096D6] bg-[length:200%_auto] animate-gradient">
-              теряются заявки
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            Можно начать с короткого разбора за 48 часов, а уже потом вкладываться
-            в сайт, рекламу, CRM или нейросетевые сценарии.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Button size="lg" className="h-16 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-[0_0_30px_-10px_rgba(var(--primary-rgb),0.5)] transition-all hover:scale-105" onClick={scrollToForm}>
-              Получить экспресс-разбор
-            </Button>
-            <Button variant="outline" size="lg" className="h-16 px-10 text-lg rounded-full border-2 transition-all hover:scale-105" onClick={scrollToPackages}>
-              Смотреть пакеты
-            </Button>
-          </motion.div>
-        </div>
-
-        {/* Ticker */}
-        <div className="absolute bottom-0 left-0 w-full overflow-hidden py-6 bg-background/50 backdrop-blur-sm border-t border-border/5">
-          <div className="flex whitespace-nowrap animate-marquee">
-            {[...tickerItems, ...tickerItems, ...tickerItems].map((item, i) => (
-              <div key={i} className="mx-8 text-muted-foreground/30 font-bold text-xl uppercase tracking-widest flex items-center gap-4">
-                {item} <div className="w-1.5 h-1.5 rounded-full bg-primary/50" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Packages */}
-      <section id="packages" className="py-24 relative bg-background">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Пакеты под разный уровень риска</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              От короткой проверки заявок до полноценного сайта, продаж и автоматизации
-            </p>
-          </div>
-
-          <div className="grid gap-8 items-start md:grid-cols-2 xl:grid-cols-4">
-            {packages.map((pkg, index) => (
-              <motion.div
-                key={index}
-                id={pkg.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="h-full"
-              >
-                <Card className={`relative p-8 h-full flex flex-col transition-all duration-300 ${pkg.popular ? 'border-primary shadow-2xl scale-105 z-10 bg-card' : 'border-border bg-card/50 hover:border-primary/30 hover:shadow-lg'}`}>
-                  {pkg.popular && (
-                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent-1 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
-                      <Star className="w-4 h-4 fill-current" />
-                      Хит продаж
-                    </div>
-                  )}
-
-                  <div className="mb-8 text-center">
-                    <div className={`w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 ${pkg.bgColor} ${pkg.color} shadow-inner`}>
-                      <pkg.icon className="w-10 h-10" />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-2">{pkg.title}</h3>
-                    <div className={`text-3xl font-bold ${pkg.color}`}>{pkg.price}</div>
-                  </div>
-
-                  <p className="text-muted-foreground mb-8 text-center text-sm leading-relaxed">{pkg.description}</p>
-
-                  <div className="space-y-4 mb-8 flex-grow">
-                    {pkg.features.map((feature, i) => (
-                      <div key={i} className="flex items-start text-sm group">
-                        <CheckCircle className={`w-5 h-5 mr-3 mt-0.5 flex-shrink-0 transition-colors ${pkg.popular ? 'text-green-500' : 'text-muted-foreground group-hover:text-green-500'}`} />
-                        <span className="text-foreground/90">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className={`p-4 rounded-xl mb-8 border ${pkg.borderColor} ${pkg.bgColor}`}>
-                    <div className={`text-xs font-bold uppercase mb-2 flex items-center gap-2 ${pkg.color}`}>
-                      <Target className="w-3 h-3" />
-                      Решает проблему:
-                    </div>
-                    <p className="text-sm italic text-foreground/80">{pkg.solve}</p>
-                  </div>
-
-                  <Button
-                    variant={pkg.popular ? "default" : "outline"}
-                    size="lg"
-                    className={`w-full h-12 rounded-xl font-semibold ${pkg.popular ? 'shadow-lg hover:shadow-primary/25' : 'border-2'}`}
-                    onClick={scrollToForm}
-                  >
-                    Заказать пакет
-                  </Button>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Individual Services */}
-      <section className="py-32 bg-[#0A0F1C] relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03]" />
-
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div className="text-center mb-20" {...fadeInUp}>
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/20">
-              Точечные решения
+      <section className="bg-[#f7fafb] pb-16 pt-32 md:pb-24 md:pt-40">
+        <div className="container mx-auto grid items-center gap-10 px-4 lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="max-w-2xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-800">
+              <Sparkles className="h-4 w-4" />
+              Прайс обновлён: {pricingUpdatedAt}
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Отдельные услуги</h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Единый прайс для страниц услуг, карточек и SEO-разметки. Если цена повторяется на сайте, она должна совпадать здесь.
+
+            <h1 className="mb-6 max-w-3xl text-4xl font-bold leading-[1.08] tracking-[-0.03em] text-slate-950 [text-wrap:balance] md:text-5xl lg:text-6xl">
+              Сколько стоит сайт, продвижение и AI — по понятным группам
+            </h1>
+
+            <p className="mb-8 max-w-xl text-lg leading-8 text-slate-600 md:text-xl">
+              Выберите задачу, сравните стартовую стоимость и откройте только нужную группу.
+              Точная смета появляется после короткого разбора объёма и интеграций.
             </p>
-          </motion.div>
 
-          <motion.div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  show: { opacity: 1, y: 0 }
-                }}
-                className="group relative h-full"
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button
+                size="lg"
+                className="h-12 rounded-lg px-6 text-base"
+                onClick={() => scrollTo("price-groups")}
               >
-                {/* Glowing Border Effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-accent-1 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 blur opacity-20" />
+                Выбрать группу услуг
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-12 rounded-lg border-slate-300 bg-white px-6 text-base"
+                onClick={() => scrollTo("form")}
+              >
+                Обсудить задачу
+              </Button>
+            </div>
+          </div>
 
-                <Card className="relative h-full bg-[#111625] border-white/5 p-6 flex flex-col overflow-hidden group-hover:border-transparent transition-colors">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="p-3 bg-white/5 rounded-2xl group-hover:bg-primary/20 group-hover:text-primary transition-all duration-300 text-gray-400">
-                      <service.icon className="w-8 h-8" />
+          <figure className="relative overflow-hidden rounded-2xl bg-[#fbfaf6] shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
+            <img
+              src="/images/prices/max-pricing-guide-v1.webp"
+              alt="Макс показывает основные ценовые ориентиры CentrLP"
+              width={1536}
+              height={1024}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="h-auto w-full"
+            />
+
+            <div className="absolute left-[4%] top-[8%] w-[44%] space-y-2.5 sm:left-[7%] sm:top-[12%] sm:w-[38%] sm:space-y-3">
+              <a
+                href="#express"
+                className="block rounded-xl bg-white px-3 py-2.5 shadow-sm transition-transform hover:-translate-y-0.5 sm:px-4 sm:py-3"
+              >
+                <span className="block text-[11px] font-medium text-slate-500 sm:text-sm">Разбор заявок</span>
+                <strong className="block text-sm text-slate-950 sm:text-lg">от 15 000 ₽</strong>
+              </a>
+              <a
+                href="#price-groups"
+                className="block rounded-xl bg-white px-3 py-2.5 shadow-sm transition-transform hover:-translate-y-0.5 sm:px-4 sm:py-3"
+              >
+                <span className="block text-[11px] font-medium text-slate-500 sm:text-sm">Сайт под ключ</span>
+                <strong className="block text-sm text-slate-950 sm:text-lg">от 45 000 ₽</strong>
+              </a>
+              <a
+                href="#automation"
+                className="block rounded-xl bg-white px-3 py-2.5 shadow-sm transition-transform hover:-translate-y-0.5 sm:px-4 sm:py-3"
+              >
+                <span className="block text-[11px] font-medium text-slate-500 sm:text-sm">AI + CRM</span>
+                <strong className="block text-sm text-slate-950 sm:text-lg">от 220 000 ₽</strong>
+              </a>
+            </div>
+          </figure>
+        </div>
+      </section>
+
+      <section id="packages" className="bg-white py-20 md:py-24">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="mb-10 max-w-3xl">
+            <h2 className="mb-4 text-3xl font-bold tracking-[-0.025em] text-slate-950 md:text-4xl">
+              Четыре формата работы
+            </h2>
+            <p className="text-lg leading-8 text-slate-600">
+              От короткой диагностики до полноценной системы продаж и автоматизации.
+              Можно начать с малого и не оплачивать лишний масштаб заранее.
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-2xl border border-slate-200">
+            {packagePrices.map((pkg, index) => {
+              const stage = packageStages[index];
+              const StageIcon = stage.icon;
+
+              return (
+                <article
+                  key={pkg.title}
+                  id={index === 0 ? "express" : index === 3 ? "automation" : undefined}
+                  className="grid gap-6 border-b border-slate-200 p-6 last:border-b-0 md:p-8 lg:grid-cols-[0.72fr_1.5fr_auto] lg:items-start"
+                >
+                  <div>
+                    <div className={`mb-4 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold ${stage.tone}`}>
+                      <StageIcon className="h-4 w-4" />
+                      {stage.label}
                     </div>
-                    <div className="flex items-center gap-1 text-white/30 group-hover:text-primary transition-colors">
-                      <ArrowUpRight className="w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0" />
-                    </div>
+                    <h3 className="text-2xl font-bold text-slate-950">{pkg.title}</h3>
+                    {pkg.highlighted && (
+                      <span className="mt-3 inline-block text-sm font-semibold text-emerald-700">
+                        Лучший первый шаг
+                      </span>
+                    )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
-                    <Link to={service.href} className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded-sm">
-                      {service.title}
-                    </Link>
-                  </h3>
-                  <p className="text-gray-400 text-sm mb-6 leading-relaxed flex-grow">{service.desc}</p>
+                  <div>
+                    <p className="mb-5 leading-7 text-slate-600">{pkg.description}</p>
+                    <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+                      {pkg.features.map((feature) => (
+                        <li key={feature} className="flex gap-2.5 text-sm leading-6 text-slate-700">
+                          <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-600" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-5 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600">
+                      <strong className="text-slate-900">Результат:</strong> {pkg.result}
+                    </p>
+                  </div>
 
-                  <div className="mt-auto pt-6 border-t border-white/5">
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex flex-col">
-                        <span className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Результат</span>
-                        <span className="text-sm text-gray-300 font-medium">{service.solve}</span>
-                      </div>
-                      <div className="bg-white/5 px-3 py-1.5 rounded-lg border border-white/5 group-hover:border-primary/30 group-hover:bg-primary/10 transition-colors">
-                        <span className="text-white font-bold text-sm group-hover:text-primary">{service.price}</span>
-                      </div>
-                    </div>
-                    <Button asChild variant="outline" className="mt-4 w-full border-white/15 bg-transparent text-white hover:bg-white hover:text-slate-950">
-                      <Link to={service.href}>Открыть услугу</Link>
+                  <div className="min-w-44 lg:text-right">
+                    <div className="mb-4 text-2xl font-bold text-slate-950">{pkg.price}</div>
+                    <Button
+                      variant="outline"
+                      className="w-full rounded-lg border-slate-300 lg:w-auto"
+                      onClick={() => scrollTo("form")}
+                    >
+                      Обсудить
                     </Button>
                   </div>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
 
-      {/* Barter */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-br from-[#1a1f2c] to-[#2d3748] rounded-3xl p-8 md:p-12 border border-primary/20 shadow-2xl relative overflow-hidden text-white"
-          >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] rounded-full" />
-
-            <div className="flex flex-col lg:flex-row items-center gap-10 relative z-10">
-              <div className="flex-1">
-                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 text-white text-sm font-medium mb-6 border border-white/10 backdrop-blur-sm">
-                  <RefreshCw className="w-4 h-4 mr-2 text-green-400" />
-                  Специальное предложение
-                </div>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Бартер-пакеты для бизнеса</h2>
-                <div className="flex items-baseline gap-2 mb-6">
-                  <span className="text-2xl md:text-3xl font-bold text-green-400">Эквивалент 80 000+ ₽</span>
-                </div>
-
-                <p className="text-lg text-gray-300 mb-8 max-w-xl leading-relaxed">
-                  Идеально для мебельщиков, СТО, детейлинга, клининга и салонов услуг.
-                  Мы вам — упаковку и клиентов, вы нам — свои услуги.
-                  Взаимозачёт по договору, фиксированная программа работ.
-                </p>
-
-                <div className="flex items-center gap-3 text-sm font-medium text-green-400 bg-green-400/10 px-4 py-2 rounded-lg w-fit">
-                  <Shield className="w-4 h-4" />
-                  Решает проблему отсутствия бюджета на старте
-                </div>
-              </div>
-
-              <div className="flex-shrink-0 w-full lg:w-auto">
-                <Card className="bg-white/5 border-white/10 p-6 backdrop-blur-sm max-w-sm mx-auto lg:mx-0">
-                  <h4 className="font-bold mb-4 text-white">Что входит в бартер:</h4>
-                  <ul className="space-y-3 text-sm text-gray-300 mb-6">
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Сайт + Квиз</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Настройка рекламы</li>
-                    <li className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-primary" /> Оформление соцсетей</li>
-                  </ul>
-                  <Button size="lg" className="w-full bg-white text-primary hover:bg-gray-100 font-bold" onClick={scrollToForm}>
-                    Обсудить условия
-                  </Button>
-                </Card>
-              </div>
+      <section id="price-groups" className="bg-slate-950 py-20 text-white md:py-24">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="mb-10 grid gap-5 lg:grid-cols-[1fr_0.7fr] lg:items-end">
+            <div>
+              <h2 className="mb-4 text-3xl font-bold tracking-[-0.025em] md:text-4xl">
+                Все услуги — по задачам
+              </h2>
+              <p className="max-w-3xl text-lg leading-8 text-slate-300">
+                Откройте одну группу: внутри видны услуга, стартовая цена, короткое описание
+                и ссылка на подробную страницу.
+              </p>
             </div>
-          </motion.div>
+            <p className="text-sm leading-6 text-slate-400 lg:text-right">
+              Внешние лицензии, рекламный бюджет, платные сервисы и сложный перенос данных
+              рассчитываются отдельно.
+            </p>
+          </div>
+
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue="growth"
+            className="overflow-hidden rounded-2xl border border-white/15 bg-white"
+          >
+            {groupedServices.map(({ group, services }) => {
+              const meta = categoryMeta[group.id];
+              const CategoryIcon = meta.icon;
+
+              return (
+                <AccordionItem
+                  key={group.id}
+                  value={group.id}
+                  className="border-slate-200 px-4 last:border-b-0 sm:px-6"
+                >
+                  <AccordionTrigger className="gap-3 py-5 text-left hover:no-underline sm:py-6">
+                    <span className="grid min-w-0 flex-1 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-4">
+                      <span className={`flex h-10 w-10 items-center justify-center rounded-lg ${meta.accent}`}>
+                        <CategoryIcon className="h-5 w-5" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block text-base font-bold text-slate-950 sm:text-lg">
+                          {group.title}
+                        </span>
+                        <span className="mt-1 hidden text-sm font-normal leading-6 text-slate-500 md:block">
+                          {meta.short}
+                        </span>
+                        <span className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:hidden">
+                          <span className="font-bold text-slate-950">{meta.from}</span>
+                          <span className="font-normal text-slate-500">
+                            {formatServicesCount(services.length)}
+                          </span>
+                        </span>
+                      </span>
+                      <span className="hidden text-right sm:block">
+                        <span className="block text-sm font-bold text-slate-950">{meta.from}</span>
+                        <span className="mt-1 block text-xs font-normal text-slate-500">
+                          {formatServicesCount(services.length)}
+                        </span>
+                      </span>
+                    </span>
+                  </AccordionTrigger>
+
+                  <AccordionContent className="pb-6">
+                    <p className="mb-4 max-w-4xl text-sm leading-6 text-slate-600 md:hidden">
+                      {group.description}
+                    </p>
+                    <div className="overflow-hidden rounded-xl bg-slate-50">
+                      {services.map((service) => (
+                        <article
+                          key={service.href}
+                          className="grid gap-4 border-b border-slate-200 px-4 py-5 last:border-b-0 sm:px-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"
+                        >
+                          <div className="min-w-0">
+                            <Link
+                              to={service.href}
+                              className="text-base font-bold text-slate-950 transition-colors hover:text-sky-700"
+                            >
+                              {service.title}
+                            </Link>
+                            <p className="mt-1.5 max-w-3xl text-sm leading-6 text-slate-600">
+                              {service.description}
+                            </p>
+                            {service.note && (
+                              <p className="mt-2 text-xs leading-5 text-slate-500">{service.note}</p>
+                            )}
+                          </div>
+
+                          <div className="flex items-center justify-between gap-4 md:min-w-48 md:justify-end">
+                            <strong className="whitespace-nowrap text-base text-slate-950">
+                              {service.price}
+                            </strong>
+                            <Link
+                              to={service.href}
+                              aria-label={`Подробнее об услуге «${service.title}»`}
+                              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-sky-700 shadow-sm transition-colors hover:bg-sky-100"
+                            >
+                              <ArrowRight className="h-4 w-4" />
+                            </Link>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
+          </Accordion>
         </div>
       </section>
 
-      {/* Contact Form */}
-      <section id="form" className="py-24 bg-secondary/30 relative">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
-        <div className="container mx-auto px-4 max-w-2xl relative z-10">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Оставить заявку</h2>
-            <p className="text-muted-foreground text-lg">
-              Заполните форму, и мы свяжемся с вами для обсуждения деталей проекта
+      <section className="bg-white py-16">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="grid gap-6 border-y border-slate-200 py-8 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-emerald-700">
+                <BriefcaseBusiness className="h-4 w-4" />
+                Бартер для сервисного бизнеса
+              </div>
+              <h2 className="mb-2 text-2xl font-bold text-slate-950">
+                Обмен услугами с эквивалентом от 80 000 ₽
+              </h2>
+              <p className="max-w-3xl leading-7 text-slate-600">
+                Подходит для СТО, детейлинга, мебели, клининга и салонов услуг.
+                Объём работ и взаимозачёт фиксируются в договоре.
+              </p>
+            </div>
+            <Button variant="outline" className="rounded-lg" onClick={() => scrollTo("form")}>
+              Обсудить бартер
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section id="form" className="bg-[#eef7fa] py-20 md:py-24">
+        <div className="container mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div>
+            <h2 className="mb-4 text-3xl font-bold tracking-[-0.025em] text-slate-950 md:text-4xl">
+              Получить точную смету
+            </h2>
+            <p className="mb-6 text-lg leading-8 text-slate-600">
+              Опишите задачу, текущий сайт или процесс. Мы уточним объём,
+              отделим обязательное от необязательного и предложим следующий шаг.
             </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
+            <div className="flex gap-3 border-t border-slate-300 pt-5 text-sm leading-6 text-slate-600">
+              <ShieldCheck className="mt-1 h-5 w-5 shrink-0 text-sky-700" />
+              <p>
+                Работаем официально по договору с ООО «ААМХ»: этапы, ТЗ,
+                сроки и состав работ фиксируются до запуска.
+              </p>
+            </div>
+          </div>
+
+          <div className="min-w-0 rounded-2xl bg-white p-1 shadow-[0_8px_24px_rgba(15,23,42,0.08)]">
             <ContactForm />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer Note */}
-      <section className="pb-20 pt-10">
-        <div className="container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="inline-block bg-secondary/50 p-8 rounded-2xl max-w-3xl border border-border/50"
-          >
-            <h4 className="font-bold mb-3 flex items-center justify-center gap-2 text-lg">
-              <Briefcase className="w-5 h-5 text-primary" />
-              Официально и прозрачно
-            </h4>
-            <p className="text-muted-foreground leading-relaxed">
-              Все услуги выполняются официально, по договору с ООО «ААМХ», с этапами, ТЗ и прозрачной отчётностью.
-              Мы гарантируем качество и соблюдение сроков. Вы всегда знаете, за что платите.
-            </p>
-          </motion.div>
+          </div>
         </div>
       </section>
     </Layout>
