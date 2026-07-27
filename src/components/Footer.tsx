@@ -103,6 +103,10 @@ export const Footer = () => {
               <div className="pt-2">
                 <p className="mb-2 text-xs font-semibold text-muted-foreground">Каналы CentrLP</p>
                 <SocialChannelLinks variant="footer" />
+                <p className="mt-2 text-[11px] leading-relaxed text-muted-foreground">
+                  *Instagram принадлежит компании Meta Platforms Inc., деятельность которой по реализации
+                  продуктов Facebook и Instagram признана экстремистской и запрещена на территории РФ.
+                </p>
               </div>
             </div>
           </div>

@@ -10,7 +10,7 @@ export const SOCIAL_CHANNELS = [
   },
   {
     id: "instagram",
-    label: "Instagram",
+    label: "Instagram*",
     detail: "@centrlp",
     href: "https://www.instagram.com/centrlp/",
     className: "bg-[#A32A8A] text-white hover:bg-[#852271]",
