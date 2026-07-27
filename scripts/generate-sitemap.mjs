@@ -194,7 +194,7 @@ function getChangefreq(route) {
 }
 
 function normalizeRoutes(staticRoutes, blogRoutes) {
-    const staticLastmod = getGitLastmod('src/App.tsx') || new Date().toISOString().split('T')[0];
+    const staticLastmod = getFileLastmod('src/App.tsx') || new Date().toISOString().split('T')[0];
     const normalizedStatic = staticRoutes.map(route => ({
         route,
         lastmod: getLandingRouteLastmod(route) || staticLastmod,
