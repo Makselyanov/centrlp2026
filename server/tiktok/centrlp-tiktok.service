@@ -1,0 +1,39 @@
+[Unit]
+Description=CentrLP TikTok OAuth and Content Posting gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=true
+WorkingDirectory=/var/www/centrlp/server/tiktok
+Environment=NODE_ENV=production
+Environment=TIKTOK_PORT=3023
+EnvironmentFile=/etc/centrlp/tiktok.env
+ExecStart=/usr/bin/node /var/www/centrlp/server/tiktok/src/server.mjs
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=15s
+StateDirectory=centrlp-tiktok
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+ProcSubset=pid
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/var/lib/centrlp-tiktok
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+{
+  "name": "centrlp-tiktok-service",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CentrLP TikTok Login Kit and Content Posting API gateway",
+  "main": "src/server.mjs",
+  "scripts": {
+    "start": "node src/server.mjs",
+    "check": "node --check src/config.mjs && node --check src/crypto-store.mjs && node --check src/tiktok-client.mjs && node --check src/app.mjs && node --check src/server.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "dependencies": {
+    "express": "4.22.2"
+  }
+}

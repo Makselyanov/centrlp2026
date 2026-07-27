@@ -106,6 +106,60 @@ npm run dev
 6. Отдельно контролировать, что рабочее дерево `/var/www/centrlp` и собранный `dist` действительно обновлены.
 7. После важных релизов перепроверять live-страницы и SEO-артефакты (`sitemap.xml`, `robots.txt`, prerendered heads).
 
+## TikTok Content Studio
+
+Маршрут `/tiktok` зависит от отдельного loopback-сервиса:
+
+- каталог: `/var/www/centrlp/server/tiktok`;
+- systemd unit: `centrlp-tiktok.service`;
+- адрес: только `127.0.0.1:3023`;
+- закрытый env-файл: `/etc/centrlp/tiktok.env`, владелец `root:root`,
+  режим `0600`;
+- зашифрованное состояние: `/var/lib/centrlp-tiktok`;
+- `3022` не использовать: он принадлежит другому проекту.
+
+При релизе, который меняет `server/tiktok`, `nginx-centrlp.conf` или маршрут
+`/tiktok`, обязательны все шаги:
+
+```bash
+cd /var/www/centrlp
+git pull --ff-only origin main
+npm ci
+npm run build
+
+cd /var/www/centrlp/server/tiktok
+npm ci --omit=dev
+npm run check
+npm test
+
+install -o root -g root -m 0644 centrlp-tiktok.service \
+  /etc/systemd/system/centrlp-tiktok.service
+systemctl daemon-reload
+systemctl enable --now centrlp-tiktok.service
+systemctl is-active centrlp-tiktok.service
+curl --fail --silent http://127.0.0.1:3023/health
+
+cp /var/www/centrlp/nginx-centrlp.conf \
+  /etc/nginx/sites-available/centrlp.ru
+nginx -t
+systemctl reload nginx
+curl --fail --silent https://centrlp.ru/api/tiktok/health
+curl --fail --silent https://centrlp.ru/tiktok
+```
+
+До отдельного подтверждения процедуры трансграничной передачи в env обязаны
+оставаться `TIKTOK_ENVIRONMENT=sandbox` и
+`TIKTOK_CROSS_BORDER_APPROVED=0`. При таком режиме health и интерфейс
+недоступности работают, а подключение, приём видео и публикация возвращают
+fail-closed ответ без обращения к TikTok. Отключение уже сохранённой
+авторизации остаётся доступным.
+
+Перед reload нужно сохранить предыдущие версии systemd unit и nginx-конфига.
+Откат выполняется на предыдущий git-коммит, предыдущий unit и предыдущий
+nginx-конфиг с обязательными `nginx -t`, перезапуском сервиса и повторными
+health-check. Нельзя оставлять опубликованный маршрут с прокси на
+неустановленный или неактивный сервис.
+
 ## Что ещё осталось улучшить в эксплуатации
 
 - либо окончательно убрать/архивировать `.github/workflows/static.yml`
