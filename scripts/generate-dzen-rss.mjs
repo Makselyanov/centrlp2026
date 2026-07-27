@@ -28,7 +28,8 @@ function slugFromFile(file) {
 }
 
 function stripMarkdown(markdown = '') {
-  return markdown
+  return String(markdown)
+    .replace(/\r\n?/g, '\n')
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/!\[[^\]]*]\([^)]+\)/g, ' ')
     .replace(/\[([^\]]+)]\(([^)]+)\)/g, '$1')
