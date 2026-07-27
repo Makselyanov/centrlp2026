@@ -15,6 +15,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/SeoSchemas";
 import { Link } from "react-router-dom";
 import { MessengerLinks } from "@/components/MessengerLinks";
+import { trackMetric } from "@/lib/metrics";
 
 const MarketingStrategy = () => {
   const faqItems = [
@@ -583,7 +584,15 @@ const MarketingStrategy = () => {
                 variant={tier.highlighted ? "default" : "outline"}
                 className="w-full"
               >
-                <Link to={`?intent=${tier.intent}#contact`}>{tier.cta}</Link>
+                <Link
+                  to={`?intent=${tier.intent}#contact`}
+                  onClick={() => trackMetric("marketing_strategy_package_cta_click", {
+                    path: "/services/marketing-strategy",
+                    placement: tier.intent,
+                  })}
+                >
+                  {tier.cta}
+                </Link>
               </Button>
             </div>
           ))}
