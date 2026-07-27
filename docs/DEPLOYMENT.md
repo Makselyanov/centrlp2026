@@ -139,8 +139,10 @@ systemctl enable --now centrlp-tiktok.service
 systemctl is-active centrlp-tiktok.service
 curl --fail --silent http://127.0.0.1:3023/health
 
-cp /var/www/centrlp/nginx-centrlp.conf \
-  /etc/nginx/sites-available/centrlp.ru
+install -o root -g root -m 0644 /var/www/centrlp/nginx-centrlp.conf \
+  /etc/nginx/sites-available/centrlp
+install -o root -g root -m 0644 /var/www/centrlp/nginx-centrlp.conf \
+  /etc/nginx/sites-enabled/centrlp
 nginx -t
 systemctl reload nginx
 curl --fail --silent https://centrlp.ru/api/tiktok/health
