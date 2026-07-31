@@ -84,7 +84,7 @@ const postLead = (body) => fetch(`${baseUrl}/api/lead`, {
 
 const submissionId = crypto.randomUUID();
 const validLead = {
-  name: "Интеграционный тест",
+  name: "",
   phone: "+7 900 000-00-00",
   privacyAccepted: true,
   cookiesAccepted: false,
@@ -139,7 +139,7 @@ try {
   assert.match(maxCalls[0].url, /user_id=6382431/);
   assert.equal(maxCalls[0].authorization, "test-max-token");
   assert.match(maxCalls[0].payload.text, /Новая заявка CentrLP/);
-  assert.match(maxCalls[0].payload.text, /Интеграционный тест/);
+  assert.match(maxCalls[0].payload.text, /Не указано/);
 
   const synthetic = await postLead({
     ...validLead,

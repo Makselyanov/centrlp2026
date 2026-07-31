@@ -756,10 +756,10 @@ app.post("/api/lead", async (req, res) => {
     return res.json({ ok: true, accepted: false });
   }
 
-  const name = String(body.name || "").trim().slice(0, 200);
+  const name = String(body.name || "").trim().slice(0, 200) || "Не указано";
   const phone = String(body.phone || "").trim().slice(0, 60);
 
-  if (!name || !phone) {
+  if (!phone) {
     return res.status(400).json({ ok: false, error: "missing_required_fields" });
   }
 

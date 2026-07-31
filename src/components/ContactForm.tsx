@@ -444,18 +444,6 @@ export const ContactForm = () => {
 
         <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <Label htmlFor="name">Имя *</Label>
-            <Input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-              className="mt-2"
-            />
-          </div>
-
-          <div>
             <Label htmlFor="phone">Телефон *</Label>
             <Input
               id="phone"
@@ -465,12 +453,26 @@ export const ContactForm = () => {
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               required
               className="mt-2"
+              autoComplete="tel"
+              inputMode="tel"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="name">Имя <span className="font-normal text-slate-500">(необязательно)</span></Label>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              className="mt-2"
+              autoComplete="name"
             />
           </div>
         </div>
 
         <p className="-mt-2 text-xs leading-5 text-slate-500">
-          Для первого ответа достаточно имени и телефона. Остальные детали можно добавить ниже, если удобно.
+          Для первого ответа достаточно телефона и согласия на обработку данных. Имя и детали задачи можно добавить, если удобно.
         </p>
 
         <details
