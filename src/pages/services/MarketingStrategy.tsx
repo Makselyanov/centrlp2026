@@ -36,12 +36,15 @@ const MarketingStrategy = () => {
     price: "35000",
   });
 
-  const scrollToForm = () => {
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   const scrollToPricing = () => {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const trackExpressCta = (placement: "hero" | "mobile-sticky") => {
+    trackMetric("marketing_strategy_package_cta_click", {
+      path: "/services/marketing-strategy",
+      placement,
+    });
   };
 
   const tags = [
@@ -277,8 +280,13 @@ const MarketingStrategy = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-            <Button size="lg" onClick={scrollToForm}>
-              Заказать план от 35 000 ₽
+            <Button size="lg" asChild>
+              <Link
+                to="?intent=marketing-express#contact"
+                onClick={() => trackExpressCta("hero")}
+              >
+                Заказать план от 35 000 ₽
+              </Link>
             </Button>
             <Button size="lg" variant="outline" onClick={scrollToPricing}>
               Смотреть состав и цены
@@ -660,6 +668,20 @@ const MarketingStrategy = () => {
           <ContactForm />
         </div>
       </section>
+      <div className="h-20 md:hidden" aria-hidden="true" />
+      <div
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 shadow-[0_-18px_42px_-28px_rgba(15,23,42,0.55)] backdrop-blur md:hidden"
+        aria-label="Быстрый заказ маркетингового плана"
+      >
+        <Button className="w-full" asChild>
+          <Link
+            to="?intent=marketing-express#contact"
+            onClick={() => trackExpressCta("mobile-sticky")}
+          >
+            Заказать экспресс-план от 35 000 ₽
+          </Link>
+        </Button>
+      </div>
     </Layout>
   );
 };
