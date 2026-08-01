@@ -16,8 +16,15 @@ import { useAutoBreadcrumb, useFaqSchema, useServiceSchema } from "@/components/
 import { Link } from "react-router-dom";
 import { MessengerLinks } from "@/components/MessengerLinks";
 import { trackMetric } from "@/lib/metrics";
+import { useEffect } from "react";
 
 const MarketingStrategy = () => {
+  useEffect(() => {
+    trackMetric("marketing_strategy_page_view", {
+      path: "/services/marketing-strategy",
+    });
+  }, []);
+
   const faqItems = [
     { question: "Сколько стоит разработка маркетинговой стратегии?", answer: "Экспресс-стратегия для небольшого бизнеса — от 35 000 ₽. Полная стратегия с глубоким анализом ЦА, конкурентов и юнит-экономикой — от 55 000 ₽. Стратегия с внедрением и сопровождением — от 80 000 ₽. Точная стоимость зависит от ниши и каналов." },
     { question: "Какие сроки разработки маркетинговой стратегии?", answer: "Экспресс-формат — 7–10 рабочих дней. Полная стратегия с медиапланом — 2–3 недели. Стратегия с внедрением первых кампаний — от 3 недель. Результат: готовый документ с пошаговым планом, бюджетами и KPI." },
