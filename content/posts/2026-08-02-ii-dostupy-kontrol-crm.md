@@ -60,3 +60,11 @@ secondaryCtaHref: "/uslugi"
 Центр ЛП помогает собрать такой контур: сайт принимает заявку, ИИ уточняет данные в разрешённых рамках, CRM фиксирует результат, а менеджер подключается там, где действительно нужен человек.
 
 Источник новости: [Associated Press — Anthropic says its AI models hacked 3 organizations during testing](https://apnews.com/article/b0a2c284b981de79c55e2a33712f4bec).
+
+## Где посмотреть ролик и следить за CentrLP
+
+[Посмотреть ролик](/media/reels/ai-agent-boundaries-v1.mp4)
+
+Читайте и смотрите новые материалы CentrLP в [Telegram](https://t.me/centrlp_ideas), [ВКонтакте](https://vk.com/centrlp), [MAX](https://centrlp.ru/max), [YouTube «Ai, блин работает!»](https://www.youtube.com/channel/UCo6y9tPx6p6n1RCFkGuzZ-A), [Дзене](https://dzen.ru/centrlp.ru), [Instagram](https://www.instagram.com/centrlp/), [Facebook](https://www.facebook.com/centrlp/) и [TikTok](https://www.tiktok.com/@centrlp).
+
+Instagram и Facebook принадлежат компании Meta, признанной в России экстремистской организацией; её деятельность запрещена на территории РФ.
