@@ -8,6 +8,7 @@ declare global {
 const METRIKA_ID = 50135101;
 const UTM_STORAGE_KEY = "centrlp:utm-attribution";
 const SERVER_EVENT_GOALS = new Set([
+  "site_page_view",
   "form_submit_attempt",
   "lead_form_submit",
   "lead_confirmed",

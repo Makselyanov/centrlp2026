@@ -97,6 +97,20 @@ const FirstPartyAnalytics = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const pageViewKey = `centrlp:page-view:${location.pathname}${location.search}`;
+    let shouldTrackPageView = true;
+
+    try {
+      shouldTrackPageView = sessionStorage.getItem(pageViewKey) !== "1";
+      if (shouldTrackPageView) sessionStorage.setItem(pageViewKey, "1");
+    } catch {
+      // First-party analytics remains available when session storage is blocked.
+    }
+
+    if (shouldTrackPageView) {
+      trackMetric("site_page_view", { path: location.pathname });
+    }
+
     const search = new URLSearchParams(location.search);
     if (!search.get("utm_source") && !search.get("utm_campaign")) return;
 
