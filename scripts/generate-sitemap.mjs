@@ -16,6 +16,7 @@ const PUBLIC_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '.
 const LANDING_ROUTE_PATHS = new Set(landingRouteMeta.map(({ path: routePath }) => routePath));
 const SITEMAP_EXCLUDED_ROUTES = new Set([
     '/barter/sto',
+    '/max',
     '/services/website-development',
     '/services/yandex-direct',
 ]);

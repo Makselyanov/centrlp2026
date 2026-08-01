@@ -29,6 +29,7 @@ const Cookies = lazy(() => import("./pages/Cookies"));
 const Consent = lazy(() => import("./pages/Consent"));
 const Terms = lazy(() => import("./pages/Terms"));
 const TikTokStudio = lazy(() => import("./pages/TikTokStudio"));
+const MaxJoin = lazy(() => import("./pages/MaxJoin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AiPlanPage = lazy(() => import("./pages/AiPlanPage").then(m => ({ default: m.AiPlanPage })));
 const AiTuragent = lazy(() => import("./pages/AiTuragent"));
@@ -147,6 +148,7 @@ const AppRoutes = () => {
             <Route path="/consent" element={<Consent />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/tiktok" element={<TikTokStudio />} />
+            <Route path="/max" element={<MaxJoin />} />
 
             {/* Service pages */}
             <Route path="/services/website-development" element={<WebsiteDevelopment />} />

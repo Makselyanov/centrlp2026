@@ -40,9 +40,14 @@ const canonicalUrlByRoute = {
 
 const robotsByRoute = {
   "/barter/sto": "noindex, nofollow, noarchive",
+  "/max": "noindex, follow, noarchive",
 };
 
 const staticRouteMetaOverrides = {
+  "/max": {
+    title: "CentrLP в MAX — открыть канал",
+    description: "Перейдите в официальный канал CentrLP в мессенджере MAX.",
+  },
   "/services/vk-ads": {
     title: "Продвижение ВКонтакте в Тюмени от 15 000 ₽ | CentrLP",
     description:
