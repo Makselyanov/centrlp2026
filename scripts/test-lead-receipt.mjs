@@ -84,7 +84,6 @@ const postLead = (body) => fetch(`${baseUrl}/api/lead`, {
 
 const submissionId = crypto.randomUUID();
 const validLead = {
-  name: "",
   phone: "+7 900 000-00-00",
   privacyAccepted: true,
   cookiesAccepted: false,
@@ -133,6 +132,7 @@ try {
   assert.equal(storedReceipt.crm_status, "sent");
   assert.equal(storedReceipt.crm_deal_id, 123);
   assert.equal(storedReceipt.max_status, "sent");
+  assert.equal(storedReceipt.name, "Не указано");
   assert.equal(crmCalls.length, 1);
   assert.equal(crmCalls[0].lead_submission_id, submissionId);
   assert.equal(maxCalls.length, 1);

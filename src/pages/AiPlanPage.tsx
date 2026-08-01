@@ -329,18 +329,14 @@ export function AiPlanPage() {
         goals: "",
         selectedServices: [] as ServiceId[],
         budget: "",
-        name: "",
         phone: "",
-        messenger: "",
         consentPersonalData: false,
         cookiesAccepted: false,
         consentMarketing: false,
     });
     const [errors, setErrors] = useState<{
         consentPersonalData?: string;
-        name?: string;
         phone?: string;
-        messenger?: string;
     }>({});
     const [selectedPackage, setSelectedPackage] = useState<
         "none" | "start" | "full" | "ads"
@@ -372,10 +368,7 @@ export function AiPlanPage() {
 
     const handleSubmit = async () => {
         const newErrors: typeof errors = {};
-        if (!formData.name) newErrors.name = "Введите имя";
         if (!formData.phone) newErrors.phone = "Введите телефон";
-        if (!formData.messenger)
-            newErrors.messenger = "Выберите мессенджер";
         if (!formData.consentPersonalData) {
             newErrors.consentPersonalData =
                 "Нужно согласиться с обработкой персональных данных";
@@ -407,7 +400,6 @@ export function AiPlanPage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name: formData.name,
                     phone: formData.phone,
                     business: formData.niche || formData.businessFormat,
                     comment: [
@@ -419,7 +411,6 @@ export function AiPlanPage() {
                         `Выбранные услуги: ${selectedServices || "не выбраны"}`,
                         `Пакет: ${selectedPackage}`,
                         `Бюджет: ${formData.budget || "не указан"}`,
-                        `Мессенджер: ${formData.messenger}`,
                         `Разово: ${totals.oneTime} ₽`,
                         `Ежемесячно: ${totals.monthly} ₽/мес`,
                         `Бартерный эквивалент: ${totals.barter} ₽`,
@@ -454,9 +445,7 @@ export function AiPlanPage() {
             // Reset contact fields
             setFormData((prev) => ({
                 ...prev,
-                name: "",
                 phone: "",
-                messenger: "",
                 consentPersonalData: false,
                 cookiesAccepted: false,
                 consentMarketing: false,
@@ -986,43 +975,6 @@ export function AiPlanPage() {
 
                                                 <div className="space-y-4 max-w-md mx-auto">
                                                     <div className="space-y-2">
-                                                        <Label htmlFor="name">
-                                                            Ваше имя
-                                                        </Label>
-                                                        <Input
-                                                            id="name"
-                                                            placeholder="Иван Иванов"
-                                                            value={
-                                                                formData.name
-                                                            }
-                                                            onChange={(e) => {
-                                                                setFormData({
-                                                                    ...formData,
-                                                                    name: e
-                                                                        .target
-                                                                        .value,
-                                                                });
-                                                                if (
-                                                                    errors.name
-                                                                )
-                                                                    setErrors({
-                                                                        ...errors,
-                                                                        name: undefined,
-                                                                    });
-                                                            }}
-                                                            className={
-                                                                errors.name
-                                                                    ? "border-red-500"
-                                                                    : ""
-                                                            }
-                                                        />
-                                                        {errors.name && (
-                                                            <p className="text-xs text-red-500 mt-1">
-                                                                {errors.name}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                    <div className="space-y-2">
                                                         <Label htmlFor="phone">
                                                             Телефон / WhatsApp
                                                         </Label>
@@ -1059,61 +1011,6 @@ export function AiPlanPage() {
                                                             </p>
                                                         )}
                                                     </div>
-                                                    <div className="space-y-2">
-                                                        <Label htmlFor="messenger">
-                                                            Удобный мессенджер
-                                                        </Label>
-                                                        <RadioGroup
-                                                            value={
-                                                                formData.messenger
-                                                            }
-                                                            onValueChange={(
-                                                                val,
-                                                            ) => {
-                                                                setFormData({
-                                                                    ...formData,
-                                                                    messenger:
-                                                                        val,
-                                                                });
-                                                                if (
-                                                                    errors.messenger
-                                                                )
-                                                                    setErrors({
-                                                                        ...errors,
-                                                                        messenger:
-                                                                            undefined,
-                                                                    });
-                                                            }}
-                                                            className="flex gap-4"
-                                                        >
-                                                            <div className="flex items-center space-x-2">
-                                                                <RadioGroupItem
-                                                                    value="telegram"
-                                                                    id="tg"
-                                                                />
-                                                                <Label htmlFor="tg">
-                                                                    Telegram
-                                                                </Label>
-                                                            </div>
-                                                            <div className="flex items-center space-x-2">
-                                                                <RadioGroupItem
-                                                                    value="whatsapp"
-                                                                    id="wa"
-                                                                />
-                                                                <Label htmlFor="wa">
-                                                                    WhatsApp
-                                                                </Label>
-                                                            </div>
-                                                        </RadioGroup>
-                                                        {errors.messenger && (
-                                                            <p className="text-xs text-red-500 mt-1">
-                                                                {
-                                                                    errors.messenger
-                                                                }
-                                                            </p>
-                                                        )}
-                                                    </div>
-
                                                     <div className="pt-4 space-y-4">
                                                         <div className="bg-slate-50 p-4 rounded-xl space-y-3">
                                                             <div className="flex items-start space-x-3">
