@@ -523,6 +523,16 @@ function summarizeCounts(map, limit = 10, minVisibleCount = 3) {
 function readLeadMetrics() {
   const now = Date.now();
   const dayMs = 24 * 60 * 60 * 1000;
+  const analyticsTimeZone = "Asia/Yekaterinburg";
+  const dayKeyFormatter = new Intl.DateTimeFormat("en-CA", {
+    timeZone: analyticsTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const dayKey = (value) => dayKeyFormatter.format(new Date(value));
+  const todayKey = dayKey(now);
+  const yesterdayKey = dayKey(now - dayMs);
   const totals = {
     ok: true,
     service: "centrlp-mailer",
@@ -538,6 +548,11 @@ function readLeadMetrics() {
     by_page_path_30d: [],
     by_lead_source_30d: [],
     events_30d: 0,
+    site_page_views_today: 0,
+    site_page_views_yesterday: 0,
+    site_page_views_7d: 0,
+    site_page_views_by_day_7d: [],
+    analytics_time_zone: analyticsTimeZone,
     synthetic_events_30d: 0,
     synthetic_leads_30d: 0,
     confirmed_leads_30d: 0,
@@ -636,6 +651,7 @@ function readLeadMetrics() {
   const eventCounts = new Map();
   const eventPageCounts = new Map();
   const utmSourceCounts = new Map();
+  const pageViewDayCounts = new Map();
   const eventContent = readTail(EVENT_LOG_FILE, "events_truncated");
 
   for (const line of eventContent.split("\n")) {
@@ -663,6 +679,16 @@ function readLeadMetrics() {
     const event = normalizeMetricValue(entry.event || "unknown", "unknown");
     const pagePath = normalizePathMetric(entry.path || entry.page_url || "/");
 
+    if (event === "site_page_view") {
+      const receivedDay = dayKey(receivedAt);
+      if (receivedDay === todayKey) totals.site_page_views_today += 1;
+      if (receivedDay === yesterdayKey) totals.site_page_views_yesterday += 1;
+      if (now - receivedAt <= 7 * dayMs) {
+        totals.site_page_views_7d += 1;
+        pageViewDayCounts.set(receivedDay, (pageViewDayCounts.get(receivedDay) || 0) + 1);
+      }
+    }
+
     eventCounts.set(event, (eventCounts.get(event) || 0) + 1);
     eventPageCounts.set(`${event}:${pagePath}`, (eventPageCounts.get(`${event}:${pagePath}`) || 0) + 1);
     utmSourceCounts.set(utmSource, (utmSourceCounts.get(utmSource) || 0) + 1);
@@ -671,6 +697,8 @@ function readLeadMetrics() {
   totals.by_event_30d = summarizeCounts(eventCounts, 10, 1);
   totals.by_event_page_30d = summarizeCounts(eventPageCounts, 10, 1);
   totals.by_utm_source_30d = summarizeCounts(utmSourceCounts, 10, 1);
+  totals.site_page_views_by_day_7d = Array.from(pageViewDayCounts, ([date, count]) => ({ date, count }))
+    .sort((a, b) => a.date.localeCompare(b.date));
   return totals;
 }
 

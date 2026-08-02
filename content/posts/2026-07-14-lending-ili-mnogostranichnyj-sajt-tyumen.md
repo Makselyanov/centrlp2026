@@ -7,9 +7,9 @@ seoDescription: "Лендинг или многостраничный сайт �
 ctaTitle: "Нужно выбрать формат сайта без лишних страниц?"
 ctaText: "Разберём услуги, источники трафика и путь заявки. Лендинг и первый запуск сайта в CentrLP начинаются от 45 000 ₽; точный состав фиксируем до начала работ."
 primaryCtaLabel: "Выбрать формат от 45 000 ₽"
-primaryCtaHref: "/razrabotka-sajtov-tyumen"
+primaryCtaHref: "/razrabotka-sajtov-tyumen?intent=site-format#contact-form"
 secondaryCtaLabel: "Обсудить лендинг"
-secondaryCtaHref: "/sozdanie-lendinga-tyumen"
+secondaryCtaHref: "/sozdanie-lendinga-tyumen?intent=landing-format#contact-form"
 tags: ["Лендинг", "Разработка сайтов", "Тюмень", "SEO", "Заявки"]
 source: "https://yandex.ru/support/webmaster/ru/recommendations/site-structure"
 ---
